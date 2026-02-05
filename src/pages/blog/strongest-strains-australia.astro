@@ -1,0 +1,420 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = "10 Strongest Weed Strains Australia 2026 | Top Medical Strain Australia | High THC";
+const description = "Discover the strongest weed strains in Australia for 2026. What's the strongest medical strain Australia? Expert guide to high THC strains including Gorilla Glue, Bruce Banner & more.";
+
+const strains = [
+  {
+    name: "Bruce Banner #3",
+    thc: "29%",
+    type: "Sativa-dominant Hybrid",
+    effects: "Euphoric, Creative, Energetic",
+    description: "Named after the Hulk's alter ego, Bruce Banner #3 delivers a powerful punch with THC levels reaching up to 29%. This strain provides an initial euphoric rush followed by deep relaxation.",
+    flavors: ["Diesel", "Sweet", "Berry"],
+    best_for: "Experienced users seeking strong cerebral effects"
+  },
+  {
+    name: "Gorilla Glue #4 (GG4)",
+    thc: "28-32%",
+    type: "Hybrid",
+    effects: "Relaxing, Euphoric, Happy",
+    description: "Also known as Original Glue, GG4 is famous for its heavy-handed euphoria and relaxation. Multiple Cannabis Cup winner with exceptionally high resin production.",
+    flavors: ["Pine", "Earthy", "Chocolate"],
+    best_for: "Pain relief and relaxation"
+  },
+  {
+    name: "Girl Scout Cookies (GSC)",
+    thc: "25-28%",
+    type: "Hybrid",
+    effects: "Euphoric, Relaxing, Creative",
+    description: "A famous strain crossing OG Kush and Durban Poison. GSC delivers full-body relaxation with a cerebral high that's perfect for unwinding.",
+    flavors: ["Sweet", "Earthy", "Mint"],
+    best_for: "Evening use and creative activities"
+  },
+  {
+    name: "Chemdawg",
+    thc: "26-32%",
+    type: "Hybrid",
+    effects: "Cerebral, Uplifting, Creative",
+    description: "A legendary strain that's a parent to many famous hybrids including Sour Diesel and OG Kush. Known for its sharp, diesel aroma and potent effects.",
+    flavors: ["Diesel", "Chemical", "Pine"],
+    best_for: "Daytime use for focus and creativity"
+  },
+  {
+    name: "Wedding Cake",
+    thc: "25-27%",
+    type: "Indica-dominant Hybrid",
+    effects: "Relaxing, Euphoric, Happy",
+    description: "A cross between Cherry Pie and Girl Scout Cookies, Wedding Cake offers a rich, tangy flavor with deeply relaxing effects.",
+    flavors: ["Sweet", "Vanilla", "Earthy"],
+    best_for: "Stress relief and appetite stimulation"
+  },
+  {
+    name: "Strawberry Banana",
+    thc: "26-28%",
+    type: "Indica-dominant Hybrid",
+    effects: "Happy, Relaxing, Euphoric",
+    description: "A delicious strain created by crossing Banana Kush and Bubble Gum. True to its name, it tastes like a strawberry banana smoothie.",
+    flavors: ["Strawberry", "Banana", "Sweet"],
+    best_for: "Relaxation and mood enhancement"
+  },
+  {
+    name: "OG Kush",
+    thc: "23-27%",
+    type: "Hybrid",
+    effects: "Euphoric, Relaxing, Happy",
+    description: "The backbone of many West Coast strains, OG Kush is a legendary variety known for its complex aroma and potent effects.",
+    flavors: ["Earthy", "Pine", "Woody"],
+    best_for: "Experienced users seeking classic effects"
+  },
+  {
+    name: "Gelato",
+    thc: "25-29%",
+    type: "Hybrid",
+    effects: "Relaxing, Euphoric, Creative",
+    description: "Born from Sunset Sherbet and Thin Mint GSC, Gelato offers a dessert-like flavor profile with powerful, balanced effects.",
+    flavors: ["Sweet", "Citrus", "Berry"],
+    best_for: "Social situations and creative pursuits"
+  },
+  {
+    name: "Godfather OG",
+    thc: "28-34%",
+    type: "Indica",
+    effects: "Sleepy, Relaxing, Euphoric",
+    description: "Often called the 'Don of all OGs,' Godfather OG is one of the strongest indica strains available, delivering heavy sedation.",
+    flavors: ["Grape", "Earthy", "Spicy"],
+    best_for: "Insomnia and severe pain relief"
+  },
+  {
+    name: "Kosher Kush",
+    thc: "26-29%",
+    type: "Indica",
+    effects: "Relaxing, Sleepy, Happy",
+    description: "The first commercial strain to be blessed by a Rabbi, Kosher Kush is known for its heavy tranquilizing effects and earthy flavors.",
+    flavors: ["Earthy", "Piney", "Fruity"],
+    best_for: "Night time use and deep relaxation"
+  }
+];
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main class="pt-20">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 text-white py-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <nav class="text-sm mb-6">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-green-300 transition-colors">Home</a></li>
+            <li><span class="mx-2">/</span></li>
+            <li><a href="/blog" class="hover:text-green-300 transition-colors">Blog</a></li>
+            <li><span class="mx-2">/</span></li>
+            <li class="text-green-300">Strongest Strains</li>
+          </ol>
+        </nav>
+        <span class="inline-block bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
+          Strain Guide
+        </span>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">10 Strongest Weed Strains in Australia 2026</h1>
+        <p class="text-xl text-green-100 mb-6">Expert guide to the highest THC cannabis strains available</p>
+        <div class="flex items-center space-x-6 text-green-200 text-sm">
+          <span>By Mullaways Medical Team</span>
+          <span>•</span>
+          <span>Updated January 2026</span>
+          <span>•</span>
+          <span>12 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="max-w-4xl mx-auto px-4 py-12">
+      <!-- Introduction -->
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-xl text-gray-700 leading-relaxed">
+          Looking for the <strong>strongest weed strains</strong> available in Australia? Whether you're seeking powerful pain relief, intense relaxation, or just want to know what's considered top-shelf cannabis, this guide covers the most potent strains for 2026.
+        </p>
+        <p class="text-gray-600 mt-4">
+          With THC levels continuing to rise through selective breeding, today's <strong>high THC strains</strong> can reach potencies that were unheard of just a decade ago. Let's explore the strongest cannabis strains and what makes each one unique.
+        </p>
+      </div>
+
+      <!-- Warning Box -->
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg mb-12">
+        <h4 class="font-bold text-amber-900 mb-2">⚠️ Important Note for New Users</h4>
+        <p class="text-amber-800">
+          High-THC strains are recommended for experienced cannabis users only. If you're new to cannabis, start with lower THC strains (10-15% THC) and work your way up gradually. The effects of strong strains can be overwhelming for beginners.
+        </p>
+      </div>
+
+      <!-- Understanding THC Levels -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding THC Levels</h2>
+        <div class="prose prose-lg max-w-none">
+          <p class="text-gray-700">
+            THC (tetrahydrocannabinol) is the primary psychoactive compound in cannabis. The higher the THC percentage, the stronger the psychoactive effects. Here's a general guide to THC levels:
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-4 gap-4 mt-6">
+          <div class="bg-green-100 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-green-700">10-15%</div>
+            <div class="text-sm text-green-600 mt-1">Mild</div>
+            <div class="text-xs text-green-500 mt-2">Good for beginners</div>
+          </div>
+          <div class="bg-yellow-100 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-yellow-700">15-20%</div>
+            <div class="text-sm text-yellow-600 mt-1">Moderate</div>
+            <div class="text-xs text-yellow-500 mt-2">Average potency</div>
+          </div>
+          <div class="bg-orange-100 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-orange-700">20-25%</div>
+            <div class="text-sm text-orange-600 mt-1">Strong</div>
+            <div class="text-xs text-orange-500 mt-2">Experienced users</div>
+          </div>
+          <div class="bg-red-100 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-red-700">25%+</div>
+            <div class="text-sm text-red-600 mt-1">Very Strong</div>
+            <div class="text-xs text-red-500 mt-2">Veterans only</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Strain List -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Top 10 Strongest Strains</h2>
+        
+        <div class="space-y-8">
+          {strains.map((strain, index) => (
+            <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+              <div class="flex items-center justify-between bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4">
+                <div class="flex items-center gap-4">
+                  <span class="text-3xl font-bold opacity-50">#{index + 1}</span>
+                  <h3 class="text-xl font-bold">{strain.name}</h3>
+                </div>
+                <div class="bg-white/20 px-4 py-2 rounded-full">
+                  <span class="font-bold">{strain.thc} THC</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">{strain.type}</span>
+                  {strain.flavors.map(flavor => (
+                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">{flavor}</span>
+                  ))}
+                </div>
+                <p class="text-gray-700 mb-4">{strain.description}</p>
+                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <span class="text-sm font-semibold text-gray-500">Effects:</span>
+                    <p class="text-green-600 font-medium">{strain.effects}</p>
+                  </div>
+                  <div>
+                    <span class="text-sm font-semibold text-gray-500">Best For:</span>
+                    <p class="text-gray-700">{strain.best_for}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Indica vs Sativa -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Indica vs Sativa: What's the Difference?</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-purple-50 rounded-2xl p-6">
+            <h3 class="text-2xl font-bold text-purple-900 mb-4">🌙 Indica Strains</h3>
+            <ul class="space-y-3 text-purple-800">
+              <li><strong>Body Effects:</strong> Full-body relaxation, "couch-lock"</li>
+              <li><strong>Best Time:</strong> Evening/Night use</li>
+              <li><strong>Common Uses:</strong> Sleep, pain relief, relaxation</li>
+              <li><strong>Physical Traits:</strong> Shorter, bushier plants</li>
+              <li><strong>Feeling:</strong> Sedating, calming, heavy</li>
+            </ul>
+          </div>
+          
+          <div class="bg-green-50 rounded-2xl p-6">
+            <h3 class="text-2xl font-bold text-green-900 mb-4">☀️ Sativa Strains</h3>
+            <ul class="space-y-3 text-green-800">
+              <li><strong>Mind Effects:</strong> Cerebral, uplifting, energizing</li>
+              <li><strong>Best Time:</strong> Daytime use</li>
+              <li><strong>Common Uses:</strong> Creativity, focus, social activities</li>
+              <li><strong>Physical Traits:</strong> Taller, thinner plants</li>
+              <li><strong>Feeling:</strong> Energetic, euphoric, creative</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 rounded-2xl p-6 mt-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">🔄 Hybrid Strains</h3>
+          <p class="text-gray-700">
+            Most modern strains are hybrids, combining indica and sativa genetics. Hybrids are often described as "indica-dominant" or "sativa-dominant" based on their primary effects. This allows cultivators to create strains with specific effect profiles suited to different needs.
+          </p>
+        </div>
+      </section>
+
+      <!-- Tips for Strong Strains -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Consuming Strong Strains</h2>
+        
+        <div class="space-y-4">
+          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
+            <div class="text-2xl">🎯</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">Start Low, Go Slow</h3>
+              <p class="text-gray-600">Even experienced users should start with smaller amounts of high-THC strains. You can always consume more, but you can't undo overconsumption.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
+            <div class="text-2xl">💧</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">Stay Hydrated</h3>
+              <p class="text-gray-600">High-THC strains often cause dry mouth. Keep water nearby and drink regularly to stay comfortable.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
+            <div class="text-2xl">🏠</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">Choose the Right Setting</h3>
+              <p class="text-gray-600">Try new strong strains in a comfortable, familiar environment where you can relax if the effects become intense.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
+            <div class="text-2xl">🥜</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">Have Snacks Ready</h3>
+              <p class="text-gray-600">Strong strains often increase appetite. Having healthy snacks available can make for a more enjoyable experience.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
+            <div class="text-2xl">🚫</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">Don't Mix with Alcohol</h3>
+              <p class="text-gray-600">Combining cannabis with alcohol can intensify effects unpredictably. Avoid mixing, especially with strong strains.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Find Quality -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">How to Find Quality Cannabis in Australia</h2>
+        <div class="prose prose-lg max-w-none">
+          <p class="text-gray-700">
+            Finding quality <strong>weed strains in Australia</strong> can be challenging. Here's what to look for when assessing cannabis quality:
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 mt-6">
+          <div class="bg-green-50 rounded-xl p-6">
+            <h4 class="font-bold text-green-900 mb-3">✓ Signs of Quality Cannabis</h4>
+            <ul class="text-green-800 space-y-2">
+              <li>• Dense, well-trimmed buds</li>
+              <li>• Visible trichomes (crystals)</li>
+              <li>• Strong, pleasant aroma</li>
+              <li>• Vibrant green with orange/purple hues</li>
+              <li>• Slightly sticky texture</li>
+              <li>• Proper moisture content</li>
+            </ul>
+          </div>
+          
+          <div class="bg-red-50 rounded-xl p-6">
+            <h4 class="font-bold text-red-900 mb-3">✗ Red Flags to Avoid</h4>
+            <ul class="text-red-800 space-y-2">
+              <li>• Brown, dried out appearance</li>
+              <li>• Hay-like or musty smell</li>
+              <li>• Visible mold or mildew</li>
+              <li>• Seeds and stems</li>
+              <li>• Crumbles to dust easily</li>
+              <li>• Chemical or unnatural odor</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="bg-green-600 text-white rounded-2xl p-8 mb-12">
+        <h3 class="text-2xl font-bold mb-4">Browse Premium Cannabis Strains</h3>
+        <p class="mb-6 text-green-100">
+          Explore our selection of premium flower strains, carefully sourced for quality and potency. From classic favourites to the latest high-THC varieties.
+        </p>
+        <a href="/shop" class="inline-block bg-white text-green-600 px-8 py-3 rounded-full font-bold hover:bg-green-50 transition-colors">
+          Shop Now →
+        </a>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        
+        <div class="space-y-4">
+          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
+              What is the strongest strain in Australia?
+            </summary>
+            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
+              Godfather OG and Gorilla Glue #4 are among the strongest strains available, with THC levels reaching up to 34%. However, potency can vary based on growing conditions and harvest timing.
+            </div>
+          </details>
+          
+          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
+              Is higher THC always better?
+            </summary>
+            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
+              Not necessarily. Higher THC doesn't always mean a better experience. Terpene profiles, other cannabinoids, and individual tolerance all affect how a strain feels. Many users prefer moderate THC strains for a more balanced experience.
+            </div>
+          </details>
+          
+          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
+              What's the difference between THC and CBD?
+            </summary>
+            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
+              THC is the psychoactive compound that produces the "high," while CBD is non-psychoactive and often associated with calming, therapeutic effects. Many strains contain both cannabinoids in varying ratios.
+            </div>
+          </details>
+          
+          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
+              How long do the effects of strong strains last?
+            </summary>
+            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
+              When smoked, effects typically last 1-3 hours. Edibles can last 4-8 hours or longer. Strong strains may have effects that feel more intense and last slightly longer than weaker varieties.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles -->
+      <section class="border-t border-gray-200 pt-12">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Related Articles</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <a href="/blog/cannabis-prices-australia" class="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <span class="text-sm text-green-600 font-medium">Price Guide</span>
+            <h4 class="text-lg font-bold text-gray-900 mt-2">Cannabis Prices in Australia 2026</h4>
+            <p class="text-gray-600 mt-2">What to expect to pay for different quantities and qualities across Australia.</p>
+          </a>
+          <a href="/blog/is-weed-legal-in-australia" class="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <span class="text-sm text-green-600 font-medium">Legal Guide</span>
+            <h4 class="text-lg font-bold text-gray-900 mt-2">Is Weed Legal in Australia?</h4>
+            <p class="text-gray-600 mt-2">Complete breakdown of cannabis laws by state and territory.</p>
+          </a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

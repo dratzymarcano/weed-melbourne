@@ -1,0 +1,766 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+
+const title = "Pre-Rolled Joints Australia | Buy THC Pre-Rolls & Blunts Online";
+const description = "Buy pre-rolled joints online Australia. Ready-to-smoke THC joints, blunts & infused pre-rolls. No rolling required — lab-tested, perfectly rolled, delivered discreetly.";
+
+const products = [
+  // Single Pre-Rolls
+  {
+    name: "OG Kush Pre-Roll",
+    slug: "og-kush-pre-roll",
+    type: "Single",
+    thc: "20-25%",
+    price: 250,
+    description: "Classic OG Kush hand-rolled to perfection. Earthy, pine flavours with balanced hybrid effects.",
+    effects: ["Relaxed", "Euphoric", "Happy"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  {
+    name: "Blue Dream Pre-Roll",
+    slug: "blue-dream-pre-roll",
+    type: "Single",
+    thc: "18-24%",
+    price: 250,
+    description: "Sweet berry sativa pre-roll. Uplifting and creative effects for daytime enjoyment.",
+    effects: ["Creative", "Uplifted", "Happy"],
+    strain: "Sativa",
+    weight: "12 Pack"
+  },
+  {
+    name: "Northern Lights Pre-Roll",
+    slug: "northern-lights-pre-roll",
+    type: "Single",
+    thc: "18-22%",
+    price: 250,
+    description: "Pure indica relaxation in a convenient pre-roll. Sweet, earthy, and deeply calming.",
+    effects: ["Relaxed", "Sleepy", "Happy"],
+    strain: "Indica",
+    weight: "12 Pack"
+  },
+  {
+    name: "Girl Scout Cookies Pre-Roll",
+    slug: "girl-scout-cookies-pre-roll",
+    type: "Single",
+    thc: "25-28%",
+    price: 280,
+    description: "Premium GSC in a hand-rolled cone. Sweet, minty, and exceptionally potent.",
+    effects: ["Euphoric", "Relaxed", "Creative"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  {
+    name: "Sour Diesel Pre-Roll",
+    slug: "sour-diesel-pre-roll",
+    type: "Single",
+    thc: "20-25%",
+    price: 250,
+    description: "Energising sativa with diesel fuel aroma. Perfect for wake and bake sessions.",
+    effects: ["Energetic", "Creative", "Uplifted"],
+    strain: "Sativa",
+    weight: "12 Pack"
+  },
+  {
+    name: "Granddaddy Purple Pre-Roll",
+    slug: "granddaddy-purple-pre-roll",
+    type: "Single",
+    thc: "20-25%",
+    price: 260,
+    description: "Purple-hued indica with grape and berry notes. Evening relaxation guaranteed.",
+    effects: ["Relaxed", "Sleepy", "Euphoric"],
+    strain: "Indica",
+    weight: "12 Pack"
+  },
+  // Multi-Packs
+  {
+    name: "Indica Variety Pack",
+    slug: "indica-variety-pack",
+    type: "5-Pack",
+    thc: "18-25%",
+    price: 550,
+    description: "Five premium indica pre-rolls: Northern Lights, GDP, Purple Kush, Bubba Kush, Death Bubba.",
+    effects: ["Relaxed", "Sleepy", "Calm"],
+    strain: "Indica",
+    weight: "12 Pack"
+  },
+  {
+    name: "Sativa Variety Pack",
+    slug: "sativa-variety-pack",
+    type: "5-Pack",
+    thc: "18-25%",
+    price: 550,
+    description: "Five energising sativa pre-rolls: Sour Diesel, Green Crack, Jack Herer, Durban Poison, Super Lemon Haze.",
+    effects: ["Energetic", "Creative", "Uplifted"],
+    strain: "Sativa",
+    weight: "12 Pack"
+  },
+  {
+    name: "Hybrid Variety Pack",
+    slug: "hybrid-variety-pack",
+    type: "5-Pack",
+    thc: "20-28%",
+    price: 575,
+    description: "Five balanced hybrid pre-rolls: OG Kush, Blue Dream, GSC, Wedding Cake, Gelato.",
+    effects: ["Balanced", "Euphoric", "Happy"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  {
+    name: "Premium Sampler Pack",
+    slug: "premium-sampler-pack",
+    type: "10-Pack",
+    thc: "18-28%",
+    price: 1050,
+    description: "Ten assorted premium pre-rolls featuring our best indica, sativa, and hybrid strains.",
+    effects: ["Varied", "Premium", "Curated"],
+    strain: "Mixed",
+    weight: "12 Pack"
+  },
+  // Infused Pre-Rolls
+  {
+    name: "Diamond Infused - OG Kush",
+    slug: "diamond-infused-og-kush",
+    type: "Infused",
+    thc: "40-45%",
+    price: 450,
+    description: "OG Kush pre-roll infused with THC diamonds and rolled in kief. Extremely potent.",
+    effects: ["Intense", "Euphoric", "Relaxed"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  {
+    name: "Diamond Infused - Gelato",
+    slug: "diamond-infused-gelato",
+    type: "Infused",
+    thc: "42-48%",
+    price: 480,
+    description: "Gelato flower dipped in live resin and coated in THC diamonds. Premium experience.",
+    effects: ["Intense", "Creative", "Euphoric"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  {
+    name: "Caviar Pre-Roll - Purple Punch",
+    slug: "caviar-pre-roll-purple-punch",
+    type: "Infused",
+    thc: "35-40%",
+    price: 420,
+    description: "Purple Punch nugs soaked in hash oil and rolled in kief. Sweet, potent, and smooth.",
+    effects: ["Heavy", "Relaxed", "Sleepy"],
+    strain: "Indica",
+    weight: "12 Pack"
+  },
+  {
+    name: "Hash Hole - Wedding Cake",
+    slug: "hash-hole-wedding-cake",
+    type: "Infused",
+    thc: "45-50%",
+    price: 550,
+    description: "Premium pre-roll wrapped around a core of hash. Burns slow with incredible flavour.",
+    effects: ["Intense", "Long-lasting", "Euphoric"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  // Blunts
+  {
+    name: "Gorilla Glue Blunt",
+    slug: "gorilla-glue-blunt",
+    type: "Blunt",
+    thc: "25-30%",
+    price: 350,
+    description: "GG4 wrapped in natural hemp leaf. Slow-burning with diesel and pine notes.",
+    effects: ["Relaxed", "Heavy", "Euphoric"],
+    strain: "Hybrid",
+    weight: "12 Pack"
+  },
+  {
+    name: "Zkittlez Blunt",
+    slug: "zkittlez-blunt",
+    type: "Blunt",
+    thc: "19-23%",
+    price: 320,
+    description: "Fruity Zkittlez in a hemp wrap. Candy-sweet flavours with balanced effects.",
+    effects: ["Happy", "Relaxed", "Creative"],
+    strain: "Indica",
+    weight: "12 Pack"
+  },
+  {
+    name: "Jack Herer Blunt",
+    slug: "jack-herer-blunt",
+    type: "Blunt",
+    thc: "18-23%",
+    price: 320,
+    description: "Legendary sativa in a slow-burning blunt. Pine and spice with clear-headed energy.",
+    effects: ["Energetic", "Creative", "Focused"],
+    strain: "Sativa",
+    weight: "12 Pack"
+  }
+];
+
+const categories = [
+  { name: "Single Pre-Rolls", count: 6, href: "#singles" },
+  { name: "Multi-Packs", count: 4, href: "#packs" },
+  { name: "Infused Pre-Rolls", count: 4, href: "#infused" },
+  { name: "Blunts", count: 3, href: "#blunts" }
+];
+
+const singleProducts = products.filter(p => p.type === "Single");
+const packProducts = products.filter(p => p.type === "5-Pack" || p.type === "10-Pack");
+const infusedProducts = products.filter(p => p.type === "Infused");
+const bluntProducts = products.filter(p => p.type === "Blunt");
+
+const getCardMeta = (slug: string, fallbackPrice: number) => {
+  const productData = getProductBySlug(slug);
+  const canonicalSlug = productData?.slug ?? slug;
+  return {
+    price: productData ? getMinPrice(productData.basePrice, productData.category) : fallbackPrice,
+    reviewCount: getReviewCount(canonicalSlug),
+    reviewRating: getReviewRating(canonicalSlug),
+  };
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Buy Pre-Rolled Joints Australia</span>
+          <h1>Ready-to-Smoke, No Fuss Required</h1>
+          <p>Can't roll to save your life? Don't have time? We get it. Our pre-rolls are hand-rolled, properly packed, and ready to light. Singles for solo sessions, packs for the weekend, infused for when you need that extra kick. No rolling skills required.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Pre-Roll Types</h3>
+              <div class="type-info">
+                <div class="type-item">
+                  <strong>Singles</strong>
+                  <p>Classic 1g pre-rolls. Perfect for personal use.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Multi-Packs</strong>
+                  <p>Value packs with variety. Great for sharing.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Infused</strong>
+                  <p>Enhanced with concentrates. Extra potency.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Blunts</strong>
+                  <p>Hemp-wrapped 2g rolls. Slow-burning.</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <div class="shop-products">
+            <!-- Singles Section -->
+            <div class="product-section" id="singles">
+              <h2 class="section-title">Single Pre-Rolls</h2>
+              <p class="section-desc">Classic 1g joints hand-rolled with premium flower. Ready when you are.</p>
+              <div class="products-grid">
+                {singleProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class={`product-badge ${product.strain.toLowerCase()}`}>{product.strain}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2v20"/>
+                        <path d="M8 6l4-4 4 4"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Packs Section -->
+            <div class="product-section" id="packs">
+              <h2 class="section-title">Multi-Packs</h2>
+              <p class="section-desc">Value packs featuring variety selections. Perfect for stocking up or sharing.</p>
+              <div class="products-grid">
+                {packProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class={`product-badge ${product.strain.toLowerCase()}`}>{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <path d="M12 8v8"/>
+                        <path d="M8 12h8"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Infused Section -->
+            <div class="product-section" id="infused">
+              <h2 class="section-title">Infused Pre-Rolls</h2>
+              <p class="section-desc">Premium flower enhanced with concentrates for maximum potency.</p>
+              <div class="products-grid">
+                {infusedProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card featured">
+                    <div class="product-badge infused">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2v20"/>
+                        <path d="M8 6l4-4 4 4"/>
+                        <path d="M12 8l4 4-4 4-4-4z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Blunts Section -->
+            <div class="product-section" id="blunts">
+              <h2 class="section-title">Blunts</h2>
+              <p class="section-desc">2g hemp-wrapped blunts for slow, smooth smoking sessions.</p>
+              <div class="products-grid">
+                {bluntProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class={`product-badge ${product.strain.toLowerCase()}`}>{product.strain}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M4 12h16"/>
+                        <path d="M4 12c0-2 2-4 4-4h8c2 0 4 2 4 4s-2 4-4 4H8c-2 0-4-2-4-4z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 { width: 400px; height: 400px; top: -100px; right: -100px; }
+  .hero-shape-2 { width: 300px; height: 300px; bottom: -50px; left: -50px; }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light { color: rgba(255, 255, 255, 0.8); }
+  .page-hero h1 { color: white; margin-bottom: var(--space-md); }
+  .page-hero p { color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; }
+
+  .shop-section { background: var(--color-bg); }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 { font-size: 1rem; margin-bottom: var(--space-md); }
+
+  .category-list { list-style: none; padding: 0; margin: 0; }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a { border-bottom: none; }
+  .category-list li a:hover { color: var(--color-primary); }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  .type-info { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+  .type-item {
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .type-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .type-item strong { font-size: 0.9rem; color: var(--color-primary); }
+  .type-item p { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 2px; }
+
+  .product-section { margin-bottom: var(--space-3xl); }
+  .section-title { font-size: 1.5rem; margin-bottom: var(--space-sm); }
+  .section-desc { color: var(--color-text-muted); margin-bottom: var(--space-xl); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Product Card - Updated Design */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-card.featured { border: 2px solid #1a472a; }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.indica { background: #7c3aed; color: white; }
+  .product-badge.sativa { background: #f59e0b; color: white; }
+  .product-badge.hybrid { background: #10b981; color: white; }
+  .product-badge.mixed { background: #6366f1; color: white; }
+  .product-badge.infused { background: #ec4899; color: white; }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+  }
+
+  .product-image svg { width: 72px; height: 72px; opacity: 0.7; }
+
+  .product-content { padding: 20px; }
+  .product-content h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc { font-weight: 700; color: #2d5a3f; }
+  .product-meta .weight { color: #888; }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price { font-size: 1.4rem; font-weight: 800; color: #1a1a1a; }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover { background: #2d5a3f; transform: translateY(-1px); }
+
+  @media (max-width: 1024px) {
+    .shop-layout { grid-template-columns: 1fr; }
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Navigate to product detail page
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

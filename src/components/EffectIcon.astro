@@ -1,0 +1,128 @@
+---
+const { effect, class: className = '' } = Astro.props;
+const label = String(effect ?? '').trim();
+const key = label.toLowerCase();
+
+const icon = (() => {
+  if (!key) return 'leaf';
+  if (key.includes('sleep')) return 'moon';
+  if (key.includes('relax') || key.includes('calm') || key.includes('rest')) return 'wave';
+  if (key.includes('euphoric') || key.includes('happy') || key.includes('joy')) return 'smile';
+  if (key.includes('creative') || key.includes('uplift')) return 'spark';
+  if (key.includes('energetic') || key.includes('focused') || key.includes('focus')) return 'bolt';
+  if (key.includes('pain') || key.includes('anti-inflammatory') || key.includes('soothing')) return 'cross';
+  if (key.includes('balanced') || key.includes('gentle')) return 'balance';
+  if (key.includes('social') || key.includes('fun')) return 'chat';
+  if (key.includes('long') || key.includes('extended') || key.includes('duration')) return 'clock';
+  if (key.includes('potent') || key.includes('strong') || key.includes('intense') || key.includes('heavy')) return 'flame';
+  if (key.includes('classic') || key.includes('authentic')) return 'badge';
+  if (key.includes('therapeutic') || key.includes('wellness') || key.includes('healing')) return 'heart';
+  if (key.includes('varied') || key.includes('mixed') || key.includes('variety')) return 'shuffle';
+  if (key.includes('natural') || key.includes('organic')) return 'leaf';
+  return 'leaf';
+})();
+---
+
+<span class={`effect-icon ${className}`} title={label} aria-label={label} role="img">
+  {icon === 'moon' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'wave' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 12c3 0 3-4 6-4s3 4 6 4 3-4 6-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'smile' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6" />
+      <path d="M8.5 14.5c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M9 10h.01M15 10h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+    </svg>
+  )}
+  {icon === 'spark' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'bolt' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'cross' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+  )}
+  {icon === 'balance' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4v16M6 8h12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M6 8l-3 5h6l-3-5zM18 8l-3 5h6l-3-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'chat' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 6h16v9H8l-4 3V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'clock' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6" />
+      <path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+  )}
+  {icon === 'flame' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3s4 4 4 8a4 4 0 1 1-8 0c0-2 1-4 4-8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'badge' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
+      <path d="M12 6v6l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+  )}
+  {icon === 'heart' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 20s-7-4.5-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.5-7 9-7 9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'shuffle' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h5l10 10h1M20 7h-1l-3 3M10 14l-3 3H4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )}
+  {icon === 'leaf' && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4c4 3 6 7 6 11a6 6 0 0 1-12 0c0-4 2-8 6-11z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="M12 9v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+  )}
+</span>
+
+<style>
+  :global(.effect-icon) {
+    background: rgba(10, 124, 98, 0.12);
+    color: #0a7c62;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  :global(.effect-icon svg) {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+  }
+
+  :global(.effect-icon:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(10, 124, 98, 0.15);
+  }
+</style>

@@ -1,0 +1,933 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../data/products';
+
+const title = "Buy Weed Online Australia | Cannabis Dispensary Near Me | THC Gummies & More";
+const description = "Looking for a weed shop near me or cannabis pharmacy near me? Buy cannabis online: THC gummies, flower, edibles, vapes & concentrates. Cheapest prices, lab-tested. Discreet delivery Australia-wide.";
+
+const categories = [
+  {
+    id: "flower",
+    name: "Cannabis Flower",
+    description: "Premium dried flower in various strains",
+    count: 18,
+    href: "/shop/flower",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`
+  },
+  {
+    id: "concentrates",
+    name: "Concentrates",
+    description: "Shatter, wax, live resin & rosin",
+    count: 18,
+    href: "/shop/concentrates",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`
+  },
+  {
+    id: "edibles",
+    name: "Edibles",
+    description: "Gummies, chocolates & infused treats",
+    count: 20,
+    href: "/shop/edibles",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`
+  },
+  {
+    id: "thc-gummies",
+    name: "THC Gummies",
+    description: "Potent cannabis gummies Australia",
+    count: 15,
+    href: "/shop/thc-gummies",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 15h8M9 9h.01M15 9h.01"/></svg>`
+  },
+  {
+    id: "vapes",
+    name: "Vapes & Cartridges",
+    description: "THC vape pens & live resin cartridges",
+    count: 21,
+    href: "/shop/vapes",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`
+  },
+  {
+    id: "pre-rolls",
+    name: "Pre-Rolls",
+    description: "Ready-to-smoke joints & blunts",
+    count: 17,
+    href: "/shop/pre-rolls",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" y1="20" x2="20" y2="4"/><circle cx="18" cy="6" r="2"/></svg>`
+  },
+  {
+    id: "hash",
+    name: "Hash",
+    description: "Traditional & bubble hash varieties",
+    count: 15,
+    href: "/shop/hash",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`
+  }
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Blue Dream",
+    slug: "blue-dream",
+    category: "Sativa",
+    thc: "18-24%",
+    price: 265,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 2,
+    name: "OG Kush",
+    slug: "og-kush",
+    category: "Indica",
+    thc: "20-26%",
+    price: 280,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 3,
+    name: "Wedding Cake",
+    slug: "wedding-cake",
+    category: "Hybrid",
+    thc: "22-26%",
+    price: 290,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 4,
+    name: "Girl Scout Cookies",
+    slug: "girl-scout-cookies",
+    category: "Hybrid",
+    thc: "25-28%",
+    price: 295,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 5,
+    name: "Gorilla Glue #4",
+    slug: "gorilla-glue-4",
+    category: "Hybrid",
+    thc: "25-30%",
+    price: 300,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 6,
+    name: "White Widow",
+    slug: "white-widow",
+    category: "Hybrid",
+    thc: "18-25%",
+    price: 260,
+    unit: "28g",
+    bestseller: false
+  },
+  {
+    id: 7,
+    name: "Purple Haze",
+    slug: "purple-haze",
+    category: "Sativa",
+    thc: "15-20%",
+    price: 250,
+    unit: "28g",
+    bestseller: false
+  },
+  {
+    id: 8,
+    name: "Northern Lights",
+    slug: "northern-lights",
+    category: "Indica",
+    thc: "16-21%",
+    price: 260,
+    unit: "28g",
+    bestseller: false
+  },
+  {
+    id: 9,
+    name: "Sour Diesel",
+    slug: "sour-diesel",
+    category: "Sativa",
+    thc: "20-25%",
+    price: 280,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 10,
+    name: "Gelato",
+    slug: "gelato",
+    category: "Hybrid",
+    thc: "20-25%",
+    price: 285,
+    unit: "28g",
+    bestseller: true
+  },
+  {
+    id: 11,
+    name: "Jack Herer",
+    slug: "jack-herer",
+    category: "Sativa",
+    thc: "18-24%",
+    price: 275,
+    unit: "28g",
+    bestseller: false
+  },
+  {
+    id: 12,
+    name: "Granddaddy Purple",
+    slug: "granddaddy-purple",
+    category: "Indica",
+    thc: "17-23%",
+    price: 280,
+    unit: "28g",
+    bestseller: false
+  },
+  {
+    id: 13,
+    name: "OG Kush Shatter",
+    slug: "og-kush-shatter",
+    category: "Concentrate",
+    thc: "80-85%",
+    price: 265,
+    unit: "7g",
+    bestseller: true
+  },
+  {
+    id: 14,
+    name: "Wedding Cake Wax",
+    slug: "wedding-cake-wax",
+    category: "Concentrate",
+    thc: "75-80%",
+    price: 270,
+    unit: "7g",
+    bestseller: false
+  },
+  {
+    id: 15,
+    name: "Live Resin - Zkittlez",
+    slug: "zkittlez-live-resin",
+    category: "Concentrate",
+    thc: "78%",
+    price: 315,
+    unit: "7g",
+    bestseller: true
+  },
+  {
+    id: 16,
+    name: "THC Gummies 10mg",
+    slug: "premium-thc-gummies-10mg",
+    category: "Edible",
+    thc: "10mg",
+    price: 350,
+    unit: "100 Pack",
+    bestseller: true
+  },
+  {
+    id: 17,
+    name: "THC Sleep Gummies",
+    slug: "thc-sleep-gummies",
+    category: "Edible",
+    thc: "15mg",
+    price: 455,
+    unit: "100 Pack",
+    bestseller: true
+  },
+  {
+    id: 18,
+    name: "Strongest THC Gummies 25mg",
+    slug: "strongest-thc-gummies-25mg",
+    category: "Edible",
+    thc: "25mg",
+    price: 505,
+    unit: "100 Pack",
+    bestseller: true
+  },
+  {
+    id: 19,
+    name: "THC Chocolate Bar",
+    slug: "thc-chocolate-bar",
+    category: "Edible",
+    thc: "100mg",
+    price: 230,
+    unit: "100 Pack",
+    bestseller: false
+  },
+  {
+    id: 20,
+    name: "Cannabis Brownie",
+    slug: "cannabis-brownie",
+    category: "Edible",
+    thc: "50mg",
+    price: 250,
+    unit: "100 Pack",
+    bestseller: false
+  },
+  {
+    id: 21,
+    name: "OG Kush Pre-Roll",
+    slug: "og-kush-pre-roll",
+    category: "Pre-Roll",
+    thc: "22%",
+    price: 250,
+    unit: "12 Pack",
+    bestseller: true
+  },
+  {
+    id: 22,
+    name: "Pre-Roll 5-Pack Mix",
+    slug: "hybrid-variety-pack",
+    category: "Pre-Roll",
+    thc: "18-22%",
+    price: 575,
+    unit: "12 Pack",
+    bestseller: false
+  },
+  {
+    id: 23,
+    name: "THC Vape Cartridge - OG Kush",
+    slug: "premium-thc-vape-cartridge-og-kush",
+    category: "Vape",
+    thc: "85%",
+    price: 375,
+    unit: "5 Pack",
+    bestseller: true
+  },
+  {
+    id: 24,
+    name: "Disposable THC Vape - Gelato",
+    slug: "disposable-thc-vape-pen-gelato",
+    category: "Vape",
+    thc: "80%",
+    price: 250,
+    unit: "5 Pack",
+    bestseller: true
+  },
+  {
+    id: 25,
+    name: "Moroccan Hash",
+    slug: "moroccan-gold-hash",
+    category: "Hash",
+    thc: "35-40%",
+    price: 260,
+    unit: "7g",
+    bestseller: true
+  },
+  {
+    id: 26,
+    name: "Bubble Hash Premium",
+    slug: "full-melt-bubble-hash-og-kush",
+    category: "Hash",
+    thc: "50-55%",
+    price: 420,
+    unit: "7g",
+    bestseller: false
+  }
+];
+
+const categoryColors: Record<string, string> = {
+  Sativa: "sativa",
+  Indica: "indica",
+  Hybrid: "hybrid",
+  Concentrate: "concentrate",
+  Edible: "edible",
+  "Pre-Roll": "pre-roll",
+  Vape: "vape",
+  Hash: "hash"
+};
+
+const categorySummaries: Record<string, string> = {
+  Sativa: "Uplifting sativa strains for daytime energy and creativity.",
+  Indica: "Relaxing indica strains for evening calm and rest.",
+  Hybrid: "Balanced hybrids blending body relaxation and mental clarity.",
+  Concentrate: "High-potency concentrates with bold terpene profiles.",
+  Edible: "Precisely dosed edibles for long-lasting effects.",
+  "Pre-Roll": "Convenient pre-rolls, expertly packed and ready to enjoy.",
+  Vape: "Fast-acting vape products for discreet use.",
+  Hash: "Traditional hash with rich, full-spectrum effects."
+};
+
+const categoryEffects: Record<string, string[]> = {
+  Sativa: ["Energetic", "Creative", "Focused"],
+  Indica: ["Relaxed", "Sleepy", "Calm"],
+  Hybrid: ["Balanced", "Happy", "Euphoric"],
+  Concentrate: ["Potent", "Fast-Acting", "Euphoric"],
+  Edible: ["Long Lasting", "Relaxed", "Calm"],
+  "Pre-Roll": ["Classic", "Smooth", "Convenient"],
+  Vape: ["Discreet", "Fast", "Uplifting"],
+  Hash: ["Traditional", "Rich", "Relaxed"]
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Australia's Trusted Online Weed Shop</span>
+          <h1>Buy Weed Online — Cannabis Dispensary Near Me</h1>
+          <p>Forget dodgy deals and unreliable sources. We're the weed shop Australians actually trust. Lab-tested THC gummies, premium flower, potent concentrates & everything in between. How much does weed cost? Check our prices — you'll be pleasantly surprised. Discreet delivery Australia-wide, no exceptions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Shop Highlights</h3>
+              <div class="strain-info">
+                <div class="strain-type">
+                  <strong>Lab Tested</strong>
+                  <p>All products are tested for potency and purity.</p>
+                </div>
+                <div class="strain-type">
+                  <strong>Discreet Delivery</strong>
+                  <p>Vacuum sealed and shipped Australia-wide.</p>
+                </div>
+                <div class="strain-type">
+                  <strong>Quality Guaranteed</strong>
+                  <p>Hassle-free returns on eligible orders.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Need Help?</h3>
+              <p>Not sure which product is right for you? Our team can help you find the perfect match.</p>
+              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+            </div>
+          </aside>
+
+          <div class="shop-products">
+            <div class="product-section" id="products">
+              <h2 class="section-title">Popular Products</h2>
+              <p class="section-desc">Top-selling products across our most popular categories.</p>
+              <div class="products-grid">
+                {products.map((product) => (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class={`product-badge ${categoryColors[product.category] || 'default'}`}>{product.category}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+                        <path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/>
+                        <path d="M12 6c0 0 4 4 4 8s-4 6-4 6"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.unit}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {(() => {
+                          const canonicalSlug = getProductBySlug(product.slug)?.slug ?? product.slug;
+                          const reviewCount = getReviewCount(canonicalSlug);
+                          const reviewRating = getReviewRating(canonicalSlug);
+
+                          return reviewCount > 0 ? (
+                            <>
+                              <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                              <span class="review-count">({reviewCount} reviews)</span>
+                            </>
+                          ) : (
+                            <span class="review-count">No reviews yet</span>
+                          );
+                        })()}
+                      </div>
+                      <div class="product-effects">
+                        {(categoryEffects[product.category] ?? ["Premium", "Lab Tested", "Discreet"]).map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${(() => {
+                          const productData = getProductBySlug(product.slug);
+                          if (productData) {
+                            return getMinPrice(productData.basePrice, productData.category);
+                          }
+                          return product.price;
+                        })()}</span>
+                        <button class="btn btn-primary btn-sm view-options" data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+              </svg>
+            </div>
+            <h3>Lab Tested</h3>
+            <p>Every product is tested for potency, pesticides, and contaminants.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="1" y="3" width="22" height="18" rx="2" ry="2"/>
+                <line x1="1" y1="9" x2="23" y2="9"/>
+              </svg>
+            </div>
+            <h3>Discreet Shipping</h3>
+            <p>Vacuum sealed and shipped discreetly across Australia.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3>Quality Guaranteed</h3>
+            <p>Not satisfied? We offer hassle-free returns and replacements.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .shop-section {
+    background: var(--color-bg);
+  }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a {
+    border-bottom: none;
+  }
+
+  .category-list li a:hover {
+    color: var(--color-primary);
+  }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  .strain-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .strain-type {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .strain-type:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .strain-type p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  .product-section {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .product-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    position: relative;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.indica { background: #7c3aed; }
+  .product-badge.sativa { background: #f59e0b; }
+  .product-badge.hybrid { background: #10b981; }
+  .product-badge.edible { background: #f59e0b; }
+  .product-badge.concentrate { background: #f59e0b; }
+  .product-badge.vape { background: #3b82f6; }
+  .product-badge.hash { background: #8b5cf6; }
+  .product-badge.pre-roll { background: #10b981; }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+    position: relative;
+  }
+
+  .product-image svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.7;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+  }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc {
+    font-weight: 700;
+    color: #2d5a3f;
+  }
+
+  .product-meta .weight { color: #888; }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover {
+    background: #2d5a3f;
+    transform: translateY(-1px);
+  }
+
+  .info-section { background: white; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .info-card {
+    text-align: center;
+    padding: var(--space-xl);
+  }
+
+  .info-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    margin: 0 auto var(--space-md);
+  }
+
+  .info-card h3 { margin-bottom: var(--space-sm); }
+
+  .info-card p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 1024px) {
+    .shop-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.view-options').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

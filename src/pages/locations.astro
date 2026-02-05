@@ -1,0 +1,933 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "Cannabis Dispensary Near Me | Buy Weed Sydney Melbourne Brisbane | Australia";
+const description = "Searching for a cannabis dispensary near me? Buy weed online with delivery to Sydney, Melbourne, Brisbane, Perth, Adelaide & all Australia. Fast, discreet shipping.";
+
+const locations = [
+  {
+    city: "Sydney",
+    state: "New South Wales",
+    slug: "sydney",
+    description: "Buy weed Sydney - Fast shipping from our Mullaways, NSW base to all Sydney suburbs.",
+    deliveryTime: "1-3 days",
+    icon: "city",
+    featured: true,
+    keywords: "buy weed sydney, where to buy weed in sydney"
+  },
+  {
+    city: "Melbourne",
+    state: "Victoria",
+    slug: "melbourne",
+    description: "Buy weed Melbourne - Cannabis dispensary delivering to all Melbourne suburbs and regional VIC.",
+    deliveryTime: "2-4 days",
+    icon: "leaf",
+    featured: true,
+    keywords: "buy weed melbourne, where to buy weed in melbourne, dispensary melbourne"
+  },
+  {
+    city: "Brisbane",
+    state: "Queensland",
+    slug: "brisbane",
+    description: "Buy weed Brisbane - Serving Brisbane and all QLD regions with reliable cannabis delivery.",
+    deliveryTime: "2-4 days",
+    icon: "sun",
+    featured: true,
+    keywords: "buy weed brisbane, where to buy weed in brisbane"
+  },
+  {
+    city: "Perth",
+    state: "Western Australia",
+    slug: "perth",
+    description: "Buy weed Perth - Express cannabis shipping to Perth and Western Australia.",
+    deliveryTime: "4-6 days",
+    icon: "sunset",
+    featured: false,
+    keywords: "buy weed perth, where to buy weed perth"
+  },
+  {
+    city: "Adelaide",
+    state: "South Australia",
+    slug: "adelaide",
+    description: "Buy weed Adelaide - Discreet cannabis delivery throughout Adelaide and SA.",
+    deliveryTime: "3-5 days",
+    icon: "wine",
+    featured: false,
+    keywords: "buy weed adelaide, where to buy weed adelaide"
+  },
+  {
+    city: "Canberra",
+    state: "Australian Capital Territory",
+    slug: "canberra",
+    description: "Buy weed Canberra - Fast cannabis delivery to Canberra and the ACT.",
+    deliveryTime: "2-4 days",
+    icon: "building",
+    featured: false,
+    keywords: "buy weed canberra, where to buy weed in canberra"
+  },
+  {
+    city: "Sunshine Coast",
+    state: "Queensland",
+    slug: "sunshine-coast",
+    description: "Medicinal cannabis Sunshine Coast - Premium cannabis delivery to the Sunshine Coast, QLD.",
+    deliveryTime: "2-4 days",
+    icon: "beach",
+    featured: false,
+    keywords: "medicinal cannabis sunshine coast, medical marijuanas sunshine coast"
+  },
+  {
+    city: "Gold Coast",
+    state: "Queensland",
+    slug: "gold-coast",
+    description: "Buy weed Gold Coast - Cannabis delivery to the Gold Coast and surrounding areas.",
+    deliveryTime: "2-4 days",
+    icon: "waves",
+    featured: false,
+    keywords: "buy weed gold coast, cannabis gold coast"
+  },
+  {
+    city: "Newcastle",
+    state: "New South Wales",
+    slug: "newcastle",
+    description: "Buy weed Newcastle - Super fast delivery from nearby Mullaways, NSW.",
+    deliveryTime: "1-2 days",
+    icon: "anchor",
+    featured: false,
+    keywords: "buy weed newcastle, cannabis newcastle"
+  },
+  {
+    city: "Central Coast",
+    state: "New South Wales",
+    slug: "central-coast",
+    description: "Buy weed Central Coast - Express local delivery from Mullaways, NSW.",
+    deliveryTime: "1-2 days",
+    icon: "sunset",
+    featured: false,
+    keywords: "buy weed central coast, cannabis central coast"
+  },
+  {
+    city: "Wollongong",
+    state: "New South Wales",
+    slug: "wollongong",
+    description: "Buy weed Wollongong - Fast cannabis delivery to Wollongong and Illawarra.",
+    deliveryTime: "1-3 days",
+    icon: "waves",
+    featured: false,
+    keywords: "buy weed wollongong, cannabis wollongong"
+  },
+  {
+    city: "Hobart",
+    state: "Tasmania",
+    slug: "hobart",
+    description: "Buy weed Hobart - Reliable cannabis shipping to Hobart and across Tasmania.",
+    deliveryTime: "3-5 days",
+    icon: "mountain",
+    featured: false,
+    keywords: "buy weed hobart, cannabis tasmania"
+  },
+  {
+    city: "Darwin",
+    state: "Northern Territory",
+    slug: "darwin",
+    description: "Buy weed Darwin - Express cannabis options for Darwin and the NT.",
+    deliveryTime: "4-6 days",
+    icon: "compass",
+    featured: false,
+    keywords: "buy weed darwin, cannabis darwin"
+  }
+];
+
+const featuredLocations = locations.filter(l => l.featured);
+const otherLocations = locations.filter(l => !l.featured);
+
+// SVG icon map for flat icons
+const iconMap: Record<string, string> = {
+  city: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01"/></svg>',
+  leaf: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg>',
+  sun: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
+  sunset: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 18a5 5 0 0 0-10 0"/><path d="M12 9V2M4.22 10.22l1.42 1.42M1 18h2M21 18h2M18.36 11.64l1.42-1.42M23 22H1M16 5l-4 4-4-4"/></svg>',
+  wine: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 22h8M12 15v7"/><path d="M5.5 8c0 4.5 3.5 7 6.5 7s6.5-2.5 6.5-7c0-3-2.5-6-2.5-6h-8s-2.5 3-2.5 6z"/></svg>',
+  building: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>',
+  beach: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M22 10a3 3 0 0 0-3-3h-2.207a5.502 5.502 0 0 0-10.702.5"/></svg>',
+  waves: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>',
+  anchor: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="3"/><path d="M12 22V8M5 12H2a10 10 0 0 0 20 0h-3"/></svg>',
+  mountain: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>',
+  compass: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+  pin: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  package: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="abstract-shape shape-1"></div>
+        <div class="abstract-shape shape-2"></div>
+        <div class="dot-pattern"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg> Weed Dispensary Near Me — Where to Buy Weed in Australia</span>
+          <h1>Looking for a Dispensary Near Me? <span class="text-gradient">We Deliver Australia-Wide</span></h1>
+          <p>Stop googling "cannabis dispensary near me" and "where can I buy weed" — you found it. We ship premium cannabis discreetly to your door, anywhere in Australia. Sydney, Melbourne, Brisbane, Perth, Adelaide, or regional areas. If Australia Post goes there, so do we.</p>
+        </div>
+        <div class="hero-map">
+          <div class="map-visual">
+            <svg viewBox="0 0 400 300" class="australia-outline">
+              <path d="M150,50 Q200,30 250,50 Q300,70 350,100 Q380,150 370,200 Q350,250 300,270 Q250,280 200,275 Q150,270 100,250 Q50,220 40,170 Q35,120 60,80 Q100,50 150,50 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+              <!-- Location dots -->
+              <circle cx="320" cy="180" r="8" class="location-dot sydney"/>
+              <circle cx="290" cy="220" r="10" class="location-dot melbourne"/>
+              <circle cx="330" cy="120" r="6" class="location-dot brisbane"/>
+              <circle cx="80" cy="160" r="6" class="location-dot perth"/>
+              <circle cx="220" cy="220" r="6" class="location-dot adelaide"/>
+              <circle cx="300" cy="200" r="5" class="location-dot canberra"/>
+              <circle cx="280" cy="260" r="5" class="location-dot hobart"/>
+              <circle cx="200" cy="80" r="5" class="location-dot darwin"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Locations -->
+    <section class="featured-locations">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Popular Destinations</span>
+          <h2>Featured Locations</h2>
+          <p>Our most popular delivery destinations with the fastest shipping times.</p>
+        </div>
+        <div class="featured-grid">
+          {featuredLocations.map((location) => (
+            <a href={`/${location.slug}`} class="featured-card">
+              <div class="card-icon" set:html={iconMap[location.icon] || iconMap.pin}></div>
+              <div class="card-content">
+                <h3>{location.city}</h3>
+                <p class="state">{location.state}</p>
+                <p class="description">{location.description}</p>
+                <div class="card-footer">
+                  <span class="delivery-time" set:html={iconMap.package + ' ' + location.deliveryTime}></span>
+                  <span class="card-link">Learn More →</span>
+                </div>
+              </div>
+              <div class="card-bg"></div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- All Locations -->
+    <section class="all-locations">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">All Service Areas</span>
+          <h2>All Australian Locations</h2>
+          <p>We deliver to every major city and regional area across Australia.</p>
+        </div>
+        <div class="locations-grid">
+          {otherLocations.map((location) => (
+            <a href={`/${location.slug}`} class="location-card">
+              <div class="card-icon" set:html={iconMap[location.icon] || iconMap.pin}></div>
+              <h3>{location.city}</h3>
+              <p class="state">{location.state}</p>
+              <p class="description">{location.description}</p>
+              <div class="card-meta">
+                <span class="delivery-time" set:html={iconMap.package + ' ' + location.deliveryTime}></span>
+              </div>
+              <span class="card-link">View Details →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-content">
+            <h2>Shipping Information</h2>
+            <p>All orders are shipped in plain, unmarked packaging with no indication of contents. Your privacy is our priority.</p>
+            <ul class="info-list">
+              <li>
+                <span class="icon">✓</span>
+                <div>
+                  <strong>Express Shipping Available</strong>
+                  <p>Priority delivery for urgent orders</p>
+                </div>
+              </li>
+              <li>
+                <span class="icon">✓</span>
+                <div>
+                  <strong>Full Tracking</strong>
+                  <p>Track your order from dispatch to delivery</p>
+                </div>
+              </li>
+              <li>
+                <span class="icon">✓</span>
+                <div>
+                  <strong>Signature on Delivery</strong>
+                  <p>Secure handover for your peace of mind</p>
+                </div>
+              </li>
+              <li>
+                <span class="icon">✓</span>
+                <div>
+                  <strong>Temperature Controlled</strong>
+                  <p>Products shipped in appropriate conditions</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="info-visual">
+            <div class="visual-card">
+              <div class="visual-icon">🚚</div>
+              <h3>Free Shipping</h3>
+              <p>On orders over $150</p>
+            </div>
+            <div class="visual-card">
+              <div class="visual-icon">📦</div>
+              <h3>Discreet Packaging</h3>
+              <p>Plain, unmarked boxes</p>
+            </div>
+            <div class="visual-card">
+              <div class="visual-icon">🔒</div>
+              <h3>Secure Delivery</h3>
+              <p>Signature required</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2>Ready to Order?</h2>
+            <p>Browse our selection of premium cannabis products and place your order today.</p>
+            <div class="cta-buttons">
+              <a href="/shop" class="btn btn-primary btn-lg">Shop Now</a>
+              <a href="/how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
+            </div>
+          </div>
+          <div class="cta-bg">
+            <div class="abstract-shape shape-1"></div>
+            <div class="abstract-shape shape-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    position: relative;
+    padding: 160px 0 100px;
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, #1e4035 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .abstract-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+
+  .shape-1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-sage);
+    top: -200px;
+    right: -100px;
+  }
+
+  .shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-terracotta);
+    bottom: -100px;
+    left: -50px;
+  }
+
+  .dot-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-terracotta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  .hero-map {
+    position: relative;
+    z-index: 1;
+  }
+
+  .map-visual {
+    padding: 2rem;
+  }
+
+  .australia-outline {
+    width: 100%;
+    height: auto;
+    color: white;
+  }
+
+  .location-dot {
+    fill: var(--color-terracotta);
+    filter: drop-shadow(0 0 8px rgba(196, 112, 75, 0.6));
+    animation: pulse 2s infinite;
+  }
+
+  .location-dot.melbourne {
+    fill: var(--color-sage);
+    filter: drop-shadow(0 0 10px rgba(139, 168, 136, 0.8));
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Section Styles */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-badge {
+    display: inline-block;
+    background: var(--color-sand);
+    color: var(--color-eucalyptus);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 1rem;
+  }
+
+  .section-header p {
+    color: #666;
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Featured Locations */
+  .featured-locations {
+    padding: 6rem 0;
+    background: var(--color-sand);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .featured-card {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+
+  .featured-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  }
+
+  .featured-card .card-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+  }
+
+  .featured-card .card-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .featured-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.25rem;
+  }
+
+  .featured-card .state {
+    color: var(--color-terracotta);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .featured-card .description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .featured-card .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .delivery-time {
+    font-size: 0.875rem;
+    color: #888;
+  }
+
+  .card-link {
+    color: var(--color-eucalyptus);
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  .featured-card:hover .card-link {
+    color: var(--color-terracotta);
+  }
+
+  .featured-card .card-bg {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: var(--color-sand);
+    border-radius: 50%;
+    opacity: 0.5;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-card:hover .card-bg {
+    transform: scale(1.2);
+  }
+
+  /* All Locations */
+  .all-locations {
+    padding: 6rem 0;
+    background: white;
+  }
+
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .location-card {
+    background: var(--color-sand);
+    padding: 2rem;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .location-card:hover {
+    background: var(--color-eucalyptus);
+    transform: translateY(-5px);
+  }
+
+  .location-card .card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .location-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+  }
+
+  .location-card:hover h3 {
+    color: white;
+  }
+
+  .location-card .state {
+    color: var(--color-terracotta);
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    transition: color 0.3s ease;
+  }
+
+  .location-card:hover .state {
+    color: var(--color-sand);
+  }
+
+  .location-card .description {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .location-card:hover .description {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .location-card .card-meta {
+    margin-bottom: 1rem;
+  }
+
+  .location-card .delivery-time {
+    transition: color 0.3s ease;
+  }
+
+  .location-card:hover .delivery-time {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .location-card .card-link {
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+  }
+
+  .location-card:hover .card-link {
+    color: white;
+  }
+
+  /* Info Section */
+  .info-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, white 0%, var(--color-sand) 100%);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .info-content h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 1rem;
+  }
+
+  .info-content > p {
+    color: #666;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-list li {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .info-list .icon {
+    width: 32px;
+    height: 32px;
+    background: var(--color-eucalyptus);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+  }
+
+  .info-list strong {
+    display: block;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.25rem;
+  }
+
+  .info-list p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .info-visual {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .visual-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+
+  .visual-card:first-child {
+    grid-column: span 2;
+    background: var(--color-eucalyptus);
+    color: white;
+  }
+
+  .visual-card:first-child h3 {
+    color: white;
+  }
+
+  .visual-card:first-child p {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .visual-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .visual-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.5rem;
+  }
+
+  .visual-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 6rem 0;
+    background: var(--color-sand);
+  }
+
+  .cta-card {
+    position: relative;
+    background: var(--color-eucalyptus);
+    padding: 4rem;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta-content p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-terracotta);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #b3613e;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .btn-lg {
+    padding: 1.125rem 2.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .cta-bg .abstract-shape {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .cta-bg .shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    right: -100px;
+  }
+
+  .cta-bg .shape-2 {
+    width: 250px;
+    height: 250px;
+    bottom: -80px;
+    left: -50px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero .container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero p {
+      margin: 0 auto;
+    }
+
+    .hero-map {
+      display: none;
+    }
+
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .locations-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 140px 0 80px;
+    }
+
+    .locations-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .info-visual {
+      grid-template-columns: 1fr;
+    }
+
+    .visual-card:first-child {
+      grid-column: span 1;
+    }
+
+    .cta-card {
+      padding: 3rem 2rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+  }
+</style>

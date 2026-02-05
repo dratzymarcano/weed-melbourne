@@ -1,0 +1,1123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+
+const title = "Cannabis Edibles Australia | CBD Gummies & THC Gummies | Where Can I Buy Edibles";
+const description = "Where can I buy edibles in Australia? Right here. CBD gummies Australia, THC gummies, hemp gummies & chocolates. Lab-tested edibles with discreet delivery Australia-wide.";
+
+const products = [
+  // Gummies
+  {
+    slug: "premium-thc-gummies-10mg",
+    name: "Premium THC Gummies 10mg",
+    type: "Gummies",
+    thc: "10mg per gummy",
+    price: 350,
+    description: "Our most popular edible. Perfect balance of potency and taste. Ideal for relaxation and euphoria.",
+    effects: ["Relaxed", "Happy", "Euphoric"],
+    flavour: "Mixed Berry, Citrus",
+    weight: "100 Pack"
+  },
+  {
+    slug: "thc-sleep-gummies",
+    name: "THC Sleep Gummies",
+    type: "Gummies",
+    thc: "15mg per gummy",
+    price: 450,
+    description: "THC gummies with melatonin for restful sleep. Fall asleep faster and wake refreshed.",
+    effects: ["Sleepy", "Relaxed", "Calm"],
+    flavour: "Lavender, Berry",
+    weight: "100 Pack"
+  },
+  {
+    slug: "strongest-thc-gummies-25mg",
+    name: "Strongest THC Gummies 25mg",
+    type: "Gummies",
+    thc: "25mg per gummy",
+    price: 505,
+    description: "High potency gummies for experienced users. Maximum strength with long-lasting effects.",
+    effects: ["Intense", "Euphoric", "Relaxed"],
+    flavour: "Tropical, Mango",
+    weight: "100 Pack"
+  },
+  {
+    slug: "cannabis-gummy-bears",
+    name: "Cannabis Gummy Bears",
+    type: "Gummies",
+    thc: "5mg per gummy",
+    price: 280,
+    description: "Classic gummy bear shape with 5mg THC each. Perfect for micro-dosing beginners.",
+    effects: ["Mild", "Happy", "Relaxed"],
+    flavour: "Mixed Fruit",
+    weight: "100 Pack"
+  },
+  // Chocolates
+  {
+    slug: "thc-chocolate-bar-dark",
+    name: "THC Dark Chocolate Bar",
+    type: "Chocolate",
+    thc: "100mg total",
+    price: 230,
+    description: "Premium dark chocolate with 100mg total THC. 10 breakable squares at 10mg each.",
+    effects: ["Relaxed", "Euphoric", "Happy"],
+    flavour: "Rich Dark Chocolate",
+    weight: "100g Bar"
+  },
+  {
+    slug: "thc-white-chocolate-bar",
+    name: "White Chocolate THC Bar",
+    type: "Chocolate",
+    thc: "100mg total",
+    price: 245,
+    description: "Creamy white chocolate with 100mg THC. Smooth, sweet, and potent.",
+    effects: ["Euphoric", "Relaxed", "Blissful"],
+    flavour: "Creamy Vanilla",
+    weight: "100g Bar"
+  },
+  {
+    slug: "thc-milk-chocolate-truffles",
+    name: "THC Milk Chocolate Truffles",
+    type: "Chocolate",
+    thc: "15mg each",
+    price: 180,
+    description: "Gourmet milk chocolate truffles with ganache centre. 6-pack at 15mg each.",
+    effects: ["Euphoric", "Happy", "Relaxed"],
+    flavour: "Milk Chocolate, Hazelnut",
+    weight: "6 Pack"
+  },
+  // Baked Goods
+  {
+    slug: "cannabis-brownie",
+    name: "Cannabis Brownie",
+    type: "Baked Goods",
+    thc: "50mg",
+    price: 250,
+    description: "Classic fudgy brownie with 50mg THC. Rich chocolate flavour with potent effects.",
+    effects: ["Relaxed", "Happy", "Hungry"],
+    flavour: "Fudge, Chocolate",
+    weight: "Single"
+  },
+  {
+    slug: "sativa-thc-cookies",
+    name: "Sativa THC Cookies",
+    type: "Baked Goods",
+    thc: "25mg each",
+    price: 220,
+    description: "Energising cannabis cookies, 25mg THC each. Perfect for daytime creativity.",
+    effects: ["Energetic", "Creative", "Uplifted"],
+    flavour: "Chocolate Chip",
+    weight: "4 Pack"
+  },
+  // Drinks
+  {
+    slug: "thc-lemonade",
+    name: "THC Lemonade",
+    type: "Drinks",
+    thc: "50mg",
+    price: 220,
+    description: "Refreshing cannabis lemonade, 50mg THC per bottle. Fast-acting and delicious.",
+    effects: ["Uplifted", "Happy", "Refreshed"],
+    flavour: "Lemon, Citrus",
+    weight: "250ml"
+  },
+  {
+    slug: "thc-cola",
+    name: "THC Cola",
+    type: "Drinks",
+    thc: "25mg",
+    price: 180,
+    description: "Classic cola taste infused with 25mg THC. Fizzy and fun.",
+    effects: ["Happy", "Relaxed", "Euphoric"],
+    flavour: "Cola",
+    weight: "330ml"
+  },
+  // Candy
+  {
+    slug: "thc-hard-candies",
+    name: "THC Hard Candies",
+    type: "Candy",
+    thc: "10mg each",
+    price: 220,
+    description: "Long-lasting THC candies, 10mg each. Assorted flavours for discreet consumption.",
+    effects: ["Relaxed", "Happy", "Calm"],
+    flavour: "Assorted Fruit",
+    weight: "20 Pack"
+  },
+  {
+    slug: "thc-caramels",
+    name: "THC Caramels",
+    type: "Candy",
+    thc: "20mg each",
+    price: 220,
+    description: "Soft and chewy THC caramels, 20mg each. Rich, buttery taste.",
+    effects: ["Relaxed", "Euphoric", "Happy"],
+    flavour: "Salted Caramel",
+    weight: "10 Pack"
+  },
+  // Honey
+  {
+    slug: "thc-infused-honey",
+    name: "THC Infused Honey",
+    type: "Honey",
+    thc: "500mg total",
+    price: 330,
+    description: "Premium cannabis honey, 500mg THC per jar. Add to tea, food, or enjoy directly.",
+    effects: ["Relaxed", "Soothing", "Versatile"],
+    flavour: "Pure Honey",
+    weight: "250g Jar"
+  }
+];
+
+const categories = [
+  { name: "THC Gummies", count: 4, href: "#gummies" },
+  { name: "Chocolates", count: 3, href: "#chocolates" },
+  { name: "Baked Goods", count: 2, href: "#baked-goods" },
+  { name: "Drinks", count: 2, href: "#drinks" },
+  { name: "Candy", count: 2, href: "#candy" },
+  { name: "Honey", count: 1, href: "#honey" }
+];
+
+const getCardMeta = (slug: string, fallbackPrice: number) => {
+  const productData = getProductBySlug(slug);
+  const canonicalSlug = productData?.slug ?? slug;
+  return {
+    price: productData ? getMinPrice(productData.basePrice, productData.category) : fallbackPrice,
+    reviewCount: getReviewCount(canonicalSlug),
+    reviewRating: getReviewRating(canonicalSlug),
+  };
+};
+
+const gummiesProducts = products.filter(p => p.type === "Gummies");
+const chocolateProducts = products.filter(p => p.type === "Chocolate");
+const bakedProducts = products.filter(p => p.type === "Baked Goods");
+const drinksProducts = products.filter(p => p.type === "Drinks");
+const candyProducts = products.filter(p => p.type === "Candy");
+const honeyProducts = products.filter(p => p.type === "Honey");
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">CBD Gummies Australia — THC Edibles Near Me</span>
+          <h1>Cannabis Edibles That Actually Deliver</h1>
+          <p>Looking for CBD gummies Australia or hemp gummies that actually work? Done with homemade edibles that either do nothing or put you on the floor for 8 hours? Our lab-tested THC gummies, chocolates, and treats give you exactly what you expect — every single time. Precise dosing, actual quality, and discreet edibles delivery Australia-wide.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Edible Types</h3>
+              <div class="type-info">
+                <div class="type-item">
+                  <span class="type-badge gummies">Gummies</span>
+                  <p>Precise dosing, delicious flavours. Most popular choice.</p>
+                </div>
+                <div class="type-item">
+                  <span class="type-badge chocolate">Chocolate</span>
+                  <p>Gourmet chocolates. Rich, indulgent, and potent.</p>
+                </div>
+                <div class="type-item">
+                  <span class="type-badge baked">Baked Goods</span>
+                  <p>Classic brownies and cookies. Comfort food with effects.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Need Help?</h3>
+              <p>Not sure which edible is right for you? Our team can help you find the perfect match.</p>
+              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <div class="shop-products">
+            <!-- Gummies Section -->
+            <div class="product-section" id="gummies">
+              <h2 class="section-title">
+                <span class="type-badge gummies">Gummies</span>
+                THC Gummies
+              </h2>
+              <p class="section-desc">Premium cannabis gummies with precise dosing. Our most popular edible category.</p>
+              <div class="products-grid">
+                {gummiesProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge gummies">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Chocolates Section -->
+            <div class="product-section" id="chocolates">
+              <h2 class="section-title">
+                <span class="type-badge chocolate">Chocolate</span>
+                Cannabis Chocolates
+              </h2>
+              <p class="section-desc">Gourmet THC chocolates in dark, milk, and white varieties.</p>
+              <div class="products-grid">
+                {chocolateProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge chocolate">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="9" y1="21" x2="9" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Baked Goods Section -->
+            <div class="product-section" id="baked-goods">
+              <h2 class="section-title">
+                <span class="type-badge baked">Baked</span>
+                Baked Goods
+              </h2>
+              <p class="section-desc">Classic cannabis brownies and cookies. Comfort food with powerful effects.</p>
+              <div class="products-grid">
+                {bakedProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge baked">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="8" cy="10" r="1"/>
+                        <circle cx="16" cy="10" r="1"/>
+                        <circle cx="10" cy="14" r="1"/>
+                        <circle cx="14" cy="14" r="1"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Drinks Section -->
+            <div class="product-section" id="drinks">
+              <h2 class="section-title">
+                <span class="type-badge drinks">Drinks</span>
+                Cannabis Drinks
+              </h2>
+              <p class="section-desc">THC-infused beverages for fast-acting, refreshing effects.</p>
+              <div class="products-grid">
+                {drinksProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge drinks">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M8 2h8l-1 18H9L8 2z"/>
+                        <path d="M6 6h12"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Candy Section -->
+            <div class="product-section" id="candy">
+              <h2 class="section-title">
+                <span class="type-badge candy">Candy</span>
+                THC Candies
+              </h2>
+              <p class="section-desc">Hard candies and caramels for long-lasting, discreet consumption.</p>
+              <div class="products-grid">
+                {candyProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge candy">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M7.5 4.5l-3 3 3 3"/>
+                        <path d="M16.5 4.5l3 3-3 3"/>
+                        <rect x="6" y="10" width="12" height="8" rx="4"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Honey Section -->
+            <div class="product-section" id="honey">
+              <h2 class="section-title">
+                <span class="type-badge honey">Honey</span>
+                THC Honey
+              </h2>
+              <p class="section-desc">Cannabis-infused honey for drinks, food, or direct consumption.</p>
+              <div class="products-grid">
+                {honeyProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge honey">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2C7 2 4 6 4 10c0 2.5 1 4.5 3 6v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4c2-1.5 3-3.5 3-6 0-4-3-8-8-8z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="section info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+              </svg>
+            </div>
+            <h3>Precise Dosing</h3>
+            <p>Every edible contains an exact amount of THC for consistent, predictable effects.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h3>Long-Lasting</h3>
+            <p>Edibles provide 4-8 hours of effects, much longer than smoking or vaping.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3>Discreet</h3>
+            <p>No smoke, no smell. Enjoy cannabis anywhere with complete discretion.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+
+  /* Shop Layout */
+  .shop-section {
+    background: var(--color-bg);
+  }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a {
+    border-bottom: none;
+  }
+
+  .category-list li a:hover {
+    color: var(--color-primary);
+  }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  /* Type Info */
+  .type-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .type-item {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .type-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .type-item p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  .type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .type-badge.gummies {
+    background: #f59e0b20;
+    color: #d97706;
+  }
+
+  .type-badge.chocolate {
+    background: #78350f20;
+    color: #78350f;
+  }
+
+  .type-badge.baked {
+    background: #ea580c20;
+    color: #ea580c;
+  }
+
+  .type-badge.drinks {
+    background: #0891b220;
+    color: #0891b2;
+  }
+
+  .type-badge.candy {
+    background: #ec489920;
+    color: #db2777;
+  }
+
+  .type-badge.honey {
+    background: #ca8a0420;
+    color: #ca8a04;
+  }
+
+  /* Product Section */
+  .product-section {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .product-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Product Card */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+  }
+
+  .product-badge.gummies {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.chocolate {
+    background: #78350f;
+    color: white;
+  }
+
+  .product-badge.baked {
+    background: #ea580c;
+    color: white;
+  }
+
+  .product-badge.drinks {
+    background: #0891b2;
+    color: white;
+  }
+
+  .product-badge.candy {
+    background: #ec4899;
+    color: white;
+  }
+
+  .product-badge.honey {
+    background: #ca8a04;
+    color: white;
+  }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+    position: relative;
+  }
+
+  .product-image svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.7;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc {
+    font-weight: 700;
+    color: #2d5a3f;
+  }
+
+  .product-meta .weight {
+    color: #888;
+  }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-flavour {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover {
+    background: #2d5a3f;
+    transform: translateY(-1px);
+  }
+
+  /* Info Section */
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    margin: 0 auto var(--space-md);
+  }
+
+  .info-card h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .info-card p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .shop-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Navigate to product detail page
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

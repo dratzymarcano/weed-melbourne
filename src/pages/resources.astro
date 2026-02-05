@@ -1,0 +1,709 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "Cannabis Resources Australia | Is Weed Legal? Cannabis Laws & Guides | Mullaways";
+const description = "Cannabis resources for Australians. Is weed legal in Australia? Marijuana law by state, buy cannabinoids safely, strain guides & health info. Best cannabis clinic Australia resources.";
+
+const resources = [
+  {
+    title: "Therapeutic Goods Administration (TGA)",
+    description: "Official information about medicinal cannabis regulation, the Special Access Scheme, and Authorized Prescribers.",
+    url: "https://www.tga.gov.au/medicinal-cannabis",
+    category: "Government",
+    icon: "🏛️"
+  },
+  {
+    title: "Australian Register of Therapeutic Goods",
+    description: "Search for approved therapeutic goods including cannabis-based medicines.",
+    url: "https://www.tga.gov.au/resources/artg",
+    category: "Government",
+    icon: "📋"
+  },
+  {
+    title: "Health Direct Australia",
+    description: "Australian government health information about cannabis, its effects, and associated risks.",
+    url: "https://www.healthdirect.gov.au/cannabis",
+    category: "Health Information",
+    icon: "🏥"
+  },
+  {
+    title: "Alcohol and Drug Foundation",
+    description: "Evidence-based information about cannabis, its effects, and support resources.",
+    url: "https://adf.org.au/drug-facts/cannabis/",
+    category: "Health Information",
+    icon: "📚"
+  },
+  {
+    title: "Medicinal Cannabis Industry Australia",
+    description: "Industry body representing medicinal cannabis companies in Australia.",
+    url: "https://www.medicinalcannabis.org.au/",
+    category: "Industry",
+    icon: "🌿"
+  },
+  {
+    title: "Pain Australia",
+    description: "Information about chronic pain management, including cannabis-based treatments.",
+    url: "https://www.painaustralia.org.au/",
+    category: "Health Information",
+    icon: "💪"
+  },
+  {
+    title: "Lambert Initiative (University of Sydney)",
+    description: "Leading cannabinoid research at the University of Sydney.",
+    url: "https://www.sydney.edu.au/lambert/",
+    category: "Research",
+    icon: "🔬"
+  },
+  {
+    title: "Epilepsy Foundation Australia",
+    description: "Information about using CBD for epilepsy management.",
+    url: "https://epilepsyfoundation.org.au/",
+    category: "Health Information",
+    icon: "🧠"
+  }
+];
+
+const categories = [...new Set(resources.map(r => r.category))];
+
+const faqs = [
+  {
+    question: "What types of products are available?",
+    answer: "We offer a wide range of cannabis products including flowers, oils, edibles, and vapes. All products are lab-tested for quality and potency."
+  },
+  {
+    question: "How long does delivery take?",
+    answer: "Most orders are dispatched within 24 hours. Delivery typically takes 2-5 business days depending on your location within Australia."
+  },
+  {
+    question: "Can I drive after using cannabis products?",
+    answer: "No. In Australia, it's illegal to drive with any detectable THC in your system. CBD-only products may be an exception, but always check your state's laws."
+  }
+];
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="abstract-shape shape-1"></div>
+        <div class="abstract-shape shape-2"></div>
+        <div class="dot-pattern"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-badge">📚 Learn More</span>
+          <h1>Resources & <span class="text-gradient">Information</span></h1>
+          <p>Trusted resources to help you learn about cannabis in Australia.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources Grid -->
+    {categories.map((category) => (
+      <section class="resources-section" id={category.toLowerCase().replace(' ', '-')}>
+        <div class="container">
+          <div class="section-header">
+            <span class="section-badge">{category}</span>
+            <h2>{category} Resources</h2>
+          </div>
+          <div class="resources-grid">
+            {resources.filter(r => r.category === category).map((resource) => (
+              <a href={resource.url} class="resource-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-icon">{resource.icon}</div>
+                <div class="card-content">
+                  <h3>{resource.title}</h3>
+                  <p>{resource.description}</p>
+                </div>
+                <div class="card-link">
+                  <span>Visit Resource</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- Quick Facts Section -->
+    <section class="facts-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Quick Facts</span>
+          <h2>Cannabis in Australia</h2>
+          <p>Key information about cannabis products and usage.</p>
+        </div>
+        <div class="facts-grid">
+          <div class="fact-card">
+            <div class="fact-number">100%</div>
+            <p>Lab-tested products for quality and safety</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-number">24hrs</div>
+            <p>Average order dispatch time</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-number">18+</div>
+            <p>Minimum age for purchasing</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-number">AUS</div>
+            <p>Australia-wide delivery available</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Preview -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="faq-wrapper">
+          <div class="faq-header">
+            <span class="section-badge">Common Questions</span>
+            <h2>Frequently Asked</h2>
+            <p>Quick answers to common questions about ordering.</p>
+          </div>
+          <div class="faq-list">
+            {faqs.map((faq) => (
+              <div class="faq-item">
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+          <a href="/faq" class="btn btn-primary">View All FAQs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section class="disclaimer-section">
+      <div class="container">
+        <div class="disclaimer-card">
+          <div class="disclaimer-icon">⚠️</div>
+          <div class="disclaimer-content">
+            <h3>Disclaimer</h3>
+            <p>
+              The resources listed above are provided for informational purposes only. Mullaways Medical Cannabis does not endorse or take responsibility for the content of external websites. Always verify information with official sources and use products responsibly.
+            </p>
+            <a href="/disclaimer" class="disclaimer-link">Read Full Disclaimer →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2>Ready to Get Started?</h2>
+            <p>Learn more about cannabis through our simple guides.</p>
+            <div class="cta-buttons">
+              <a href="/how-it-works" class="btn btn-primary btn-lg">How It Works</a>
+              <a href="/shop" class="btn btn-secondary btn-lg">Browse Products</a>
+            </div>
+          </div>
+          <div class="cta-bg">
+            <div class="abstract-shape shape-1"></div>
+            <div class="abstract-shape shape-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    position: relative;
+    padding: 160px 0 100px;
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, #1e4035 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .abstract-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+
+  .shape-1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-sage);
+    top: -200px;
+    right: -100px;
+  }
+
+  .shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-terracotta);
+    bottom: -100px;
+    left: -50px;
+  }
+
+  .dot-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-terracotta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.7;
+  }
+
+  /* Section Styles */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-badge {
+    display: inline-block;
+    background: var(--color-sand);
+    color: var(--color-eucalyptus);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 1rem;
+  }
+
+  .section-header p {
+    color: #666;
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Resources Sections */
+  .resources-section {
+    padding: 5rem 0;
+  }
+
+  .resources-section:nth-child(odd) {
+    background: white;
+  }
+
+  .resources-section:nth-child(even) {
+    background: var(--color-sand);
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .resource-card {
+    display: flex;
+    gap: 1.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    align-items: flex-start;
+  }
+
+  .resources-section:nth-child(odd) .resource-card {
+    background: var(--color-sand);
+  }
+
+  .resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .card-content {
+    flex-grow: 1;
+  }
+
+  .card-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-content p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .card-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-terracotta);
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .resource-card:hover .card-link {
+    color: var(--color-eucalyptus);
+  }
+
+  /* Facts Section */
+  .facts-section {
+    padding: 6rem 0;
+    background: var(--color-eucalyptus);
+  }
+
+  .facts-section .section-badge {
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+
+  .facts-section .section-header h2 {
+    color: white;
+  }
+
+  .facts-section .section-header p {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .fact-card {
+    background: rgba(255,255,255,0.1);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .fact-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-terracotta);
+    margin-bottom: 0.75rem;
+  }
+
+  .fact-card p {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    padding: 6rem 0;
+    background: white;
+  }
+
+  .faq-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .faq-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .faq-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-header p {
+    color: #666;
+    font-size: 1.125rem;
+  }
+
+  .faq-list {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .faq-item {
+    background: var(--color-sand);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .faq-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-item p {
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Disclaimer Section */
+  .disclaimer-section {
+    padding: 3rem 0;
+    background: var(--color-sand);
+  }
+
+  .disclaimer-card {
+    display: flex;
+    gap: 1.5rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    border-left: 4px solid var(--color-terracotta);
+  }
+
+  .disclaimer-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .disclaimer-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.75rem;
+  }
+
+  .disclaimer-content p {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .disclaimer-link {
+    color: var(--color-terracotta);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .disclaimer-link:hover {
+    color: var(--color-eucalyptus);
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 6rem 0;
+    background: white;
+  }
+
+  .cta-card {
+    position: relative;
+    background: var(--color-eucalyptus);
+    padding: 4rem;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta-content p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-terracotta);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #b3613e;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .btn-lg {
+    padding: 1.125rem 2.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .cta-bg .abstract-shape {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .cta-bg .shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    right: -100px;
+  }
+
+  .cta-bg .shape-2 {
+    width: 250px;
+    height: 250px;
+    bottom: -80px;
+    left: -50px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .resources-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .facts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 140px 0 80px;
+    }
+
+    .facts-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .fact-card {
+      padding: 1.5rem;
+    }
+
+    .fact-number {
+      font-size: 2rem;
+    }
+
+    .resource-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .disclaimer-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cta-card {
+      padding: 3rem 2rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+  }
+</style>

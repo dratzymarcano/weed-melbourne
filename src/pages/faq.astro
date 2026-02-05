@@ -1,0 +1,638 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "Cannabis FAQ Australia | How to Buy Weed Online | Dispensary Near Me Questions";
+const description = "Questions about buying weed online in Australia? How much does weed cost? Is cannabis legal? Are THC gummies legal? Get real answers about ordering, delivery & more.";
+
+const faqCategories = [
+  {
+    id: "ordering",
+    name: "Ordering & Delivery",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="22" height="18" rx="2" ry="2"/><line x1="1" y1="9" x2="23" y2="9"/></svg>`,
+    questions: [
+      {
+        q: "How do I buy weed online in Australia?",
+        a: "It's simple: browse our products, add what you want to your cart, and checkout. Enter your shipping details, choose payment (we accept cards and bank transfer), and you're done. You'll get a confirmation email straight away, plus tracking once your order ships. Most Aussies receive their order within 2-5 business days."
+      },
+      {
+        q: "How much does weed cost in Australia?",
+        a: "Prices vary by product and quantity. Our flower starts from around $180-280 per ounce depending on strain. THC gummies range from $350-660 per 100-pack. Concentrates and vapes vary. Check individual product pages for exact pricing. We're upfront about costs - no hidden fees."
+      },
+      {
+        q: "Is there a minimum order to buy weed?",
+        a: "Nope, no minimum order. Buy what you need, when you need it. Orders over $150 get free shipping Australia-wide, which most customers hit easily."
+      },
+      {
+        q: "How long does weed delivery take?",
+        a: "We ship express Australia-wide. Sydney, Melbourne, Brisbane, and major cities usually receive orders in 2-3 business days. Regional areas and Perth/Darwin can take 4-6 days. You get full tracking so you always know where your package is."
+      },
+      {
+        q: "Is my cannabis order shipped discreetly?",
+        a: "100%. Plain packaging, no logos, no indication of what's inside. The return address is generic, and our billing descriptions are discreet too. We've been doing this for years - your privacy matters to us."
+      },
+      {
+        q: "Can I track my weed order?",
+        a: "Absolutely. Once your order ships, you get tracking via email and SMS. You can follow your package from our warehouse straight to your door."
+      }
+    ]
+  },
+  {
+    id: "products",
+    name: "Products & Pricing",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    questions: [
+      {
+        q: "Are your THC gummies lab-tested?",
+        a: "Every single product is independently lab-tested for potency, purity, and safety. We test for THC/CBD content, pesticides, heavy metals, and microbial contamination. Lab reports are available on each product page. We don't sell anything we haven't verified ourselves."
+      },
+      {
+        q: "What are the strongest THC gummies you sell?",
+        a: "Our Ultra Strength gummies pack 50mg THC per piece - that's serious. We also have 25mg options. These are for experienced users only. If you're new, start with our 5-10mg options and work your way up. Trust us, you can always take more, but you can't take less."
+      },
+      {
+        q: "What's the difference between THC and CBD?",
+        a: "THC gets you high - it's psychoactive and great for relaxation, pain relief, and sleep. CBD doesn't get you high but may help with anxiety, inflammation, and general wellness. Many of our products combine both for balanced effects. Your call which works best for your situation."
+      },
+      {
+        q: "Which strain should I choose - indica, sativa, or hybrid?",
+        a: "Quick guide: Indica = relaxation and sleep (use at night). Sativa = energy and focus (use during the day). Hybrid = somewhere in between. That said, everyone's different. Our product descriptions explain what to expect from each strain."
+      },
+      {
+        q: "Do you sell CBD gummies or hemp gummies?",
+        a: "We focus primarily on THC products, but many of our edibles include CBD for balanced effects. If you're after CBD-only products, check our product descriptions for THC:CBD ratios."
+      }
+    ]
+  },
+  {
+    id: "legal",
+    name: "Legal & Safety",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+    questions: [
+      {
+        q: "Is weed legal in Australia?",
+        a: "It's complicated. Medical cannabis is legal with a prescription. Recreational cannabis is decriminalized in the ACT (you can possess up to 50g and grow 2 plants for personal use). Other states vary - some have diversion programs, others are stricter. We recommend understanding your local laws."
+      },
+      {
+        q: "Are edibles legal in Australia?",
+        a: "Edibles containing THC are controlled substances in Australia. Medical cannabis edibles are legal with a valid prescription. The ACT has decriminalized personal possession. Laws vary by state, so check your local regulations."
+      },
+      {
+        q: "Are THC gummies legal in Australia?",
+        a: "THC products are generally controlled substances in Australia. Medical cannabis (including THC) is legal with a valid prescription. Laws are evolving, and we encourage customers to stay informed about regulations in their state."
+      },
+      {
+        q: "What are the cannabis laws in Queensland (QLD)?",
+        a: "QLD has stricter cannabis laws than some states. Possession of any amount can result in charges, though first-time offenders may be eligible for drug diversion programs. Medical cannabis is available with a prescription."
+      },
+      {
+        q: "Can I drive after using cannabis?",
+        a: "No, absolutely not. It's illegal to drive with any detectable THC in Australia, and it can stay in your system for days. Don't risk it - plan ahead. We take this seriously and so should you."
+      },
+      {
+        q: "How old do I need to be to buy weed?",
+        a: "18 years or older, no exceptions. We verify age during checkout. This isn't negotiable."
+      },
+      {
+        q: "Is my information kept private?",
+        a: "Yes. Bank-level encryption on all transactions, plain packaging, and we never sell or share your data. Your business is your business."
+      }
+    ]
+  },
+  {
+    id: "account",
+    name: "Account & Support",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    questions: [
+      {
+        q: "Do I need an account to buy weed online?",
+        a: "Nope, guest checkout is available. But an account makes things easier - saved addresses, order history, faster checkout next time. Up to you."
+      },
+      {
+        q: "Can I change or cancel my order?",
+        a: "Within 2 hours of placing it, yes. After that, orders are already being processed for shipping. If you need to make changes, contact us ASAP - we'll do what we can."
+      },
+      {
+        q: "What's your return policy?",
+        a: "Unopened products can be returned within 14 days. Once opened, we can't accept returns for obvious reasons. If there's an issue with your order, reach out - we make things right."
+      },
+      {
+        q: "How do I find a cannabis dispensary near me?",
+        a: "You just did! We're an online dispensary that delivers Australia-wide. No need to search 'weed shop near me' anymore. Order online and we bring the dispensary to your doorstep - Sydney, Melbourne, Brisbane, Perth, Adelaide, or anywhere else."
+      }
+    ]
+  }
+];
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Support</span>
+          <h1>Frequently Asked Questions</h1>
+          <p>Find answers to common questions about ordering, products, and more.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <section class="category-nav">
+      <div class="container">
+        <div class="nav-grid">
+          {faqCategories.map(cat => (
+            <a href={`#${cat.id}`} class="nav-item">
+              <span class="nav-icon" set:html={cat.icon}></span>
+              <span class="nav-text">{cat.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="section faq-content">
+      <div class="container">
+        {faqCategories.map((category, catIndex) => (
+          <div class="faq-category" id={category.id}>
+            <div class="category-header">
+              <div class="category-icon" set:html={category.icon}></div>
+              <h2>{category.name}</h2>
+            </div>
+            
+            <div class="faq-list">
+              {category.questions.map((faq, index) => (
+                <div class="faq-item" data-index={`${catIndex}-${index}`}>
+                  <button class="faq-question" aria-expanded="false">
+                    <span class="faq-q">{faq.q}</span>
+                    <span class="faq-toggle">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"/>
+                      </svg>
+                    </span>
+                  </button>
+                  <div class="faq-answer">
+                    <p>{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="section contact-section">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-content">
+            <h2>Still Have Questions?</h2>
+            <p>Our team is here to help. Reach out and we'll get back to you as soon as possible.</p>
+            <div class="contact-actions">
+              <a href="mailto:hello@mullawaysmedicalcannabis.com.au" class="btn btn-primary btn-large">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="M22 6L12 13L2 6"/>
+                </svg>
+                Email Us
+              </a>
+              <a href="/how-it-works" class="btn btn-outline btn-large">How It Works</a>
+            </div>
+          </div>
+          <div class="contact-visual">
+            <div class="visual-circle">
+              <span>?</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer') as HTMLElement;
+      
+      if (question && answer) {
+        question.addEventListener('click', () => {
+          const isOpen = item.classList.contains('is-open');
+          
+          // Close all other items
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('is-open');
+              const otherQuestion = otherItem.querySelector('.faq-question');
+              if (otherQuestion) {
+                otherQuestion.setAttribute('aria-expanded', 'false');
+              }
+            }
+          });
+          
+          // Toggle current item
+          item.classList.toggle('is-open');
+          question.setAttribute('aria-expanded', (!isOpen).toString());
+        });
+      }
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('.nav-item').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = (link as HTMLAnchorElement).getAttribute('href');
+        if (href) {
+          const target = document.querySelector(href);
+          if (target) {
+            const offset = 100;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  /* ========== Page Hero ========== */
+  .page-hero {
+    position: relative;
+    padding: calc(var(--header-height) + var(--space-4xl)) 0 var(--space-3xl);
+    background: linear-gradient(165deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -100px;
+    left: -50px;
+  }
+
+  .hero-content {
+    max-width: 640px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: var(--color-terracotta-light);
+  }
+
+  .section-label-light::before {
+    background: var(--color-terracotta-light);
+  }
+
+  .page-hero h1 {
+    color: var(--color-white);
+    font-size: clamp(2.25rem, 5vw, 3rem);
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+
+  /* ========== Category Navigation ========== */
+  .category-nav {
+    background: var(--color-white);
+    padding: var(--space-xl) 0;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 50;
+  }
+
+  .nav-grid {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 12px 20px;
+    background: var(--color-bg);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+    transition: all var(--transition-base);
+    border: 1px solid transparent;
+  }
+
+  .nav-item:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .nav-icon {
+    display: flex;
+    color: var(--color-primary);
+  }
+
+  .nav-item:hover .nav-icon {
+    color: var(--color-white);
+  }
+
+  /* ========== FAQ Content ========== */
+  .faq-content {
+    background: var(--color-bg);
+  }
+
+  .faq-category {
+    max-width: 800px;
+    margin: 0 auto var(--space-4xl);
+    scroll-margin-top: calc(var(--header-height) + 100px);
+  }
+
+  .faq-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .category-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 90, 74, 0.08);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+  }
+
+  .category-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .faq-item {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-primary);
+  }
+
+  .faq-item.is-open {
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text);
+    transition: background var(--transition-fast);
+  }
+
+  .faq-question:hover {
+    background: var(--color-bg);
+  }
+
+  .faq-q {
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    border-radius: 50%;
+    color: var(--color-primary);
+    transition: all var(--transition-base);
+  }
+
+  .faq-item.is-open .faq-toggle {
+    background: var(--color-primary);
+    color: var(--color-white);
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-base);
+  }
+
+  .faq-item.is-open .faq-answer {
+    max-height: 500px;
+  }
+
+  .faq-answer p {
+    padding: 0 var(--space-lg) var(--space-lg);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  /* ========== Contact Section ========== */
+  .contact-section {
+    background: var(--color-white);
+  }
+
+  .contact-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-3xl);
+    align-items: center;
+    padding: var(--space-3xl);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .contact-content h2 {
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+  }
+
+  .contact-content p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .contact-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .contact-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .visual-circle {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+
+  .visual-circle span {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* ========== Responsive ========== */
+  @media (max-width: 1024px) {
+    .contact-card {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .contact-visual {
+      display: none;
+    }
+
+    .contact-actions {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl);
+    }
+
+    .category-nav {
+      position: static;
+    }
+
+    .nav-grid {
+      gap: var(--space-sm);
+    }
+
+    .nav-item {
+      padding: 10px 16px;
+      font-size: 0.85rem;
+    }
+
+    .nav-text {
+      display: none;
+    }
+
+    .nav-icon {
+      margin: 0;
+    }
+
+    .category-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .faq-question {
+      padding: var(--space-md);
+    }
+
+    .faq-answer p {
+      padding: 0 var(--space-md) var(--space-md);
+    }
+
+    .contact-card {
+      padding: var(--space-2xl);
+    }
+
+    .contact-actions {
+      flex-direction: column;
+    }
+
+    .contact-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

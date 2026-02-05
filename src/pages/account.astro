@@ -1,0 +1,539 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="My Cannabis Account | Order History | Mullaways Medical Cannabis" description="Manage your cannabis orders, track deliveries, and update account details. Buy weed online Australia with Mullaways Medical Cannabis.">
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">My Account</span>
+          <h1>Account Dashboard</h1>
+          <p>Manage your orders, preferences, and account details</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Account Section -->
+    <section class="section account-section">
+      <div class="container">
+        <div class="account-layout">
+          <!-- Sidebar -->
+          <aside class="account-sidebar">
+            <nav class="account-nav">
+              <a href="#orders" class="nav-link active" data-tab="orders">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="3" width="22" height="18" rx="2" ry="2"/>
+                  <line x1="1" y1="9" x2="23" y2="9"/>
+                </svg>
+                Orders
+              </a>
+              <a href="#details" class="nav-link" data-tab="details">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+                Account Details
+              </a>
+              <a href="#addresses" class="nav-link" data-tab="addresses">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Addresses
+              </a>
+              <a href="#preferences" class="nav-link" data-tab="preferences">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                Preferences
+              </a>
+            </nav>
+          </aside>
+
+          <!-- Main Content -->
+          <div class="account-content">
+            <!-- Orders Tab -->
+            <div class="tab-content active" id="orders">
+              <div class="content-header">
+                <h2>Order History</h2>
+                <p>View and track your recent orders</p>
+              </div>
+              
+              <div class="empty-state">
+                <div class="empty-icon">📦</div>
+                <h3>No orders yet</h3>
+                <p>When you place an order, it will appear here for you to track and manage.</p>
+                <a href="/shop" class="btn btn-primary">Start Shopping</a>
+              </div>
+            </div>
+
+            <!-- Account Details Tab -->
+            <div class="tab-content" id="details">
+              <div class="content-header">
+                <h2>Account Details</h2>
+                <p>Update your personal information</p>
+              </div>
+              
+              <form class="account-form" id="account-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                  <label for="dob">Date of Birth</label>
+                  <input type="date" id="dob" name="dob">
+                  <p class="form-hint">You must be 18+ to purchase cannabis products</p>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+              </form>
+            </div>
+
+            <!-- Addresses Tab -->
+            <div class="tab-content" id="addresses">
+              <div class="content-header">
+                <h2>Saved Addresses</h2>
+                <p>Manage your shipping addresses</p>
+              </div>
+              
+              <div class="empty-state">
+                <div class="empty-icon">🏠</div>
+                <h3>No addresses saved</h3>
+                <p>Add a shipping address to speed up checkout.</p>
+                <button class="btn btn-primary" id="add-address-btn">Add Address</button>
+              </div>
+            </div>
+
+            <!-- Preferences Tab -->
+            <div class="tab-content" id="preferences">
+              <div class="content-header">
+                <h2>Preferences</h2>
+                <p>Manage your account preferences</p>
+              </div>
+              
+              <div class="preferences-list">
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <h4>Email Notifications</h4>
+                    <p>Receive order updates and shipping notifications</p>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <h4>Marketing Emails</h4>
+                    <p>Get updates about new products and promotions</p>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <h4>SMS Notifications</h4>
+                    <p>Receive text messages for delivery updates</p>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.125rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Account Section */
+  .account-section {
+    background: var(--color-bg);
+  }
+
+  .account-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .account-sidebar {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  .account-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .account-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--color-text-light);
+    transition: all var(--transition-fast);
+  }
+
+  .account-nav .nav-link:hover {
+    background: var(--color-bg-alt);
+    color: var(--color-primary);
+  }
+
+  .account-nav .nav-link.active {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  /* Content Area */
+  .account-content {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    min-height: 500px;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .content-header {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .content-header h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .content-header p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .empty-state h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .empty-state p {
+    max-width: 400px;
+    margin: 0 auto var(--space-xl);
+    color: var(--color-text-muted);
+  }
+
+  /* Form Styles */
+  .account-form {
+    max-width: 500px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-lg);
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: border-color var(--transition-fast);
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .form-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+    margin-bottom: 0;
+  }
+
+  /* Preferences */
+  .preferences-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .preference-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg);
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+  }
+
+  .preference-info h4 {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .preference-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Toggle Switch */
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+  }
+
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-border-dark);
+    transition: var(--transition-fast);
+    border-radius: var(--radius-full);
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: var(--transition-fast);
+    border-radius: 50%;
+  }
+
+  .toggle input:checked + .toggle-slider {
+    background-color: var(--color-primary);
+  }
+
+  .toggle input:checked + .toggle-slider:before {
+    transform: translateX(22px);
+  }
+
+  @media (max-width: 900px) {
+    .account-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .account-sidebar {
+      position: static;
+    }
+
+    .account-nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .account-nav .nav-link {
+      flex: 1;
+      min-width: 100px;
+      justify-content: center;
+      font-size: 0.875rem;
+    }
+
+    .account-nav .nav-link svg {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .preference-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+  }
+</style>
+
+<script>
+  // Tab switching
+  const navLinks = document.querySelectorAll('.account-nav .nav-link');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabId = (e.currentTarget as HTMLElement).dataset.tab;
+      
+      // Update active nav link
+      navLinks.forEach(l => l.classList.remove('active'));
+      (e.currentTarget as HTMLElement).classList.add('active');
+      
+      // Show corresponding tab content
+      tabContents.forEach(content => {
+        if (content.id === tabId) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    });
+  });
+
+  // Form submission
+  document.getElementById('account-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Account details saved! (Demo functionality)');
+  });
+
+  // Add address button
+  document.getElementById('add-address-btn')?.addEventListener('click', () => {
+    alert('Address form coming soon! (Demo functionality)');
+  });
+</script>

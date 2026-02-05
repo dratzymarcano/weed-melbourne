@@ -1,0 +1,999 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+
+const title = "THC Concentrates Australia | Buy Cannabis Wax, Shatter & Dabs Online";
+const description = "Looking for THC concentrates in Australia? Buy wax, shatter, live resin & rosin. Lab-tested extracts for dabbing. No bunk product — just clean, potent concentrates.";
+
+const products = [
+  // Shatter
+  {
+    name: "OG Kush Shatter",
+    slug: "og-kush-shatter",
+    type: "Shatter",
+    thc: "80-85%",
+    price: 265,
+    description: "Glass-like consistency with classic OG Kush flavour. Clean, potent, and perfect for dabbing.",
+    effects: ["Euphoric", "Relaxed", "Happy"],
+    flavour: "Earthy, Pine, Woody",
+    weight: "7g"
+  },
+  {
+    name: "Girl Scout Cookies Shatter",
+    slug: "girl-scout-cookies-shatter",
+    type: "Shatter",
+    thc: "82-87%",
+    price: 280,
+    description: "Premium shatter with sweet, minty undertones. Amber clarity with exceptional potency.",
+    effects: ["Euphoric", "Creative", "Relaxed"],
+    flavour: "Sweet, Mint, Earthy",
+    weight: "7g"
+  },
+  {
+    name: "Blue Dream Shatter",
+    slug: "blue-dream-shatter",
+    type: "Shatter",
+    thc: "78-83%",
+    price: 265,
+    description: "Sativa-dominant shatter with berry sweetness. Uplifting effects ideal for daytime use.",
+    effects: ["Uplifted", "Creative", "Happy"],
+    flavour: "Berry, Sweet, Herbal",
+    weight: "7g"
+  },
+  {
+    name: "Gorilla Glue Shatter",
+    slug: "gorilla-glue-shatter",
+    type: "Shatter",
+    thc: "85-90%",
+    price: 295,
+    description: "Extremely potent shatter with diesel notes. Heavy-hitting for experienced users.",
+    effects: ["Relaxed", "Euphoric", "Sleepy"],
+    flavour: "Pine, Diesel, Earthy",
+    weight: "7g"
+  },
+  // Wax
+  {
+    name: "Sour Diesel Wax",
+    slug: "sour-diesel-wax",
+    type: "Wax",
+    thc: "75-80%",
+    price: 250,
+    description: "Soft, malleable wax with pungent diesel aroma. Energising sativa effects.",
+    effects: ["Energetic", "Creative", "Uplifted"],
+    flavour: "Diesel, Citrus, Earthy",
+    weight: "7g"
+  },
+  {
+    name: "Purple Punch Wax",
+    slug: "purple-punch-wax",
+    type: "Wax",
+    thc: "78-82%",
+    price: 260,
+    description: "Smooth indica wax with grape candy sweetness. Perfect for evening relaxation.",
+    effects: ["Relaxed", "Sleepy", "Happy"],
+    flavour: "Grape, Berry, Sweet",
+    weight: "7g"
+  },
+  {
+    name: "Wedding Cake Wax",
+    slug: "wedding-cake-wax",
+    type: "Wax",
+    thc: "80-85%",
+    price: 270,
+    description: "Creamy, smooth wax with rich vanilla notes. Balanced hybrid effects.",
+    effects: ["Relaxed", "Euphoric", "Creative"],
+    flavour: "Vanilla, Sweet, Earthy",
+    weight: "7g"
+  },
+  {
+    name: "Gelato Wax",
+    slug: "gelato-wax",
+    type: "Wax",
+    thc: "77-82%",
+    price: 265,
+    description: "Dessert-like wax with sweet citrus profile. Smooth, balanced high.",
+    effects: ["Relaxed", "Euphoric", "Happy"],
+    flavour: "Sweet, Citrus, Berry",
+    weight: "7g"
+  },
+  // Live Resin
+  {
+    name: "Zkittlez Live Resin",
+    slug: "zkittlez-live-resin",
+    type: "Live Resin",
+    thc: "72-78%",
+    price: 315,
+    description: "Fresh-frozen extraction preserving full terpene profile. Tropical candy explosion.",
+    effects: ["Happy", "Relaxed", "Creative"],
+    flavour: "Tropical, Berry, Candy",
+    weight: "7g"
+  },
+  {
+    name: "Jack Herer Live Resin",
+    slug: "jack-herer-live-resin",
+    type: "Live Resin",
+    thc: "70-75%",
+    price: 305,
+    description: "Premium live resin with pine and spice notes. Cerebral, energising effects.",
+    effects: ["Energetic", "Creative", "Focused"],
+    flavour: "Pine, Spicy, Herbal",
+    weight: "7g"
+  },
+  {
+    name: "Northern Lights Live Resin",
+    slug: "northern-lights-live-resin",
+    type: "Live Resin",
+    thc: "74-79%",
+    price: 315,
+    description: "Classic indica in live resin form. Sweet, earthy with deep relaxation.",
+    effects: ["Relaxed", "Sleepy", "Euphoric"],
+    flavour: "Sweet, Earthy, Pine",
+    weight: "7g"
+  },
+  {
+    name: "Durban Poison Live Resin",
+    slug: "durban-poison-live-resin",
+    type: "Live Resin",
+    thc: "73-78%",
+    price: 325,
+    description: "Pure sativa live resin with sweet, spicy aroma. Uplifting and energetic.",
+    effects: ["Energetic", "Uplifted", "Happy"],
+    flavour: "Sweet, Spicy, Pine",
+    weight: "7g"
+  },
+  // Rosin
+  {
+    name: "Bubba Kush Rosin",
+    slug: "bubba-kush-rosin",
+    type: "Rosin",
+    thc: "70-75%",
+    price: 330,
+    description: "Solventless press with coffee and chocolate notes. Pure, clean extraction.",
+    effects: ["Relaxed", "Sleepy", "Happy"],
+    flavour: "Coffee, Chocolate, Earthy",
+    weight: "7g"
+  },
+  {
+    name: "Super Lemon Haze Rosin",
+    slug: "super-lemon-haze-rosin",
+    type: "Rosin",
+    thc: "68-73%",
+    price: 325,
+    description: "Solventless rosin with zesty lemon profile. Clean, energising effects.",
+    effects: ["Happy", "Energetic", "Uplifted"],
+    flavour: "Lemon, Citrus, Sweet",
+    weight: "7g"
+  },
+  {
+    name: "Ice Cream Cake Rosin",
+    slug: "ice-cream-cake-rosin",
+    type: "Rosin",
+    thc: "72-77%",
+    price: 350,
+    description: "Premium solventless extract with creamy vanilla sweetness. Heavy indica effects.",
+    effects: ["Relaxed", "Euphoric", "Sleepy"],
+    flavour: "Vanilla, Sweet, Creamy",
+    weight: "7g"
+  },
+  {
+    name: "GMO Cookies Rosin",
+    slug: "gmo-cookies-rosin",
+    type: "Rosin",
+    thc: "75-80%",
+    price: 365,
+    description: "Pungent, garlic-forward rosin with extreme potency. For experienced users only.",
+    effects: ["Relaxed", "Euphoric", "Hungry"],
+    flavour: "Garlic, Diesel, Earthy",
+    weight: "7g"
+  },
+  // Diamonds
+  {
+    name: "THC-A Diamonds - OG Kush",
+    slug: "thc-a-diamonds-og-kush",
+    type: "Diamonds",
+    thc: "95-99%",
+    price: 400,
+    description: "Pure crystalline THC-A with terpene sauce. Maximum potency for connoisseurs.",
+    effects: ["Euphoric", "Relaxed", "Happy"],
+    flavour: "Earthy, Pine, Woody",
+    weight: "7g"
+  },
+  {
+    name: "THC-A Diamonds - Strawberry Cough",
+    slug: "thc-a-diamonds-strawberry-cough",
+    type: "Diamonds",
+    thc: "96-99%",
+    price: 415,
+    description: "Crystal clear diamonds with strawberry terpene sauce. Uplifting and potent.",
+    effects: ["Uplifted", "Happy", "Creative"],
+    flavour: "Strawberry, Sweet, Herbal",
+    weight: "7g"
+  }
+];
+
+const categories = [
+  { name: "Shatter", count: 4, href: "#shatter" },
+  { name: "Wax", count: 4, href: "#wax" },
+  { name: "Live Resin", count: 4, href: "#live-resin" },
+  { name: "Rosin", count: 4, href: "#rosin" },
+  { name: "Diamonds", count: 2, href: "#diamonds" }
+];
+
+const shatterProducts = products.filter(p => p.type === "Shatter");
+const waxProducts = products.filter(p => p.type === "Wax");
+const liveResinProducts = products.filter(p => p.type === "Live Resin");
+const rosinProducts = products.filter(p => p.type === "Rosin");
+const diamondProducts = products.filter(p => p.type === "Diamonds");
+
+const getCardMeta = (slug: string, fallbackPrice: number) => {
+  const productData = getProductBySlug(slug);
+  const canonicalSlug = productData?.slug ?? slug;
+  return {
+    price: productData ? getMinPrice(productData.basePrice, productData.category) : fallbackPrice,
+    reviewCount: getReviewCount(canonicalSlug),
+    reviewRating: getReviewRating(canonicalSlug),
+  };
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Buy THC Concentrates Australia</span>
+          <h1>Concentrates for People Who Know What They Want</h1>
+          <p>Flower tolerance through the roof? We've got you. Our concentrates are lab-tested for potency and purity — no mystery solvents, no cut product. Shatter, wax, live resin, rosin, and diamonds from 70-95% THC. If you know, you know.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Concentrate Types</h3>
+              <div class="type-info">
+                <div class="type-item">
+                  <strong>Shatter</strong>
+                  <p>Glass-like, stable consistency. Easy to handle and dose.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Wax</strong>
+                  <p>Soft, pliable texture. Great flavour retention.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Live Resin</strong>
+                  <p>Fresh-frozen extraction. Full terpene profile.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Rosin</strong>
+                  <p>Solventless press. Pure and clean.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Diamonds</strong>
+                  <p>Crystalline THC-A. Maximum potency.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Need Help?</h3>
+              <p>New to concentrates? Our team can help you find the right product.</p>
+              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <div class="shop-products">
+            <!-- Shatter Section -->
+            <div class="product-section" id="shatter">
+              <h2 class="section-title">
+                <span class="type-badge shatter">Shatter</span>
+                Shatter
+              </h2>
+              <p class="section-desc">Glass-like concentrates with high potency and clean flavour profiles.</p>
+              <div class="products-grid">
+                {shatterProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge shatter">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Wax Section -->
+            <div class="product-section" id="wax">
+              <h2 class="section-title">
+                <span class="type-badge wax">Wax</span>
+                Wax
+              </h2>
+              <p class="section-desc">Soft, pliable concentrates with excellent terpene retention.</p>
+              <div class="products-grid">
+                {waxProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge wax">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Live Resin Section -->
+            <div class="product-section" id="live-resin">
+              <h2 class="section-title">
+                <span class="type-badge live-resin">Live Resin</span>
+                Live Resin
+              </h2>
+              <p class="section-desc">Fresh-frozen extraction preserving the full spectrum of cannabinoids and terpenes.</p>
+              <div class="products-grid">
+                {liveResinProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge live-resin">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Rosin Section -->
+            <div class="product-section" id="rosin">
+              <h2 class="section-title">
+                <span class="type-badge rosin">Rosin</span>
+                Rosin
+              </h2>
+              <p class="section-desc">Solventless extracts made with heat and pressure. Pure and natural.</p>
+              <div class="products-grid">
+                {rosinProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge rosin">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Diamonds Section -->
+            <div class="product-section" id="diamonds">
+              <h2 class="section-title">
+                <span class="type-badge diamonds">Diamonds</span>
+                THC Diamonds
+              </h2>
+              <p class="section-desc">Crystalline THC-A with terpene sauce. Maximum potency for connoisseurs.</p>
+              <div class="products-grid">
+                {diamondProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge diamonds">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+
+  /* Shop Layout */
+  .shop-section {
+    background: var(--color-bg);
+  }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a {
+    border-bottom: none;
+  }
+
+  .category-list li a:hover {
+    color: var(--color-primary);
+  }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  .type-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .type-item {
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .type-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .type-item strong {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+  }
+
+  .type-item p {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+  }
+
+  /* Product Section */
+  .product-section {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Type Badges */
+  .type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .type-badge.shatter, .product-badge.shatter {
+    background: #f59e0b20;
+    color: #d97706;
+  }
+
+  .product-badge.shatter {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .type-badge.wax, .product-badge.wax {
+    background: #8b5cf620;
+    color: #7c3aed;
+  }
+
+  .product-badge.wax {
+    background: #8b5cf6;
+    color: white;
+  }
+
+  .type-badge.live-resin, .product-badge.live-resin {
+    background: #10b98120;
+    color: #059669;
+  }
+
+  .product-badge.live-resin {
+    background: #10b981;
+    color: white;
+  }
+
+  .type-badge.rosin, .product-badge.rosin {
+    background: #ec489920;
+    color: #db2777;
+  }
+
+  .product-badge.rosin {
+    background: #ec4899;
+    color: white;
+  }
+
+  .type-badge.diamonds, .product-badge.diamonds {
+    background: #3b82f620;
+    color: #2563eb;
+  }
+
+  .product-badge.diamonds {
+    background: #3b82f6;
+    color: white;
+  }
+
+  /* Product Card - Updated Design */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+    position: relative;
+  }
+
+  .product-image svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.7;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc {
+    font-weight: 700;
+    color: #2d5a3f;
+  }
+
+  .product-meta .weight {
+    color: #888;
+  }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover {
+    background: #2d5a3f;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1024px) {
+    .shop-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Navigate to product detail page
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

@@ -1,0 +1,131 @@
+---
+
+---
+
+<section class="section legal-info">
+  <div class="container">
+    <div class="content-grid">
+      <div class="content-image">
+        <div class="image-placeholder">
+          <span>✅</span>
+          <p>Lab-Tested Quality Guaranteed</p>
+        </div>
+      </div>
+      <div class="content-text">
+        <span class="section-label">NO BS QUALITY</span>
+        <h2>Premium Weed — Not Premium Prices</h2>
+        <p>
+          Here's the thing: good cannabis shouldn't require a second mortgage. We've cut out the middlemen, the fancy storefronts, and the marketing fluff. What's left? Quality product at prices that make sense.
+        </p>
+        <p>
+          Based in Mullaways, NSW, we're not some faceless corporation. We're Aussies who got tired of the industry BS and decided to do something about it. Every product is lab-tested — because you deserve to know exactly what you're putting in your body.
+        </p>
+        <p>
+          What you get when you order from us:
+        </p>
+        <ul class="compliance-list">
+          <li>Actual lab results — THC/CBD content, purity testing, the works</li>
+          <li>Transparent pricing — no "contact us" games, prices are on the page</li>
+          <li>Age verification (18+) — we don't cut corners on this</li>
+          <li>Discreet shipping with full tracking — your business, not your neighbours'</li>
+          <li>Support from humans who actually know the products</li>
+        </ul>
+        <p>
+          <a href="/how-it-works" class="text-link">See how it works →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .legal-info {
+    background: var(--color-bg);
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .content-text h2 {
+    color: var(--color-primary);
+    margin-bottom: 25px;
+  }
+
+  .content-text p {
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .content-text a.text-link {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .content-text a.text-link:hover {
+    color: var(--color-primary);
+  }
+
+  .compliance-list {
+    margin: 20px 0 30px 20px;
+  }
+
+  .compliance-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .compliance-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: bold;
+  }
+
+  .image-placeholder {
+    background: linear-gradient(135deg, #27ae60 0%, #1a472a 100%);
+    border-radius: 12px;
+    padding: 60px;
+    text-align: center;
+    color: var(--color-white);
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-placeholder span {
+    font-size: 6rem;
+    margin-bottom: 20px;
+  }
+
+  .image-placeholder p {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 992px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .image-placeholder {
+      min-height: 300px;
+      padding: 40px;
+    }
+
+    .image-placeholder span {
+      font-size: 4rem;
+    }
+  }
+</style>

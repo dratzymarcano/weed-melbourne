@@ -1,0 +1,1058 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+
+const title = "THC Vapes Australia | CBD Vape Pens Near Me | Buy Cannabis Vapes Online";
+const description = "Buy THC vapes & CBD vapes in Australia. Vape pens, cartridges & disposables. Looking for a cannabis vape near me? Lab-tested, discreet delivery Australia-wide.";
+
+const products = [
+  // THC Cartridges
+  {
+    slug: "premium-thc-vape-cartridge-og-kush",
+    name: "Premium THC Vape Cartridge - OG Kush",
+    type: "Cartridge",
+    thc: "85%",
+    price: 375,
+    description: "Premium distillate cartridge with natural OG Kush terpenes. Smooth, potent, and flavorful.",
+    effects: ["Relaxed", "Euphoric", "Sleepy"],
+    flavour: "Earthy, Pine, Woody",
+    weight: "5 Pack"
+  },
+  {
+    slug: "premium-thc-vape-cartridge-blue-dream",
+    name: "Premium THC Vape Cartridge - Blue Dream",
+    type: "Cartridge",
+    thc: "82%",
+    price: 375,
+    description: "Sativa-dominant hybrid cartridge with sweet berry flavours. Uplifting and creative effects.",
+    effects: ["Creative", "Uplifted", "Happy"],
+    flavour: "Berry, Sweet, Herbal",
+    weight: "5 Pack"
+  },
+  {
+    slug: "thc-vape-cartridge-sour-diesel",
+    name: "THC Vape Cartridge - Sour Diesel",
+    type: "Cartridge",
+    thc: "84%",
+    price: 375,
+    description: "Energising sativa cartridge with diesel and citrus notes. Perfect for daytime use.",
+    effects: ["Energetic", "Focused", "Uplifted"],
+    flavour: "Diesel, Citrus, Pungent",
+    weight: "5 Pack"
+  },
+  {
+    slug: "thc-vape-cartridge-girl-scout-cookies",
+    name: "THC Vape Cartridge - Girl Scout Cookies",
+    type: "Cartridge",
+    thc: "86%",
+    price: 400,
+    description: "Sweet, earthy hybrid with potent effects. One of our top sellers in Australia.",
+    effects: ["Euphoric", "Relaxed", "Creative"],
+    flavour: "Sweet, Earthy, Mint",
+    weight: "5 Pack"
+  },
+  {
+    slug: "thc-vape-cartridge-granddaddy-purple",
+    name: "THC Vape Cartridge - Granddaddy Purple",
+    type: "Cartridge",
+    thc: "80%",
+    price: 375,
+    description: "Classic indica with grape and berry flavours. Deep relaxation and sleep support.",
+    effects: ["Sleepy", "Relaxed", "Happy"],
+    flavour: "Grape, Berry, Sweet",
+    weight: "5 Pack"
+  },
+  {
+    slug: "thc-vape-cartridge-wedding-cake",
+    name: "THC Vape Cartridge - Wedding Cake",
+    type: "Cartridge",
+    thc: "84%",
+    price: 385,
+    description: "Indica-leaning hybrid with vanilla cake notes. Rich flavour with relaxing effects.",
+    effects: ["Relaxed", "Euphoric", "Happy"],
+    flavour: "Vanilla, Sweet, Earthy",
+    weight: "5 Pack"
+  },
+  {
+    slug: "thc-vape-cartridge-gelato",
+    name: "THC Vape Cartridge - Gelato",
+    type: "Cartridge",
+    thc: "83%",
+    price: 380,
+    description: "Dessert-strain cartridge with creamy, fruity notes. Balanced euphoria and relaxation.",
+    effects: ["Euphoric", "Creative", "Relaxed"],
+    flavour: "Creamy, Fruity, Sweet",
+    weight: "5 Pack"
+  },
+  // Disposables
+  {
+    slug: "disposable-thc-vape-pen-gelato",
+    name: "Disposable THC Vape Pen - Gelato",
+    type: "Disposable",
+    thc: "80%",
+    price: 250,
+    description: "All-in-one disposable vape pen. No charging needed. Sweet, dessert-like flavour profile.",
+    effects: ["Relaxed", "Happy", "Euphoric"],
+    flavour: "Gelato, Sweet, Creamy",
+    weight: "5 Pack"
+  },
+  {
+    slug: "disposable-thc-vape-pen-gorilla-glue",
+    name: "Disposable THC Vape Pen - Gorilla Glue",
+    type: "Disposable",
+    thc: "85%",
+    price: 250,
+    description: "Powerful indica-dominant disposable. Pine and earthy flavours with heavy relaxation.",
+    effects: ["Heavy", "Relaxed", "Sleepy"],
+    flavour: "Pine, Earthy, Diesel",
+    weight: "5 Pack"
+  },
+  {
+    slug: "disposable-thc-vape-pen-jack-herer",
+    name: "Disposable THC Vape Pen - Jack Herer",
+    type: "Disposable",
+    thc: "78%",
+    price: 250,
+    description: "Energising sativa disposable with pine and spice notes. Great for creativity and focus.",
+    effects: ["Focused", "Creative", "Energetic"],
+    flavour: "Pine, Spice, Citrus",
+    weight: "5 Pack"
+  },
+  {
+    slug: "disposable-thc-vape-pen-pineapple-express",
+    name: "Disposable THC Vape Pen - Pineapple Express",
+    type: "Disposable",
+    thc: "82%",
+    price: 260,
+    description: "Tropical sativa disposable with pineapple and citrus. Euphoric, uplifting effects.",
+    effects: ["Uplifted", "Happy", "Energetic"],
+    flavour: "Pineapple, Citrus, Tropical",
+    weight: "5 Pack"
+  },
+  {
+    slug: "disposable-thc-vape-pen-northern-lights",
+    name: "Disposable THC Vape Pen - Northern Lights",
+    type: "Disposable",
+    thc: "79%",
+    price: 250,
+    description: "Classic indica disposable for nighttime use. Sweet, earthy with deep relaxation.",
+    effects: ["Sleepy", "Relaxed", "Calm"],
+    flavour: "Sweet, Earthy, Herbal",
+    weight: "5 Pack"
+  },
+  {
+    slug: "disposable-thc-vape-pen-zkittlez",
+    name: "Disposable THC Vape Pen - Zkittlez",
+    type: "Disposable",
+    thc: "81%",
+    price: 260,
+    description: "Candy-flavoured indica disposable. Fruity sweetness with calming body effects.",
+    effects: ["Relaxed", "Happy", "Calm"],
+    flavour: "Candy, Fruity, Sweet",
+    weight: "5 Pack"
+  },
+  // Live Resin
+  {
+    slug: "live-resin-cartridge-wedding-cake",
+    name: "Live Resin Cartridge - Wedding Cake",
+    type: "Live Resin",
+    thc: "78%",
+    price: 460,
+    description: "Premium live resin extraction preserving full terpene profile. Rich, complex flavour.",
+    effects: ["Euphoric", "Relaxed", "Creative"],
+    flavour: "Vanilla, Tangy, Earthy",
+    weight: "5 Pack"
+  },
+  {
+    slug: "live-resin-cartridge-zkittlez",
+    name: "Live Resin Cartridge - Zkittlez",
+    type: "Live Resin",
+    thc: "76%",
+    price: 460,
+    description: "Fruity live resin with candy-like sweetness. Indica-dominant for relaxation.",
+    effects: ["Relaxed", "Happy", "Euphoric"],
+    flavour: "Candy, Tropical, Sweet",
+    weight: "5 Pack"
+  },
+  {
+    slug: "live-resin-cartridge-super-lemon-haze",
+    name: "Live Resin Cartridge - Super Lemon Haze",
+    type: "Live Resin",
+    thc: "74%",
+    price: 460,
+    description: "Zesty citrus live resin sativa. Uplifting, energetic, and perfect for daytime.",
+    effects: ["Energetic", "Uplifted", "Creative"],
+    flavour: "Lemon, Citrus, Sweet",
+    weight: "5 Pack"
+  },
+  {
+    slug: "live-resin-cartridge-gmo-cookies",
+    name: "Live Resin Cartridge - GMO Cookies",
+    type: "Live Resin",
+    thc: "80%",
+    price: 485,
+    description: "Pungent, garlic-forward live resin with extreme potency. Heavy indica effects.",
+    effects: ["Heavy", "Relaxed", "Sleepy"],
+    flavour: "Garlic, Diesel, Earthy",
+    weight: "5 Pack"
+  },
+  {
+    slug: "live-resin-cartridge-durban-poison",
+    name: "Live Resin Cartridge - Durban Poison",
+    type: "Live Resin",
+    thc: "75%",
+    price: 470,
+    description: "Pure sativa live resin with sweet, spicy notes. Energising and uplifting.",
+    effects: ["Energetic", "Focused", "Uplifted"],
+    flavour: "Sweet, Spicy, Anise",
+    weight: "5 Pack"
+  },
+  // Accessories
+  {
+    slug: "510-thread-battery-adjustable-voltage",
+    name: "510 Thread Battery - Adjustable Voltage",
+    type: "Accessory",
+    thc: "N/A",
+    price: 35,
+    description: "Universal 510-thread battery with adjustable voltage settings. Compact and discreet.",
+    effects: ["Accessory"],
+    flavour: "N/A",
+    weight: "650mAh"
+  },
+  {
+    slug: "premium-vape-battery-variable-wattage",
+    name: "Premium Vape Battery - Variable Wattage",
+    type: "Accessory",
+    thc: "N/A",
+    price: 55,
+    description: "Advanced battery with digital display and variable wattage. Longer lasting 1100mAh.",
+    effects: ["Accessory"],
+    flavour: "N/A",
+    weight: "1100mAh"
+  },
+  {
+    slug: "vape-pen-case-discreet-carrying",
+    name: "Vape Pen Case - Discreet Carrying",
+    type: "Accessory",
+    thc: "N/A",
+    price: 25,
+    description: "Smell-proof carrying case for your vape pen and cartridges. Holds 3 cartridges.",
+    effects: ["Accessory"],
+    flavour: "N/A",
+    weight: "N/A"
+  }
+];
+
+const categories = [
+  { name: "All Vapes", count: products.length, href: "#all" },
+  { name: "THC Cartridges", count: products.filter(p => p.type === "Cartridge").length, href: "#cartridges" },
+  { name: "Disposable Vapes", count: products.filter(p => p.type === "Disposable").length, href: "#disposables" },
+  { name: "Live Resin", count: products.filter(p => p.type === "Live Resin").length, href: "#live-resin" },
+  { name: "Accessories", count: products.filter(p => p.type === "Accessory").length, href: "#accessories" }
+];
+
+const cartridgeProducts = products.filter(p => p.type === "Cartridge");
+const disposableProducts = products.filter(p => p.type === "Disposable");
+const liveResinProducts = products.filter(p => p.type === "Live Resin");
+const accessoryProducts = products.filter(p => p.type === "Accessory");
+
+const getCardMeta = (slug: string, fallbackPrice: number) => {
+  const productData = getProductBySlug(slug);
+  const canonicalSlug = productData?.slug ?? slug;
+  return {
+    price: productData ? getMinPrice(productData.basePrice, productData.category) : fallbackPrice,
+    reviewCount: getReviewCount(canonicalSlug),
+    reviewRating: getReviewRating(canonicalSlug),
+  };
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Cannabis Vape Near Me — THC Vapes Australia</span>
+          <h1>THC Vapes That Actually Hit Right</h1>
+          <p>Looking for a quality cannabis vape near me? We get it. Dodgy carts are everywhere. Our vapes are lab-tested for purity and potency — no vitamin E acetate, no mystery oil. Just clean, potent vapour in flavours you'll actually enjoy. Fast-acting, discreet, delivered Australia-wide.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Vape Types</h3>
+              <div class="type-info">
+                <div class="type-item">
+                  <span class="type-badge cartridge">Cartridge</span>
+                  <p>510-thread carts for reusable batteries.</p>
+                </div>
+                <div class="type-item">
+                  <span class="type-badge disposable">Disposable</span>
+                  <p>All-in-one, no charging needed.</p>
+                </div>
+                <div class="type-item">
+                  <span class="type-badge live-resin">Live Resin</span>
+                  <p>Premium full-spectrum terpene profile.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Need Help?</h3>
+              <p>Not sure which vape is right for you? Our team can help you find the perfect match.</p>
+              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <div class="shop-products">
+            <!-- Cartridges Section -->
+            <div class="product-section" id="cartridges">
+              <h2 class="section-title">
+                <span class="type-badge cartridge">Cartridge</span>
+                THC Cartridges
+              </h2>
+              <p class="section-desc">510-thread cartridges for use with reusable vape batteries. Premium distillate with natural terpenes.</p>
+              <div class="products-grid">
+                {cartridgeProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge cartridge">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="8" y="2" width="8" height="20" rx="2"/>
+                        <path d="M10 6h4"/>
+                        <path d="M10 10h4"/>
+                        <circle cx="12" cy="16" r="2"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Disposables Section -->
+            <div class="product-section" id="disposables">
+              <h2 class="section-title">
+                <span class="type-badge disposable">Disposable</span>
+                Disposable Vapes
+              </h2>
+              <p class="section-desc">All-in-one disposable vape pens. No charging, no refilling - just use and enjoy.</p>
+              <div class="products-grid">
+                {disposableProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge disposable">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="8" y="2" width="8" height="20" rx="2"/>
+                        <path d="M10 6h4"/>
+                        <path d="M10 10h4"/>
+                        <circle cx="12" cy="16" r="2"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Live Resin Section -->
+            <div class="product-section" id="live-resin">
+              <h2 class="section-title">
+                <span class="type-badge live-resin">Live Resin</span>
+                Live Resin Cartridges
+              </h2>
+              <p class="section-desc">Premium live resin extracted from fresh-frozen cannabis. Full terpene profile for the best flavour.</p>
+              <div class="products-grid">
+                {liveResinProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge live-resin">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="8" y="2" width="8" height="20" rx="2"/>
+                        <path d="M10 6h4"/>
+                        <path d="M10 10h4"/>
+                        <circle cx="12" cy="16" r="2"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Accessories Section -->
+            <div class="product-section" id="accessories">
+              <h2 class="section-title">
+                <span class="type-badge accessory">Accessory</span>
+                Vape Accessories
+              </h2>
+              <p class="section-desc">Batteries, cases, and accessories for your vaping needs.</p>
+              <div class="products-grid">
+                {accessoryProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge accessory">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="6" y="4" width="12" height="16" rx="2"/>
+                        <line x1="10" y1="1" x2="14" y2="1"/>
+                        <line x1="9" y1="8" x2="15" y2="8"/>
+                        <line x1="9" y1="12" x2="15" y2="12"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="section info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <h3>Fast Acting</h3>
+            <p>Effects within seconds. Perfect for immediate relief when you need it most.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                <path d="M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+            </div>
+            <h3>Discreet</h3>
+            <p>Minimal odour and compact design. Use anywhere without drawing attention.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3>Lab Tested</h3>
+            <p>All vape products tested for potency, purity, and safety standards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+
+  /* Shop Layout */
+  .shop-section {
+    background: var(--color-bg);
+  }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a {
+    border-bottom: none;
+  }
+
+  .category-list li a:hover {
+    color: var(--color-primary);
+  }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  /* Type Info */
+  .type-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .type-item {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .type-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .type-item p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  .type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .type-badge.cartridge {
+    background: #7c3aed20;
+    color: #7c3aed;
+  }
+
+  .type-badge.disposable {
+    background: #f5920020;
+    color: #d97706;
+  }
+
+  .type-badge.live-resin {
+    background: #10b98120;
+    color: #059669;
+  }
+
+  .type-badge.accessory {
+    background: #64748b20;
+    color: #475569;
+  }
+
+  /* Product Section */
+  .product-section {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .product-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Product Card */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+  }
+
+  .product-badge.cartridge {
+    background: #7c3aed;
+    color: white;
+  }
+
+  .product-badge.disposable {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.live-resin {
+    background: #10b981;
+    color: white;
+  }
+
+  .product-badge.accessory {
+    background: #64748b;
+    color: white;
+  }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+    position: relative;
+  }
+
+  .product-image svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.7;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc {
+    font-weight: 700;
+    color: #2d5a3f;
+  }
+
+  .product-meta .weight {
+    color: #888;
+  }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-flavour {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover {
+    background: #2d5a3f;
+    transform: translateY(-1px);
+  }
+
+  /* Info Section */
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    margin: 0 auto var(--space-md);
+  }
+
+  .info-card h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .info-card p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .shop-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Navigate to product detail page
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

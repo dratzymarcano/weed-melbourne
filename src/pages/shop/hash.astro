@@ -1,0 +1,797 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+
+const title = "Buy Hash Online Australia | Moroccan, Afghan & Bubble Hash Near Me";
+const description = "Buy hash online Australia. Traditional Moroccan, Afghan, Lebanese hashish & modern bubble hash. Looking for quality hash near me? Lab-tested, discreet delivery.";
+
+const products = [
+  // Traditional Hash
+  {
+    name: "Moroccan Gold Hash",
+    slug: "moroccan-gold-hash",
+    type: "Moroccan",
+    thc: "25-35%",
+    price: 260,
+    description: "Traditional Moroccan-style hash with golden colour and spicy, earthy aroma. Smooth, mellow high.",
+    effects: ["Relaxed", "Happy", "Euphoric"],
+    texture: "Soft, Pliable",
+    weight: "7g"
+  },
+  {
+    name: "Afghan Black Hash",
+    slug: "afghan-black-hash",
+    type: "Afghan",
+    thc: "30-40%",
+    price: 285,
+    description: "Dark, hand-pressed Afghan hash with intense earthy flavours. Potent indica effects.",
+    effects: ["Sedating", "Relaxed", "Heavy"],
+    texture: "Firm, Dense",
+    weight: "7g"
+  },
+  {
+    name: "Lebanese Red Hash",
+    slug: "lebanese-red-hash",
+    type: "Lebanese",
+    thc: "20-28%",
+    price: 250,
+    description: "Red-tinted Lebanese hash with sweet, spicy notes. Balanced, clear-headed effects.",
+    effects: ["Uplifted", "Relaxed", "Creative"],
+    texture: "Crumbly, Dry",
+    weight: "7g"
+  },
+  {
+    name: "Nepalese Temple Ball",
+    slug: "nepalese-temple-ball",
+    type: "Temple Ball",
+    thc: "35-45%",
+    price: 365,
+    description: "Hand-rolled temple ball aged for smoothness. Complex, earthy flavours with powerful effects.",
+    effects: ["Euphoric", "Meditative", "Deep"],
+    texture: "Sticky, Smooth",
+    weight: "7g"
+  },
+  {
+    name: "Pakistani Charas",
+    slug: "pakistani-charas",
+    type: "Charas",
+    thc: "30-38%",
+    price: 310,
+    description: "Traditional hand-rubbed charas from live plants. Incredibly aromatic with full-spectrum effects.",
+    effects: ["Relaxed", "Euphoric", "Spiritual"],
+    texture: "Sticky, Resinous",
+    weight: "7g"
+  },
+  // Bubble Hash
+  {
+    name: "Full Melt Bubble Hash - OG Kush",
+    slug: "full-melt-bubble-hash-og-kush",
+    type: "Bubble Hash",
+    thc: "55-65%",
+    price: 420,
+    description: "Ice water extracted full melt hash. Dabbable quality with OG Kush terpenes.",
+    effects: ["Euphoric", "Relaxed", "Happy"],
+    texture: "Greasy, Full Melt",
+    weight: "7g"
+  },
+  {
+    name: "Full Melt Bubble Hash - Blue Dream",
+    slug: "full-melt-bubble-hash-blue-dream",
+    type: "Bubble Hash",
+    thc: "50-60%",
+    price: 390,
+    description: "Premium bubble hash with berry sweetness. Clean, uplifting sativa effects.",
+    effects: ["Uplifted", "Creative", "Energetic"],
+    texture: "Greasy, Full Melt",
+    weight: "7g"
+  },
+  {
+    name: "Half Melt Bubble Hash - GDP",
+    slug: "half-melt-bubble-hash-gdp",
+    type: "Bubble Hash",
+    thc: "45-55%",
+    price: 310,
+    description: "Quality bubble hash from Granddaddy Purple. Grape notes with heavy relaxation.",
+    effects: ["Relaxed", "Sleepy", "Calm"],
+    texture: "Crumbly, Sand",
+    weight: "7g"
+  },
+  {
+    name: "Bubble Hash - Mixed Strain",
+    slug: "bubble-hash-mixed-strain",
+    type: "Bubble Hash",
+    thc: "40-50%",
+    price: 285,
+    description: "Affordable bubble hash blend from premium trim. Great value, solid effects.",
+    effects: ["Balanced", "Relaxed", "Happy"],
+    texture: "Crumbly, Sand",
+    weight: "7g"
+  },
+  // Dry Sift
+  {
+    name: "Dry Sift Kief - Girl Scout Cookies",
+    slug: "dry-sift-kief-girl-scout-cookies",
+    type: "Dry Sift",
+    thc: "50-60%",
+    price: 340,
+    description: "Fine-screened trichome heads from GSC. Perfect for topping bowls or pressing.",
+    effects: ["Euphoric", "Creative", "Relaxed"],
+    texture: "Fine Powder",
+    weight: "7g"
+  },
+  {
+    name: "Dry Sift Kief - Sour Diesel",
+    slug: "dry-sift-kief-sour-diesel",
+    type: "Dry Sift",
+    thc: "48-55%",
+    price: 310,
+    description: "Sativa-dominant dry sift with diesel fuel aroma. Energising and cerebral.",
+    effects: ["Energetic", "Creative", "Uplifted"],
+    texture: "Fine Powder",
+    weight: "7g"
+  },
+  {
+    name: "Dry Sift Kief - Northern Lights",
+    slug: "dry-sift-kief-northern-lights",
+    type: "Dry Sift",
+    thc: "52-58%",
+    price: 320,
+    description: "Pure indica dry sift for evening use. Sweet, earthy with deep relaxation.",
+    effects: ["Relaxed", "Sleepy", "Calm"],
+    texture: "Fine Powder",
+    weight: "7g"
+  },
+  // Pressed Hash
+  {
+    name: "Pressed Hash Coin - Gelato",
+    slug: "pressed-hash-coin-gelato",
+    type: "Pressed",
+    thc: "45-52%",
+    price: 285,
+    description: "Hydraulically pressed hash coin from Gelato kief. Sweet, dessert flavours.",
+    effects: ["Relaxed", "Euphoric", "Creative"],
+    texture: "Hard, Compressed",
+    weight: "7g"
+  },
+  {
+    name: "Pressed Hash Coin - Wedding Cake",
+    slug: "pressed-hash-coin-wedding-cake",
+    type: "Pressed",
+    thc: "48-55%",
+    price: 300,
+    description: "Dense pressed hash with vanilla cake notes. Rich, creamy, and potent.",
+    effects: ["Relaxed", "Happy", "Euphoric"],
+    texture: "Hard, Compressed",
+    weight: "7g"
+  },
+  {
+    name: "Pressed Hash Bar - Mixed",
+    slug: "pressed-hash-bar-mixed",
+    type: "Pressed",
+    thc: "42-48%",
+    price: 625,
+    description: "7g pressed hash bar from mixed premium strains. Excellent value for hash lovers.",
+    effects: ["Balanced", "Relaxed", "Versatile"],
+    texture: "Hard, Compressed",
+    weight: "14g"
+  }
+];
+
+const categories = [
+  { name: "Traditional Hash", count: 5, href: "#traditional" },
+  { name: "Bubble Hash", count: 4, href: "#bubble" },
+  { name: "Dry Sift Kief", count: 3, href: "#dry-sift" },
+  { name: "Pressed Hash", count: 3, href: "#pressed" }
+];
+
+const traditionalProducts = products.filter(p => ["Moroccan", "Afghan", "Lebanese", "Temple Ball", "Charas"].includes(p.type));
+const bubbleProducts = products.filter(p => p.type === "Bubble Hash");
+const drySiftProducts = products.filter(p => p.type === "Dry Sift");
+const pressedProducts = products.filter(p => p.type === "Pressed");
+
+const getCardMeta = (slug: string, fallbackPrice: number) => {
+  const productData = getProductBySlug(slug);
+  const canonicalSlug = productData?.slug ?? slug;
+  return {
+    price: productData ? getMinPrice(productData.basePrice, productData.category) : fallbackPrice,
+    reviewCount: getReviewCount(canonicalSlug),
+    reviewRating: getReviewRating(canonicalSlug),
+  };
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Buy Hash Online Australia</span>
+          <h1>Real Hashish for Old-School Smokers</h1>
+          <p>Remember when hash meant something? Traditional Moroccan gold, proper Afghan black, temple balls, and bubble hash — the way it's meant to be. If you're tired of all the new-school extracts and just want that classic hash experience, you're in the right place.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Hash Types</h3>
+              <div class="type-info">
+                <div class="type-item">
+                  <strong>Traditional</strong>
+                  <p>Classic hand-pressed hash from different regions.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Bubble Hash</strong>
+                  <p>Ice water extracted trichomes. Higher purity.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Dry Sift</strong>
+                  <p>Sieved trichome heads. Fine, potent powder.</p>
+                </div>
+                <div class="type-item">
+                  <strong>Pressed</strong>
+                  <p>Hydraulically pressed kief coins and bars.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>How to Use Hash</h3>
+              <p>Hash can be crumbled into joints, vaped at low temps, dabbed (full melt), or added to bowls.</p>
+              <a href="/faq" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <div class="shop-products">
+            <!-- Traditional Section -->
+            <div class="product-section" id="traditional">
+              <h2 class="section-title">Traditional Hash</h2>
+              <p class="section-desc">Authentic hand-pressed hashish from legendary growing regions around the world.</p>
+              <div class="products-grid">
+                {traditionalProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge traditional">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="6"/>
+                        <circle cx="12" cy="12" r="2"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-texture">
+                        <strong>Texture:</strong> {product.texture}
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Bubble Hash Section -->
+            <div class="product-section" id="bubble">
+              <h2 class="section-title">Bubble Hash</h2>
+              <p class="section-desc">Ice water extracted hash with superior purity and potency. Full melt options available.</p>
+              <div class="products-grid">
+                {bubbleProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge bubble">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="8" cy="10" r="2"/>
+                        <circle cx="16" cy="10" r="2"/>
+                        <circle cx="12" cy="15" r="2"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-texture">
+                        <strong>Texture:</strong> {product.texture}
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Dry Sift Section -->
+            <div class="product-section" id="dry-sift">
+              <h2 class="section-title">Dry Sift Kief</h2>
+              <p class="section-desc">Pure trichome heads sieved through fine screens. Perfect for topping bowls or pressing.</p>
+              <div class="products-grid">
+                {drySiftProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge dry-sift">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <line x1="4" y1="10" x2="20" y2="10"/>
+                        <line x1="10" y1="4" x2="10" y2="20"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-texture">
+                        <strong>Texture:</strong> {product.texture}
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Pressed Hash Section -->
+            <div class="product-section" id="pressed">
+              <h2 class="section-title">Pressed Hash</h2>
+              <p class="section-desc">Hydraulically pressed hash coins and bars. Dense, potent, and long-lasting.</p>
+              <div class="products-grid">
+                {pressedProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge pressed">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="6" y="4" width="12" height="16" rx="2"/>
+                        <line x1="6" y1="8" x2="18" y2="8"/>
+                        <line x1="6" y1="16" x2="18" y2="16"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-texture">
+                        <strong>Texture:</strong> {product.texture}
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 { width: 400px; height: 400px; top: -100px; right: -100px; }
+  .hero-shape-2 { width: 300px; height: 300px; bottom: -50px; left: -50px; }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light { color: rgba(255, 255, 255, 0.8); }
+  .page-hero h1 { color: white; margin-bottom: var(--space-md); }
+  .page-hero p { color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; }
+
+  .shop-section { background: var(--color-bg); }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 { font-size: 1rem; margin-bottom: var(--space-md); }
+
+  .category-list { list-style: none; padding: 0; margin: 0; }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a { border-bottom: none; }
+  .category-list li a:hover { color: var(--color-primary); }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  .type-info { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+  .type-item {
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .type-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .type-item strong { font-size: 0.9rem; color: var(--color-primary); }
+  .type-item p { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 2px; }
+
+  .product-section { margin-bottom: var(--space-3xl); }
+  .section-title { font-size: 1.5rem; margin-bottom: var(--space-sm); }
+  .section-desc { color: var(--color-text-muted); margin-bottom: var(--space-xl); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Product Card - Updated Design */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.traditional, .product-badge.Moroccan, .product-badge.Afghan, 
+  .product-badge.Lebanese, .product-badge.Charas {
+    background: #92400e;
+    color: white;
+  }
+
+  .product-badge.bubble, .product-badge.Bubble {
+    background: #0891b2;
+    color: white;
+  }
+
+  .product-badge.dry-sift, .product-badge.Dry {
+    background: #ca8a04;
+    color: white;
+  }
+
+  .product-badge.pressed, .product-badge.Pressed {
+    background: #7c3aed;
+    color: white;
+  }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+  }
+
+  .product-image svg { width: 72px; height: 72px; opacity: 0.7; }
+
+  .product-content { padding: 20px; }
+  .product-content h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc { font-weight: 700; color: #2d5a3f; }
+  .product-meta .weight { color: #888; }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #2d5a3f;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-texture {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price { font-size: 1.4rem; font-weight: 800; color: #1a1a1a; }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover { background: #2d5a3f; transform: translateY(-1px); }
+
+  @media (max-width: 1024px) {
+    .shop-layout { grid-template-columns: 1fr; }
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Navigate to product detail page
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

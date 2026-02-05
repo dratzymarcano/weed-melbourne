@@ -1,0 +1,1327 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../data/products';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { city: 'adelaide' },
+      props: { 
+        cityName: 'Adelaide', 
+        state: 'South Australia',
+        stateAbbr: 'SA',
+        deliveryTime: '3-5 business days',
+        description: 'Buy weed Adelaide - Premium cannabis delivery to Adelaide and throughout South Australia. Discreet shipping from Mullaways Medical Cannabis ensures your order arrives safely.',
+        icon: '🍷',
+        highlight: 'Buy Weed Adelaide SA',
+        keywords: ['buy weed adelaide', 'buying weed in adelaide', 'where to buy weed adelaide', 'cannabis dispensary adelaide']
+      }
+    },
+    {
+      params: { city: 'brisbane' },
+      props: { 
+        cityName: 'Brisbane', 
+        state: 'Queensland',
+        stateAbbr: 'QLD',
+        deliveryTime: '2-4 business days',
+        description: 'Buy weed Brisbane - Fast delivery of lab-tested cannabis to Brisbane and all QLD. Serving all Brisbane suburbs and regional Queensland from our Mullaways, NSW dispensary.',
+        icon: '☀️',
+        highlight: 'Buy Weed Brisbane QLD',
+        keywords: ['buy weed brisbane', 'where to buy weed in brisbane', 'cannabis dispensary brisbane', 'weed delivery brisbane']
+      }
+    },
+    {
+      params: { city: 'canberra' },
+      props: { 
+        cityName: 'Canberra', 
+        state: 'Australian Capital Territory',
+        stateAbbr: 'ACT',
+        deliveryTime: '2-4 business days',
+        description: 'Buy weed Canberra - Quick delivery of quality cannabis to Canberra and the ACT. Where to buy weed in Canberra? Mullaways Medical Cannabis delivers discreetly.',
+        icon: '🏛️',
+        highlight: 'Buy Weed Canberra ACT',
+        keywords: ['buy weed canberra', 'where to buy weed in canberra', 'buying weed in canberra', 'cannabis canberra']
+      }
+    },
+    {
+      params: { city: 'darwin' },
+      props: { 
+        cityName: 'Darwin', 
+        state: 'Northern Territory',
+        stateAbbr: 'NT',
+        deliveryTime: '4-6 business days',
+        description: 'Buy weed Darwin - Express cannabis shipping to Darwin and the Northern Territory. All orders shipped discreetly with full tracking from Mullaways Medical Cannabis.',
+        icon: '🐊',
+        highlight: 'Buy Weed Darwin NT',
+        keywords: ['buy weed darwin', 'cannabis delivery darwin', 'weed dispensary darwin']
+      }
+    },
+    {
+      params: { city: 'hobart' },
+      props: { 
+        cityName: 'Hobart', 
+        state: 'Tasmania',
+        stateAbbr: 'TAS',
+        deliveryTime: '3-5 business days',
+        description: 'Buy weed Hobart - Reliable cannabis delivery to Hobart and across Tasmania. Full product range available with discreet Australia-wide shipping.',
+        icon: '🏔️',
+        highlight: 'Buy Weed Hobart TAS',
+        keywords: ['buy weed hobart', 'cannabis delivery tasmania', 'weed dispensary hobart']
+      }
+    },
+    {
+      params: { city: 'melbourne' },
+      props: { 
+        cityName: 'Melbourne', 
+        state: 'Victoria',
+        stateAbbr: 'VIC',
+        deliveryTime: '2-4 business days',
+        description: 'Buy weed Melbourne - Where to buy weed in Melbourne? Mullaways Medical Cannabis delivers premium cannabis to all Melbourne suburbs and regional Victoria. Melbourne weed with lab-tested quality, discreet delivery.',
+        icon: '🌿',
+        highlight: 'Buy Weed Melbourne VIC',
+        keywords: ['buy weed melbourne', 'where to buy weed in melbourne', 'buying weed melbourne', 'cannabis melbourne', 'weed dispensary melbourne', 'dispensary melbourne', 'melbourne weed']
+      }
+    },
+    {
+      params: { city: 'perth' },
+      props: { 
+        cityName: 'Perth', 
+        state: 'Western Australia',
+        stateAbbr: 'WA',
+        deliveryTime: '4-6 business days',
+        description: 'Buy weed Perth - Express cannabis shipping to Perth and Western Australia. Where to buy weed in Perth? Mullaways Medical Cannabis delivers lab-tested products with priority handling.',
+        icon: '🌅',
+        highlight: 'Buy Weed Perth WA',
+        keywords: ['buy weed perth', 'where to buy weed perth', 'buy weed online perth', 'cannabis delivery perth']
+      }
+    },
+    {
+      params: { city: 'sydney' },
+      props: { 
+        cityName: 'Sydney', 
+        state: 'New South Wales',
+        stateAbbr: 'NSW',
+        deliveryTime: '1-3 business days',
+        description: 'Buy weed Sydney - Fast shipping to Sydney and throughout NSW from our Mullaways, NSW base. Where to buy weed in Sydney? We cover all Sydney suburbs and regional areas with discreet delivery.',
+        icon: '🏙️',
+        highlight: 'Buy Weed Sydney NSW',
+        keywords: ['buy weed sydney', 'where to buy weed in sydney', 'buying weed sydney', 'cannabis dispensary sydney']
+      }
+    },
+    {
+      params: { city: 'sunshine-coast' },
+      props: { 
+        cityName: 'Sunshine Coast', 
+        state: 'Queensland',
+        stateAbbr: 'QLD',
+        deliveryTime: '2-4 business days',
+        description: 'Medicinal cannabis Sunshine Coast - Premium cannabis delivery to the Sunshine Coast, QLD. Medical marijuanas Sunshine Coast from Mullaways Medical Cannabis with discreet express shipping.',
+        icon: '🏖️',
+        highlight: 'Cannabis Sunshine Coast',
+        keywords: ['medicinal cannabis sunshine coast', 'medical marijuanas sunshine coast', 'cannabis sunshine coast', 'weed delivery sunshine coast']
+      }
+    },
+    {
+      params: { city: 'gold-coast' },
+      props: { 
+        cityName: 'Gold Coast', 
+        state: 'Queensland',
+        stateAbbr: 'QLD',
+        deliveryTime: '2-4 business days',
+        description: 'Buy weed Gold Coast - Premium cannabis delivery to the Gold Coast and surrounding areas. Lab-tested products with discreet shipping from Mullaways Medical Cannabis.',
+        icon: '🏄',
+        highlight: 'Buy Weed Gold Coast',
+        keywords: ['buy weed gold coast', 'cannabis delivery gold coast', 'weed dispensary gold coast']
+      }
+    },
+    {
+      params: { city: 'newcastle' },
+      props: { 
+        cityName: 'Newcastle', 
+        state: 'New South Wales',
+        stateAbbr: 'NSW',
+        deliveryTime: '1-2 business days',
+        description: 'Buy weed Newcastle - Super fast cannabis delivery to Newcastle, NSW from nearby Mullaways. Lab-tested medical cannabis with express local shipping.',
+        icon: '⚓',
+        highlight: 'Buy Weed Newcastle NSW',
+        keywords: ['buy weed newcastle', 'cannabis delivery newcastle', 'weed dispensary newcastle nsw']
+      }
+    },
+    {
+      params: { city: 'wollongong' },
+      props: { 
+        cityName: 'Wollongong', 
+        state: 'New South Wales',
+        stateAbbr: 'NSW',
+        deliveryTime: '1-3 business days',
+        description: 'Buy weed Wollongong - Fast cannabis delivery to Wollongong and the Illawarra region. Premium products from Mullaways Medical Cannabis, NSW.',
+        icon: '🌊',
+        highlight: 'Buy Weed Wollongong',
+        keywords: ['buy weed wollongong', 'cannabis delivery wollongong', 'weed dispensary wollongong']
+      }
+    },
+    {
+      params: { city: 'central-coast' },
+      props: { 
+        cityName: 'Central Coast', 
+        state: 'New South Wales',
+        stateAbbr: 'NSW',
+        deliveryTime: '1-2 business days',
+        description: 'Buy weed Central Coast - Express cannabis delivery to the Central Coast, NSW. Located nearby in Mullaways, we offer the fastest delivery times to Central Coast customers.',
+        icon: '🌅',
+        highlight: 'Buy Weed Central Coast',
+        keywords: ['buy weed central coast', 'cannabis delivery central coast', 'weed central coast nsw']
+      }
+    }
+  ];
+}
+
+const { city } = Astro.params;
+const { cityName, state, stateAbbr, deliveryTime, description, icon, highlight, keywords } = Astro.props;
+
+// SVG icon map for flat 2D icons
+const iconSvgMap: Record<string, string> = {
+  'wine': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 22h8M12 15v7"/><path d="M5.5 8c0 4.5 3.5 7 6.5 7s6.5-2.5 6.5-7c0-3-2.5-6-2.5-6h-8s-2.5 3-2.5 6z"/></svg>',
+  'sun': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
+  'building': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>',
+  'compass': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+  'mountain': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>',
+  'leaf': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg>',
+  'sunset': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 18a5 5 0 0 0-10 0"/><path d="M12 9V2M4.22 10.22l1.42 1.42M1 18h2M21 18h2M18.36 11.64l1.42-1.42M23 22H1M16 5l-4 4-4-4"/></svg>',
+  'city': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01"/></svg>',
+  'beach': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M22 10a3 3 0 0 0-3-3h-2.207a5.502 5.502 0 0 0-10.702.5"/></svg>',
+  'waves': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>',
+  'anchor': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="3"/><path d="M12 22V8M5 12H2a10 10 0 0 0 20 0h-3"/></svg>',
+  'pin': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  'package': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+  'check': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
+};
+
+// Map old emoji icons to new icon keys
+const emojiToKey: Record<string, string> = {
+  '🍷': 'wine', '☀️': 'sun', '🏛️': 'building', '🐊': 'compass', '🏔️': 'mountain',
+  '🌿': 'leaf', '🌅': 'sunset', '🏙️': 'city', '🏖️': 'beach', '🏄': 'waves',
+  '⚓': 'anchor', '🌊': 'waves', '📍': 'pin', '📦': 'package', '✓': 'check'
+};
+
+const getIconSvg = (iconEmoji: string, size = 24) => {
+  const key = emojiToKey[iconEmoji] || 'leaf';
+  return iconSvgMap[key] || iconSvgMap.leaf;
+};
+
+const products = [
+  { name: "Blue Dream", slug: "blue-dream", type: "Sativa", thc: "18-24%", weight: "3.5g", price: 150, description: "Uplifting and creative, perfect for daytime use", effects: ["Euphoric", "Creative", "Uplifted"], flavour: "Berry, Sweet, Herbal" },
+  { name: "OG Kush", slug: "og-kush", type: "Indica", thc: "20-26%", weight: "3.5g", price: 160, description: "Deep relaxation and stress relief", effects: ["Relaxed", "Happy", "Sleepy"], flavour: "Earthy, Pine, Woody" },
+  { name: "Wedding Cake", slug: "wedding-cake", type: "Hybrid", thc: "25-28%", weight: "3.5g", price: 165, description: "Balanced mind-body high with vanilla notes", effects: ["Euphoric", "Relaxed", "Creative"], flavour: "Vanilla, Sweet, Earthy" },
+  { name: "THC Gummies 10mg", slug: "premium-thc-gummies-10mg", type: "Edible", thc: "10mg", weight: "20 pack", price: 69, description: "Delicious THC gummies Australia", effects: ["Happy", "Relaxed", "Uplifted"], flavour: "Mixed Fruit" },
+];
+
+const benefits = [
+  { icon: "✓", title: "Trusted Dispensary", description: "Australia's trusted online cannabis dispensary" },
+  { icon: "✓", title: "Lab-Tested Products", description: "Every product tested for potency and purity" },
+  { icon: "✓", title: "Discreet Shipping", description: "Plain packaging with no indication of contents" },
+  { icon: "✓", title: "Fast Delivery", description: `Express shipping to ${cityName} in ${deliveryTime}` },
+  { icon: "✓", title: "Full Tracking", description: "Track your order from Mullaways to your door" },
+  { icon: "✓", title: "Expert Support", description: "Our NSW-based team helps you find the right products" },
+];
+
+const steps = [
+  { number: "01", title: "Browse Products", description: "Explore our range of flowers, oils, edibles, vapes and more" },
+  { number: "02", title: "Add to Cart", description: "Select your products and quantities" },
+  { number: "03", title: "Secure Checkout", description: "Complete your order with secure payment" },
+  { number: "04", title: "Receive Delivery", description: `Discreet delivery to your ${cityName} address` },
+];
+
+// Generate SEO meta description (under 160 chars)
+const metaDescription = `Buy weed ${cityName} with fast ${deliveryTime} delivery. Lab-tested cannabis flower, edibles & vapes. Discreet shipping to ${cityName}, ${stateAbbr} from Mullaways.`;
+---
+
+<Layout title={`Buy Weed ${cityName} | Cannabis Delivery ${stateAbbr} | Mullaways Medical Cannabis`} description={metaDescription}>
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="abstract-shape shape-1"></div>
+        <div class="abstract-shape shape-2"></div>
+        <div class="dot-pattern"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-badge"><span class="badge-icon" set:html={getIconSvg(icon)}></span> {highlight}</span>
+          <h1>Buy Weed {cityName} <span class="text-gradient">| Cannabis Delivery {stateAbbr}</span></h1>
+          <p>{description}</p>
+          <div class="hero-meta">
+            <div class="meta-item">
+              <span class="meta-icon" set:html={iconSvgMap.pin}></span>
+              <span>{state}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon" set:html={iconSvgMap.package}></span>
+              <span>{deliveryTime}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon" set:html={iconSvgMap.leaf}></span>
+              <span>Premium Cannabis</span>
+            </div>
+          </div>
+          <div class="hero-buttons">
+            <a href="/shop" class="btn btn-primary btn-lg">Buy Cannabis Online</a>
+            <a href="/how-it-works" class="btn btn-secondary btn-lg">How to Order</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-card">
+            <div class="visual-header">
+              <span class="city-icon" set:html={getIconSvg(icon)}></span>
+              <div>
+                <h3>{cityName}</h3>
+                <p>{state}</p>
+              </div>
+            </div>
+            <div class="visual-stats">
+              <div class="stat">
+                <span class="stat-value">{deliveryTime.split(' ')[0].split('-')[0]}</span>
+                <span class="stat-label">Min Days</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">50+</span>
+                <span class="stat-label">Products</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">4.9</span>
+                <span class="stat-label">Rating</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Why Choose Us</span>
+          <h2>Why Order From Mullaways Medical Cannabis</h2>
+          <p>Trusted by customers across {state}</p>
+        </div>
+        <div class="benefits-grid">
+          {benefits.map((benefit) => (
+            <div class="benefit-card">
+              <span class="benefit-icon" set:html={iconSvgMap.check}></span>
+              <div class="benefit-content">
+                <h3>{benefit.title}</h3>
+                <p>{benefit.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Popular in {cityName}</span>
+          <h2>Featured Products</h2>
+          <p>Top choices for our {cityName} customers</p>
+        </div>
+        <div class="products-grid">
+          {products.map((product) => {
+            const productData = getProductBySlug(product.slug);
+            const canonicalSlug = productData?.slug ?? product.slug;
+            const reviewCount = getReviewCount(canonicalSlug);
+            const reviewRating = getReviewRating(canonicalSlug);
+            const displayPrice = productData ? getMinPrice(productData.basePrice, productData.category) : product.price;
+
+            return (
+            <a href={`/shop/product/${product.slug}`} class="product-card">
+              <div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
+              <div class="product-image">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+                  <path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/>
+                  <path d="M12 6c0 0 4 4 4 8s-4 6-4 6"/>
+                </svg>
+              </div>
+              <div class="product-content">
+                <h3>{product.name}</h3>
+                <div class="product-meta">
+                  <span class="thc">THC: {product.thc}</span>
+                  <span class="weight">{product.weight}</span>
+                </div>
+                <div class="product-reviews">
+                  {reviewCount > 0 ? (
+                    <>
+                      <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                      <span class="review-count">({reviewCount} reviews)</span>
+                    </>
+                  ) : (
+                    <span class="review-count">No reviews yet</span>
+                  )}
+                </div>
+                <div class="product-effects">
+                  {product.effects.map((effect) => (
+                    <span class="effect-tag">{effect}</span>
+                  ))}
+                </div>
+                <div class="product-flavour">
+                  <strong>Flavour:</strong> {product.flavour}
+                </div>
+                <div class="product-footer">
+                  <span class="price">From ${displayPrice}</span>
+                  <button class="btn btn-primary btn-sm view-options" data-slug={product.slug}>
+                    View Options
+                  </button>
+                </div>
+              </div>
+            </a>
+            );
+          })}
+        </div>
+        <div class="products-cta">
+          <a href="/shop" class="btn btn-primary btn-lg">View All Products</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="steps-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Simple Process</span>
+          <h2>How to Order to {cityName}</h2>
+          <p>Get your cannabis delivered in 4 easy steps</p>
+        </div>
+        <div class="steps-grid">
+          {steps.map((step, index) => (
+            <div class="step-card">
+              <div class="step-number">{step.number}</div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+              {index < steps.length - 1 && <div class="step-connector"></div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Shipping Info Section -->
+    <section class="shipping-section">
+      <div class="container">
+        <div class="shipping-card">
+          <div class="shipping-content">
+            <h2>Shipping to {cityName}</h2>
+            <p>All orders to {cityName} are shipped via express courier with full tracking. Your package will arrive in plain, unmarked packaging for complete discretion.</p>
+            <ul class="shipping-features">
+              <li>
+                <span class="icon" set:html={iconSvgMap.package}></span>
+                <div>
+                  <strong>Estimated Delivery</strong>
+                  <p>{deliveryTime}</p>
+                </div>
+              </li>
+              <li>
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <div>
+                  <strong>Signature Required</strong>
+                  <p>Secure handover to you or authorized person</p>
+                </div>
+              </li>
+              <li>
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                <div>
+                  <strong>Free Shipping</strong>
+                  <p>On all orders over $150</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="shipping-visual">
+            <div class="map-placeholder">
+              <span class="map-icon" set:html={getIconSvg(icon)}></span>
+              <span class="map-city">{cityName}</span>
+              <span class="map-delivery">{deliveryTime}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Questions?</span>
+          <h2>Frequently Asked About {cityName} Delivery</h2>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Do you deliver to all {cityName} suburbs?</h3>
+            <p>Yes! We deliver to all suburbs in {cityName} and throughout {state}. Regional areas are also covered with slightly longer delivery times.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What do I need to order?</h3>
+            <p>You need to be 18 years or older with a valid Australian address. Simply create an account, add products to your cart, and complete checkout.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is the packaging discreet?</h3>
+            <p>Absolutely. All orders are shipped in plain, unmarked packaging with no indication of the contents. Your privacy is our priority.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I track my order?</h3>
+            <p>Yes, you'll receive tracking information via email and SMS once your order ships. Track your delivery in real-time from our warehouse to your door.</p>
+          </div>
+        </div>
+        <div class="faq-cta">
+          <a href="/faq" class="btn btn-secondary">View All FAQs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <span class="cta-icon" set:html={getIconSvg(icon)}></span>
+            <h2>Ready to Order to {cityName}?</h2>
+            <p>Buy weed online from Mullaways Medical Cannabis. Premium products with fast, discreet delivery to {cityName} and all of {state}.</p>
+            <div class="cta-buttons">
+              <a href="/shop" class="btn btn-primary btn-lg">Shop Now</a>
+              <a href="/how-it-works" class="btn btn-secondary btn-lg">Learn More</a>
+            </div>
+          </div>
+          <div class="cta-bg">
+            <div class="abstract-shape shape-1"></div>
+            <div class="abstract-shape shape-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    position: relative;
+    padding: 160px 0 100px;
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, #1e4035 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .abstract-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+
+  .shape-1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-sage);
+    top: -200px;
+    right: -100px;
+  }
+
+  .shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-terracotta);
+    bottom: -100px;
+    left: -50px;
+  }
+
+  .dot-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .hero .container {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    color: white;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-terracotta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .meta-icon {
+    font-size: 1.25rem;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+
+  .visual-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .visual-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .city-icon {
+    font-size: 3rem;
+  }
+
+  .visual-header h3 {
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .visual-header p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  .visual-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-terracotta);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Section Styles */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-badge {
+    display: inline-block;
+    background: var(--color-sand);
+    color: var(--color-eucalyptus);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 1rem;
+  }
+
+  .section-header p {
+    color: #666;
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Benefits Section */
+  .benefits-section {
+    padding: 6rem 0;
+    background: white;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .benefit-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--color-sand);
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .benefit-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--color-eucalyptus);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .benefit-content h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.25rem;
+  }
+
+  .benefit-content p {
+    color: #666;
+    font-size: 0.875rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Products Section */
+  .products-section {
+    padding: 6rem 0;
+    background: var(--color-sand);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Product Card - Matching Shop Pages */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.indica {
+    background: #7c3aed;
+    color: white;
+  }
+
+  .product-badge.sativa {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.hybrid {
+    background: #10b981;
+    color: white;
+  }
+
+  .product-badge.edible {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+    position: relative;
+  }
+
+  .product-image svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.7;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc {
+    font-weight: 700;
+    color: #2d5a3f;
+  }
+
+  .product-meta .weight {
+    color: #888;
+  }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-flavour {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .product-footer .btn:hover {
+    background: #2d5a3f;
+    transform: translateY(-1px);
+  }
+
+  .products-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  /* Steps Section */
+  .steps-section {
+    padding: 6rem 0;
+    background: white;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .step-card {
+    position: relative;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .step-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--color-sand);
+    margin-bottom: 1rem;
+  }
+
+  .step-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .step-connector {
+    position: absolute;
+    top: 4rem;
+    right: -1rem;
+    width: 2rem;
+    height: 2px;
+    background: var(--color-sand);
+  }
+
+  /* Shipping Section */
+  .shipping-section {
+    padding: 6rem 0;
+    background: var(--color-sand);
+  }
+
+  .shipping-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    background: white;
+    padding: 3rem;
+    border-radius: 24px;
+    align-items: center;
+  }
+
+  .shipping-content h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 1rem;
+  }
+
+  .shipping-content > p {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .shipping-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .shipping-features li {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .shipping-features .icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .shipping-features strong {
+    display: block;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.25rem;
+  }
+
+  .shipping-features p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .map-placeholder {
+    background: var(--color-eucalyptus);
+    padding: 4rem;
+    border-radius: 16px;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .map-icon {
+    font-size: 4rem;
+  }
+
+  .map-city {
+    font-family: var(--font-display);
+    font-size: 2rem;
+  }
+
+  .map-delivery {
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    padding: 6rem 0;
+    background: white;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .faq-item {
+    background: var(--color-sand);
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+  }
+
+  .faq-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-item p {
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .faq-cta {
+    text-align: center;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 6rem 0;
+    background: var(--color-sand);
+  }
+
+  .cta-card {
+    position: relative;
+    background: var(--color-eucalyptus);
+    padding: 4rem;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .cta-content h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta-content p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-terracotta);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #b3613e;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .btn-lg {
+    padding: 1.125rem 2.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .cta-bg .abstract-shape {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .cta-bg .shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    right: -100px;
+  }
+
+  .cta-bg .shape-2 {
+    width: 250px;
+    height: 250px;
+    bottom: -80px;
+    left: -50px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .hero .container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-meta {
+      justify-content: center;
+    }
+
+    .hero-buttons {
+      justify-content: center;
+    }
+
+    .hero-visual {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .benefits-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .step-connector {
+      display: none;
+    }
+
+    .shipping-card {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 140px 0 80px;
+    }
+
+    .hero-meta {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-card {
+      padding: 3rem 2rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  // View options functionality - navigate to product page
+  document.querySelectorAll('.view-options').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>

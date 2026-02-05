@@ -1,0 +1,542 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = "Cannabis Blog Australia | Is Weed Legal? How Much Does Weed Cost? | Guides";
+const description = "Australian cannabis blog answering your questions: Is weed legal in Australia? How much does weed cost? Where to buy weed near me? Expert guides, laws & strain reviews.";
+
+const posts = [
+  {
+    slug: "is-weed-legal-in-australia",
+    title: "Is Weed Legal in Australia? 2026 Cannabis Laws Explained",
+    excerpt: "Everything you need to know about cannabis laws in Australia. Is weed legal? What are the penalties? We break down the current legal status of marijuana in Australia.",
+    category: "Legal",
+    date: "February 3, 2026",
+    readTime: "8 min read",
+    image: "scales",
+    featured: true
+  },
+  {
+    slug: "cannabis-prices-australia",
+    title: "How Much Does Weed Cost in Australia? 2026 Price Guide",
+    excerpt: "Complete guide to Australian weed prices. How much does a gram cost? What are medicinal cannabis prices? Compare costs across states and product types.",
+    category: "Guide",
+    date: "January 28, 2026",
+    readTime: "6 min read",
+    image: "dollar",
+    featured: true
+  },
+  {
+    slug: "edibles-vs-smoking",
+    title: "Edibles vs Smoking: Which Is Better For You?",
+    excerpt: "Compare cannabis edibles and smoking. Onset times, duration, effects, and health considerations. Find out which consumption method is right for you.",
+    category: "Education",
+    date: "January 20, 2026",
+    readTime: "7 min read",
+    image: "gummy",
+    featured: true
+  },
+  {
+    slug: "strongest-strains-australia",
+    title: "Top 10 Strongest Cannabis Strains in Australia 2026",
+    excerpt: "Discover the most potent weed strains available in Australia. From OG Kush to Gorilla Glue, we rank the strongest medical strains by THC content.",
+    category: "Strains",
+    date: "January 15, 2026",
+    readTime: "10 min read",
+    image: "leaf",
+    featured: false
+  },
+  {
+    slug: "cannabis-laws-queensland",
+    title: "Cannabis Laws in Queensland: 2026 Update",
+    excerpt: "Is weed legal in QLD? How many plants for personal use? Complete guide to Queensland cannabis laws including penalties and medical access.",
+    category: "Legal",
+    date: "January 10, 2026",
+    readTime: "7 min read",
+    image: "clipboard",
+    featured: false
+  },
+  {
+    slug: "how-to-buy-weed-safely",
+    title: "How to Buy Cannabis Safely in Australia",
+    excerpt: "Safe ways to purchase cannabis in Australia. How to find reliable sources, avoid scams, and ensure product quality. Your complete safety guide.",
+    category: "Guide",
+    date: "January 5, 2026",
+    readTime: "6 min read",
+    image: "shield",
+    featured: false
+  },
+  {
+    slug: "thca-australia-legal-status",
+    title: "What is THCA? Legal Status in Australia Explained",
+    excerpt: "Is THCA illegal in Australia? Understanding the difference between THCA and THC, legal considerations, and what it means for Australian consumers.",
+    category: "Education",
+    date: "December 28, 2025",
+    readTime: "5 min read",
+    image: "microscope",
+    featured: false
+  }
+];
+
+// SVG icon map
+const iconMap: Record<string, string> = {
+  scales: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M3 6l3 9c0 2 1.5 3 3 3s3-1 3-3l3-9M15 6l3 9c0 2 1.5 3 3 3s3-1 3-3l3-9"/></svg>',
+  dollar: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M8 14h8"/></svg>',
+  gummy: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3"/></svg>',
+  leaf: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg>',
+  clipboard: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>',
+  shield: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  microscope: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18h8M3 22h18M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2M9 2v6l3 2"/></svg>',
+  cookie: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="8" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="10" cy="14" r="1"/><circle cx="15" cy="16" r="1"/></svg>'
+};
+
+const featuredPosts = posts.filter(p => p.featured);
+const recentPosts = posts.filter(p => !p.featured);
+const categories = [...new Set(posts.map(p => p.category))];
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="abstract-shape shape-1"></div>
+        <div class="abstract-shape shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Cannabis Education</span>
+          <h1>Cannabis Blog <span class="text-gradient">& Resources</span></h1>
+          <p>Stay informed with the latest cannabis news, guides, and educational content. Expert insights on Australian cannabis laws, products, and wellness.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Posts -->
+    <section class="featured-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Articles</h2>
+          <p>Our most popular guides and resources</p>
+        </div>
+        <div class="featured-grid">
+          {featuredPosts.map((post) => (
+            <article class="featured-card">
+              <a href={`/blog/${post.slug}`} class="card-link">
+                <div class="card-image">
+                  <span class="card-emoji" set:html={iconMap[post.image] || iconMap.leaf}></span>
+                  <span class="card-category">{post.category}</span>
+                </div>
+                <div class="card-content">
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                  <div class="card-meta">
+                    <span>{post.date}</span>
+                    <span>•</span>
+                    <span>{post.readTime}</span>
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section">
+      <div class="container">
+        <div class="categories-list">
+          <span class="category-label">Browse by topic:</span>
+          {categories.map((cat) => (
+            <button class="category-btn">{cat}</button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Posts -->
+    <section class="posts-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Recent Articles</h2>
+        </div>
+        <div class="posts-grid">
+          {recentPosts.map((post) => (
+            <article class="post-card">
+              <a href={`/blog/${post.slug}`} class="card-link">
+                <div class="post-image">
+                  <span set:html={iconMap[post.image] || iconMap.leaf}></span>
+                </div>
+                <div class="post-content">
+                  <span class="post-category">{post.category}</span>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                  <div class="post-meta">
+                    <span>{post.date}</span>
+                    <span>•</span>
+                    <span>{post.readTime}</span>
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Stay Updated</h2>
+          <p>Get the latest cannabis news and exclusive offers delivered to your inbox.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, var(--color-sage) 100%);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .abstract-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+
+  .shape-1 {
+    width: 400px;
+    height: 400px;
+    background: white;
+    top: -100px;
+    right: -100px;
+  }
+
+  .shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-terracotta);
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    color: white;
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-terracotta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+
+  /* Featured Section */
+  .featured-section {
+    padding: 80px 0;
+    background: var(--color-sand);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-header p {
+    color: #666;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .featured-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .featured-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-image {
+    background: linear-gradient(135deg, #f8f4ef 0%, #ebe4db 100%);
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .card-emoji {
+    font-size: 4rem;
+  }
+
+  .card-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--color-eucalyptus);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-content h3 {
+    font-size: 1.1rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .card-content p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #999;
+  }
+
+  /* Categories */
+  .categories-section {
+    padding: 40px 0;
+    background: white;
+    border-bottom: 1px solid #eee;
+  }
+
+  .categories-list {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .category-label {
+    color: #666;
+    font-weight: 500;
+  }
+
+  .category-btn {
+    background: var(--color-sand);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+
+  .category-btn:hover {
+    background: var(--color-eucalyptus);
+    color: white;
+  }
+
+  /* Posts Grid */
+  .posts-section {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .post-card {
+    display: flex;
+    background: var(--color-sand);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .post-card:hover {
+    transform: translateX(5px);
+  }
+
+  .post-card .card-link {
+    display: flex;
+    width: 100%;
+  }
+
+  .post-image {
+    width: 120px;
+    min-height: 150px;
+    background: linear-gradient(135deg, #f0ebe4 0%, #e5ddd3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .post-content {
+    padding: 1.25rem;
+    flex: 1;
+  }
+
+  .post-category {
+    display: inline-block;
+    background: var(--color-sage);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content h3 {
+    font-size: 1rem;
+    color: var(--color-eucalyptus);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .post-content p {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #999;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, var(--color-sage) 100%);
+    text-align: center;
+  }
+
+  .cta-content h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 968px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .post-card .card-link {
+      flex-direction: column;
+    }
+
+    .post-image {
+      width: 100%;
+      min-height: 100px;
+    }
+
+    .newsletter-form {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,465 @@
+---
+const locations = [
+  { href: "/adelaide", label: "Adelaide" },
+  { href: "/brisbane", label: "Brisbane" },
+  { href: "/melbourne", label: "Melbourne" },
+  { href: "/perth", label: "Perth" },
+  { href: "/sydney", label: "Sydney" },
+];
+
+const features = [
+  { icon: "shield", label: "Lab Tested" },
+  { icon: "truck", label: "Fast Delivery" },
+  { icon: "lock", label: "Discreet" },
+  { icon: "check", label: "Legal & Compliant" },
+];
+---
+
+<section class="hero">
+  <!-- Abstract Background -->
+  <div class="hero-bg">
+    <div class="abstract-shape shape-1"></div>
+    <div class="abstract-shape shape-2"></div>
+    <div class="abstract-shape shape-3"></div>
+    <div class="abstract-dots-pattern"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="hero-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+          </svg>
+          Weed Near Me — Australia's Trusted Cannabis Dispensary
+        </span>
+        
+        <h1>Buy Weed Online <span class="text-highlight">Australia-Wide Delivery</span></h1>
+        
+        <p class="hero-description">
+          Looking for marijuana near me? Mullaways Medical Cannabis is your trusted online dispensary. Lab-tested THC gummies, flower, edibles & vapes delivered discreetly across Australia. Based in Mullaways, NSW.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="/shop" class="btn btn-primary btn-large hero-btn">
+            Shop Cannabis Online
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="/how-it-works" class="btn btn-outline-light btn-large hero-btn">How to Buy Weed</a>
+        </div>
+
+        <div class="hero-features">
+          {features.map((feature) => (
+            <div class="feature">
+              {feature.icon === "shield" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              )}
+              {feature.icon === "truck" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="3" width="15" height="13"/>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                  <circle cx="5.5" cy="18.5" r="2.5"/>
+                  <circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+              )}
+              {feature.icon === "lock" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
+              )}
+              {feature.icon === "check" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              )}
+              <span>{feature.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-container">
+          <div class="visual-circle circle-1"></div>
+          <div class="visual-circle circle-2"></div>
+          <div class="visual-circle circle-3"></div>
+          <div class="visual-icon">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <path d="M40 10C40 10 25 25 25 40C25 55 40 70 40 70C40 70 55 55 55 40C55 25 40 10 40 10Z" fill="currentColor" opacity="0.3"/>
+              <path d="M40 20C40 20 30 30 30 40C30 50 40 60 40 60C40 60 50 50 50 40C50 30 40 20 40 20Z" fill="currentColor" opacity="0.5"/>
+              <circle cx="40" cy="40" r="8" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div class="delivery-badge">
+          <span class="badge-icon">⚡</span>
+          <span class="badge-text">Australia-Wide Delivery</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-locations">
+      <span class="locations-label">We deliver to:</span>
+      <div class="locations-list">
+        {locations.map((loc, i) => (
+          <a href={loc.href} class="location-tag">{loc.label}</a>
+        ))}
+        <a href="/locations" class="location-more">+ More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-4xl)) 0 var(--space-4xl);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Abstract Background */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .abstract-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .shape-1 {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    right: -100px;
+  }
+
+  .shape-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -100px;
+    left: -100px;
+  }
+
+  .shape-3 {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 30%;
+    background: rgba(196, 112, 75, 0.08);
+  }
+
+  .abstract-dots-pattern {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Content */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  .hero-text {
+    color: var(--color-white);
+    position: relative;
+    z-index: 5;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 10px 18px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: var(--space-xl);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-text h1 {
+    color: var(--color-white);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    line-height: 1.15;
+  }
+
+  .text-highlight {
+    color: var(--color-sand);
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: var(--space-xl);
+    max-width: 540px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2xl);
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-btn {
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .hero-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .hero-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .feature svg {
+    color: var(--color-sage);
+  }
+
+  /* Visual */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+    pointer-events: none;
+  }
+
+  .visual-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .visual-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  .circle-1 {
+    width: 100%;
+    height: 100%;
+    animation-delay: 0s;
+  }
+
+  .circle-2 {
+    width: 75%;
+    height: 75%;
+    animation-delay: 0.5s;
+  }
+
+  .circle-3 {
+    width: 50%;
+    height: 50%;
+    animation-delay: 1s;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .visual-icon {
+    position: relative;
+    z-index: 2;
+    color: var(--color-sage);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .delivery-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--color-white);
+    color: var(--color-text);
+    padding: 14px 24px;
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .badge-icon {
+    font-size: 1.1rem;
+  }
+
+  /* Locations */
+  .hero-locations {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+  }
+
+  .locations-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .locations-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .location-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .location-tag:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--color-white);
+  }
+
+  .location-more {
+    display: inline-block;
+    padding: 6px 14px;
+    color: var(--color-sage);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+  }
+
+  .location-more:hover {
+    color: var(--color-white);
+  }
+
+  @media (max-width: 1024px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-description {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-ctas {
+      justify-content: center;
+    }
+
+    .hero-features {
+      justify-content: center;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .visual-container {
+      width: 260px;
+      height: 260px;
+    }
+
+    .hero-locations {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding-top: calc(var(--header-height) + var(--space-2xl));
+      padding-bottom: var(--space-2xl);
+      min-height: auto;
+    }
+
+    .hero-text h1 {
+      font-size: 2rem;
+    }
+
+    .visual-container {
+      width: 200px;
+      height: 200px;
+    }
+
+    .visual-icon svg {
+      width: 50px;
+      height: 50px;
+    }
+
+    .hero-features {
+      gap: var(--space-md);
+    }
+
+    .feature {
+      font-size: 0.8rem;
+    }
+  }
+</style>

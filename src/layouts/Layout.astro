@@ -1,0 +1,1001 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	schema?: object;
+}
+
+const { title, description = "Mullaways Medical Cannabis - Australia's trusted online dispensary. Buy weed online with discreet Australia-wide delivery. Lab-tested medical cannabis products.", schema } = Astro.props;
+
+const defaultSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"name": "Mullaways Medical Cannabis",
+	"url": "https://mullawaysmedicalcannabis.com.au",
+	"logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
+	"description": "Australia's trusted online cannabis dispensary. Buy weed online with discreet delivery Australia-wide.",
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "Mullaways",
+		"addressRegion": "NSW",
+		"addressCountry": "AU"
+	},
+	"contactPoint": {
+		"@type": "ContactPoint",
+		"contactType": "customer service",
+		"areaServed": "AU"
+	},
+	"sameAs": []
+};
+
+const schemaData = schema || defaultSchema;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={Astro.url.href} />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Open Graph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:site_name" content="Mullaways Medical Cannabis" />
+		<meta property="og:locale" content="en_AU" />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		
+		<!-- Geo Tags -->
+		<meta name="geo.region" content="AU-NSW" />
+		<meta name="geo.placename" content="Mullaways" />
+		
+		<!-- Fonts - Optimized Loading -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+		<noscript>
+			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+		</noscript>
+		
+		<!-- Schema.org Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+		
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+
+		<!-- Age Verification Modal -->
+		<div class="age-gate" id="age-gate" aria-hidden="true">
+			<div class="age-gate-backdrop"></div>
+			<div class="age-gate-card" role="dialog" aria-modal="true" aria-labelledby="age-gate-title">
+				<!-- Cannabis leaf decoration -->
+				<div class="age-gate-decoration">
+					<svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M12 2C12 2 9.5 6 9.5 9C9.5 10.5 10.5 11.5 12 11.5C13.5 11.5 14.5 10.5 14.5 9C14.5 6 12 2 12 2Z" fill="currentColor" opacity="0.15"/>
+						<path d="M6 8C6 8 3 10 3 13C3 15 5 17 7 16C8 15.5 8.5 14 8 12.5C7.5 10.5 6 8 6 8Z" fill="currentColor" opacity="0.15"/>
+						<path d="M18 8C18 8 21 10 21 13C21 15 19 17 17 16C16 15.5 15.5 14 16 12.5C16.5 10.5 18 8 18 8Z" fill="currentColor" opacity="0.15"/>
+						<path d="M4 14C4 14 2 17 3 20C4 22 6.5 22 8 20.5C9 19.5 9 17.5 8 16C7 14 4 14 4 14Z" fill="currentColor" opacity="0.15"/>
+						<path d="M20 14C20 14 22 17 21 20C20 22 17.5 22 16 20.5C15 19.5 15 17.5 16 16C17 14 20 14 20 14Z" fill="currentColor" opacity="0.15"/>
+						<path d="M12 22V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+					</svg>
+				</div>
+				
+				<!-- Badge -->
+				<div class="age-gate-badge">
+					<span class="age-gate-badge-icon">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+						</svg>
+					</span>
+					<span>18+ Adults Only</span>
+				</div>
+				
+				<!-- Content -->
+				<h2 id="age-gate-title" class="age-gate-title">Welcome to Mullaways</h2>
+				<p class="age-gate-subtitle">Australia's Trusted Medical Cannabis Dispensary</p>
+				<p class="age-gate-desc">This website contains products intended for adults aged 18 years and older. By entering, you confirm that you meet the legal age requirement.</p>
+				
+				<!-- Actions -->
+				<div class="age-gate-actions">
+					<button class="age-gate-btn age-gate-btn-confirm" id="age-confirm-btn">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<polyline points="20 6 9 17 4 12"/>
+						</svg>
+						<span>Yes, I'm 18 or Older</span>
+					</button>
+					<a class="age-gate-btn age-gate-btn-leave" href="https://www.google.com" rel="noopener noreferrer">
+						<span>No, Take Me Back</span>
+					</a>
+				</div>
+				
+				<!-- Footer note -->
+				<div class="age-gate-footer">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+					</svg>
+					<span>Your preference is stored locally and remembered</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Cookie Notice -->
+		<div class="cookie-banner" id="cookie-banner" role="region" aria-label="Cookie notice" aria-hidden="true">
+			<div class="cookie-banner-inner">
+				<div class="cookie-icon">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+						<circle cx="8" cy="9" r="1.5" fill="currentColor"/>
+						<circle cx="15" cy="8" r="1" fill="currentColor"/>
+						<circle cx="10" cy="14" r="1" fill="currentColor"/>
+						<circle cx="16" cy="13" r="1.5" fill="currentColor"/>
+						<circle cx="13" cy="17" r="1" fill="currentColor"/>
+					</svg>
+				</div>
+				<div class="cookie-content">
+					<p class="cookie-title">We value your privacy</p>
+					<p class="cookie-text">We use cookies to enhance your browsing experience, serve personalised content, and analyse our traffic. By clicking "Accept", you consent to our use of cookies.</p>
+				</div>
+				<div class="cookie-actions">
+					<a class="cookie-link" href="/cookies-policy">Cookies Policy</a>
+					<button class="cookie-btn cookie-btn-accept" id="cookie-accept-btn">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<polyline points="20 6 9 17 4 12"/>
+						</svg>
+						<span>Accept All</span>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const ageGate = document.getElementById('age-gate');
+			const ageConfirmBtn = document.getElementById('age-confirm-btn');
+			const cookieBanner = document.getElementById('cookie-banner');
+			const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
+
+			const AGE_KEY = 'ageVerified';
+			const COOKIE_KEY = 'cookiesAccepted';
+
+			function showAgeGate() {
+				if (!ageGate) return;
+				ageGate.classList.add('is-visible');
+				ageGate.setAttribute('aria-hidden', 'false');
+				document.body.classList.add('no-scroll');
+			}
+
+			function hideAgeGate() {
+				if (!ageGate) return;
+				ageGate.classList.remove('is-visible');
+				ageGate.setAttribute('aria-hidden', 'true');
+				document.body.classList.remove('no-scroll');
+			}
+
+			function showCookieBanner() {
+				if (!cookieBanner) return;
+				cookieBanner.classList.add('is-visible');
+				cookieBanner.setAttribute('aria-hidden', 'false');
+			}
+
+			function hideCookieBanner() {
+				if (!cookieBanner) return;
+				cookieBanner.classList.remove('is-visible');
+				cookieBanner.setAttribute('aria-hidden', 'true');
+			}
+
+			const ageVerified = localStorage.getItem(AGE_KEY) === 'true';
+			const cookiesAccepted = localStorage.getItem(COOKIE_KEY) === 'true';
+
+			if (!ageVerified) {
+				showAgeGate();
+			} else if (!cookiesAccepted) {
+				showCookieBanner();
+			}
+
+			ageConfirmBtn?.addEventListener('click', () => {
+				localStorage.setItem(AGE_KEY, 'true');
+				hideAgeGate();
+				if (localStorage.getItem(COOKIE_KEY) !== 'true') {
+					showCookieBanner();
+				}
+			});
+
+			cookieAcceptBtn?.addEventListener('click', () => {
+				localStorage.setItem(COOKIE_KEY, 'true');
+				hideCookieBanner();
+			});
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		/* Australian-Inspired Color Palette */
+		--color-eucalyptus: #2D5A4A;
+		--color-eucalyptus-light: #3D7A64;
+		--color-eucalyptus-dark: #1A3D32;
+		--color-sage: #8BA888;
+		--color-terracotta: #C4704B;
+		--color-terracotta-light: #D4896A;
+		--color-sand: #E8DED1;
+		--color-sand-light: #F5F1EB;
+		--color-charcoal: #1C1C1C;
+		--color-charcoal-light: #2D2D2D;
+		--color-ocean: #4A8B9C;
+		--color-ocean-light: #6BA3B2;
+		
+		/* Semantic Colors */
+		--color-primary: var(--color-eucalyptus);
+		--color-primary-dark: var(--color-eucalyptus-dark);
+		--color-primary-light: var(--color-eucalyptus-light);
+		--color-accent: var(--color-terracotta);
+		--color-accent-light: var(--color-terracotta-light);
+		--color-text: var(--color-charcoal);
+		--color-text-light: #5A5A5A;
+		--color-text-muted: #8A8A8A;
+		--color-white: #FFFFFF;
+		--color-bg: var(--color-sand-light);
+		--color-bg-alt: var(--color-sand);
+		--color-bg-dark: var(--color-charcoal);
+		--color-border: rgba(0, 0, 0, 0.08);
+		--color-border-dark: rgba(0, 0, 0, 0.12);
+		
+		/* Typography */
+		--font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+		--font-display: 'Playfair Display', Georgia, serif;
+		
+		/* Spacing Scale */
+		--space-xs: 4px;
+		--space-sm: 8px;
+		--space-md: 16px;
+		--space-lg: 24px;
+		--space-xl: 32px;
+		--space-2xl: 48px;
+		--space-3xl: 64px;
+		--space-4xl: 96px;
+		
+		/* Layout */
+		--max-width: 1280px;
+		--max-width-narrow: 720px;
+		--header-height: 72px;
+		
+		/* Borders & Shadows */
+		--radius-sm: 6px;
+		--radius-md: 12px;
+		--radius-lg: 20px;
+		--radius-xl: 28px;
+		--radius-full: 9999px;
+		--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+		--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+		--shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+		--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.1);
+		
+		/* Transitions */
+		--transition-fast: 150ms ease;
+		--transition-base: 250ms ease;
+		--transition-slow: 400ms ease;
+	}
+
+	/* Font fallback to prevent FOIT */
+	@font-face {
+		font-family: 'Inter';
+		font-display: swap;
+	}
+	
+	@font-face {
+		font-family: 'Playfair Display';
+		font-display: swap;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		font-family: var(--font-primary);
+		font-size: 16px;
+		line-height: 1.7;
+		color: var(--color-text);
+		background-color: var(--color-bg);
+		font-weight: 400;
+		letter-spacing: -0.01em;
+	}
+
+	body.no-scroll {
+		overflow: hidden;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+		transition: color var(--transition-fast);
+	}
+
+	a:hover {
+		color: var(--color-accent);
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-display);
+		font-weight: 600;
+		line-height: 1.2;
+		margin-bottom: var(--space-md);
+		color: var(--color-text);
+		letter-spacing: -0.02em;
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 700;
+	}
+
+	h2 {
+		font-size: clamp(1.75rem, 4vw, 2.75rem);
+	}
+
+	h3 {
+		font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+		font-family: var(--font-primary);
+		font-weight: 600;
+	}
+
+	.age-gate {
+		position: fixed;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.4s ease, visibility 0.4s ease;
+		z-index: 9999;
+		padding: var(--space-lg);
+	}
+
+	.age-gate-backdrop {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, rgba(29, 61, 50, 0.95) 0%, rgba(28, 28, 28, 0.98) 100%);
+		backdrop-filter: blur(12px);
+	}
+
+	.age-gate.is-visible {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.age-gate.is-visible .age-gate-card {
+		transform: scale(1) translateY(0);
+		opacity: 1;
+	}
+
+	.age-gate-card {
+		position: relative;
+		max-width: 480px;
+		width: 100%;
+		background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+		border-radius: 24px;
+		padding: 48px 40px 40px;
+		box-shadow: 
+			0 0 0 1px rgba(255, 255, 255, 0.1),
+			0 25px 80px -12px rgba(0, 0, 0, 0.4),
+			0 10px 30px -8px rgba(0, 0, 0, 0.3);
+		text-align: center;
+		transform: scale(0.9) translateY(20px);
+		opacity: 0;
+		transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+		overflow: hidden;
+	}
+
+	.age-gate-decoration {
+		position: absolute;
+		top: -30px;
+		left: 50%;
+		transform: translateX(-50%);
+		color: var(--color-primary);
+		opacity: 0.08;
+		pointer-events: none;
+	}
+
+	.age-gate-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 20px;
+		border-radius: 100px;
+		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+		color: white;
+		font-weight: 600;
+		font-size: 0.85rem;
+		letter-spacing: 0.02em;
+		margin-bottom: 24px;
+		box-shadow: 0 4px 15px -3px rgba(45, 90, 74, 0.4);
+	}
+
+	.age-gate-badge-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.age-gate-title {
+		font-family: var(--font-display);
+		font-size: 1.85rem;
+		font-weight: 700;
+		color: var(--color-text);
+		margin-bottom: 8px;
+		letter-spacing: -0.02em;
+	}
+
+	.age-gate-subtitle {
+		font-size: 0.95rem;
+		color: var(--color-primary);
+		font-weight: 500;
+		margin-bottom: 20px;
+	}
+
+	.age-gate-desc {
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--color-text-light);
+		margin-bottom: 32px;
+		max-width: 360px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.age-gate-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-bottom: 24px;
+	}
+
+	.age-gate-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		padding: 16px 32px;
+		font-family: var(--font-primary);
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-align: center;
+		border-radius: 14px;
+		cursor: pointer;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: none;
+		letter-spacing: 0.01em;
+		text-decoration: none;
+	}
+
+	.age-gate-btn-confirm {
+		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+		color: white;
+		box-shadow: 
+			0 4px 15px -3px rgba(45, 90, 74, 0.5),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
+
+	.age-gate-btn-confirm:hover {
+		transform: translateY(-2px);
+		box-shadow: 
+			0 8px 25px -5px rgba(45, 90, 74, 0.6),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		color: white;
+	}
+
+	.age-gate-btn-confirm:active {
+		transform: translateY(0);
+	}
+
+	.age-gate-btn-leave {
+		background: transparent;
+		color: var(--color-text-light);
+		border: 2px solid var(--color-border-dark);
+	}
+
+	.age-gate-btn-leave:hover {
+		background: var(--color-bg-alt);
+		border-color: var(--color-text-muted);
+		color: var(--color-text);
+	}
+
+	.age-gate-footer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		padding-top: 20px;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.age-gate-footer svg {
+		opacity: 0.6;
+	}
+
+	/* Cookie Banner - Professional Design */
+	.cookie-banner {
+		position: fixed;
+		left: var(--space-lg);
+		right: var(--space-lg);
+		bottom: var(--space-lg);
+		max-width: 520px;
+		background: white;
+		border-radius: 20px;
+		box-shadow: 
+			0 0 0 1px rgba(0, 0, 0, 0.04),
+			0 20px 60px -15px rgba(0, 0, 0, 0.25),
+			0 10px 30px -10px rgba(0, 0, 0, 0.15);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(20px);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		z-index: 9998;
+		overflow: hidden;
+	}
+
+	.cookie-banner::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+	}
+
+	.cookie-banner.is-visible {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.cookie-banner-inner {
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+		padding: 24px;
+	}
+
+	.cookie-icon {
+		flex-shrink: 0;
+		width: 48px;
+		height: 48px;
+		border-radius: 12px;
+		background: linear-gradient(135deg, rgba(45, 90, 74, 0.1) 0%, rgba(45, 90, 74, 0.05) 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-primary);
+	}
+
+	.cookie-content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.cookie-title {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--color-text);
+		margin-bottom: 4px;
+	}
+
+	.cookie-text {
+		font-size: 0.85rem;
+		line-height: 1.5;
+		color: var(--color-text-light);
+		margin: 0;
+	}
+
+	.cookie-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		flex-shrink: 0;
+		align-items: flex-end;
+	}
+
+	.cookie-btn-accept {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 20px;
+		font-family: var(--font-primary);
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: white;
+		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+		border: none;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: all 0.25s ease;
+		box-shadow: 0 4px 12px -3px rgba(45, 90, 74, 0.4);
+		white-space: nowrap;
+	}
+
+	.cookie-btn-accept:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 6px 16px -3px rgba(45, 90, 74, 0.5);
+	}
+
+	.cookie-link {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		transition: color 0.2s ease;
+	}
+
+	.cookie-link:hover {
+		color: var(--color-primary);
+	}
+
+	/* Mobile responsive for cookie banner */
+	@media (max-width: 600px) {
+		.cookie-banner {
+			left: var(--space-md);
+			right: var(--space-md);
+			bottom: var(--space-md);
+		}
+
+		.cookie-banner-inner {
+			flex-direction: column;
+			padding: 20px;
+		}
+
+		.cookie-icon {
+			display: none;
+		}
+
+		.cookie-actions {
+			flex-direction: row;
+			width: 100%;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.age-gate-card {
+			padding: 40px 24px 32px;
+			margin: var(--space-md);
+		}
+
+		.age-gate-title {
+			font-size: 1.5rem;
+		}
+
+		.age-gate-desc {
+			font-size: 0.9rem;
+		}
+	}
+
+	p {
+		margin-bottom: var(--space-md);
+		color: var(--color-text-light);
+	}
+
+	ul {
+		list-style: none;
+	}
+
+	/* Container */
+	.container {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 0 var(--space-lg);
+	}
+
+	.container-narrow {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+		padding: 0 var(--space-lg);
+	}
+
+	/* Sections */
+	.section {
+		padding: var(--space-4xl) 0;
+	}
+
+	.section-sm {
+		padding: var(--space-3xl) 0;
+	}
+
+	/* Section Labels */
+	.section-label {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-sm);
+		font-family: var(--font-primary);
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		margin-bottom: var(--space-lg);
+	}
+
+	.section-label::before {
+		content: '';
+		width: 24px;
+		height: 2px;
+		background: var(--color-accent);
+	}
+
+	/* Buttons */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-sm);
+		padding: 14px 28px;
+		font-family: var(--font-primary);
+		font-size: 0.9rem;
+		font-weight: 500;
+		text-align: center;
+		border-radius: var(--radius-full);
+		cursor: pointer;
+		transition: all var(--transition-base);
+		border: 2px solid transparent;
+		letter-spacing: 0.01em;
+	}
+
+	.btn-primary {
+		background: var(--color-primary);
+		color: var(--color-white);
+		border-color: var(--color-primary);
+	}
+
+	.btn-primary:hover {
+		background: var(--color-primary-dark);
+		border-color: var(--color-primary-dark);
+		color: var(--color-white);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.btn-secondary {
+		background: var(--color-accent);
+		color: var(--color-white);
+		border-color: var(--color-accent);
+	}
+
+	.btn-secondary:hover {
+		background: var(--color-accent-light);
+		border-color: var(--color-accent-light);
+		color: var(--color-white);
+		transform: translateY(-2px);
+	}
+
+	.btn-outline {
+		background: transparent;
+		border: 2px solid var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	.btn-outline:hover {
+		background: var(--color-primary);
+		color: var(--color-white);
+		transform: translateY(-2px);
+	}
+
+	.btn-outline-light {
+		background: transparent;
+		border: 2px solid rgba(255, 255, 255, 0.5);
+		color: var(--color-white);
+	}
+
+	.btn-outline-light:hover {
+		background: var(--color-white);
+		border-color: var(--color-white);
+		color: var(--color-primary);
+	}
+
+	.btn-ghost {
+		background: transparent;
+		color: var(--color-primary);
+		padding: 10px 16px;
+	}
+
+	.btn-ghost:hover {
+		background: rgba(45, 90, 74, 0.08);
+		color: var(--color-primary);
+	}
+
+	.btn-large {
+		padding: 18px 36px;
+		font-size: 1rem;
+	}
+
+	/* Cards */
+	.card {
+		background: var(--color-white);
+		border-radius: var(--radius-lg);
+		padding: var(--space-xl);
+		transition: all var(--transition-base);
+		border: 1px solid var(--color-border);
+	}
+
+	.card:hover {
+		box-shadow: var(--shadow-lg);
+		transform: translateY(-4px);
+	}
+
+	/* Text Utilities */
+	.text-accent {
+		color: var(--color-accent);
+	}
+
+	.text-primary {
+		color: var(--color-primary);
+	}
+
+	.text-muted {
+		color: var(--color-text-muted);
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	/* Abstract Decorative Elements */
+	.abstract-dots {
+		position: absolute;
+		width: 120px;
+		height: 120px;
+		background-image: radial-gradient(var(--color-sage) 2px, transparent 2px);
+		background-size: 12px 12px;
+		opacity: 0.4;
+		pointer-events: none;
+	}
+
+	.abstract-circle {
+		position: absolute;
+		border-radius: 50%;
+		border: 2px solid var(--color-sage);
+		opacity: 0.3;
+		pointer-events: none;
+	}
+
+	.abstract-line {
+		position: absolute;
+		height: 2px;
+		background: linear-gradient(90deg, var(--color-sage), transparent);
+		opacity: 0.4;
+		pointer-events: none;
+	}
+
+	/* Dividers */
+	.divider {
+		height: 1px;
+		background: var(--color-border);
+		margin: var(--space-2xl) 0;
+	}
+
+	/* Badge */
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-xs);
+		padding: 6px 12px;
+		font-size: 0.75rem;
+		font-weight: 500;
+		border-radius: var(--radius-full);
+		background: rgba(45, 90, 74, 0.1);
+		color: var(--color-primary);
+		letter-spacing: 0.02em;
+	}
+
+	.badge-accent {
+		background: rgba(196, 112, 75, 0.1);
+		color: var(--color-accent);
+	}
+
+	/* Grid Systems */
+	.grid-2 {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-xl);
+	}
+
+	.grid-3 {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-xl);
+	}
+
+	.grid-4 {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--space-xl);
+	}
+
+	/* Responsive */
+	@media (max-width: 1024px) {
+		.grid-4 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		
+		.grid-3 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.section {
+			padding: var(--space-3xl) 0;
+		}
+		
+		.grid-2, .grid-3, .grid-4 {
+			grid-template-columns: 1fr;
+		}
+		
+		.container {
+			padding: 0 var(--space-md);
+		}
+	}
+
+	/* Animations */
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	.animate-fade-in-up {
+		animation: fadeInUp 0.6s ease forwards;
+	}
+
+	.animate-fade-in {
+		animation: fadeIn 0.4s ease forwards;
+	}
+
+	/* Focus States for Accessibility */
+	:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+	}
+
+	/* Selection */
+	::selection {
+		background: var(--color-sage);
+		color: var(--color-charcoal);
+	}
+</style>

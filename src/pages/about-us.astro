@@ -1,0 +1,736 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "About Us | Cannabis Australia | Marijuana Dispensary | Mullaways Medical";
+const description = "Cannabis Australia done right. Just Aussies who got tired of the BS. Mullaways Medical: marijuana Australia's trusted source. Lab-tested weed, honest prices, discreet delivery.";
+
+const values = [
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title: "No Dodgy Product",
+    description: "Every product gets lab-tested for potency and purity. We've seen what's out there — we don't sell that stuff."
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+    title: "Straight Up Pricing",
+    description: "No hidden fees, no 'contact for pricing' games. What you see is what you pay. Simple."
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`,
+    title: "Actually Fast Delivery",
+    description: "Australia-wide shipping that actually arrives. Full tracking, plain packaging, no drama."
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    title: "We Actually Help",
+    description: "Questions? We answer them. Problems? We fix them. Our support team are real people who know the products."
+  }
+];
+
+const stats = [
+  { value: "10,000+", label: "Patients Served" },
+  { value: "100%", label: "Lab Tested Products" },
+  { value: "4.9★", label: "Average Rating" },
+  { value: "2-5", label: "Day Delivery" },
+];
+
+const team = [
+  {
+    role: "Patient Care",
+    description: "Our patient care team provides personalised support to help you find the right products for your needs."
+  },
+  {
+    role: "Quality Assurance",
+    description: "Dedicated specialists ensure every product meets our strict quality and safety standards."
+  },
+  {
+    role: "Medical Liaison",
+    description: "Working with quality suppliers to ensure premium products that meet the highest standards."
+  }
+];
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-circle"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Who We Are</span>
+          <h1>We're Not a Faceless Corporation</h1>
+          <p>Just Aussies who got fed up with overpriced, unreliable sources. So we built something better. Based in Mullaways, NSW — real people, real products, real support.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section mission-section">
+      <div class="container">
+        <div class="mission-grid">
+          <div class="mission-content">
+            <span class="section-label">Our Mission</span>
+            <h2>Wellness Through Quality Cannabis</h2>
+            <p class="lead">We believe that everyone suffering from qualifying conditions deserves access to effective, affordable medicine.</p>
+            <p>Mullaways Medical Cannabis was founded in Mullaways, NSW with a clear purpose: to make buying weed online in Australia simple, safe, and reliable. We understand the challenges many Australians face in accessing quality cannabis products, and we're committed to making this process as straightforward as possible with fast Australia-wide delivery.</p>
+            <p>Our mission extends beyond just providing products. We're here to educate, support, and empower our patients throughout their wellness journey. From helping you understand different strains and their effects to ensuring your order arrives safely and discreetly, we're with you every step of the way.</p>
+          </div>
+          <div class="mission-visual">
+            <div class="visual-card">
+              <div class="visual-accent"></div>
+              <div class="visual-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg></div>
+              <blockquote>
+                "Our commitment is simple: provide safe access to quality cannabis that genuinely improves lives."
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section values-section">
+      <div class="container">
+        <div class="section-intro">
+          <span class="section-label">Our Values</span>
+          <h2>What Drives Us</h2>
+          <p>These core principles guide everything we do, from product selection to patient care.</p>
+        </div>
+
+        <div class="values-grid">
+          {values.map((value, i) => (
+            <div class="value-card" style={`--delay: ${i * 0.1}s`}>
+              <div class="value-icon" set:html={value.icon}></div>
+              <h3>{value.title}</h3>
+              <p>{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          {stats.map(stat => (
+            <div class="stat-item">
+              <span class="stat-value">{stat.value}</span>
+              <span class="stat-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- What We Offer Section -->
+    <section class="section offer-section">
+      <div class="container">
+        <div class="offer-grid">
+          <div class="offer-content">
+            <span class="section-label">What We Offer</span>
+            <h2>Comprehensive Cannabis Care</h2>
+            
+            <div class="offer-list">
+              <div class="offer-item">
+                <div class="offer-check">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Lab-Tested Products</strong>
+                  <p>Every product is independently tested for potency, purity, and safety</p>
+                </div>
+              </div>
+              <div class="offer-item">
+                <div class="offer-check">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Wide Selection</strong>
+                  <p>From flowers and oils to edibles and topicals, products for every preference</p>
+                </div>
+              </div>
+              <div class="offer-item">
+                <div class="offer-check">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Expert Guidance</strong>
+                  <p>Our team can help you find the right products for your condition</p>
+                </div>
+              </div>
+              <div class="offer-item">
+                <div class="offer-check">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Discreet Delivery</strong>
+                  <p>Plain, unmarked packaging with fast shipping Australia-wide</p>
+                </div>
+              </div>
+              <div class="offer-item">
+                <div class="offer-check">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Full Compliance</strong>
+                  <p>Operating in accordance with all Australian therapeutic goods regulations</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="offer-visual">
+            <div class="offer-card">
+              <div class="offer-card-pattern"></div>
+              <div class="offer-card-content">
+                <span class="badge">Australian Owned</span>
+                <h3>Proudly Supporting Local Patients</h3>
+                <p>We're an Australian-owned business dedicated to providing premium cannabis solutions for our local community.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team-section">
+      <div class="container">
+        <div class="section-intro">
+          <span class="section-label">Our Team</span>
+          <h2>Dedicated Professionals</h2>
+          <p>Our team of specialists is committed to providing you with the best possible experience.</p>
+        </div>
+
+        <div class="team-grid">
+          {team.map((member, i) => (
+            <div class="team-card" style={`--delay: ${i * 0.1}s`}>
+              <div class="team-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <h3>{member.role}</h3>
+              <p>{member.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-pattern"></div>
+          <div class="cta-content">
+            <h2>Ready to Experience the Difference?</h2>
+            <p>Browse our range of cannabis products or learn more about how to get started.</p>
+            <div class="cta-buttons">
+              <a href="/shop" class="btn btn-primary btn-large">Browse Products</a>
+              <a href="/how-it-works" class="btn btn-outline-light btn-large">How It Works</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ========== Page Hero ========== */
+  .page-hero {
+    position: relative;
+    padding: calc(var(--header-height) + var(--space-4xl)) 0 var(--space-4xl);
+    background: linear-gradient(165deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 500px;
+    height: 500px;
+    top: -200px;
+    right: -150px;
+  }
+
+  .hero-shape-2 {
+    width: 350px;
+    height: 350px;
+    bottom: -150px;
+    left: -100px;
+  }
+
+  .hero-circle {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+  }
+
+  .hero-content {
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: var(--color-terracotta-light);
+  }
+
+  .section-label-light::before {
+    background: var(--color-terracotta-light);
+  }
+
+  .page-hero h1 {
+    color: var(--color-white);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: var(--space-lg);
+  }
+
+  .page-hero p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+
+  /* ========== Mission Section ========== */
+  .mission-section {
+    background: var(--color-white);
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  .mission-content h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .mission-content .lead {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-lg);
+  }
+
+  .mission-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .mission-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .visual-card {
+    position: relative;
+    background: var(--color-bg);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    max-width: 400px;
+  }
+
+  .visual-accent {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    border-radius: var(--radius-xl);
+    z-index: -1;
+    opacity: 0.1;
+  }
+
+  .visual-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .visual-card blockquote {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin: 0;
+    quotes: '"' '"';
+  }
+
+  .visual-card blockquote::before {
+    content: open-quote;
+  }
+
+  .visual-card blockquote::after {
+    content: close-quote;
+  }
+
+  /* ========== Values Section ========== */
+  .values-section {
+    background: var(--color-bg);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .value-card {
+    background: var(--color-white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    text-align: center;
+  }
+
+  .value-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .value-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 90, 74, 0.08);
+    border-radius: 50%;
+    color: var(--color-primary);
+    margin: 0 auto var(--space-lg);
+  }
+
+  .value-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .value-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ========== Stats Section ========== */
+  .stats-section {
+    background: var(--color-primary-dark);
+    padding: var(--space-3xl) 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========== Offer Section ========== */
+  .offer-section {
+    background: var(--color-white);
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  .offer-content h2 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .offer-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .offer-item {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .offer-check {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 90, 74, 0.08);
+    border-radius: 50%;
+    color: var(--color-primary);
+  }
+
+  .offer-item strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .offer-item p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .offer-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .offer-card {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
+    max-width: 400px;
+    overflow: hidden;
+  }
+
+  .offer-card-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .offer-card-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .offer-card .badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    margin-bottom: var(--space-lg);
+  }
+
+  .offer-card h3 {
+    color: var(--color-white);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .offer-card p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ========== Team Section ========== */
+  .team-section {
+    background: var(--color-bg);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .team-card {
+    background: var(--color-white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    text-align: center;
+    transition: all var(--transition-base);
+  }
+
+  .team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .team-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    border-radius: 50%;
+    color: var(--color-primary);
+    margin: 0 auto var(--space-lg);
+  }
+
+  .team-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .team-card p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ========== CTA Section ========== */
+  .cta-section {
+    background: var(--color-bg);
+    padding-bottom: var(--space-4xl);
+  }
+
+  .cta-card {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4xl);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .cta-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ========== Responsive ========== */
+  @media (max-width: 1024px) {
+    .mission-grid,
+    .offer-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .mission-visual,
+    .offer-visual {
+      order: -1;
+    }
+
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl);
+    }
+
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-card {
+      padding: var(--space-2xl);
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+    }
+  }
+</style>

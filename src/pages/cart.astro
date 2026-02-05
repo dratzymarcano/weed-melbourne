@@ -1,0 +1,961 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Cannabis Shopping Cart Australia | Mullaways Medical Cannabis" description="Review your cannabis order. Buy weed online Australia with secure checkout, Bitcoin or bank transfer. Discreet shipping Australia-wide.">
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Your Order</span>
+          <h1>Shopping Cart</h1>
+          <p>Review your items and proceed to checkout</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="section cart-section">
+      <div class="container">
+        <div class="cart-layout">
+          <!-- Cart Items -->
+          <div class="cart-items" id="cart-items">
+            <div class="empty-cart" id="empty-cart">
+              <div class="empty-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+              <h2>Your cart is empty</h2>
+              <p>Looks like you haven't added any products yet. Browse our premium selection of cannabis products.</p>
+              <a href="/shop" class="btn btn-primary btn-large">Browse Products</a>
+            </div>
+            
+            <!-- Cart items will be populated by JavaScript -->
+            <div class="cart-list" id="cart-list" style="display: none;">
+              <!-- Dynamic cart items go here -->
+            </div>
+          </div>
+
+          <!-- Cart Summary -->
+          <div class="cart-summary" id="cart-summary" style="display: none;">
+            <div class="summary-card">
+              <h3>Order Summary</h3>
+              
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">$0.00</span>
+              </div>
+              
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span id="cart-shipping">Calculated at checkout</span>
+              </div>
+              
+              <div class="summary-divider"></div>
+              
+              <div class="summary-row summary-total">
+                <span>Total</span>
+                <span id="cart-total">$0.00</span>
+              </div>
+
+              <div class="promo-section">
+                <label for="promo-code">Promo Code</label>
+                <div class="promo-input">
+                  <input type="text" id="promo-code" placeholder="Enter code">
+                  <button type="button" class="btn btn-outline btn-sm">Apply</button>
+                </div>
+              </div>
+              
+              <button class="btn btn-primary btn-large btn-full" id="checkout-btn">
+                Proceed to Checkout
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+
+              <!-- Guest Checkout Option -->
+              <div class="checkout-options" id="checkout-options" style="display: none;">
+                <div class="checkout-options-header">
+                  <h4>How would you like to checkout?</h4>
+                  <button class="checkout-options-close" id="checkout-options-close" aria-label="Close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="18" y1="6" x2="6" y2="18"/>
+                      <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </button>
+                </div>
+                
+                <button class="checkout-option-btn guest-checkout" id="guest-checkout-btn">
+                  <div class="option-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                  </div>
+                  <div class="option-content">
+                    <span class="option-title">Guest Checkout</span>
+                    <span class="option-desc">Checkout without creating an account</span>
+                  </div>
+                  <svg class="option-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </button>
+
+                <button class="checkout-option-btn create-account" id="create-account-btn">
+                  <div class="option-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="8.5" cy="7" r="4"/>
+                      <line x1="20" y1="8" x2="20" y2="14"/>
+                      <line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                  </div>
+                  <div class="option-content">
+                    <span class="option-title">Create Account</span>
+                    <span class="option-desc">Save your details for faster checkout</span>
+                  </div>
+                  <svg class="option-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </button>
+
+                <div class="social-login-divider">
+                  <span>or continue with</span>
+                </div>
+
+                <div class="social-login-buttons">
+                  <button class="btn-social btn-google" id="checkout-google">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Google
+                  </button>
+                  <button class="btn-social btn-facebook" id="checkout-facebook">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    Facebook
+                  </button>
+                </div>
+
+                <p class="login-prompt">
+                  Already have an account? <a href="/account">Sign in</a>
+                </p>
+              </div>
+              
+              <p class="secure-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
+                Secure checkout with encrypted payment
+              </p>
+            </div>
+
+            <div class="trust-badges">
+              <div class="badge">
+                <span class="badge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <span>Secure Payment</span>
+              </div>
+              <div class="badge">
+                <span class="badge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>
+                <span>Discreet Packaging</span>
+              </div>
+              <div class="badge">
+                <span class="badge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+                <span>Fast Delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Continue Shopping -->
+    <section class="section continue-section">
+      <div class="container">
+        <div class="continue-card">
+          <h2>Continue Shopping</h2>
+          <p>Explore our full range of premium cannabis products</p>
+          <div class="category-links">
+            <a href="/shop/flower" class="category-link">
+              <span class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg></span>
+              <span>Cannabis Flower</span>
+            </a>
+            <a href="/shop/concentrates" class="category-link">
+              <span class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span>
+              <span>Concentrates</span>
+            </a>
+            <a href="/shop/edibles" class="category-link">
+              <span class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+              <span>Edibles</span>
+            </a>
+            <a href="/shop/thc-gummies" class="category-link">
+              <span class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <span>THC Gummies</span>
+            </a>
+            <a href="/shop/vapes" class="category-link">
+              <span class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 19H5c-1 0-2-1-2-2V7c0-1 1-2 2-2h14c1 0 2 1 2 2v10c0 1-1 2-2 2h-3"/><path d="M12 15v4"/><circle cx="12" cy="9" r="3"/></svg></span>
+              <span>Vapes</span>
+            </a>
+            <a href="/shop/pre-rolls" class="category-link">
+              <span class="link-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20"/><path d="M8 6l4-4 4 4"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <span>Pre-Rolls</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.125rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Cart Section */
+  .cart-section {
+    background: var(--color-bg);
+  }
+
+  .cart-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  /* Empty Cart */
+  .empty-cart {
+    text-align: center;
+    padding: var(--space-4xl) var(--space-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .empty-cart h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .empty-cart p {
+    max-width: 400px;
+    margin: 0 auto var(--space-xl);
+  }
+
+  /* Cart List */
+  .cart-list {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto auto;
+    gap: var(--space-lg);
+    align-items: center;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-image {
+    width: 100px;
+    height: 100px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .item-details h4 {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .item-variant {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .item-price {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-full);
+    padding: 4px;
+  }
+
+  .qty-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+  }
+
+  .qty-btn:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .qty-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: var(--space-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .remove-btn:hover {
+    color: #e74c3c;
+  }
+
+  /* Cart Summary */
+  .summary-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .summary-card h3 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-light);
+  }
+
+  .summary-total {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: var(--space-md) 0;
+  }
+
+  .promo-section {
+    margin: var(--space-lg) 0;
+  }
+
+  .promo-section label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+  }
+
+  .promo-input {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .promo-input input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+  }
+
+  .btn-full {
+    width: 100%;
+  }
+
+  .secure-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-md);
+    margin-bottom: 0;
+  }
+
+  /* Checkout Options */
+  .checkout-options {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .checkout-options-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+  }
+
+  .checkout-options-header h4 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .checkout-options-close {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: var(--space-xs);
+    transition: color 0.2s ease;
+  }
+
+  .checkout-options-close:hover {
+    color: var(--color-text);
+  }
+
+  .checkout-option-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: var(--space-sm);
+  }
+
+  .checkout-option-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+  }
+
+  .option-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+  }
+
+  .option-content {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .option-title {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .option-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .option-arrow {
+    color: var(--color-text-muted);
+  }
+
+  .social-login-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin: var(--space-lg) 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .social-login-divider::before,
+  .social-login-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  .social-login-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-google:hover {
+    background: #f8f8f8;
+    border-color: #4285F4;
+  }
+
+  .btn-facebook {
+    color: #1877F2;
+  }
+
+  .btn-facebook:hover {
+    background: #f0f4fa;
+    border-color: #1877F2;
+  }
+
+  .login-prompt {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-md);
+  }
+
+  .login-prompt a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  /* Trust Badges */
+  .trust-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  .trust-badges .badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: white;
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .badge-icon {
+    font-size: 1.25rem;
+  }
+
+  .trust-badges .badge span:last-child {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Continue Shopping */
+  .continue-section {
+    background: white;
+  }
+
+  .continue-card {
+    text-align: center;
+  }
+
+  .continue-card h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .continue-card > p {
+    margin-bottom: var(--space-xl);
+  }
+
+  .category-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .category-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-xl);
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+
+  .category-link:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-4px);
+  }
+
+  .link-icon {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .cart-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+      grid-template-columns: 80px 1fr;
+      gap: var(--space-md);
+    }
+
+    .item-price,
+    .quantity-control {
+      grid-column: 2;
+    }
+
+    .social-login-buttons {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .page-hero h1 {
+      font-size: 1.75rem;
+    }
+
+    .cart-item {
+      grid-template-columns: 70px 1fr;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+    }
+
+    .item-image {
+      width: 70px;
+      height: 70px;
+    }
+
+    .item-details h4 {
+      font-size: 0.9rem;
+    }
+
+    .quantity-control {
+      scale: 0.9;
+    }
+
+    .summary-card {
+      padding: var(--space-md);
+    }
+
+    .trust-badges {
+      grid-template-columns: 1fr;
+    }
+
+    .category-links {
+      flex-direction: column;
+    }
+
+    .category-link {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .checkout-option-btn {
+      padding: var(--space-sm);
+    }
+
+    .option-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  // Cart functionality
+  function renderCart() {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Clean up invalid cart items (no name or undefined)
+    const cleanedCart = cart.filter((item: any) => item.name && item.name !== 'undefined');
+    if (cleanedCart.length !== cart.length) {
+      localStorage.setItem('cart', JSON.stringify(cleanedCart));
+      cart = cleanedCart;
+      window.dispatchEvent(new CustomEvent('cartUpdated'));
+    }
+    
+    const emptyCart = document.getElementById('empty-cart');
+    const cartList = document.getElementById('cart-list');
+    const cartSummary = document.getElementById('cart-summary');
+
+    if (cart.length === 0) {
+      if (emptyCart) emptyCart.style.display = 'block';
+      if (cartList) cartList.style.display = 'none';
+      if (cartSummary) cartSummary.style.display = 'none';
+    } else {
+      if (emptyCart) emptyCart.style.display = 'none';
+      if (cartList) {
+        cartList.style.display = 'block';
+        const defaultIcon = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg>';
+        cartList.innerHTML = cart.map((item: any, index: number) => `
+          <div class="cart-item" data-index="${index}">
+            <div class="item-image">${item.icon || defaultIcon}</div>
+            <div class="item-details">
+              <h4>${item.name || 'Unknown Product'}</h4>
+              <p class="item-variant">${item.variant || ''}</p>
+              <p class="item-price">$${(item.price * item.quantity).toFixed(2)}</p>
+            </div>
+            <div class="quantity-control">
+              <button class="qty-btn qty-minus" data-index="${index}">−</button>
+              <span class="qty-value">${item.quantity}</span>
+              <button class="qty-btn qty-plus" data-index="${index}">+</button>
+            </div>
+            <button class="remove-btn" data-index="${index}" aria-label="Remove item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        `).join('');
+
+        // Add event listeners
+        cartList.querySelectorAll('.qty-minus').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const index = parseInt((e.currentTarget as HTMLElement).dataset.index || '0');
+            updateQuantity(index, -1);
+          });
+        });
+
+        cartList.querySelectorAll('.qty-plus').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const index = parseInt((e.currentTarget as HTMLElement).dataset.index || '0');
+            updateQuantity(index, 1);
+          });
+        });
+
+        cartList.querySelectorAll('.remove-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const index = parseInt((e.currentTarget as HTMLElement).dataset.index || '0');
+            removeItem(index);
+          });
+        });
+      }
+      if (cartSummary) {
+        cartSummary.style.display = 'block';
+        const subtotal = cart.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
+        const subtotalEl = document.getElementById('cart-subtotal');
+        const totalEl = document.getElementById('cart-total');
+        if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+        if (totalEl) totalEl.textContent = `$${subtotal.toFixed(2)}`;
+      }
+    }
+  }
+
+  function updateQuantity(index: number, delta: number) {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (cart[index]) {
+      cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+  }
+
+  function removeItem(index: number) {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    window.dispatchEvent(new Event('cartUpdated'));
+  }
+
+  // Initial render
+  renderCart();
+
+  // Listen for updates
+  window.addEventListener('storage', renderCart);
+  window.addEventListener('cartUpdated', renderCart);
+
+  // Checkout options
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const checkoutOptions = document.getElementById('checkout-options');
+  const checkoutOptionsClose = document.getElementById('checkout-options-close');
+  const guestCheckoutBtn = document.getElementById('guest-checkout-btn');
+  const createAccountBtn = document.getElementById('create-account-btn');
+  const checkoutGoogle = document.getElementById('checkout-google');
+  const checkoutFacebook = document.getElementById('checkout-facebook');
+
+  // Check if user is logged in
+  function isUserLoggedIn() {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    return user && user.isLoggedIn;
+  }
+
+  // Checkout button - show options or proceed directly if logged in
+  checkoutBtn?.addEventListener('click', () => {
+    if (isUserLoggedIn()) {
+      // User is logged in, proceed directly
+      proceedToCheckout();
+    } else {
+      // Show checkout options
+      if (checkoutOptions) {
+        checkoutOptions.style.display = 'block';
+        checkoutBtn.style.display = 'none';
+      }
+    }
+  });
+
+  // Close checkout options
+  checkoutOptionsClose?.addEventListener('click', () => {
+    if (checkoutOptions && checkoutBtn) {
+      checkoutOptions.style.display = 'none';
+      checkoutBtn.style.display = 'flex';
+    }
+  });
+
+  // Guest checkout
+  guestCheckoutBtn?.addEventListener('click', () => {
+    localStorage.setItem('checkoutMode', 'guest');
+    proceedToCheckout();
+  });
+
+  // Create account button
+  createAccountBtn?.addEventListener('click', () => {
+    localStorage.setItem('checkoutMode', 'create-account');
+    window.location.href = '/account?redirect=checkout';
+  });
+
+  // Social login for checkout
+  checkoutGoogle?.addEventListener('click', () => {
+    // Mock Google login for demo
+    const mockUser = {
+      isLoggedIn: true,
+      name: 'Demo User',
+      email: 'demo@gmail.com',
+      avatar: 'https://ui-avatars.com/api/?name=Demo+User&background=2d5a27&color=fff',
+      provider: 'google'
+    };
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    alert('Successfully signed in with Google! (Demo mode)');
+    proceedToCheckout();
+  });
+
+  checkoutFacebook?.addEventListener('click', () => {
+    // Mock Facebook login for demo
+    const mockUser = {
+      isLoggedIn: true,
+      name: 'Facebook User',
+      email: 'user@facebook.com',
+      avatar: 'https://ui-avatars.com/api/?name=Facebook+User&background=1877F2&color=fff',
+      provider: 'facebook'
+    };
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    alert('Successfully signed in with Facebook! (Demo mode)');
+    proceedToCheckout();
+  });
+
+  function proceedToCheckout() {
+    window.location.href = '/checkout';
+  }
+</script>

@@ -1,0 +1,1215 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+
+const title = "THC Gummies Australia | Weed Gummies | Buy Cannabis Gummies Online";
+const description = "Buy THC gummies & weed gummies Australia. Strongest cannabis gummies, pot gummies for pain & sleep. Lab-tested, discreet shipping. Hemp gummies available.";
+
+const products = [
+  // Featured/Popular
+  {
+    slug: "premium-thc-gummies-10mg",
+    name: "Premium THC Gummies 10mg",
+    type: "Popular",
+    thc: "10mg per gummy",
+    price: 350,
+    description: "Best THC gummies Australia - Premium full spectrum THC gummies with 10mg per piece. Perfect for relaxation and euphoria.",
+    effects: ["Euphoric", "Relaxed", "Creative"],
+    flavour: "Mixed Berry",
+    weight: "100 Pack"
+  },
+  {
+    slug: "strongest-thc-gummies-25mg",
+    name: "Strongest THC Gummies 25mg",
+    type: "High Potency",
+    thc: "25mg per gummy",
+    price: 505,
+    description: "Strongest THC gummies Australia - High potency 25mg THC per gummy for experienced users. Maximum effects.",
+    effects: ["Intense", "Long Lasting", "Euphoric"],
+    flavour: "Tropical Punch",
+    weight: "100 Pack"
+  },
+  {
+    slug: "ultra-strength-thc-gummies-50mg",
+    name: "Ultra Strength THC Gummies 50mg",
+    type: "High Potency",
+    thc: "50mg per gummy",
+    price: 660,
+    description: "Our strongest THC gummies. 50mg per gummy for experienced users only. Extremely potent - use responsibly.",
+    effects: ["Ultra Potent", "Extended Duration", "Heavy"],
+    flavour: "Cherry, Grape",
+    weight: "100 Pack"
+  },
+  // Sleep
+  {
+    slug: "thc-sleep-gummies",
+    name: "THC Sleep Gummies",
+    type: "Sleep",
+    thc: "15mg + CBN",
+    price: 455,
+    description: "THC gummies for sleep with added CBN. Fall asleep faster and enjoy deep, restful sleep. Wake refreshed.",
+    effects: ["Sleepy", "Calm", "Restful"],
+    flavour: "Lavender Berry",
+    weight: "100 Pack"
+  },
+  {
+    slug: "indica-thc-gummies",
+    name: "Indica THC Gummies",
+    type: "Sleep",
+    thc: "10mg per gummy",
+    price: 380,
+    description: "Relaxing indica THC gummies for evening use. Calming effects perfect for unwinding after a long day.",
+    effects: ["Relaxed", "Calm", "Sleepy"],
+    flavour: "Grape, Berry",
+    weight: "100 Pack"
+  },
+  // Daytime
+  {
+    slug: "sativa-thc-gummies",
+    name: "Sativa THC Gummies",
+    type: "Daytime",
+    thc: "10mg per gummy",
+    price: 380,
+    description: "Uplifting sativa THC gummies for daytime use. Energising effects perfect for creativity and focus.",
+    effects: ["Energetic", "Creative", "Uplifted"],
+    flavour: "Citrus, Mango",
+    weight: "100 Pack"
+  },
+  {
+    slug: "tropical-thc-gummies",
+    name: "Tropical THC Gummies",
+    type: "Daytime",
+    thc: "10mg per gummy",
+    price: 350,
+    description: "Delicious tropical flavoured THC gummies. Mango, pineapple and passion fruit flavours with uplifting effects.",
+    effects: ["Happy", "Uplifted", "Social"],
+    flavour: "Mango, Pineapple, Passion Fruit",
+    weight: "100 Pack"
+  },
+  // Wellness
+  {
+    slug: "thc-gummies-for-anxiety",
+    name: "THC Gummies for Anxiety",
+    type: "Wellness",
+    thc: "5mg + 15mg CBD",
+    price: 435,
+    description: "Specially formulated THC gummies with calming terpenes. Perfect for reducing stress and anxiety naturally.",
+    effects: ["Calm", "Stress Relief", "Peaceful"],
+    flavour: "Chamomile, Lavender",
+    weight: "100 Pack"
+  },
+  {
+    slug: "thc-gummies-for-pain",
+    name: "THC Gummies for Pain",
+    type: "Wellness",
+    thc: "20mg + CBG",
+    price: 485,
+    description: "High-dose THC gummies formulated for pain relief. Added CBG for enhanced anti-inflammatory effects.",
+    effects: ["Pain Relief", "Anti-Inflammatory", "Soothing"],
+    flavour: "Ginger, Turmeric",
+    weight: "100 Pack"
+  },
+  {
+    slug: "balanced-1-1-thc-cbd-gummies",
+    name: "Balanced 1:1 THC:CBD Gummies",
+    type: "Wellness",
+    thc: "10mg THC + 10mg CBD",
+    price: 400,
+    description: "Equal parts THC and CBD for balanced effects. Great for beginners or those seeking mild euphoria with wellness benefits.",
+    effects: ["Balanced", "Therapeutic", "Gentle"],
+    flavour: "Mixed Fruit",
+    weight: "100 Pack"
+  },
+  // Beginner
+  {
+    slug: "micro-dose-thc-gummies-2-5mg",
+    name: "Micro-Dose THC Gummies 2.5mg",
+    type: "Beginner",
+    thc: "2.5mg per gummy",
+    price: 250,
+    description: "Low-dose THC gummies for micro-dosing. 2.5mg per gummy for subtle effects and enhanced mood without feeling high.",
+    effects: ["Subtle", "Mood Boost", "Functional"],
+    flavour: "Strawberry, Peach",
+    weight: "100 Pack"
+  },
+  // Specialty
+  {
+    slug: "vegan-thc-gummies",
+    name: "Vegan THC Gummies",
+    type: "Specialty",
+    thc: "10mg per gummy",
+    price: 380,
+    description: "100% vegan and organic THC gummies. Made with pectin instead of gelatin. No artificial colours.",
+    effects: ["Relaxed", "Happy", "Natural"],
+    flavour: "Organic Fruit",
+    weight: "100 Pack"
+  },
+  {
+    slug: "thc-sour-gummies",
+    name: "THC Sour Gummies",
+    type: "Specialty",
+    thc: "10mg per gummy",
+    price: 365,
+    description: "Sour coated THC gummies with a tangy kick. Sour apple, lemon, and watermelon flavours.",
+    effects: ["Happy", "Relaxed", "Fun"],
+    flavour: "Sour Apple, Lemon, Watermelon",
+    weight: "100 Pack"
+  },
+  {
+    slug: "delta-9-thc-gummies",
+    name: "Delta 9 THC Gummies",
+    type: "Specialty",
+    thc: "10mg Δ9",
+    price: 400,
+    description: "Premium delta 9 THC gummies Australia. Pure delta-9 THC for authentic cannabis experience.",
+    effects: ["Authentic", "Classic", "Potent"],
+    flavour: "Classic Fruit Mix",
+    weight: "100 Pack"
+  },
+  {
+    slug: "thc-gummies-party-pack",
+    name: "THC Gummies Party Pack",
+    type: "Value",
+    thc: "5mg per gummy",
+    price: 760,
+    description: "Mixed flavour THC gummies variety pack. Assorted fruit flavours. Perfect for sharing with friends.",
+    effects: ["Social", "Fun", "Varied"],
+    flavour: "Assorted Fruit",
+    weight: "100 Pack"
+  }
+];
+
+const categories = [
+  { name: "Popular Gummies", count: 2, href: "#popular" },
+  { name: "High Potency", count: 2, href: "#high-potency" },
+  { name: "Sleep & Relaxation", count: 2, href: "#sleep" },
+  { name: "Daytime & Energy", count: 2, href: "#daytime" },
+  { name: "Wellness & Relief", count: 3, href: "#wellness" },
+  { name: "Beginner Friendly", count: 1, href: "#beginner" },
+  { name: "Specialty Gummies", count: 4, href: "#specialty" }
+];
+
+const popularProducts = products.filter(p => p.type === "Popular");
+const highPotencyProducts = products.filter(p => p.type === "High Potency");
+const sleepProducts = products.filter(p => p.type === "Sleep");
+const daytimeProducts = products.filter(p => p.type === "Daytime");
+const wellnessProducts = products.filter(p => p.type === "Wellness");
+const beginnerProducts = products.filter(p => p.type === "Beginner");
+const specialtyProducts = products.filter(p => p.type === "Specialty" || p.type === "Value");
+
+const getCardMeta = (slug: string, fallbackPrice: number) => {
+  const productData = getProductBySlug(slug);
+  const canonicalSlug = productData?.slug ?? slug;
+  return {
+    price: productData ? getMinPrice(productData.basePrice, productData.category) : fallbackPrice,
+    reviewCount: getReviewCount(canonicalSlug),
+    reviewRating: getReviewRating(canonicalSlug),
+  };
+};
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label section-label-light">Australia's Best-Selling Edibles</span>
+          <h1>THC Gummies Australia — Cannabis Edibles That Actually Work</h1>
+          <p>Sick of dodgy edibles that either do nothing or knock you flat? We've got you covered. Our THC gummies are lab-tested for exact potency so you know exactly what you're getting. Whether you want a chill night in, help with sleep, or something stronger — there's a gummy for that. From 5mg beginner doses to our legendary 50mg "proceed with caution" options.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="section shop-section">
+      <div class="container">
+        <div class="shop-layout">
+          <!-- Sidebar -->
+          <aside class="shop-sidebar">
+            <div class="sidebar-card">
+              <h3>Categories</h3>
+              <ul class="category-list">
+                {categories.map((cat) => (
+                  <li>
+                    <a href={cat.href}>
+                      <span>{cat.name}</span>
+                      <span class="count">{cat.count}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Potency Guide</h3>
+              <div class="type-info">
+                <div class="type-item">
+                  <span class="type-badge beginner">Beginner</span>
+                  <p>2.5-5mg THC. Subtle effects, functional.</p>
+                </div>
+                <div class="type-item">
+                  <span class="type-badge moderate">Moderate</span>
+                  <p>10-15mg THC. Standard recreational dose.</p>
+                </div>
+                <div class="type-item">
+                  <span class="type-badge strong">Strong</span>
+                  <p>25-50mg THC. Experienced users only.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>Need Help?</h3>
+              <p>Not sure which gummies are right for you? Our team can help you find the perfect match.</p>
+              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+            </div>
+          </aside>
+
+          <!-- Products -->
+          <div class="shop-products">
+            <!-- Popular Section -->
+            <div class="product-section" id="popular">
+              <h2 class="section-title">
+                <span class="type-badge popular">Popular</span>
+                Best Selling Gummies
+              </h2>
+              <p class="section-desc">Our most popular THC gummies. Trusted by thousands of Australian customers.</p>
+              <div class="products-grid">
+                {popularProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge popular">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- High Potency Section -->
+            <div class="product-section" id="high-potency">
+              <h2 class="section-title">
+                <span class="type-badge strong">Strong</span>
+                High Potency Gummies
+              </h2>
+              <p class="section-desc">Our strongest THC gummies for experienced users. Maximum potency, long-lasting effects.</p>
+              <div class="products-grid">
+                {highPotencyProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge strong">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Sleep Section -->
+            <div class="product-section" id="sleep">
+              <h2 class="section-title">
+                <span class="type-badge sleep">Sleep</span>
+                Sleep & Relaxation
+              </h2>
+              <p class="section-desc">Calming gummies formulated for restful sleep and deep relaxation.</p>
+              <div class="products-grid">
+                {sleepProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge sleep">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Daytime Section -->
+            <div class="product-section" id="daytime">
+              <h2 class="section-title">
+                <span class="type-badge daytime">Daytime</span>
+                Daytime & Energy
+              </h2>
+              <p class="section-desc">Uplifting gummies for daytime use, creativity, and social activities.</p>
+              <div class="products-grid">
+                {daytimeProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge daytime">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Wellness Section -->
+            <div class="product-section" id="wellness">
+              <h2 class="section-title">
+                <span class="type-badge wellness">Wellness</span>
+                Wellness & Relief
+              </h2>
+              <p class="section-desc">Therapeutic gummies formulated for anxiety, pain relief, and general wellness.</p>
+              <div class="products-grid">
+                {wellnessProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge wellness">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Beginner Section -->
+            <div class="product-section" id="beginner">
+              <h2 class="section-title">
+                <span class="type-badge beginner">Beginner</span>
+                Beginner Friendly
+              </h2>
+              <p class="section-desc">Low-dose gummies perfect for new users or micro-dosing.</p>
+              <div class="products-grid">
+                {beginnerProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge beginner">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+
+            <!-- Specialty Section -->
+            <div class="product-section" id="specialty">
+              <h2 class="section-title">
+                <span class="type-badge specialty">Specialty</span>
+                Specialty Gummies
+              </h2>
+              <p class="section-desc">Unique flavours, vegan options, and value packs.</p>
+              <div class="products-grid">
+                {specialtyProducts.map((product) => {
+                  const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
+                  return (
+                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                    <div class="product-badge specialty">{product.type}</div>
+                    <div class="product-image">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                      </svg>
+                    </div>
+                    <div class="product-content">
+                      <h3>{product.name}</h3>
+                      <div class="product-meta">
+                        <span class="thc">THC: {product.thc}</span>
+                        <span class="weight">{product.weight}</span>
+                      </div>
+                      <div class="product-reviews">
+                        {reviewCount > 0 ? (
+                          <>
+                            <span class="rating">★ {reviewRating.toFixed(1)}</span>
+                            <span class="review-count">({reviewCount} reviews)</span>
+                          </>
+                        ) : (
+                          <span class="review-count">No reviews yet</span>
+                        )}
+                      </div>
+                      <div class="product-effects">
+                        {product.effects.map((effect) => (
+                          <span class="effect-tag">{effect}</span>
+                        ))}
+                      </div>
+                      <div class="product-flavour">
+                        <strong>Flavour:</strong> {product.flavour}
+                      </div>
+                      <div class="product-footer">
+                        <span class="price">From ${price}</span>
+                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                          View Options
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="section info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+              </svg>
+            </div>
+            <h3>Precise Dosing</h3>
+            <p>Every gummy contains an exact amount of THC for consistent, predictable effects.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h3>Long-Lasting</h3>
+            <p>Gummies provide 4-8 hours of effects, much longer than smoking or vaping.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3>Lab Tested</h3>
+            <p>All gummies are tested for potency, pesticides, and contaminants.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hero-shape-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: -50px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .page-hero h1 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+
+  /* Shop Layout */
+  .shop-section {
+    background: var(--color-bg);
+  }
+
+  .shop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .shop-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-list li a {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.2s ease;
+  }
+
+  .category-list li:last-child a {
+    border-bottom: none;
+  }
+
+  .category-list li a:hover {
+    color: var(--color-primary);
+  }
+
+  .category-list .count {
+    background: var(--color-bg);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+  }
+
+  /* Type Info */
+  .type-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .type-item {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .type-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .type-item p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  .type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .type-badge.beginner {
+    background: #10b98120;
+    color: #059669;
+  }
+
+  .type-badge.moderate {
+    background: #f5920020;
+    color: #d97706;
+  }
+
+  .type-badge.strong {
+    background: #7c3aed20;
+    color: #7c3aed;
+  }
+
+  .type-badge.popular {
+    background: #f59e0b20;
+    color: #d97706;
+  }
+
+  .type-badge.sleep {
+    background: #6366f120;
+    color: #4f46e5;
+  }
+
+  .type-badge.daytime {
+    background: #eab30820;
+    color: #ca8a04;
+  }
+
+  .type-badge.wellness {
+    background: #14b8a620;
+    color: #0d9488;
+  }
+
+  .type-badge.specialty {
+    background: #ec489920;
+    color: #db2777;
+  }
+
+  /* Product Section */
+  .product-section {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .product-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Product Card */
+  .product-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #faf8f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.beginner {
+    background: #10b981;
+    color: white;
+  }
+
+  .product-badge.moderate {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.strong {
+    background: #7c3aed;
+    color: white;
+  }
+
+  .product-badge.popular {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .product-badge.sleep {
+    background: #6366f1;
+    color: white;
+  }
+
+  .product-badge.daytime {
+    background: #eab308;
+    color: white;
+  }
+
+  .product-badge.wellness {
+    background: #14b8a6;
+    color: white;
+  }
+
+  .product-badge.specialty {
+    background: #ec4899;
+    color: white;
+  }
+
+  .product-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
+    color: #2d5a3f;
+    position: relative;
+  }
+
+  .product-image svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.7;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+
+  .product-meta .thc {
+    font-weight: 700;
+    color: #2d5a3f;
+  }
+
+  .product-meta .weight {
+    color: #888;
+  }
+
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .product-reviews .rating {
+    font-weight: 700;
+    color: #f5b301;
+  }
+
+  .product-reviews .review-count {
+    color: #888;
+    font-weight: 500;
+  }
+
+  .product-effects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .effect-tag {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    transition: all 0.2s ease;
+  }
+
+  .effect-tag:hover {
+    border-color: #2d5a3f;
+    color: #2d5a3f;
+  }
+
+  .product-flavour {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: none;
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .product-footer .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    background: #1a472a;
+    color: white;
+    .effect-tag {
+      background: transparent;
+      border: 1px solid #ddd;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #555;
+      transition: all 0.2s ease;
+    }
+
+    .effect-tag:hover {
+      border-color: #2d5a3f;
+      color: #2d5a3f;
+    }
+    color: #2d5a3f;
+  }
+    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    margin: 0 auto var(--space-md);
+  }
+
+  .info-card h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .info-card p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .shop-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shop-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Navigate to product detail page
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const slug = btn.getAttribute('data-slug');
+      if (slug) {
+        window.location.href = `/shop/product/${slug}`;
+      }
+    });
+  });
+</script>
