@@ -544,7 +544,6 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   .product-main-image {
     background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
     border-radius: 20px;
-    padding: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -552,6 +551,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
+    aspect-ratio: 3 / 2;
   }
 
   .product-main-image img {
@@ -562,6 +562,11 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
     top: 0;
     left: 0;
     border-radius: 20px;
+  }
+
+  .product-main-image svg {
+    width: 120px;
+    height: 120px;
   }
 
   .product-image-area .product-badge {
