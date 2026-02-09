@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const title = "How to Buy Weed Online Discreetly Australia | Simple 4-Step Process";
+const title = "How to Buy Weed Online Australia | 4-Step Process";
 const description = "How to buy weed online discreetly in Australia. Browse, cart, checkout, delivered. Plain packaging, no hassle. The easiest way to buy cannabis online.";
 
 const steps = [
@@ -93,9 +93,51 @@ const faqs = [
     answer: "We accept all major credit cards, debit cards, and various other secure payment options."
   }
 ];
+
+// HowTo Schema
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Buy Weed Online in Australia",
+  "description": "A simple 4-step guide to buying cannabis online with discreet delivery anywhere in Australia.",
+  "step": steps.map((step, index) => ({
+    "@type": "HowToStep",
+    "position": index + 1,
+    "name": step.title,
+    "text": step.description,
+    "itemListElement": step.details.map((detail) => ({
+      "@type": "HowToDirection",
+      "text": detail
+    }))
+  })),
+  "totalTime": "PT10M"
+};
+
+// FAQ Schema for the how-it-works page FAQs
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://mullawaysmedicalcannabis.com.au/how-it-works" }
+  ]
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[howToSchema, faqSchema, breadcrumbSchema]}>
   <Header />
   
   <main>

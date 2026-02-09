@@ -159,7 +159,7 @@ function buildOverviewHtml(product: Product): string {
   const potency = [thc, cbd].filter(Boolean).join(' ');
 
   return `
-<h1>Buy ${product.name} ${getCategoryLabel(product)} Australia</h1>
+<h2>Buy ${product.name} ${getCategoryLabel(product)} Australia</h2>
 <p>${getProductDescriptionHook(product)}</p>
 <ul>
   <li><strong>Benefit-led effects:</strong> ${effects} to support ${primaryBenefit.toLowerCase()}.</li>

@@ -3,11 +3,34 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
-const title = "Cannabis Laws Queensland 2026 | Is Weed Legal in QLD? | Mullaways Medical";
+const title = "Cannabis Laws Queensland 2026 | Is Weed Legal QLD?";
 const description = "Complete guide to cannabis laws in Queensland 2026. Weed possession limits, penalties, medical cannabis access & recent QLD law changes explained.";
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
+  "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
+  "datePublished": "2026-01-01",
+  "dateModified": "2026-01-01",
+  "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-laws-queensland",
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mullawaysmedicalcannabis.com.au/blog" },
+    { "@type": "ListItem", "position": 3, "name": "Cannabis Laws Queensland", "item": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-laws-queensland" }
+  ]
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
   <Header />
   
   <main class="pt-20">

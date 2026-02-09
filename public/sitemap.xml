@@ -44,24 +44,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mullawaysmedicalcannabis.com.au/cart</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://mullawaysmedicalcannabis.com.au/checkout</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://mullawaysmedicalcannabis.com.au/account</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://mullawaysmedicalcannabis.com.au/privacy-policy</loc>
     <lastmod>2026-02-05</lastmod>
     <changefreq>yearly</changefreq>

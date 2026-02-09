@@ -4,8 +4,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../data/products';
 
-const title = "Buy Weed Online Australia | Cannabis Dispensary Near Me | THC Gummies & More";
-const description = "Looking for a weed shop near me or cannabis pharmacy near me? Buy cannabis online: THC gummies, flower, edibles, vapes & concentrates. Cheapest prices, lab-tested. Discreet delivery Australia-wide.";
+const title = "Buy Weed Online Australia | Cannabis Shop | Mullaways";
+const description = "Buy cannabis online Australia. THC gummies, flower, edibles, vapes & concentrates. Lab-tested, cheapest prices. Discreet delivery Australia-wide.";
 
 const categories = [
   {
@@ -361,9 +361,33 @@ const categoryEffects: Record<string, string[]> = {
   Vape: ["Discreet", "Fast", "Uplifting"],
   Hash: ["Traditional", "Rich", "Relaxed"]
 };
+
+// Shop page schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop" }
+  ]
+};
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Cannabis Products Australia",
+  "description": "Browse our complete range of lab-tested cannabis products available for delivery across Australia.",
+  "numberOfItems": categories.length,
+  "itemListElement": categories.map((cat, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": cat.name,
+    "url": `https://mullawaysmedicalcannabis.com.au${cat.href}`
+  }))
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema]}>
   <Header />
 
   <main>

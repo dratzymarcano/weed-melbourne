@@ -167,9 +167,47 @@ const stats = [
   { value: "100%", label: "Lab Tested" },
   { value: "24hr", label: "Fast Dispatch" },
 ];
+
+// WebSite schema with SearchAction for sitelinks search box
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Mullaways Medical Cannabis",
+  "url": "https://mullawaysmedicalcannabis.com.au",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://mullawaysmedicalcannabis.com.au/shop?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+
+// Organization schema (enhanced)
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Mullaways Medical Cannabis",
+  "url": "https://mullawaysmedicalcannabis.com.au",
+  "logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
+  "description": "Australia's trusted online cannabis dispensary. Buy weed online with discreet delivery Australia-wide.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mullaways",
+    "addressRegion": "NSW",
+    "addressCountry": "AU"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "areaServed": "AU"
+  },
+  "sameAs": []
+};
 ---
 
-<Layout title="Buy Weed Online Australia | Cannabis Dispensary Near Me | Mullaways Medical" description="Buy weed online Australia from the best cannabis dispensary near me. THC gummies, edibles, flower & vapes. Cheapest medical cannabis Australia with discreet delivery. Sydney, Melbourne, Brisbane.">
+<Layout title="Buy Weed Online Australia | Cannabis Dispensary | Mullaways" description="Buy weed online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary. Lab-tested, discreet delivery Australia-wide." schema={[webSiteSchema, orgSchema]}>
 	<Header />
 	<main>
 		<!-- Hero Section -->

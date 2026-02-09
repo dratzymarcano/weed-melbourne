@@ -2,10 +2,18 @@
 interface Props {
 	title: string;
 	description?: string;
-	schema?: object;
+	schema?: object | object[];
+	ogType?: string;
+	ogImage?: string;
 }
 
-const { title, description = "Mullaways Medical Cannabis - Australia's trusted online dispensary. Buy weed online with discreet Australia-wide delivery. Lab-tested medical cannabis products.", schema } = Astro.props;
+const { 
+	title, 
+	description = "Mullaways Medical Cannabis - Australia's trusted online dispensary. Buy weed online with discreet Australia-wide delivery. Lab-tested medical cannabis products.", 
+	schema,
+	ogType = "website",
+	ogImage = "https://mullawaysmedicalcannabis.com.au/og-default.png"
+} = Astro.props;
 
 const defaultSchema = {
 	"@context": "https://schema.org",
@@ -29,6 +37,7 @@ const defaultSchema = {
 };
 
 const schemaData = schema || defaultSchema;
+const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 ---
 
 <!doctype html>
@@ -44,15 +53,17 @@ const schemaData = schema || defaultSchema;
 		<!-- Open Graph -->
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:url" content={Astro.url.href} />
 		<meta property="og:site_name" content="Mullaways Medical Cannabis" />
 		<meta property="og:locale" content="en_AU" />
+		<meta property="og:image" content={ogImage} />
 		
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
 		
 		<!-- Geo Tags -->
 		<meta name="geo.region" content="AU-NSW" />
@@ -68,7 +79,9 @@ const schemaData = schema || defaultSchema;
 		</noscript>
 		
 		<!-- Schema.org Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+		{schemaArray.map((s) => (
+			<script type="application/ld+json" set:html={JSON.stringify(s)} />
+		))}
 		
 		<title>{title}</title>
 	</head>

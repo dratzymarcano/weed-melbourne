@@ -31,9 +31,91 @@ const title = `Buy ${product.name} Australia | ${product.type} ${categoryLabel} 
 // Generate meta description (160 chars max)
 const baseDesc = `Buy ${product.name} online in Australia. ${product.type} ${categoryLabel.toLowerCase()} with ${product.thc} THC. ${product.effects.slice(0, 2).join(', ')} effects.`;
 const description = baseDesc.length > 160 ? baseDesc.substring(0, 157) + '...' : baseDesc + ' Discreet delivery Australia-wide from Mullaways Medical Cannabis.'.substring(0, 160 - baseDesc.length);
+
+// --- Structured Data: Product Schema ---
+const minPrice = Math.round(product.basePrice * weightVariants[0].multiplier);
+const maxPrice = Math.round(product.basePrice * weightVariants[weightVariants.length - 1].multiplier);
+
+const productSchema: Record<string, any> = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": product.name,
+  "description": product.description,
+  "brand": {
+    "@type": "Brand",
+    "name": "Mullaways Medical Cannabis"
+  },
+  "sku": product.slug,
+  "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}`,
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "category": categoryLabel,
+  "offers": {
+    "@type": "AggregateOffer",
+    "lowPrice": minPrice,
+    "highPrice": maxPrice,
+    "priceCurrency": "AUD",
+    "availability": "https://schema.org/InStock",
+    "offerCount": weightVariants.length,
+    "seller": {
+      "@type": "Organization",
+      "name": "Mullaways Medical Cannabis"
+    }
+  }
+};
+
+if (reviewCount > 0) {
+  productSchema["aggregateRating"] = {
+    "@type": "AggregateRating",
+    "ratingValue": reviewRating.toFixed(1),
+    "reviewCount": reviewCount,
+    "bestRating": "5",
+    "worstRating": "1"
+  };
+  productSchema["review"] = reviewItems.slice(0, 5).map((r: ProductReview) => ({
+    "@type": "Review",
+    "author": { "@type": "Person", "name": r.name },
+    "datePublished": r.date,
+    "reviewBody": r.body,
+    "name": r.title,
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": r.rating.toFixed(1),
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  }));
+}
+
+// --- Structured Data: BreadcrumbList ---
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop" },
+    { "@type": "ListItem", "position": 3, "name": categoryLabel, "item": `https://mullawaysmedicalcannabis.com.au/shop/${product.category}` },
+    { "@type": "ListItem", "position": 4, "name": product.name, "item": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}` }
+  ]
+};
+
+// --- Structured Data: FAQPage ---
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+
+const schemas = [productSchema, breadcrumbSchema, faqSchema];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={schemas} ogType="product">
   <Header />
   
   <main>

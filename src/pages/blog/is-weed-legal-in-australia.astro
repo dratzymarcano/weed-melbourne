@@ -3,11 +3,34 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
-const title = "Is Weed Legal in Australia? 2026 Cannabis Laws | Australia Weed Laws Guide";
+const title = "Is Weed Legal in Australia? 2026 Cannabis Laws";
 const description = "Australia weed laws explained. Is marijuana legal in Australia? Cannabis laws by state, penalties, and legal medical cannabis. Complete 2026 guide.";
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
+  "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
+  "datePublished": "2026-01-15",
+  "dateModified": "2026-01-15",
+  "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/is-weed-legal-in-australia",
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mullawaysmedicalcannabis.com.au/blog" },
+    { "@type": "ListItem", "position": 3, "name": "Is Weed Legal in Australia?", "item": "https://mullawaysmedicalcannabis.com.au/blog/is-weed-legal-in-australia" }
+  ]
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
   <Header />
   <main>
     <article class="blog-article">
