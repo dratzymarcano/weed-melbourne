@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 const title = "How Much Does Weed Cost in Australia? 2026 Prices";
 const description = "Complete guide to Australian weed prices in 2026. How much does a gram cost? Compare cannabis prices by state, strain, and product type.";
@@ -33,6 +34,7 @@ const breadcrumbSchema = {
 <Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
   <Header />
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog'}, {label: 'Cannabis Prices Australia'}]} />
     <article class="blog-article">
       <!-- Hero -->
       <header class="article-header">

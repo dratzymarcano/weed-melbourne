@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const title = "About Us | Cannabis Australia | Marijuana Dispensary | Mullaways Medical";
 const description = "Cannabis Australia done right. Just Aussies who got tired of the BS. Mullaways Medical: marijuana Australia's trusted source. Lab-tested weed, honest prices, discreet delivery.";
@@ -56,6 +57,7 @@ const team = [
   <Header />
   
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'About Us'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">

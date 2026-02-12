@@ -2,11 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
 <Layout title="Cannabis Disclaimer Australia | Mullaways Medical Cannabis" description="Important legal information for buying weed online in Australia. Age restrictions, product information & responsible use guidelines.">
   <Header />
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Disclaimer'}]} />
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-bg">

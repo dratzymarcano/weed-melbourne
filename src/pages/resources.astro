@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const title = "Cannabis Resources Australia | Is Weed Legal? Cannabis Laws & Guides | Mullaways";
 const description = "Cannabis resources for Australians. Is weed legal in Australia? Marijuana law by state, buy cannabinoids safely, strain guides & health info. Best cannabis clinic Australia resources.";
@@ -86,6 +87,7 @@ const faqs = [
 <Layout title={title} description={description}>
   <Header />
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Resources'}]} />
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-bg">

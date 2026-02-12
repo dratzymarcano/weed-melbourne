@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 import { allProducts, getWeightVariants, getReviewCount, getReviewRating, getProductReviews, getProductDescriptionHook, getProductLongDescription, getProductFaqItems, getMinPrice } from '../../../data/products';
 import type { Product, ProductReview } from '../../../data/products';
 
@@ -120,19 +121,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   
   <main>
     <!-- Breadcrumb -->
-    <section class="breadcrumb-section">
-      <div class="container">
-        <nav class="breadcrumb">
-          <a href="/">Home</a>
-          <span class="separator">/</span>
-          <a href="/shop">Shop</a>
-          <span class="separator">/</span>
-          <a href={`/shop/${product.category}`}>{product.category.charAt(0).toUpperCase() + product.category.slice(1)}</a>
-          <span class="separator">/</span>
-          <span class="current">{product.name}</span>
-        </nav>
-      </div>
-    </section>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop'}, {label: product.category.charAt(0).toUpperCase() + product.category.slice(1), href: `/shop/${product.category}`}, {label: product.name}]} />
 
     <!-- Product Detail -->
     <section class="product-detail-section">
@@ -487,24 +476,6 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
 </script>
 
 <style>
-  .breadcrumb-section {
-    padding: 24px 0;
-    background: var(--color-bg);
-  }
-
-  .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  .breadcrumb a {
-    color: #666;
-    text-decoration: none;
-  }
-
   .effect-tag {
     background: transparent;
     border: 1px solid #ddd;
@@ -518,10 +489,6 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   .effect-tag:hover {
     border-color: #2d5a3f;
     color: #2d5a3f;
-  }
-  .breadcrumb .current {
-    color: #1a1a1a;
-    font-weight: 500;
   }
 
   .product-detail-section {
@@ -1391,10 +1358,6 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
     .trust-signals {
       flex-direction: column;
       gap: 12px;
-    }
-
-    .breadcrumb {
-      flex-wrap: wrap;
     }
 
     .product-main-image {

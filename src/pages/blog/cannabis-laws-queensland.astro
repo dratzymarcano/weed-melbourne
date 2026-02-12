@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 const title = "Cannabis Laws Queensland 2026 | Is Weed Legal QLD?";
 const description = "Complete guide to cannabis laws in Queensland 2026. Weed possession limits, penalties, medical cannabis access & recent QLD law changes explained.";
@@ -34,6 +35,7 @@ const breadcrumbSchema = {
   <Header />
   
   <main class="pt-20">
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog'}, {label: 'Cannabis Laws Queensland'}]} />
     <!-- Hero Section -->
     <section class="bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 text-white py-16">
       <div class="max-w-4xl mx-auto px-4">

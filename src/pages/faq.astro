@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const title = "Cannabis FAQ Australia | Buy Weed Online Questions";
 const description = "Buying weed online in Australia? How much does weed cost? Is cannabis legal? Get real answers about ordering, delivery & more.";
@@ -155,6 +156,7 @@ const breadcrumbSchema = {
   <Header />
   
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'FAQ'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">

@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
 
 const title = "Buy Weed Australia | Strongest Strains Near Me | Cannabis Flower Online";
@@ -244,6 +245,7 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
   <Header />
   
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop'}, {label: 'Flower'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">

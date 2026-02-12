@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 const title = "Cannabis Blog Australia | Weed Laws & Guides 2026";
 const description = "Australian cannabis blog answering your questions: Is weed legal in Australia? How much does weed cost? Where to buy weed near me? Expert guides, laws & strain reviews.";
@@ -99,6 +100,7 @@ const categories = [...new Set(posts.map(p => p.category))];
 <Layout title={title} description={description}>
   <Header />
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog'}]} />
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-bg">

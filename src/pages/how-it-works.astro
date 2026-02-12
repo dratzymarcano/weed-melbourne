@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const title = "How to Buy Weed Online Australia | 4-Step Process";
 const description = "How to buy weed online discreetly in Australia. Browse, cart, checkout, delivered. Plain packaging, no hassle. The easiest way to buy cannabis online.";
@@ -141,6 +142,7 @@ const breadcrumbSchema = {
   <Header />
   
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'How It Works'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">
