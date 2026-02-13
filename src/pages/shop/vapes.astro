@@ -987,28 +987,53 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
   }
 
   /* Info Section */
-  .effect-tag {
-    background: transparent;
-    border: 1px solid #ddd;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    color: #555;
-    transition: all 0.2s ease;
+  .info-section {
+    background: linear-gradient(135deg, #f0f7f2 0%, #e8f5e9 100%);
+    padding: var(--space-3xl) 0;
   }
 
-  .effect-tag:hover {
-    border-color: #2d5a3f;
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .info-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .info-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f5e9;
     color: #2d5a3f;
+    border-radius: 50%;
+    margin: 0 auto var(--space-md);
   }
 
   .info-card h3 {
     margin-bottom: var(--space-sm);
+    font-size: 1.15rem;
+    color: #1a1a1a;
   }
 
   .info-card p {
     color: var(--color-text-muted);
     font-size: 0.9rem;
+    line-height: 1.6;
   }
 
   /* Responsive */
