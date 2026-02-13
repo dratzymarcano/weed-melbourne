@@ -1,55 +1,56 @@
 // All products data for the shop
-// Minimum order: Flower = 28g, Other products = $220-250 AUD minimum
+// Minimum order: $220-250 AUD across all categories
 
 export const flowerWeights = [
-  { label: "28g (1 Oz)", value: "28g", multiplier: 1.85 },
-  { label: "56g (2 Oz)", value: "56g", multiplier: 3.5 },
-  { label: "113g (QP)", value: "113g", multiplier: 6.8 },
-  { label: "227g (Half Lb)", value: "227g", multiplier: 13 },
-  { label: "454g (1 Lb)", value: "454g", multiplier: 24 },
+  { label: "28g (1 Oz)", value: "28g", multiplier: 1.6 },
+  { label: "56g (2 Oz)", value: "56g", multiplier: 3.0 },
+  { label: "113g (QP)", value: "113g", multiplier: 5.9 },
+  { label: "227g (Half Lb)", value: "227g", multiplier: 11.2 },
+  { label: "454g (1 Lb)", value: "454g", multiplier: 20.8 },
 ];
 
 export const concentrateWeights = [
-  { label: "7g", value: "7g", multiplier: 3.3 },
-  { label: "14g", value: "14g", multiplier: 6.2 },
-  { label: "28g", value: "28g", multiplier: 11.5 },
-  { label: "56g", value: "56g", multiplier: 21 },
+  { label: "7g", value: "7g", multiplier: 2.9 },
+  { label: "14g", value: "14g", multiplier: 5.4 },
+  { label: "28g", value: "28g", multiplier: 10.1 },
+  { label: "56g", value: "56g", multiplier: 18.5 },
 ];
 
 export const edibleQuantities = [
+  { label: "50 Pack", value: "50 pack", multiplier: 3.3 },
   { label: "100 Pack", value: "100 pack", multiplier: 5.1 },
   { label: "200 Pack", value: "200 pack", multiplier: 9.5 },
   { label: "500 Pack", value: "500 pack", multiplier: 22 },
 ];
 
 export const vapeQuantities = [
-  { label: "5 Pack", value: "5 pack", multiplier: 4.2 },
-  { label: "10 Pack", value: "10 pack", multiplier: 7.8 },
-  { label: "20 Pack", value: "20 pack", multiplier: 14 },
+  { label: "5 Pack", value: "5 pack", multiplier: 3.8 },
+  { label: "10 Pack", value: "10 pack", multiplier: 7.0 },
+  { label: "20 Pack", value: "20 pack", multiplier: 12.7 },
 ];
 
 export const prerollQuantities = [
-  { label: "12 Pack", value: "12 pack", multiplier: 10 },
+  { label: "10 Pack", value: "10 pack", multiplier: 9.0 },
   { label: "25 Pack", value: "25 pack", multiplier: 19 },
   { label: "50 Pack", value: "50 pack", multiplier: 35 },
 ];
 
 export const hashWeights = [
-  { label: "7g", value: "7g", multiplier: 5.2 },
-  { label: "14g", value: "14g", multiplier: 9.5 },
-  { label: "28g", value: "28g", multiplier: 17.5 },
-  { label: "56g", value: "56g", multiplier: 32 },
+  { label: "7g", value: "7g", multiplier: 4.5 },
+  { label: "14g", value: "14g", multiplier: 8.2 },
+  { label: "28g", value: "28g", multiplier: 15.1 },
+  { label: "56g", value: "56g", multiplier: 27.7 },
 ];
 
 // Get the minimum purchasable price for a product based on its category
 export function getMinPrice(basePrice: number, category: string): number {
   const multipliers: Record<string, number> = {
-    flower: 1.85,       // 28g minimum
-    concentrates: 3.3,  // 7g minimum
-    edibles: 5.1,       // 100 pack minimum
-    vapes: 4.2,         // 5 pack minimum
-    'pre-rolls': 10,    // 12 pack minimum
-    hash: 5.2,          // 7g minimum
+    flower: 1.6,        // 28g minimum
+    concentrates: 2.9,  // 7g minimum
+    edibles: 3.3,       // 50 pack minimum
+    vapes: 3.8,         // 5 pack minimum
+    'pre-rolls': 9.0,   // 10 pack minimum
+    hash: 4.5,          // 7g minimum
   };
   const multiplier = multipliers[category] ?? 1;
   return Math.round(basePrice * multiplier);
