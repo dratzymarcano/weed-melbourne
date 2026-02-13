@@ -33,507 +33,572 @@ const breadcrumbSchema = {
 
 <Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
   <Header />
-  
+
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog'}, {label: 'How to Buy Weed Safely'}]} />
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 text-white py-16">
-      <div class="max-w-4xl mx-auto px-4">
-        <nav class="text-sm mb-6">
-          <ol class="flex items-center space-x-2">
-            <li><a href="/" class="hover:text-green-300 transition-colors">Home</a></li>
-            <li><span class="mx-2">/</span></li>
-            <li><a href="/blog" class="hover:text-green-300 transition-colors">Blog</a></li>
-            <li><span class="mx-2">/</span></li>
-            <li class="text-green-300">Buy Weed Safely</li>
-          </ol>
-        </nav>
-        <span class="inline-block bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
-          Safety Guide
-        </span>
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">How to Buy Weed Safely in Australia</h1>
-        <p class="text-xl text-green-100 mb-6">Protect yourself from scams and ensure quality with our safety checklist</p>
-        <div class="flex items-center space-x-6 text-green-200 text-sm">
-          <span>By Mullaways Medical Team</span>
-          <span>•</span>
-          <span>Updated January 2026</span>
-          <span>•</span>
-          <span>9 min read</span>
+    <article class="blog-article">
+      <header class="article-header">
+        <div class="container">
+          <div class="header-content">
+            <span class="category">Safety Guide</span>
+            <h1>How to Buy Weed Safely in Australia</h1>
+            <p class="subtitle">Protect yourself from scams and ensure quality with our safety checklist</p>
+            <div class="meta">
+              <span>By Mullaways Medical Team</span>
+              <span>•</span>
+              <span>Updated January 2026</span>
+              <span>•</span>
+              <span>9 min read</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="article-content">
+        <div class="container-narrow">
+          <!-- Introduction -->
+          <div class="intro-text">
+            <p>With the growing interest in cannabis in Australia, many people are looking for ways to <strong>buy weed safely</strong>. Whether you're exploring legal CBD products or considering your options, understanding how to protect yourself from scams and identify quality products is essential.</p>
+            <p>This guide covers the key safety considerations, red flags to watch for, and how to ensure you're getting quality products from reliable sources.</p>
+          </div>
+
+          <!-- Warning Section -->
+          <div class="intro-box intro-box-red">
+            <h4>⚠️ Legal Disclaimer</h4>
+            <p>Cannabis laws vary by Australian state and territory. THC products remain illegal for recreational use across Australia. This guide is for educational purposes only. Always understand and comply with your local laws before making any purchasing decisions.</p>
+          </div>
+
+          <!-- Common Scams Section -->
+          <section>
+            <h2>Common Cannabis Scams to Avoid</h2>
+
+            <div class="scam-list">
+              <div class="scam-card">
+                <div class="scam-icon">🚨</div>
+                <div>
+                  <h3>Upfront Payment Scams</h3>
+                  <p>Scammers ask for full payment via untraceable methods (cryptocurrency, gift cards, wire transfers) and then disappear without delivering products.</p>
+                  <div class="red-flags">
+                    <strong>Red Flags:</strong>
+                    <ul>
+                      <li>• Only accepting cryptocurrency or gift cards</li>
+                      <li>• Asking for "shipping fees" after initial payment</li>
+                      <li>• No refund or satisfaction guarantee</li>
+                      <li>• Pressure to pay immediately</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="scam-card">
+                <div class="scam-icon">📱</div>
+                <div>
+                  <h3>Fake Social Media Vendors</h3>
+                  <p>Instagram, Snapchat, and Telegram are full of accounts claiming to sell cannabis. These are almost always scams or law enforcement operations.</p>
+                  <div class="red-flags">
+                    <strong>Red Flags:</strong>
+                    <ul>
+                      <li>• New accounts with few followers</li>
+                      <li>• Stock photos of products</li>
+                      <li>• Too-good-to-be-true prices</li>
+                      <li>• Aggressive DM solicitation</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="scam-card">
+                <div class="scam-icon">💊</div>
+                <div>
+                  <h3>Contaminated or Fake Products</h3>
+                  <p>Some sellers offer products that are synthetic cannabinoids, contaminated with pesticides, or completely fake CBD/THC products.</p>
+                  <div class="red-flags">
+                    <strong>Red Flags:</strong>
+                    <ul>
+                      <li>• Unusually cheap prices</li>
+                      <li>• No lab testing or certificates</li>
+                      <li>• Packaging that looks unprofessional</li>
+                      <li>• Products with no brand or source information</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="scam-card">
+                <div class="scam-icon">👮</div>
+                <div>
+                  <h3>Law Enforcement Operations</h3>
+                  <p>Some online cannabis "sellers" are actually law enforcement operations designed to identify and charge buyers.</p>
+                  <div class="red-flags">
+                    <strong>Red Flags:</strong>
+                    <ul>
+                      <li>• Too perfect reputation with no verifiable reviews</li>
+                      <li>• Willing to ship anything, anywhere</li>
+                      <li>• Asking for personal identifying information</li>
+                      <li>• Requesting to meet in person for transactions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Safety Checklist -->
+          <section>
+            <h2>Safety Checklist: What to Look For</h2>
+            <div class="checklist-box">
+              <h3>✓ Signs of a Legitimate Operation</h3>
+              <div class="checklist-grid">
+                <div class="checklist-col">
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Established Website</strong>
+                      <p>Professional website with proper security (HTTPS), privacy policy, and terms of service</p>
+                    </div>
+                  </div>
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Transparent Contact Information</strong>
+                      <p>Real email addresses, phone numbers, and physical address (if applicable)</p>
+                    </div>
+                  </div>
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Lab Testing Results</strong>
+                      <p>Third-party Certificates of Analysis (COAs) for products</p>
+                    </div>
+                  </div>
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Clear Product Information</strong>
+                      <p>Detailed descriptions, ingredients, dosage information, and source</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="checklist-col">
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Realistic Pricing</strong>
+                      <p>Prices that align with market averages—not too cheap or unrealistic</p>
+                    </div>
+                  </div>
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Customer Reviews</strong>
+                      <p>Verifiable reviews from real customers, including some constructive criticism</p>
+                    </div>
+                  </div>
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Secure Payment Options</strong>
+                      <p>Multiple payment methods with buyer protection</p>
+                    </div>
+                  </div>
+                  <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                      <strong>Refund/Return Policy</strong>
+                      <p>Clear policies for returns, refunds, or issues with orders</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Quality Identification -->
+          <section>
+            <h2>How to Identify Quality Cannabis Products</h2>
+
+            <div class="quality-cards">
+              <div class="quality-card">
+                <h3>🌿 For Flower Products</h3>
+                <div class="quality-grid">
+                  <div>
+                    <h4 class="green">Quality Indicators</h4>
+                    <ul>
+                      <li>• Dense, well-trimmed buds</li>
+                      <li>• Vibrant colours (green, purple, orange hairs)</li>
+                      <li>• Visible trichomes (crystals)</li>
+                      <li>• Strong, pleasant aroma</li>
+                      <li>• Slightly sticky texture</li>
+                      <li>• No visible seeds or stems</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="red">Warning Signs</h4>
+                    <ul>
+                      <li>• Brown, dried appearance</li>
+                      <li>• Hay or musty smell</li>
+                      <li>• Visible mold or mildew</li>
+                      <li>• Crumbles to dust</li>
+                      <li>• Chemical smell</li>
+                      <li>• Suspiciously low price</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quality-card">
+                <h3>🍬 For Edibles &amp; CBD Products</h3>
+                <div class="quality-grid">
+                  <div>
+                    <h4 class="green">Quality Indicators</h4>
+                    <ul>
+                      <li>• Professional, sealed packaging</li>
+                      <li>• Clear dosage information</li>
+                      <li>• Ingredients list</li>
+                      <li>• Batch numbers for traceability</li>
+                      <li>• QR codes linking to lab results</li>
+                      <li>• Manufacture and expiry dates</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="red">Warning Signs</h4>
+                    <ul>
+                      <li>• Homemade-looking packaging</li>
+                      <li>• Vague or missing dosage info</li>
+                      <li>• No ingredients list</li>
+                      <li>• Copied branding from known brands</li>
+                      <li>• Unrealistic THC/CBD claims</li>
+                      <li>• No way to verify authenticity</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quality-card">
+                <h3>🧪 For CBD Oil</h3>
+                <div class="quality-grid">
+                  <div>
+                    <h4 class="green">Quality Indicators</h4>
+                    <ul>
+                      <li>• Third-party lab test results available</li>
+                      <li>• Clear CBD concentration per ml</li>
+                      <li>• Extraction method disclosed (CO2 preferred)</li>
+                      <li>• Full ingredient transparency</li>
+                      <li>• Type specified (full/broad spectrum, isolate)</li>
+                      <li>• Proper glass dropper packaging</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="red">Warning Signs</h4>
+                    <ul>
+                      <li>• No lab testing available</li>
+                      <li>• Vague concentration claims</li>
+                      <li>• Unknown extraction method</li>
+                      <li>• Medical claims (illegal for CBD)</li>
+                      <li>• Unrealistically cheap prices</li>
+                      <li>• Plastic packaging</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Understanding Lab Testing -->
+          <section>
+            <h2>Understanding Lab Test Results (COAs)</h2>
+            <p>A Certificate of Analysis (COA) is a document from an independent laboratory that verifies what's in a cannabis product. Learning to read COAs helps you verify product quality and safety.</p>
+
+            <div class="info-box">
+              <h3>What a COA Should Include:</h3>
+              <div class="coa-grid">
+                <div class="coa-item">
+                  <h4>📊 Cannabinoid Profile</h4>
+                  <p>Shows the levels of CBD, THC, and other cannabinoids. This should match what's on the product label.</p>
+                </div>
+                <div class="coa-item">
+                  <h4>🦠 Microbial Testing</h4>
+                  <p>Confirms the product is free from harmful bacteria, mold, and other pathogens.</p>
+                </div>
+                <div class="coa-item">
+                  <h4>🧫 Pesticide Screening</h4>
+                  <p>Shows the product is free from harmful pesticides and chemical residues.</p>
+                </div>
+                <div class="coa-item">
+                  <h4>⚗️ Heavy Metal Testing</h4>
+                  <p>Confirms absence of lead, mercury, arsenic, and other harmful heavy metals.</p>
+                </div>
+                <div class="coa-item">
+                  <h4>🧪 Solvent Residue</h4>
+                  <p>For extracts, confirms no harmful solvents remain from the extraction process.</p>
+                </div>
+                <div class="coa-item">
+                  <h4>📅 Batch Information</h4>
+                  <p>Date of testing, batch number, and lab identification should all be present.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Digital Security -->
+          <section>
+            <h2>Protecting Your Digital Privacy</h2>
+            <div class="tip-list">
+              <div class="tip-item">
+                <div class="tip-icon">🔒</div>
+                <div>
+                  <h3>Use Secure Payment Methods</h3>
+                  <p>Prefer payment methods with buyer protection. Be wary of any site that only accepts cryptocurrency or gift cards.</p>
+                </div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-icon">📧</div>
+                <div>
+                  <h3>Protect Your Information</h3>
+                  <p>Only provide necessary shipping information. Be cautious with any site asking for excessive personal details.</p>
+                </div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-icon">🌐</div>
+                <div>
+                  <h3>Check Website Security</h3>
+                  <p>Ensure the website uses HTTPS (padlock icon). Never enter payment info on unsecured sites.</p>
+                </div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-icon">📱</div>
+                <div>
+                  <h3>Avoid Social Media Transactions</h3>
+                  <p>Never buy from random social media accounts. These are almost always scams or law enforcement.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Legal Pathways Section -->
+          <section>
+            <h2>Legal Ways to Access Cannabis in Australia</h2>
+            <div class="comparison-grid">
+              <div class="info-card">
+                <h3>🏥 Medical Cannabis</h3>
+                <p>Since 2016, medical cannabis has been legal with a prescription through the TGA's Special Access Scheme or Authorised Prescriber pathway.</p>
+                <ul>
+                  <li>• Must have a qualifying medical condition</li>
+                  <li>• Need a prescription from an authorized doctor</li>
+                  <li>• Products dispensed through authorized pharmacies</li>
+                  <li>• Fully legal and quality-controlled</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h3>💊 Over-the-Counter CBD</h3>
+                <p>Low-dose CBD products (max 150mg/day) are available from pharmacies without prescription since February 2021.</p>
+                <ul>
+                  <li>• Available from licensed pharmacies</li>
+                  <li>• Maximum 150mg CBD per day</li>
+                  <li>• Must be Schedule 3 approved products</li>
+                  <li>• THC content must be below legal limits</li>
+                </ul>
+              </div>
+            </div>
+            <p>For more details on cannabis legality by state, read our comprehensive guide: <a href="/blog/is-weed-legal-in-australia">Is Weed Legal in Australia? Complete 2026 Guide</a></p>
+          </section>
+
+          <!-- CTA Section -->
+          <div class="cta-box">
+            <h3>Shop With Confidence at Mullaways Medical</h3>
+            <p>We prioritize transparency, quality, and safety. All our products come with detailed information and our commitment to customer satisfaction.</p>
+            <a href="/shop" class="btn btn-white">Browse Our Products →</a>
+          </div>
+
+          <!-- Summary -->
+          <section>
+            <h2>Summary: Stay Safe</h2>
+            <div class="summary-box">
+              <div class="summary-grid">
+                <div>
+                  <h3>✓ Do:</h3>
+                  <ul>
+                    <li>• Research thoroughly before purchasing</li>
+                    <li>• Look for third-party lab testing</li>
+                    <li>• Check for realistic pricing</li>
+                    <li>• Read customer reviews</li>
+                    <li>• Use secure payment methods</li>
+                    <li>• Understand your local laws</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>✗ Don't:</h3>
+                  <ul>
+                    <li>• Trust random social media sellers</li>
+                    <li>• Pay with untraceable methods</li>
+                    <li>• Fall for too-good-to-be-true prices</li>
+                    <li>• Ignore red flags</li>
+                    <li>• Share unnecessary personal info</li>
+                    <li>• Rush into purchases</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Related Articles -->
+          <div class="related-posts">
+            <h3>Related Articles</h3>
+            <div class="related-grid">
+              <a href="/blog/is-weed-legal-in-australia" class="related-card">
+                <span>⚖️</span>
+                <h4>Is Weed Legal in Australia?</h4>
+                <p>Complete breakdown of cannabis laws by state and territory.</p>
+              </a>
+              <a href="/blog/cannabis-prices-australia" class="related-card">
+                <span>💰</span>
+                <h4>Cannabis Prices in Australia 2026</h4>
+                <p>Understand typical pricing to avoid being overcharged.</p>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
-
-    <!-- Article Content -->
-    <article class="max-w-4xl mx-auto px-4 py-12">
-      <!-- Introduction -->
-      <div class="prose prose-lg max-w-none mb-12">
-        <p class="text-xl text-gray-700 leading-relaxed">
-          With the growing interest in cannabis in Australia, many people are looking for ways to <strong>buy weed safely</strong>. Whether you're exploring legal CBD products or considering your options, understanding how to protect yourself from scams and identify quality products is essential.
-        </p>
-        <p class="text-gray-600 mt-4">
-          This guide covers the key safety considerations, red flags to watch for, and how to ensure you're getting quality products from reliable sources.
-        </p>
-      </div>
-
-      <!-- Warning Section -->
-      <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-12">
-        <h4 class="font-bold text-red-900 mb-2">⚠️ Legal Disclaimer</h4>
-        <p class="text-red-800">
-          Cannabis laws vary by Australian state and territory. THC products remain illegal for recreational use across Australia. This guide is for educational purposes only. Always understand and comply with your local laws before making any purchasing decisions.
-        </p>
-      </div>
-
-      <!-- Common Scams Section -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Common Cannabis Scams to Avoid</h2>
-        
-        <div class="space-y-6">
-          <div class="bg-white border-l-4 border-red-500 rounded-lg shadow-sm p-6">
-            <div class="flex items-start gap-4">
-              <span class="text-3xl">🚨</span>
-              <div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Upfront Payment Scams</h3>
-                <p class="text-gray-600 mb-3">
-                  Scammers ask for full payment via untraceable methods (cryptocurrency, gift cards, wire transfers) and then disappear without delivering products.
-                </p>
-                <div class="bg-red-50 rounded-lg p-4">
-                  <strong class="text-red-800">Red Flags:</strong>
-                  <ul class="text-red-700 mt-2 space-y-1">
-                    <li>• Only accepting cryptocurrency or gift cards</li>
-                    <li>• Asking for "shipping fees" after initial payment</li>
-                    <li>• No refund or satisfaction guarantee</li>
-                    <li>• Pressure to pay immediately</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-white border-l-4 border-red-500 rounded-lg shadow-sm p-6">
-            <div class="flex items-start gap-4">
-              <span class="text-3xl">📱</span>
-              <div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Fake Social Media Vendors</h3>
-                <p class="text-gray-600 mb-3">
-                  Instagram, Snapchat, and Telegram are full of accounts claiming to sell cannabis. These are almost always scams or law enforcement operations.
-                </p>
-                <div class="bg-red-50 rounded-lg p-4">
-                  <strong class="text-red-800">Red Flags:</strong>
-                  <ul class="text-red-700 mt-2 space-y-1">
-                    <li>• New accounts with few followers</li>
-                    <li>• Stock photos of products</li>
-                    <li>• Too-good-to-be-true prices</li>
-                    <li>• Aggressive DM solicitation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-white border-l-4 border-red-500 rounded-lg shadow-sm p-6">
-            <div class="flex items-start gap-4">
-              <span class="text-3xl">💊</span>
-              <div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Contaminated or Fake Products</h3>
-                <p class="text-gray-600 mb-3">
-                  Some sellers offer products that are synthetic cannabinoids, contaminated with pesticides, or completely fake CBD/THC products.
-                </p>
-                <div class="bg-red-50 rounded-lg p-4">
-                  <strong class="text-red-800">Red Flags:</strong>
-                  <ul class="text-red-700 mt-2 space-y-1">
-                    <li>• Unusually cheap prices</li>
-                    <li>• No lab testing or certificates</li>
-                    <li>• Packaging that looks unprofessional</li>
-                    <li>• Products with no brand or source information</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-white border-l-4 border-red-500 rounded-lg shadow-sm p-6">
-            <div class="flex items-start gap-4">
-              <span class="text-3xl">👮</span>
-              <div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Law Enforcement Operations</h3>
-                <p class="text-gray-600 mb-3">
-                  Some online cannabis "sellers" are actually law enforcement operations designed to identify and charge buyers.
-                </p>
-                <div class="bg-red-50 rounded-lg p-4">
-                  <strong class="text-red-800">Red Flags:</strong>
-                  <ul class="text-red-700 mt-2 space-y-1">
-                    <li>• Too perfect reputation with no verifiable reviews</li>
-                    <li>• Willing to ship anything, anywhere</li>
-                    <li>• Asking for personal identifying information</li>
-                    <li>• Requesting to meet in person for transactions</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Safety Checklist -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Safety Checklist: What to Look For</h2>
-        
-        <div class="bg-green-50 rounded-2xl p-8">
-          <h3 class="text-xl font-bold text-green-900 mb-6">✓ Signs of a Legitimate Operation</h3>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Established Website</strong>
-                  <p class="text-gray-600 text-sm">Professional website with proper security (HTTPS), privacy policy, and terms of service</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Transparent Contact Information</strong>
-                  <p class="text-gray-600 text-sm">Real email addresses, phone numbers, and physical address (if applicable)</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Lab Testing Results</strong>
-                  <p class="text-gray-600 text-sm">Third-party Certificates of Analysis (COAs) for products</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Clear Product Information</strong>
-                  <p class="text-gray-600 text-sm">Detailed descriptions, ingredients, dosage information, and source</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Realistic Pricing</strong>
-                  <p class="text-gray-600 text-sm">Prices that align with market averages—not too cheap or unrealistic</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Customer Reviews</strong>
-                  <p class="text-gray-600 text-sm">Verifiable reviews from real customers, including some constructive criticism</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Secure Payment Options</strong>
-                  <p class="text-gray-600 text-sm">Multiple payment methods with buyer protection</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <div>
-                  <strong class="text-gray-900">Refund/Return Policy</strong>
-                  <p class="text-gray-600 text-sm">Clear policies for returns, refunds, or issues with orders</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Quality Identification -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">How to Identify Quality Cannabis Products</h2>
-        
-        <div class="space-y-6">
-          <div class="bg-white border border-gray-200 rounded-xl p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-4">🌿 For Flower Products</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 class="font-semibold text-green-700 mb-3">Quality Indicators</h4>
-                <ul class="text-gray-600 space-y-2">
-                  <li>• Dense, well-trimmed buds</li>
-                  <li>• Vibrant colours (green, purple, orange hairs)</li>
-                  <li>• Visible trichomes (crystals)</li>
-                  <li>• Strong, pleasant aroma</li>
-                  <li>• Slightly sticky texture</li>
-                  <li>• No visible seeds or stems</li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-semibold text-red-700 mb-3">Warning Signs</h4>
-                <ul class="text-gray-600 space-y-2">
-                  <li>• Brown, dried appearance</li>
-                  <li>• Hay or musty smell</li>
-                  <li>• Visible mold or mildew</li>
-                  <li>• Crumbles to dust</li>
-                  <li>• Chemical smell</li>
-                  <li>• Suspiciously low price</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-white border border-gray-200 rounded-xl p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-4">🍬 For Edibles & CBD Products</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 class="font-semibold text-green-700 mb-3">Quality Indicators</h4>
-                <ul class="text-gray-600 space-y-2">
-                  <li>• Professional, sealed packaging</li>
-                  <li>• Clear dosage information</li>
-                  <li>• Ingredients list</li>
-                  <li>• Batch numbers for traceability</li>
-                  <li>• QR codes linking to lab results</li>
-                  <li>• Manufacture and expiry dates</li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-semibold text-red-700 mb-3">Warning Signs</h4>
-                <ul class="text-gray-600 space-y-2">
-                  <li>• Homemade-looking packaging</li>
-                  <li>• Vague or missing dosage info</li>
-                  <li>• No ingredients list</li>
-                  <li>• Copied branding from known brands</li>
-                  <li>• Unrealistic THC/CBD claims</li>
-                  <li>• No way to verify authenticity</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-white border border-gray-200 rounded-xl p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-4">🧪 For CBD Oil</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 class="font-semibold text-green-700 mb-3">Quality Indicators</h4>
-                <ul class="text-gray-600 space-y-2">
-                  <li>• Third-party lab test results available</li>
-                  <li>• Clear CBD concentration per ml</li>
-                  <li>• Extraction method disclosed (CO2 preferred)</li>
-                  <li>• Full ingredient transparency</li>
-                  <li>• Type specified (full/broad spectrum, isolate)</li>
-                  <li>• Proper glass dropper packaging</li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-semibold text-red-700 mb-3">Warning Signs</h4>
-                <ul class="text-gray-600 space-y-2">
-                  <li>• No lab testing available</li>
-                  <li>• Vague concentration claims</li>
-                  <li>• Unknown extraction method</li>
-                  <li>• Medical claims (illegal for CBD)</li>
-                  <li>• Unrealistically cheap prices</li>
-                  <li>• Plastic packaging</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Understanding Lab Testing -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Lab Test Results (COAs)</h2>
-        
-        <div class="prose prose-lg max-w-none mb-6">
-          <p class="text-gray-700">
-            A Certificate of Analysis (COA) is a document from an independent laboratory that verifies what's in a cannabis product. Learning to read COAs helps you verify product quality and safety.
-          </p>
-        </div>
-        
-        <div class="bg-blue-50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-blue-900 mb-4">What a COA Should Include:</h3>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-4">
-              <div class="bg-white rounded-lg p-4">
-                <h4 class="font-semibold text-gray-900 mb-2">📊 Cannabinoid Profile</h4>
-                <p class="text-gray-600 text-sm">Shows the levels of CBD, THC, and other cannabinoids. This should match what's on the product label.</p>
-              </div>
-              
-              <div class="bg-white rounded-lg p-4">
-                <h4 class="font-semibold text-gray-900 mb-2">🦠 Microbial Testing</h4>
-                <p class="text-gray-600 text-sm">Confirms the product is free from harmful bacteria, mold, and other pathogens.</p>
-              </div>
-              
-              <div class="bg-white rounded-lg p-4">
-                <h4 class="font-semibold text-gray-900 mb-2">🧫 Pesticide Screening</h4>
-                <p class="text-gray-600 text-sm">Shows the product is free from harmful pesticides and chemical residues.</p>
-              </div>
-            </div>
-            
-            <div class="space-y-4">
-              <div class="bg-white rounded-lg p-4">
-                <h4 class="font-semibold text-gray-900 mb-2">⚗️ Heavy Metal Testing</h4>
-                <p class="text-gray-600 text-sm">Confirms absence of lead, mercury, arsenic, and other harmful heavy metals.</p>
-              </div>
-              
-              <div class="bg-white rounded-lg p-4">
-                <h4 class="font-semibold text-gray-900 mb-2">🧪 Solvent Residue</h4>
-                <p class="text-gray-600 text-sm">For extracts, confirms no harmful solvents remain from the extraction process.</p>
-              </div>
-              
-              <div class="bg-white rounded-lg p-4">
-                <h4 class="font-semibold text-gray-900 mb-2">📅 Batch Information</h4>
-                <p class="text-gray-600 text-sm">Date of testing, batch number, and lab identification should all be present.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Digital Security -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Protecting Your Digital Privacy</h2>
-        
-        <div class="space-y-4">
-          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
-            <div class="text-2xl">🔒</div>
-            <div>
-              <h3 class="text-lg font-bold text-gray-900">Use Secure Payment Methods</h3>
-              <p class="text-gray-600">Prefer payment methods with buyer protection. Be wary of any site that only accepts cryptocurrency or gift cards.</p>
-            </div>
-          </div>
-          
-          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
-            <div class="text-2xl">📧</div>
-            <div>
-              <h3 class="text-lg font-bold text-gray-900">Protect Your Information</h3>
-              <p class="text-gray-600">Only provide necessary shipping information. Be cautious with any site asking for excessive personal details.</p>
-            </div>
-          </div>
-          
-          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
-            <div class="text-2xl">🌐</div>
-            <div>
-              <h3 class="text-lg font-bold text-gray-900">Check Website Security</h3>
-              <p class="text-gray-600">Ensure the website uses HTTPS (padlock icon). Never enter payment info on unsecured sites.</p>
-            </div>
-          </div>
-          
-          <div class="flex gap-4 p-6 bg-white border border-gray-200 rounded-xl">
-            <div class="text-2xl">📱</div>
-            <div>
-              <h3 class="text-lg font-bold text-gray-900">Avoid Social Media Transactions</h3>
-              <p class="text-gray-600">Never buy from random social media accounts. These are almost always scams or law enforcement.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Legal Pathways Section -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Legal Ways to Access Cannabis in Australia</h2>
-        
-        <div class="bg-gray-50 rounded-2xl p-6">
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="bg-white rounded-xl p-6">
-              <h3 class="text-xl font-bold text-green-700 mb-4">🏥 Medical Cannabis</h3>
-              <p class="text-gray-600 mb-4">
-                Since 2016, medical cannabis has been legal with a prescription through the TGA's Special Access Scheme or Authorised Prescriber pathway.
-              </p>
-              <ul class="text-gray-600 space-y-2 text-sm">
-                <li>• Must have a qualifying medical condition</li>
-                <li>• Need a prescription from an authorized doctor</li>
-                <li>• Products dispensed through authorized pharmacies</li>
-                <li>• Fully legal and quality-controlled</li>
-              </ul>
-            </div>
-            
-            <div class="bg-white rounded-xl p-6">
-              <h3 class="text-xl font-bold text-green-700 mb-4">💊 Over-the-Counter CBD</h3>
-              <p class="text-gray-600 mb-4">
-                Low-dose CBD products (max 150mg/day) are available from pharmacies without prescription since February 2021.
-              </p>
-              <ul class="text-gray-600 space-y-2 text-sm">
-                <li>• Available from licensed pharmacies</li>
-                <li>• Maximum 150mg CBD per day</li>
-                <li>• Must be Schedule 3 approved products</li>
-                <li>• THC content must be below legal limits</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <p class="text-gray-600 mt-6">
-          For more details on cannabis legality by state, read our comprehensive guide: <a href="/blog/is-weed-legal-in-australia" class="text-green-600 hover:text-green-800 font-medium">Is Weed Legal in Australia? Complete 2026 Guide</a>
-        </p>
-      </section>
-
-      <!-- CTA Section -->
-      <section class="bg-green-600 text-white rounded-2xl p-8 mb-12">
-        <h3 class="text-2xl font-bold mb-4">Shop With Confidence at Mullaways Medical</h3>
-        <p class="mb-6 text-green-100">
-          We prioritize transparency, quality, and safety. All our products come with detailed information and our commitment to customer satisfaction.
-        </p>
-        <a href="/shop" class="inline-block bg-white text-green-600 px-8 py-3 rounded-full font-bold hover:bg-green-50 transition-colors">
-          Browse Our Products →
-        </a>
-      </section>
-
-      <!-- Summary -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Summary: Stay Safe</h2>
-        
-        <div class="bg-amber-50 rounded-2xl p-6">
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h3 class="font-bold text-amber-900 mb-3">✓ Do:</h3>
-              <ul class="text-amber-800 space-y-2">
-                <li>• Research thoroughly before purchasing</li>
-                <li>• Look for third-party lab testing</li>
-                <li>• Check for realistic pricing</li>
-                <li>• Read customer reviews</li>
-                <li>• Use secure payment methods</li>
-                <li>• Understand your local laws</li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="font-bold text-amber-900 mb-3">✗ Don't:</h3>
-              <ul class="text-amber-800 space-y-2">
-                <li>• Trust random social media sellers</li>
-                <li>• Pay with untraceable methods</li>
-                <li>• Fall for too-good-to-be-true prices</li>
-                <li>• Ignore red flags</li>
-                <li>• Share unnecessary personal info</li>
-                <li>• Rush into purchases</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Related Articles -->
-      <section class="border-t border-gray-200 pt-12">
-        <h3 class="text-2xl font-bold text-gray-900 mb-6">Related Articles</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <a href="/blog/is-weed-legal-in-australia" class="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-            <span class="text-sm text-green-600 font-medium">Legal Guide</span>
-            <h4 class="text-lg font-bold text-gray-900 mt-2">Is Weed Legal in Australia?</h4>
-            <p class="text-gray-600 mt-2">Complete breakdown of cannabis laws by state and territory.</p>
-          </a>
-          <a href="/blog/cannabis-prices-australia" class="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-            <span class="text-sm text-green-600 font-medium">Price Guide</span>
-            <h4 class="text-lg font-bold text-gray-900 mt-2">Cannabis Prices in Australia 2026</h4>
-            <p class="text-gray-600 mt-2">Understand typical pricing to avoid being overcharged.</p>
-          </a>
-        </div>
-      </section>
     </article>
   </main>
 
   <Footer />
 </Layout>
+
+<style>
+  .article-header {
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, var(--color-sage) 100%);
+    padding: 40px 0 60px;
+    color: white;
+  }
+  .header-content { max-width: 800px; }
+  .category {
+    display: inline-block; background: rgba(255,255,255,0.2);
+    padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 1rem;
+  }
+  .article-header h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1rem; line-height: 1.2; }
+  .subtitle { font-size: 1.15rem; opacity: 0.9; margin-bottom: 1.5rem; }
+  .meta { display: flex; gap: 1.5rem; flex-wrap: wrap; opacity: 0.9; font-size: 0.9rem; }
+  .article-content { padding: 60px 0; }
+  .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+  .intro-text { margin-bottom: 2rem; }
+  .intro-text p { font-size: 1.1rem; }
+
+  section { margin-bottom: 3rem; }
+  h2 { color: var(--color-eucalyptus); font-size: 1.75rem; margin-bottom: 1rem; padding-top: 1rem; }
+  h3 { color: var(--color-sage); font-size: 1.25rem; margin: 1.5rem 0 1rem; }
+  h4 { margin: 0 0 0.5rem; }
+  h4.green { color: #15803d; }
+  h4.red { color: #b91c1c; }
+  p { line-height: 1.8; color: #444; margin-bottom: 1rem; }
+  ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.5rem; line-height: 1.6; color: #444; }
+  a { color: var(--color-eucalyptus); }
+
+  .intro-box {
+    background: var(--color-sand); border-left: 4px solid var(--color-eucalyptus);
+    padding: 1.5rem; border-radius: 0 12px 12px 0; margin-bottom: 2rem;
+  }
+  .intro-box-red { background: #fef2f2; border-left-color: #ef4444; }
+  .intro-box-red h4 { color: #7f1d1d; }
+  .intro-box-red p { color: #991b1b; margin: 0; }
+
+  .scam-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .scam-card {
+    display: flex; gap: 1rem; padding: 1.5rem;
+    background: white; border-left: 4px solid #ef4444;
+    border-radius: 0 12px 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .scam-icon { font-size: 2rem; flex-shrink: 0; }
+  .scam-card h3 { margin-top: 0; color: #111; }
+  .red-flags {
+    background: #fef2f2; border-radius: 8px; padding: 1rem; margin-top: 0.75rem;
+  }
+  .red-flags strong { color: #991b1b; }
+  .red-flags li { color: #7f1d1d; }
+
+  .checklist-box {
+    background: #f0fdf4; border-radius: 16px; padding: 2rem;
+  }
+  .checklist-box h3 { margin-top: 0; color: #14532d; }
+  .checklist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .checklist-col { display: flex; flex-direction: column; gap: 1rem; }
+  .checklist-item { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .check-icon { color: #16a34a; font-size: 1.25rem; flex-shrink: 0; margin-top: 2px; }
+  .checklist-item strong { display: block; color: #111; }
+  .checklist-item p { font-size: 0.85rem; color: #666; margin: 0.25rem 0 0; }
+
+  .quality-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+  .quality-card {
+    background: white; border: 1px solid #e5e7eb;
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .quality-card h3 { margin-top: 0; color: #111; }
+  .quality-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+  .info-box {
+    background: linear-gradient(135deg, #e8f4f0 0%, #d4e8e0 100%);
+    padding: 1.5rem; border-radius: 12px; margin: 2rem 0;
+  }
+  .info-box h3 { margin-top: 0; color: var(--color-eucalyptus); }
+  .coa-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+  .coa-item {
+    background: white; border-radius: 8px; padding: 1rem;
+  }
+  .coa-item h4 { color: #111; margin-bottom: 0.5rem; }
+  .coa-item p { font-size: 0.85rem; margin: 0; }
+
+  .tip-list { display: flex; flex-direction: column; gap: 1rem; }
+  .tip-item {
+    display: flex; gap: 1rem; padding: 1.5rem;
+    background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+  }
+  .tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .tip-item h3 { margin-top: 0; color: #111; font-size: 1.1rem; }
+  .tip-item p { margin: 0; font-size: 0.95rem; }
+
+  .comparison-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin: 1.5rem 0; }
+  .info-card {
+    background: white; border: 1px solid #e5e7eb;
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .info-card h3 { margin-top: 0; color: #15803d; }
+
+  .summary-box {
+    background: #fffbeb; border-radius: 16px; padding: 1.5rem;
+  }
+  .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .summary-box h3 { color: #92400e; margin-top: 0; }
+  .summary-box li { color: #92400e; }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, var(--color-sage) 100%);
+    color: white; border-radius: 16px; padding: 2rem; margin: 3rem 0; text-align: center;
+  }
+  .cta-box h3 { color: white; font-size: 1.5rem; margin-top: 0; }
+  .cta-box p { color: rgba(255,255,255,0.9); }
+  .btn {
+    display: inline-block; padding: 12px 24px; border-radius: 30px;
+    font-weight: 700; text-decoration: none; transition: opacity 0.3s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn-white { background: white; color: var(--color-eucalyptus); }
+
+  .related-posts { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eee; }
+  .related-posts h3 { text-align: center; margin-bottom: 1.5rem; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .related-card {
+    background: var(--color-sand); padding: 1.5rem;
+    border-radius: 12px; text-decoration: none; transition: transform 0.3s;
+  }
+  .related-card:hover { transform: translateY(-3px); }
+  .related-card span { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .related-card h4 { font-size: 1rem; color: var(--color-eucalyptus); margin: 0 0 0.5rem; }
+  .related-card p { font-size: 0.9rem; color: #666; margin: 0; }
+
+  @media (max-width: 768px) {
+    .comparison-grid, .checklist-grid, .quality-grid, .coa-grid, .summary-grid { grid-template-columns: 1fr; }
+    .scam-card { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>

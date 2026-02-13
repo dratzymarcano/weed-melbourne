@@ -33,428 +33,500 @@ const breadcrumbSchema = {
 
 <Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
   <Header />
-  
+
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog'}, {label: 'Cannabis Laws Queensland'}]} />
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 text-white py-16">
-      <div class="max-w-4xl mx-auto px-4">
-        <nav class="text-sm mb-6">
-          <ol class="flex items-center space-x-2">
-            <li><a href="/" class="hover:text-green-300 transition-colors">Home</a></li>
-            <li><span class="mx-2">/</span></li>
-            <li><a href="/blog" class="hover:text-green-300 transition-colors">Blog</a></li>
-            <li><span class="mx-2">/</span></li>
-            <li class="text-green-300">Cannabis Laws Queensland</li>
-          </ol>
-        </nav>
-        <span class="inline-block bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
-          Legal Guide
-        </span>
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">Cannabis Laws in Queensland 2026</h1>
-        <p class="text-xl text-green-100 mb-6">Everything you need to know about weed legality in QLD</p>
-        <div class="flex items-center space-x-6 text-green-200 text-sm">
-          <span>By Mullaways Medical Team</span>
-          <span>•</span>
-          <span>Updated January 2026</span>
-          <span>•</span>
-          <span>10 min read</span>
+    <article class="blog-article">
+      <header class="article-header">
+        <div class="container">
+          <div class="header-content">
+            <span class="category">Legal Guide</span>
+            <h1>Cannabis Laws in Queensland 2026</h1>
+            <p class="subtitle">Everything you need to know about weed legality in QLD</p>
+            <div class="meta">
+              <span>By Mullaways Medical Team</span>
+              <span>•</span>
+              <span>Updated January 2026</span>
+              <span>•</span>
+              <span>10 min read</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </header>
 
-    <!-- Article Content -->
-    <article class="max-w-4xl mx-auto px-4 py-12">
-      <!-- Quick Summary Box -->
-      <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-12">
-        <h4 class="font-bold text-red-900 mb-2">⚖️ Quick Summary: Queensland Cannabis Laws 2026</h4>
-        <ul class="text-red-800 space-y-2">
-          <li>• <strong>Recreational cannabis:</strong> Illegal</li>
-          <li>• <strong>Medical cannabis:</strong> Legal with TGA approval and prescription</li>
-          <li>• <strong>Possession penalty:</strong> Up to 15 years imprisonment for serious offences</li>
-          <li>• <strong>Diversion programs:</strong> Available for minor first offences</li>
-        </ul>
-      </div>
-
-      <!-- Introduction -->
-      <div class="prose prose-lg max-w-none mb-12">
-        <p class="text-xl text-gray-700 leading-relaxed">
-          Queensland has some of the strictest <strong>cannabis laws in Australia</strong>. Unlike the ACT, which has decriminalised personal cannabis use, QLD maintains full prohibition for recreational cannabis. Understanding these laws is essential for anyone living in or visiting the Sunshine State.
-        </p>
-        <p class="text-gray-600 mt-4">
-          This guide covers everything from possession penalties to how you can legally access medical cannabis in Queensland.
-        </p>
-      </div>
-
-      <!-- Table of Contents -->
-      <div class="bg-gray-50 rounded-2xl p-6 mb-12">
-        <h2 class="text-xl font-bold text-gray-900 mb-4">📋 In This Guide</h2>
-        <ul class="grid md:grid-cols-2 gap-2 text-green-700">
-          <li><a href="#current-laws" class="hover:text-green-900 transition-colors">→ Current Cannabis Laws</a></li>
-          <li><a href="#possession" class="hover:text-green-900 transition-colors">→ Possession Penalties</a></li>
-          <li><a href="#cultivation" class="hover:text-green-900 transition-colors">→ Growing Cannabis</a></li>
-          <li><a href="#trafficking" class="hover:text-green-900 transition-colors">→ Supply & Trafficking</a></li>
-          <li><a href="#diversion" class="hover:text-green-900 transition-colors">→ Diversion Programs</a></li>
-          <li><a href="#medical" class="hover:text-green-900 transition-colors">→ Medical Cannabis in QLD</a></li>
-          <li><a href="#driving" class="hover:text-green-900 transition-colors">→ Drug Driving Laws</a></li>
-          <li><a href="#future" class="hover:text-green-900 transition-colors">→ Future of Cannabis in QLD</a></li>
-        </ul>
-      </div>
-
-      <!-- Current Laws -->
-      <section id="current-laws" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Current Cannabis Laws in Queensland</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            In Queensland, cannabis is classified as a <strong>"dangerous drug"</strong> under the <a href="https://www.legislation.qld.gov.au/view/html/inforce/current/act-1986-033" target="_blank" rel="noopener noreferrer">Drugs Misuse Act 1986</a>. This legislation governs all cannabis-related offences, from simple possession to large-scale trafficking.
-          </p>
-          <p class="text-gray-700 mt-4">
-            The Act categorises drugs into schedules based on perceived harm. Cannabis falls under <strong>Schedule 2</strong>, which carries significant penalties for various offences.
-          </p>
-        </div>
-        
-        <div class="bg-blue-50 rounded-xl p-6 mt-6">
-          <h3 class="text-xl font-bold text-blue-900 mb-4">Key Points About QLD Cannabis Laws:</h3>
-          <ul class="text-blue-800 space-y-3">
-            <li>✗ <strong>No personal use exemption</strong> – unlike the ACT, there's no allowance for personal cannabis use</li>
-            <li>✗ <strong>No home cultivation allowed</strong> – growing even one plant is a criminal offence</li>
-            <li>✓ <strong>Medical cannabis is legal</strong> – with proper TGA approval and prescription</li>
-            <li>⚠️ <strong>Police diversion available</strong> – for minor first offences, but not guaranteed</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Possession Penalties -->
-      <section id="possession" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Cannabis Possession Penalties in QLD</h2>
-        
-        <div class="overflow-x-auto">
-          <table class="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-lg">
-            <thead class="bg-red-600 text-white">
-              <tr>
-                <th class="px-6 py-4 text-left">Amount</th>
-                <th class="px-6 py-4 text-left">Classification</th>
-                <th class="px-6 py-4 text-left">Maximum Penalty</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium">Under 50g</td>
-                <td class="px-6 py-4">Simple Possession</td>
-                <td class="px-6 py-4 text-gray-600">15 years imprisonment (but typically fine or diversion)</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium">50g - 500g</td>
-                <td class="px-6 py-4">Possession</td>
-                <td class="px-6 py-4 text-gray-600">15 years imprisonment</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium">500g+</td>
-                <td class="px-6 py-4">Deemed Supply</td>
-                <td class="px-6 py-4 text-gray-600">20-25 years imprisonment</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="mt-6 bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg">
-          <h4 class="font-bold text-amber-900 mb-2">⚠️ Important: "Deemed Supply" Rule</h4>
-          <p class="text-amber-800">
-            In Queensland, possession of over 500g of cannabis is automatically treated as supply (trafficking), even if you claim it's for personal use. This means significantly harsher penalties without needing proof of intent to sell.
-          </p>
-        </div>
-      </section>
-
-      <!-- Cultivation -->
-      <section id="cultivation" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Growing Cannabis in Queensland</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            Unlike the ACT where you can grow up to 2 plants at home, <strong>cultivating cannabis is illegal in Queensland</strong> regardless of the number of plants or claimed purpose.
-          </p>
-        </div>
-        
-        <div class="overflow-x-auto mt-6">
-          <table class="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-lg">
-            <thead class="bg-gray-800 text-white">
-              <tr>
-                <th class="px-6 py-4 text-left">Number of Plants</th>
-                <th class="px-6 py-4 text-left">Classification</th>
-                <th class="px-6 py-4 text-left">Maximum Penalty</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium">1-20 plants</td>
-                <td class="px-6 py-4">Producing Dangerous Drug</td>
-                <td class="px-6 py-4 text-gray-600">20 years imprisonment</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium">21-100 plants</td>
-                <td class="px-6 py-4">Commercial Production</td>
-                <td class="px-6 py-4 text-gray-600">20-25 years imprisonment</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium">100+ plants</td>
-                <td class="px-6 py-4">Commercial Production (aggravated)</td>
-                <td class="px-6 py-4 text-gray-600">25 years imprisonment</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Trafficking -->
-      <section id="trafficking" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Supply & Trafficking Penalties</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            Supplying or trafficking cannabis in Queensland carries severe penalties. The law treats anyone found selling, distributing, or even sharing cannabis very seriously.
-          </p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-6 mt-6">
-          <div class="bg-red-50 rounded-xl p-6">
-            <h3 class="text-xl font-bold text-red-900 mb-4">Supply Offences</h3>
-            <ul class="text-red-800 space-y-2">
-              <li><strong>Supplying cannabis:</strong> Up to 20 years</li>
-              <li><strong>Supplying to minors:</strong> Up to 25 years</li>
-              <li><strong>Supplying in schools:</strong> Up to 25 years</li>
+      <div class="article-content">
+        <div class="container-narrow">
+          <!-- Quick Summary Box -->
+          <div class="intro-box intro-box-red">
+            <h4>⚖️ Quick Summary: Queensland Cannabis Laws 2026</h4>
+            <ul>
+              <li>• <strong>Recreational cannabis:</strong> Illegal</li>
+              <li>• <strong>Medical cannabis:</strong> Legal with TGA approval and prescription</li>
+              <li>• <strong>Possession penalty:</strong> Up to 15 years imprisonment for serious offences</li>
+              <li>• <strong>Diversion programs:</strong> Available for minor first offences</li>
             </ul>
           </div>
-          
-          <div class="bg-red-100 rounded-xl p-6">
-            <h3 class="text-xl font-bold text-red-900 mb-4">Trafficking Offences</h3>
-            <ul class="text-red-800 space-y-2">
-              <li><strong>Trafficking (any amount):</strong> Up to 20 years</li>
-              <li><strong>Major trafficking:</strong> Up to 25 years</li>
-              <li><strong>Aggravated offences:</strong> Up to life imprisonment</li>
+
+          <!-- Introduction -->
+          <div class="intro-text">
+            <p>Queensland has some of the strictest <strong>cannabis laws in Australia</strong>. Unlike the ACT, which has decriminalised personal cannabis use, QLD maintains full prohibition for recreational cannabis. Understanding these laws is essential for anyone living in or visiting the Sunshine State.</p>
+            <p>This guide covers everything from possession penalties to how you can legally access medical cannabis in Queensland.</p>
+          </div>
+
+          <!-- Table of Contents -->
+          <nav class="toc">
+            <h3>📋 In This Guide</h3>
+            <ul class="toc-grid">
+              <li><a href="#current-laws">→ Current Cannabis Laws</a></li>
+              <li><a href="#possession">→ Possession Penalties</a></li>
+              <li><a href="#cultivation">→ Growing Cannabis</a></li>
+              <li><a href="#trafficking">→ Supply & Trafficking</a></li>
+              <li><a href="#diversion">→ Diversion Programs</a></li>
+              <li><a href="#medical">→ Medical Cannabis in QLD</a></li>
+              <li><a href="#driving">→ Drug Driving Laws</a></li>
+              <li><a href="#future">→ Future of Cannabis in QLD</a></li>
             </ul>
+          </nav>
+
+          <!-- Current Laws -->
+          <section id="current-laws">
+            <h2>Current Cannabis Laws in Queensland</h2>
+            <p>In Queensland, cannabis is classified as a <strong>"dangerous drug"</strong> under the <a href="https://www.legislation.qld.gov.au/view/html/inforce/current/act-1986-033" target="_blank" rel="noopener noreferrer">Drugs Misuse Act 1986</a>. This legislation governs all cannabis-related offences, from simple possession to large-scale trafficking.</p>
+            <p>The Act categorises drugs into schedules based on perceived harm. Cannabis falls under <strong>Schedule 2</strong>, which carries significant penalties for various offences.</p>
+
+            <div class="info-box">
+              <h3>Key Points About QLD Cannabis Laws:</h3>
+              <ul>
+                <li>✗ <strong>No personal use exemption</strong> – unlike the ACT, there's no allowance for personal cannabis use</li>
+                <li>✗ <strong>No home cultivation allowed</strong> – growing even one plant is a criminal offence</li>
+                <li>✓ <strong>Medical cannabis is legal</strong> – with proper TGA approval and prescription</li>
+                <li>⚠️ <strong>Police diversion available</strong> – for minor first offences, but not guaranteed</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Possession Penalties -->
+          <section id="possession">
+            <h2>Cannabis Possession Penalties in QLD</h2>
+            <div class="table-wrap">
+              <table class="comparison-table table-red">
+                <thead>
+                  <tr>
+                    <th>Amount</th>
+                    <th>Classification</th>
+                    <th>Maximum Penalty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Under 50g</strong></td><td>Simple Possession</td><td>15 years imprisonment (but typically fine or diversion)</td></tr>
+                  <tr><td><strong>50g - 500g</strong></td><td>Possession</td><td>15 years imprisonment</td></tr>
+                  <tr><td><strong>500g+</strong></td><td>Deemed Supply</td><td>20-25 years imprisonment</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="warning-box">
+              <h4>⚠️ Important: "Deemed Supply" Rule</h4>
+              <p>In Queensland, possession of over 500g of cannabis is automatically treated as supply (trafficking), even if you claim it's for personal use. This means significantly harsher penalties without needing proof of intent to sell.</p>
+            </div>
+          </section>
+
+          <!-- Cultivation -->
+          <section id="cultivation">
+            <h2>Growing Cannabis in Queensland</h2>
+            <p>Unlike the ACT where you can grow up to 2 plants at home, <strong>cultivating cannabis is illegal in Queensland</strong> regardless of the number of plants or claimed purpose.</p>
+
+            <div class="table-wrap">
+              <table class="comparison-table table-dark">
+                <thead>
+                  <tr>
+                    <th>Number of Plants</th>
+                    <th>Classification</th>
+                    <th>Maximum Penalty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>1-20 plants</strong></td><td>Producing Dangerous Drug</td><td>20 years imprisonment</td></tr>
+                  <tr><td><strong>21-100 plants</strong></td><td>Commercial Production</td><td>20-25 years imprisonment</td></tr>
+                  <tr><td><strong>100+ plants</strong></td><td>Commercial Production (aggravated)</td><td>25 years imprisonment</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Trafficking -->
+          <section id="trafficking">
+            <h2>Supply &amp; Trafficking Penalties</h2>
+            <p>Supplying or trafficking cannabis in Queensland carries severe penalties. The law treats anyone found selling, distributing, or even sharing cannabis very seriously.</p>
+
+            <div class="comparison-grid">
+              <div class="card card-red-light">
+                <h3>Supply Offences</h3>
+                <ul>
+                  <li><strong>Supplying cannabis:</strong> Up to 20 years</li>
+                  <li><strong>Supplying to minors:</strong> Up to 25 years</li>
+                  <li><strong>Supplying in schools:</strong> Up to 25 years</li>
+                </ul>
+              </div>
+              <div class="card card-red">
+                <h3>Trafficking Offences</h3>
+                <ul>
+                  <li><strong>Trafficking (any amount):</strong> Up to 20 years</li>
+                  <li><strong>Major trafficking:</strong> Up to 25 years</li>
+                  <li><strong>Aggravated offences:</strong> Up to life imprisonment</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Diversion Programs -->
+          <section id="diversion">
+            <h2>Police Diversion Programs</h2>
+            <p>Queensland does offer a <strong>drug diversion program</strong> for minor cannabis offences. Instead of criminal charges, eligible offenders may be offered the chance to attend a drug assessment and education session.</p>
+
+            <div class="card card-green">
+              <h3>Eligibility for Diversion:</h3>
+              <ul>
+                <li>✓ First or second minor drug offence</li>
+                <li>✓ Possession of 50g or less of cannabis</li>
+                <li>✓ No associated violence or other serious offences</li>
+                <li>✓ Admission of the offence</li>
+                <li>✓ Consent to participate in the program</li>
+              </ul>
+            </div>
+
+            <div class="warning-box">
+              <h4>Note: Diversion is Not Guaranteed</h4>
+              <p>Police have discretion over whether to offer diversion. They may choose to proceed with charges even for minor offences, particularly if aggravating factors exist or if you've previously received a diversion.</p>
+            </div>
+          </section>
+
+          <!-- Medical Cannabis -->
+          <section id="medical">
+            <h2>Medical Cannabis in Queensland</h2>
+            <p>While recreational cannabis remains illegal, <strong>medical cannabis is legal in Queensland</strong> when accessed through proper channels. Queensland residents can access medical cannabis with a valid prescription.</p>
+
+            <div class="card card-green">
+              <h3>How to Access Medical Cannabis in QLD:</h3>
+              <ol>
+                <li><strong>Consult a doctor:</strong> Discuss your condition with a GP or specialist</li>
+                <li><strong>Medical assessment:</strong> Your doctor assesses if cannabis is appropriate</li>
+                <li><strong>TGA approval:</strong> Doctor applies through <a href="https://www.tga.gov.au/medicinal-cannabis" target="_blank" rel="noopener noreferrer">Special Access Scheme</a> or Authorised Prescriber pathway</li>
+                <li><strong>Prescription issued:</strong> Once approved, you receive a legal prescription</li>
+                <li><strong>Pharmacy dispensing:</strong> Collect your medicine from an authorized pharmacy</li>
+              </ol>
+            </div>
+
+            <div class="comparison-grid">
+              <div class="info-card">
+                <h4>Qualifying Conditions May Include:</h4>
+                <ul>
+                  <li>• Chronic pain</li>
+                  <li>• Cancer-related symptoms</li>
+                  <li>• Multiple sclerosis</li>
+                  <li>• Epilepsy</li>
+                  <li>• PTSD</li>
+                  <li>• Anxiety disorders</li>
+                  <li>• Insomnia</li>
+                  <li>• Inflammatory conditions</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h4>Important Rules for Patients:</h4>
+                <ul>
+                  <li>• Keep prescription with your medicine</li>
+                  <li>• Don't share your medication</li>
+                  <li>• Store products securely</li>
+                  <li>• Don't drive while impaired</li>
+                  <li>• Renew prescription as required</li>
+                  <li>• Only use as prescribed</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Drug Driving -->
+          <section id="driving">
+            <h2>Drug Driving Laws in Queensland</h2>
+            <p>Queensland has <strong>zero-tolerance drug driving laws</strong>. It's illegal to drive with any detectable amount of THC in your system, regardless of whether you're impaired or using legally prescribed medical cannabis.</p>
+
+            <div class="card card-red-light">
+              <h3>Drug Driving Penalties in QLD:</h3>
+              <div class="table-wrap">
+                <table class="comparison-table table-red-light">
+                  <thead>
+                    <tr>
+                      <th>Offence</th>
+                      <th>Maximum Fine</th>
+                      <th>Licence Suspension</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>First offence</td><td>$4,058</td><td>1-9 months</td></tr>
+                    <tr><td>Second offence</td><td>$6,086</td><td>3-12 months</td></tr>
+                    <tr><td>Third+ offence</td><td>$12,172</td><td>6 months+</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="warning-box">
+              <h4>⚠️ Medical Cannabis Patients Warning</h4>
+              <p>Even if you have a valid prescription for medical cannabis, you can still be charged with drug driving if THC is detected in your system. There is currently no exemption for medical users. THC can be detected days after use, even when no longer impaired.</p>
+            </div>
+          </section>
+
+          <!-- Future of Cannabis in QLD -->
+          <section id="future">
+            <h2>The Future of Cannabis Laws in Queensland</h2>
+            <p>As of 2026, there are no imminent plans to legalise recreational cannabis in Queensland. The state government has remained conservative on cannabis reform compared to jurisdictions like the ACT.</p>
+            <p>However, advocacy groups continue to push for reform, and the growing success of medical cannabis programs may influence future policy discussions.</p>
+
+            <div class="info-box">
+              <h3>What Could Change?</h3>
+              <ul>
+                <li>📋 <strong>Expanded diversion programs:</strong> More focus on treatment over punishment</li>
+                <li>🚗 <strong>Drug driving reform:</strong> Impairment-based testing for medical patients</li>
+                <li>💊 <strong>Easier medical access:</strong> Streamlined prescription pathways</li>
+                <li>🌿 <strong>Decriminalisation:</strong> Following ACT's example (unlikely in near future)</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- CTA Section -->
+          <div class="cta-box">
+            <h3>Explore Legal Cannabis Products</h3>
+            <p>Browse our selection of quality cannabis products delivered Australia-wide.</p>
+            <a href="/shop" class="btn btn-white">Shop Now →</a>
+          </div>
+
+          <!-- FAQ Section -->
+          <section>
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+              <details class="faq-item">
+                <summary>Is weed legal in Queensland?</summary>
+                <div class="faq-answer">Recreational cannabis is illegal in Queensland. However, medical cannabis is legal with a valid prescription obtained through proper TGA-approved channels.</div>
+              </details>
+              <details class="faq-item">
+                <summary>What happens if I get caught with weed in QLD?</summary>
+                <div class="faq-answer">For small amounts (under 50g) with no prior offences, you may be offered diversion to an education program. Otherwise, you could face fines or imprisonment. Larger amounts can result in serious criminal charges with penalties up to 15-25 years.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Can I grow my own cannabis in Queensland?</summary>
+                <div class="faq-answer">No. Unlike the ACT, there is no allowance for home cultivation in Queensland. Growing even one plant is a criminal offence with penalties up to 20 years imprisonment.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Can I drive if I'm a medical cannabis patient?</summary>
+                <div class="faq-answer">While you can legally possess and use prescribed cannabis, you cannot drive with any detectable THC in your system. There's currently no exemption for medical patients in Queensland's drug driving laws.</div>
+              </details>
+            </div>
+          </section>
+
+          <!-- Related Articles -->
+          <div class="related-posts">
+            <h3>Related Articles</h3>
+            <div class="related-grid">
+              <a href="/blog/is-weed-legal-in-australia" class="related-card">
+                <span>⚖️</span>
+                <h4>Is Weed Legal in Australia? Complete Guide</h4>
+                <p>State-by-state breakdown of cannabis laws across Australia.</p>
+              </a>
+              <a href="/brisbane" class="related-card">
+                <span>🏙️</span>
+                <h4>Buy Weed Online Brisbane</h4>
+                <p>Cannabis delivery services for Brisbane residents.</p>
+              </a>
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- Diversion Programs -->
-      <section id="diversion" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Police Diversion Programs</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            Queensland does offer a <strong>drug diversion program</strong> for minor cannabis offences. Instead of criminal charges, eligible offenders may be offered the chance to attend a drug assessment and education session.
-          </p>
-        </div>
-        
-        <div class="bg-green-50 rounded-xl p-6 mt-6">
-          <h3 class="text-xl font-bold text-green-900 mb-4">Eligibility for Diversion:</h3>
-          <ul class="text-green-800 space-y-3">
-            <li>✓ First or second minor drug offence</li>
-            <li>✓ Possession of 50g or less of cannabis</li>
-            <li>✓ No associated violence or other serious offences</li>
-            <li>✓ Admission of the offence</li>
-            <li>✓ Consent to participate in the program</li>
-          </ul>
-        </div>
-        
-        <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg mt-6">
-          <h4 class="font-bold text-amber-900 mb-2">Note: Diversion is Not Guaranteed</h4>
-          <p class="text-amber-800">
-            Police have discretion over whether to offer diversion. They may choose to proceed with charges even for minor offences, particularly if aggravating factors exist or if you've previously received a diversion.
-          </p>
-        </div>
-      </section>
-
-      <!-- Medical Cannabis -->
-      <section id="medical" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Medical Cannabis in Queensland</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            While recreational cannabis remains illegal, <strong>medical cannabis is legal in Queensland</strong> when accessed through proper channels. Queensland residents can access medical cannabis with a valid prescription.
-          </p>
-        </div>
-        
-        <div class="bg-green-50 rounded-2xl p-6 mt-6">
-          <h3 class="text-xl font-bold text-green-900 mb-4">How to Access Medical Cannabis in QLD:</h3>
-          <ol class="text-green-800 space-y-4 list-decimal list-inside">
-            <li><strong>Consult a doctor:</strong> Discuss your condition with a GP or specialist</li>
-            <li><strong>Medical assessment:</strong> Your doctor assesses if cannabis is appropriate</li>
-            <li><strong>TGA approval:</strong> Doctor applies through <a href="https://www.tga.gov.au/medicinal-cannabis" target="_blank" rel="noopener noreferrer">Special Access Scheme</a> or Authorised Prescriber pathway</li>
-            <li><strong>Prescription issued:</strong> Once approved, you receive a legal prescription</li>
-            <li><strong>Pharmacy dispensing:</strong> Collect your medicine from an authorized pharmacy</li>
-          </ol>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-6 mt-6">
-          <div class="bg-white border border-gray-200 rounded-xl p-6">
-            <h4 class="font-bold text-gray-900 mb-3">Qualifying Conditions May Include:</h4>
-            <ul class="text-gray-600 space-y-2">
-              <li>• Chronic pain</li>
-              <li>• Cancer-related symptoms</li>
-              <li>• Multiple sclerosis</li>
-              <li>• Epilepsy</li>
-              <li>• PTSD</li>
-              <li>• Anxiety disorders</li>
-              <li>• Insomnia</li>
-              <li>• Inflammatory conditions</li>
-            </ul>
-          </div>
-          
-          <div class="bg-white border border-gray-200 rounded-xl p-6">
-            <h4 class="font-bold text-gray-900 mb-3">Important Rules for Patients:</h4>
-            <ul class="text-gray-600 space-y-2">
-              <li>• Keep prescription with your medicine</li>
-              <li>• Don't share your medication</li>
-              <li>• Store products securely</li>
-              <li>• Don't drive while impaired</li>
-              <li>• Renew prescription as required</li>
-              <li>• Only use as prescribed</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Drug Driving -->
-      <section id="driving" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Drug Driving Laws in Queensland</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            Queensland has <strong>zero-tolerance drug driving laws</strong>. It's illegal to drive with any detectable amount of THC in your system, regardless of whether you're impaired or using legally prescribed medical cannabis.
-          </p>
-        </div>
-        
-        <div class="bg-red-50 rounded-xl p-6 mt-6">
-          <h3 class="text-xl font-bold text-red-900 mb-4">Drug Driving Penalties in QLD:</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full border-collapse">
-              <thead class="bg-red-100">
-                <tr>
-                  <th class="px-4 py-3 text-left text-red-900">Offence</th>
-                  <th class="px-4 py-3 text-left text-red-900">Maximum Fine</th>
-                  <th class="px-4 py-3 text-left text-red-900">Licence Suspension</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-red-200">
-                <tr>
-                  <td class="px-4 py-3">First offence</td>
-                  <td class="px-4 py-3">$4,058</td>
-                  <td class="px-4 py-3">1-9 months</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-3">Second offence</td>
-                  <td class="px-4 py-3">$6,086</td>
-                  <td class="px-4 py-3">3-12 months</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-3">Third+ offence</td>
-                  <td class="px-4 py-3">$12,172</td>
-                  <td class="px-4 py-3">6 months+</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg mt-6">
-          <h4 class="font-bold text-amber-900 mb-2">⚠️ Medical Cannabis Patients Warning</h4>
-          <p class="text-amber-800">
-            Even if you have a valid prescription for medical cannabis, you can still be charged with drug driving if THC is detected in your system. There is currently no exemption for medical users. THC can be detected days after use, even when no longer impaired.
-          </p>
-        </div>
-      </section>
-
-      <!-- Future of Cannabis in QLD -->
-      <section id="future" class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">The Future of Cannabis Laws in Queensland</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-gray-700">
-            As of 2026, there are no imminent plans to legalise recreational cannabis in Queensland. The state government has remained conservative on cannabis reform compared to jurisdictions like the ACT.
-          </p>
-          <p class="text-gray-700 mt-4">
-            However, advocacy groups continue to push for reform, and the growing success of medical cannabis programs may influence future policy discussions.
-          </p>
-        </div>
-        
-        <div class="bg-blue-50 rounded-xl p-6 mt-6">
-          <h3 class="text-xl font-bold text-blue-900 mb-4">What Could Change?</h3>
-          <ul class="text-blue-800 space-y-3">
-            <li>📋 <strong>Expanded diversion programs:</strong> More focus on treatment over punishment</li>
-            <li>🚗 <strong>Drug driving reform:</strong> Impairment-based testing for medical patients</li>
-            <li>💊 <strong>Easier medical access:</strong> Streamlined prescription pathways</li>
-            <li>🌿 <strong>Decriminalisation:</strong> Following ACT's example (unlikely in near future)</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- CTA Section -->
-      <section class="bg-green-600 text-white rounded-2xl p-8 mb-12">
-        <h3 class="text-2xl font-bold mb-4">Explore Legal Cannabis Products</h3>
-        <p class="mb-6 text-green-100">
-          Browse our selection of quality cannabis products delivered Australia-wide.
-        </p>
-        <a href="/shop" class="inline-block bg-white text-green-600 px-8 py-3 rounded-full font-bold hover:bg-green-50 transition-colors">
-          Shop Now →
-        </a>
-      </section>
-
-      <!-- FAQ Section -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-        
-        <div class="space-y-4">
-          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
-              Is weed legal in Queensland?
-            </summary>
-            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
-              Recreational cannabis is illegal in Queensland. However, medical cannabis is legal with a valid prescription obtained through proper TGA-approved channels.
-            </div>
-          </details>
-          
-          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
-              What happens if I get caught with weed in QLD?
-            </summary>
-            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
-              For small amounts (under 50g) with no prior offences, you may be offered diversion to an education program. Otherwise, you could face fines or imprisonment. Larger amounts can result in serious criminal charges with penalties up to 15-25 years.
-            </div>
-          </details>
-          
-          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
-              Can I grow my own cannabis in Queensland?
-            </summary>
-            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
-              No. Unlike the ACT, there is no allowance for home cultivation in Queensland. Growing even one plant is a criminal offence with penalties up to 20 years imprisonment.
-            </div>
-          </details>
-          
-          <details class="bg-white border border-gray-200 rounded-xl overflow-hidden">
-            <summary class="px-6 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50">
-              Can I drive if I'm a medical cannabis patient?
-            </summary>
-            <div class="px-6 py-4 border-t border-gray-200 text-gray-600">
-              While you can legally possess and use prescribed cannabis, you cannot drive with any detectable THC in your system. There's currently no exemption for medical patients in Queensland's drug driving laws.
-            </div>
-          </details>
-        </div>
-      </section>
-
-      <!-- Related Articles -->
-      <section class="border-t border-gray-200 pt-12">
-        <h3 class="text-2xl font-bold text-gray-900 mb-6">Related Articles</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <a href="/blog/is-weed-legal-in-australia" class="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-            <span class="text-sm text-green-600 font-medium">Legal Guide</span>
-            <h4 class="text-lg font-bold text-gray-900 mt-2">Is Weed Legal in Australia? Complete Guide</h4>
-            <p class="text-gray-600 mt-2">State-by-state breakdown of cannabis laws across Australia.</p>
-          </a>
-          <a href="/brisbane" class="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-            <span class="text-sm text-green-600 font-medium">Location</span>
-            <h4 class="text-lg font-bold text-gray-900 mt-2">Buy Weed Online Brisbane</h4>
-            <p class="text-gray-600 mt-2">Cannabis delivery services for Brisbane residents.</p>
-          </a>
-        </div>
-      </section>
+      </div>
     </article>
   </main>
 
   <Footer />
 </Layout>
+
+<style>
+  .article-header {
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, var(--color-sage) 100%);
+    padding: 40px 0 60px;
+    color: white;
+  }
+  .header-content { max-width: 800px; }
+  .category {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .article-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .subtitle { font-size: 1.15rem; opacity: 0.9; margin-bottom: 1.5rem; }
+  .meta {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    opacity: 0.9; font-size: 0.9rem;
+  }
+  .article-content { padding: 60px 0; }
+  .container-narrow {
+    max-width: 800px; margin: 0 auto; padding: 0 1.5rem;
+  }
+  .intro-text { margin-bottom: 2rem; }
+
+  section { margin-bottom: 3rem; }
+  h2 { color: var(--color-eucalyptus); font-size: 1.75rem; margin-bottom: 1rem; padding-top: 1rem; }
+  h3 { color: var(--color-sage); font-size: 1.25rem; margin: 1.5rem 0 1rem; }
+  h4 { margin: 0 0 0.75rem; }
+  p { line-height: 1.8; color: #444; margin-bottom: 1rem; }
+  ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.5rem; line-height: 1.6; color: #444; }
+  a { color: var(--color-eucalyptus); }
+
+  .intro-box {
+    background: var(--color-sand);
+    border-left: 4px solid var(--color-eucalyptus);
+    padding: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 2rem;
+  }
+  .intro-box-red {
+    background: #fef2f2;
+    border-left-color: #ef4444;
+  }
+  .intro-box-red h4 { color: #7f1d1d; }
+  .intro-box-red li { color: #991b1b; }
+
+  .toc {
+    background: #f8f8f8;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+  }
+  .toc h3 { margin-top: 0; color: var(--color-eucalyptus); }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .toc a { color: #666; text-decoration: none; }
+  .toc a:hover { color: var(--color-eucalyptus); }
+
+  .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; }
+  .comparison-table th, .comparison-table td {
+    padding: 12px 16px; text-align: left; border-bottom: 1px solid #eee;
+  }
+  .comparison-table thead th { background: var(--color-eucalyptus); color: white; }
+  .comparison-table.table-red thead th { background: #dc2626; }
+  .comparison-table.table-red-light thead th { background: #fecaca; color: #7f1d1d; }
+  .comparison-table.table-dark thead th { background: #1f2937; }
+  .comparison-table tr:nth-child(even) { background: #f9f9f9; }
+
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .card { border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
+  .card h3 { margin-top: 0; }
+  .card-red-light { background: #fef2f2; }
+  .card-red-light h3 { color: #7f1d1d; }
+  .card-red-light li { color: #991b1b; }
+  .card-red { background: #fee2e2; }
+  .card-red h3 { color: #7f1d1d; }
+  .card-red li { color: #991b1b; }
+  .card-green { background: #f0fdf4; }
+  .card-green h3 { color: #14532d; }
+  .card-green li { color: #166534; }
+
+  .info-box {
+    background: linear-gradient(135deg, #e8f4f0 0%, #d4e8e0 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+  }
+  .info-box h3 { margin-top: 0; color: var(--color-eucalyptus); }
+
+  .info-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .info-card h4 { color: #111; }
+
+  .warning-box {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    margin: 2rem 0;
+  }
+  .warning-box h4 { margin: 0 0 0.5rem; color: #92400e; }
+  .warning-box p { margin: 0; color: #92400e; }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--color-eucalyptus) 0%, var(--color-sage) 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  .cta-box h3 { color: white; font-size: 1.5rem; margin-top: 0; }
+  .cta-box p { color: rgba(255,255,255,0.9); }
+  .btn {
+    display: inline-block; padding: 12px 24px; border-radius: 30px;
+    font-weight: 700; text-decoration: none; transition: opacity 0.3s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn-white { background: white; color: var(--color-eucalyptus); }
+
+  .faq-list { display: flex; flex-direction: column; gap: 1rem; }
+  .faq-item {
+    background: white; border: 1px solid #e5e7eb;
+    border-radius: 12px; overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 1rem 1.5rem; cursor: pointer;
+    font-weight: 600; color: #111;
+  }
+  .faq-item summary:hover { background: #f9fafb; }
+  .faq-answer {
+    padding: 1rem 1.5rem; border-top: 1px solid #e5e7eb;
+    color: #4b5563; line-height: 1.7;
+  }
+
+  .related-posts {
+    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eee;
+  }
+  .related-posts h3 { text-align: center; margin-bottom: 1.5rem; }
+  .related-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+  }
+  .related-card {
+    background: var(--color-sand); padding: 1.5rem;
+    border-radius: 12px; text-decoration: none; transition: transform 0.3s;
+  }
+  .related-card:hover { transform: translateY(-3px); }
+  .related-card span { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .related-card h4 { font-size: 1rem; color: var(--color-eucalyptus); margin: 0 0 0.5rem; }
+  .related-card p { font-size: 0.9rem; color: #666; margin: 0; }
+
+  @media (max-width: 768px) {
+    .comparison-grid { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .related-grid { grid-template-columns: 1fr; }
+    .comparison-table { font-size: 0.85rem; }
+    .comparison-table th, .comparison-table td { padding: 8px; }
+  }
+</style>
