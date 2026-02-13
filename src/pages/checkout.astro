@@ -2,12 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
 <Layout title="Secure Cannabis Checkout Australia | Buy Weed Online | Mullaways" description="Complete your weed order securely. Buying weed online in Australia made easy. Bitcoin or bank transfer. Discreet Australia-wide delivery. Express shipping available.">
   <Header />
 
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Cart', href: '/cart'}, {label: 'Checkout'}]} />
     <section class="page-hero">
       <div class="hero-bg">
         <div class="hero-shape hero-shape-1"></div>
@@ -196,7 +198,7 @@ import Footer from '../components/Footer.astro';
   .page-hero {
     position: relative;
     background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
-    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    padding: var(--space-3xl) 0;
     text-align: center;
     overflow: hidden;
   }

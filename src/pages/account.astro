@@ -2,12 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
 <Layout title="My Cannabis Account | Order History | Mullaways Medical Cannabis" description="Manage your cannabis orders, track deliveries, and update account details. Buy weed online Australia with Mullaways Medical Cannabis.">
   <Header />
   
   <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Account'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">
@@ -187,7 +189,7 @@ import Footer from '../components/Footer.astro';
   .page-hero {
     position: relative;
     background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
-    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    padding: var(--space-3xl) 0;
     text-align: center;
     overflow: hidden;
   }
