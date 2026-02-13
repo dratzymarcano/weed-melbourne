@@ -384,9 +384,9 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${price}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-price={price} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -442,9 +442,9 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${price}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-price={price} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -500,9 +500,9 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${price}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-price={price} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -549,9 +549,9 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${price}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-price={price} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-price={price} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -1001,10 +1001,6 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
     border-color: #2d5a3f;
     color: #2d5a3f;
   }
-    color: var(--color-primary);
-    border-radius: var(--radius-lg);
-    margin: 0 auto var(--space-md);
-  }
 
   .info-card h3 {
     margin-bottom: var(--space-sm);
@@ -1045,16 +1041,3 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
   }
 </style>
 
-<script>
-  // Navigate to product detail page
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const slug = btn.getAttribute('data-slug');
-      if (slug) {
-        window.location.href = `/shop/product/${slug}`;
-      }
-    });
-  });
-</script>

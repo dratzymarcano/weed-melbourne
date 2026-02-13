@@ -362,9 +362,9 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-name={product.name} data-price={(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-name={product.name} data-price={(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -426,9 +426,9 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-name={product.name} data-price={(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-name={product.name} data-price={(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -490,9 +490,9 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
                       </div>
                       <div class="product-footer">
                         <span class="price">From ${(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()}</span>
-                        <button class="btn btn-primary btn-sm add-to-cart" data-name={product.name} data-price={(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()} data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-name={product.name} data-price={(() => { const p = getProductBySlug(product.slug); return p ? getMinPrice(p.basePrice, p.category) : product.price; })()} data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -1005,16 +1005,3 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
   }
 </style>
 
-<script>
-  // Navigate to product detail page
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const slug = btn.getAttribute('data-slug');
-      if (slug) {
-        window.location.href = `/shop/product/${slug}`;
-      }
-    });
-  });
-</script>

@@ -344,9 +344,9 @@ const orgSchema = {
 								</div>
 								<div class="product-footer">
 										<span class="price">From ${displayPrice}</span>
-										<button class="btn btn-primary btn-sm add-to-cart" data-price={displayPrice} data-slug={resolvedSlug}>
+										<span class="btn btn-primary btn-sm" data-price={displayPrice} data-slug={resolvedSlug}>
 										View Options
-									</button>
+									</span>
 								</div>
 							</div>
 							</a>
@@ -1013,6 +1013,8 @@ const orgSchema = {
 		overflow: hidden;
 	}
 
+	.product-meta .thc {
+		font-weight: 700;
 		color: #2d5a3f;
 	}
 
@@ -1672,17 +1674,3 @@ const orgSchema = {
 		}
 	}
 </style>
-
-<script>
-	// Navigate to product detail page
-	document.querySelectorAll('.add-to-cart').forEach(btn => {
-		btn.addEventListener('click', (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			const slug = btn.getAttribute('data-slug');
-			if (slug) {
-				window.location.href = `/shop/product/${slug}`;
-			}
-		});
-	});
-</script>

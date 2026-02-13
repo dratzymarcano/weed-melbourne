@@ -415,9 +415,9 @@ const breadcrumbSchema = {
                 </div>
                 <div class="product-footer">
                   <span class="price">From ${displayPrice}</span>
-                  <button class="btn btn-primary btn-sm view-options" data-slug={product.slug}>
+                  <span class="btn btn-primary btn-sm" data-slug={product.slug}>
                     View Options
-                  </button>
+                  </span>
                 </div>
               </div>
             </a>
@@ -1359,17 +1359,3 @@ const breadcrumbSchema = {
     }
   }
 </style>
-
-<script>
-  // View options functionality - navigate to product page
-  document.querySelectorAll('.view-options').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const slug = btn.getAttribute('data-slug');
-      if (slug) {
-        window.location.href = `/shop/product/${slug}`;
-      }
-    });
-  });
-</script>

@@ -507,9 +507,9 @@ const itemListSchema = {
                           }
                           return product.price;
                         })()}</span>
-                        <button class="btn btn-primary btn-sm view-options" data-slug={product.slug}>
+                        <span class="btn btn-primary btn-sm" data-slug={product.slug}>
                           View Options
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </a>
@@ -958,16 +958,3 @@ const itemListSchema = {
     }
   }
 </style>
-
-<script>
-  document.querySelectorAll('.view-options').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const slug = btn.getAttribute('data-slug');
-      if (slug) {
-        window.location.href = `/shop/product/${slug}`;
-      }
-    });
-  });
-</script>
