@@ -1326,12 +1326,22 @@ const navLinks = [
     nav?.classList.add('active');
     toggle?.classList.add('active');
     document.body.classList.add('no-scroll');
+    // Fix iOS: set body position fixed to truly prevent scroll
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${window.scrollY}px`;
   }
 
   function closeMobileMenu() {
     nav?.classList.remove('active');
     toggle?.classList.remove('active');
+    // Restore scroll position before removing fixed positioning
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.top = '';
     document.body.classList.remove('no-scroll');
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
   }
 
   toggle?.addEventListener('click', () => {
@@ -1348,6 +1358,21 @@ const navLinks = [
       closeMobileMenu();
     });
   });
+
+  // Close mobile menu on scroll (handles any scroll that leaks through)
+  window.addEventListener('scroll', () => {
+    if (nav?.classList.contains('active')) {
+      closeMobileMenu();
+    }
+  });
+
+  // Prevent background page from scrolling via touch while menu is open
+  document.addEventListener('touchmove', (e) => {
+    if (!nav?.classList.contains('active')) return;
+    // Allow scrolling inside the nav itself
+    if (nav && nav.contains(e.target as Node)) return;
+    e.preventDefault();
+  }, { passive: false });
 
   // Scroll effect
   window.addEventListener('scroll', () => {
