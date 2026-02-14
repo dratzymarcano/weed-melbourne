@@ -518,55 +518,69 @@ const faqs = [
       <div class="section-header">
         <span class="section-label">Find a Bitcoin ATM</span>
         <h2>Bitcoin ATM Locations <span class="text-accent">Across Australia</span></h2>
-        <p>Select your city to view Bitcoin ATM locations near you. Click any ATM on the map for directions and operating hours.</p>
+        <p>Select your city to view Bitcoin ATM locations near you. Click any marker for details and directions.</p>
       </div>
 
-      <!-- City Selector -->
-      <div class="city-selector">
-        {cities.map((city, index) => (
-          <button
-            class={`city-tab ${index === 0 ? 'active' : ''}`}
-            data-city={city.slug}
-            data-lat={city.lat}
-            data-lng={city.lng}
-            data-zoom={city.mapZoom}
-          >
-            <span class="city-name">{city.name}</span>
-            <span class="city-atm-count">{city.atms} ATM{city.atms !== 1 ? 's' : ''}</span>
-          </button>
-        ))}
-      </div>
+      <!-- Map App Container -->
+      <div class="map-app">
+        <!-- Sidebar -->
+        <div class="map-sidebar">
+          <div class="sidebar-header">
+            <h3 class="sidebar-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              ATM Locations
+            </h3>
+            <span class="sidebar-count" id="atm-count-badge">54 ATMs</span>
+          </div>
 
-      <!-- Map Container -->
-      <div class="map-wrapper">
-        <div class="map-container" id="atm-map-container">
-          <div id="atm-leaflet-map" style="width:100%; height:500px; border-radius:16px;"></div>
+          <!-- City dropdown -->
+          <div class="city-dropdown-wrap">
+            <select class="city-dropdown" id="city-select">
+              <option value="all">All Cities (54 ATMs)</option>
+              {cities.map((city) => (
+                <option value={city.slug}>{city.name}, {city.state} — {city.atms} ATM{city.atms !== 1 ? 's' : ''}</option>
+              ))}
+            </select>
+            <svg class="dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+
+          <!-- ATM List -->
+          <div class="atm-list" id="atm-list">
+            <!-- Populated by JS -->
+          </div>
         </div>
-        <div class="map-info">
-          <p class="map-credit">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            Click any pin for ATM details, hours, and directions. Map tiles by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.
-          </p>
-        </div>
-      </div>
 
-      <!-- City ATM Summary Cards -->
-      <div class="atm-city-grid">
-        {cities.map((city) => (
-          <div class="atm-city-card">
-            <div class="atm-city-header">
-              <h3>{city.name}</h3>
-              <span class="atm-state">{city.state}</span>
-            </div>
-            <div class="atm-city-count">
-              <span class="count-number">{city.atms}</span>
-              <span class="count-label">Bitcoin ATM{city.atms !== 1 ? 's' : ''}</span>
-            </div>
-            <button class="atm-city-btn" data-city={city.slug} data-lat={city.lat} data-lng={city.lng} data-zoom={city.mapZoom}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              View on Map
+        <!-- Map -->
+        <div class="map-panel">
+          <!-- Map overlay controls -->
+          <div class="map-overlay-controls">
+            <button class="map-ctrl-btn" id="zoom-all-btn" title="View all Australia">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/></svg>
+            </button>
+            <button class="map-ctrl-btn" id="locate-btn" title="Use my location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/></svg>
             </button>
           </div>
+          <!-- Leaflet map -->
+          <div id="atm-leaflet-map"></div>
+        </div>
+      </div>
+
+      <!-- Map credit -->
+      <div class="map-info">
+        <p class="map-credit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Click any pin for ATM details, hours, and directions. Map tiles by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> &middot; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>.
+        </p>
+      </div>
+
+      <!-- City Quick-Access Pills -->
+      <div class="city-pills">
+        {cities.map((city) => (
+          <button class="city-pill" data-city={city.slug} data-lat={city.lat} data-lng={city.lng} data-zoom={city.mapZoom}>
+            <span class="pill-name">{city.name}</span>
+            <span class="pill-count">{city.atms}</span>
+          </button>
         ))}
       </div>
     </div>
@@ -1272,70 +1286,252 @@ const faqs = [
     font-weight: bold;
   }
 
-  /* ATM Map */
+  /* ATM Map — Premium UI */
   .atm-map-section {
     background: white;
   }
 
-  .city-selector {
-    display: flex;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: var(--space-xl);
+  .map-app {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.06);
+    height: 600px;
+    margin-bottom: var(--space-lg);
   }
 
-  .city-tab {
+  /* Sidebar */
+  .map-sidebar {
+    background: #1a1f2e;
+    color: #fff;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    display: flex;
     align-items: center;
-    gap: 2px;
-    padding: 10px 18px;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    transition: all var(--transition-fast);
+    justify-content: space-between;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
     font-family: var(--font-primary);
   }
 
-  .city-tab:hover {
-    border-color: var(--color-primary);
-    background: rgba(45, 90, 74, 0.04);
+  .sidebar-title svg {
+    color: #F7931A;
   }
 
-  .city-tab.active {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: white;
+  .sidebar-count {
+    background: #F7931A;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
 
-  .city-name {
-    font-weight: 600;
-    font-size: 0.85rem;
+  .city-dropdown-wrap {
+    position: relative;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  .city-atm-count {
-    font-size: 0.7rem;
-    opacity: 0.7;
-  }
-
-  .map-wrapper {
-    margin-bottom: var(--space-3xl);
-  }
-
-  .map-container {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .map-container #atm-leaflet-map {
-    display: block;
+  .city-dropdown {
     width: 100%;
-    min-height: 500px;
+    padding: 10px 36px 10px 14px;
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: all 0.2s;
+  }
+
+  .city-dropdown:hover,
+  .city-dropdown:focus {
+    background: rgba(255,255,255,0.12);
+    border-color: #F7931A;
+    outline: none;
+  }
+
+  .city-dropdown option {
+    background: #1a1f2e;
+    color: #fff;
+  }
+
+  .dropdown-chevron {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.4);
+    pointer-events: none;
+  }
+
+  /* ATM List */
+  .atm-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+  }
+
+  .atm-list::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .atm-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .atm-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+  }
+
+  .atm-list-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .atm-list-item:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.08);
+  }
+
+  .atm-list-item.active {
+    background: rgba(247,147,26,0.12);
+    border-color: rgba(247,147,26,0.3);
+  }
+
+  .atm-list-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    background: #F7931A;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .atm-list-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .atm-list-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .atm-list-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+
+  .atm-list-address {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+  }
+
+  .atm-list-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .atm-list-hours {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(45, 90, 74, 0.25);
+    color: #6dd5a0;
+  }
+
+  .atm-list-hours.limited {
+    background: rgba(196, 112, 75, 0.2);
+    color: #e8a97e;
+  }
+
+  .atm-list-operator {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* Map Panel */
+  .map-panel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #atm-leaflet-map {
+    width: 100%;
+    height: 100%;
     z-index: 1;
+  }
+
+  .map-overlay-controls {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .map-ctrl-btn {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: #333;
+  }
+
+  .map-ctrl-btn:hover {
+    background: #F7931A;
+    color: #fff;
+    transform: scale(1.05);
   }
 
   .map-info {
@@ -1346,7 +1542,7 @@ const faqs = [
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--color-text-muted);
   }
 
@@ -1356,83 +1552,204 @@ const faqs = [
     text-underline-offset: 2px;
   }
 
-  /* ATM City Grid */
-  .atm-city-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
-    gap: var(--space-md);
-  }
-
-  .atm-city-card {
-    background: var(--color-bg);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-    text-align: center;
-    border: 1px solid var(--color-border);
-    transition: all var(--transition-base);
-  }
-
-  .atm-city-card:hover {
-    border-color: var(--color-primary);
-  }
-
-  .atm-city-header {
+  /* City Pills */
+  .city-pills {
     display: flex;
-    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-sm);
+    margin-top: var(--space-xl);
   }
 
-  .atm-city-header h3 {
-    font-size: 0.95rem;
-    margin: 0;
-  }
-
-  .atm-state {
-    font-size: 0.7rem;
-    color: var(--color-text-muted);
-    background: rgba(0,0,0,0.05);
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-  }
-
-  .atm-city-count {
-    margin-bottom: var(--space-md);
-  }
-
-  .count-number {
-    display: block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-primary);
-    font-family: var(--font-display);
-  }
-
-  .count-label {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-  }
-
-  .atm-city-btn {
+  .city-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    background: var(--color-primary);
-    color: white;
-    border: none;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.2s;
     font-family: var(--font-primary);
+    font-size: 0.82rem;
   }
 
-  .atm-city-btn:hover {
-    background: var(--color-primary-dark);
+  .city-pill:hover {
+    border-color: #F7931A;
+    background: rgba(247,147,26,0.05);
+  }
+
+  .city-pill.active {
+    background: #F7931A;
+    border-color: #F7931A;
+    color: #fff;
+  }
+
+  .pill-name {
+    font-weight: 600;
+  }
+
+  .pill-count {
+    background: rgba(0,0,0,0.08);
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .city-pill.active .pill-count {
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* Marker animations */
+  @keyframes markerPulse {
+    0% { box-shadow: 0 0 0 0 rgba(247,147,26,0.5); }
+    70% { box-shadow: 0 0 0 14px rgba(247,147,26,0); }
+    100% { box-shadow: 0 0 0 0 rgba(247,147,26,0); }
+  }
+
+  :global(.btc-marker-pin) {
+    animation: markerPulse 2.5s infinite;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  :global(.btc-marker-pin:hover) {
+    transform: scale(1.15);
+  }
+
+  /* Popup styles */
+  :global(.leaflet-popup-content-wrapper) {
+    border-radius: 14px !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  :global(.leaflet-popup-content) {
+    margin: 0 !important;
+    width: auto !important;
+    min-width: 280px !important;
+  }
+
+  :global(.leaflet-popup-tip) {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  }
+
+  :global(.atm-popup) {
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+
+  :global(.atm-popup-header) {
+    background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+    padding: 16px 18px 14px;
+    color: #fff;
+  }
+
+  :global(.atm-popup-name) {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  :global(.atm-popup-operator) {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  :global(.atm-popup-body) {
+    padding: 14px 18px 16px;
+  }
+
+  :global(.atm-popup-address) {
+    font-size: 0.8rem;
+    color: #555;
+    margin: 0 0 12px;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  :global(.atm-popup-address svg) {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #F7931A;
+  }
+
+  :global(.atm-popup-tags) {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  :global(.atm-popup-tag) {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  :global(.atm-popup-tag.hours) {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  :global(.atm-popup-tag.hours.limited) {
+    background: #fff3e0;
+    color: #e65100;
+  }
+
+  :global(.atm-popup-tag.buy) {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+
+  :global(.atm-popup-directions) {
+    display: flex;
+    gap: 8px;
+  }
+
+  :global(.atm-popup-btn) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  :global(.atm-popup-btn.primary) {
+    background: #F7931A;
+    color: #fff;
+  }
+
+  :global(.atm-popup-btn.primary:hover) {
+    background: #e8850e;
     transform: translateY(-1px);
+  }
+
+  :global(.atm-popup-btn.secondary) {
+    background: #f5f5f5;
+    color: #333;
+  }
+
+  :global(.atm-popup-btn.secondary:hover) {
+    background: #eee;
   }
 
   /* Tips */
@@ -1625,6 +1942,11 @@ const faqs = [
     .tips-grid {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .map-app {
+      grid-template-columns: 280px 1fr;
+      height: 550px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -1676,16 +1998,25 @@ const faqs = [
       grid-template-columns: 1fr;
     }
 
-    .city-selector {
-      gap: var(--space-xs);
+    .map-app {
+      grid-template-columns: 1fr;
+      height: auto;
     }
 
-    .city-tab {
-      padding: 8px 14px;
+    .map-sidebar {
+      max-height: none;
     }
 
-    .map-container #atm-leaflet-map {
-      min-height: 400px;
+    .atm-list {
+      max-height: 200px;
+    }
+
+    .map-panel {
+      height: 400px;
+    }
+
+    #atm-leaflet-map {
+      height: 400px !important;
     }
 
     .cta-card {
@@ -1700,16 +2031,24 @@ const faqs = [
       width: 100%;
       justify-content: center;
     }
+
+    .city-pills {
+      gap: 6px;
+    }
+
+    .city-pill {
+      padding: 6px 12px;
+      font-size: 0.75rem;
+    }
   }
 
   @media (max-width: 480px) {
-    .city-tab {
-      padding: 8px 10px;
-      font-size: 0.8rem;
+    .map-panel {
+      height: 350px;
     }
 
-    .city-atm-count {
-      font-size: 0.65rem;
+    #atm-leaflet-map {
+      height: 350px !important;
     }
 
     .faq-question {
@@ -1821,106 +2160,237 @@ const faqs = [
       { city: 'central-coast', name: 'Localcoin Bitcoin ATM', address: 'Imperial Shopping Centre, 183 Mann St, Gosford NSW 2250', lat: -33.4265, lng: 151.3418, operator: 'Localcoin', hours: '9am – 9pm' },
     ];
 
-    // Custom Bitcoin marker icon — official ₿ logo
+    // Custom Bitcoin marker icon with pulse animation
     const btcIcon = L.divIcon({
-      className: 'btc-marker',
-      html: `<div style="background:#F7931A;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,0.35);">
+      className: 'btc-marker-pin',
+      html: `<div style="background:#F7931A;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 3px 14px rgba(247,147,26,0.45),0 1px 4px rgba(0,0,0,0.25);">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 64 64"><path fill="#fff" d="M63.04 39.74c-4.27 17.16-21.61 27.58-38.77 23.31C7.12 58.78-3.3 41.44.97 24.28 5.24 7.12 22.58-3.3 39.74.96c17.16 4.28 27.58 21.62 23.3 38.78z"/><path fill="#F7931A" d="M46.11 27.44c.63-4.23-2.59-6.5-6.99-8.02l1.43-5.73-3.49-.87-1.39 5.58c-.92-.23-1.86-.44-2.8-.66l1.4-5.61-3.49-.87-1.43 5.73c-.76-.17-1.5-.35-2.23-.53l0-.02-4.82-1.2-.93 3.73s2.59.59 2.53.63c1.41.35 1.67 1.29 1.63 2.03l-1.63 6.55c.1.02.22.06.36.11-.12-.03-.24-.06-.36-.09l-2.29 9.19c-.17.43-.61 1.07-1.6.83.04.05-2.53-.63-2.53-.63l-1.73 4 4.55 1.13c.85.21 1.68.43 2.49.64l-1.44 5.8 3.49.87 1.43-5.74c.95.26 1.88.5 2.78.73l-1.42 5.71 3.49.87 1.44-5.78c5.95 1.13 10.43.67 12.31-4.71 1.52-4.33-.07-6.83-3.21-8.46 2.28-.53 4-2.03 4.46-5.14zm-7.99 11.2c-1.08 4.33-8.37 1.99-10.73 1.4l1.91-7.68c2.37.59 9.95 1.76 8.82 6.28zm1.08-11.27c-.98 3.94-7.05 1.94-9.02 1.45l1.74-6.96c1.97.49 8.31 1.41 7.28 5.51z"/></svg>
       </div>`,
-      iconSize: [36, 36],
-      iconAnchor: [18, 36],
-      popupAnchor: [0, -38]
+      iconSize: [38, 38],
+      iconAnchor: [19, 38],
+      popupAnchor: [0, -40]
     });
 
-    // Initialize map centered on Sydney
+    // Initialize map centered on Australia
     const map = L.map('atm-leaflet-map', {
       scrollWheelZoom: false,
-      zoomControl: true,
-    }).setView([-33.8688, 151.2093], 12);
+      zoomControl: false,
+    }).setView([-28.5, 135.0], 4);
 
-    // Add OpenStreetMap tiles with a clean style
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 18,
+    // Place Leaflet zoom control bottom-right
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    // CARTO Voyager tiles for a clean, modern look
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19,
     }).addTo(map);
 
-    // Track current markers
-    let currentMarkers: any[] = [];
+    // DOM elements
+    const atmList = document.getElementById('atm-list') as HTMLElement;
+    const citySelect = document.getElementById('city-select') as HTMLSelectElement;
+    const countBadge = document.getElementById('atm-count-badge') as HTMLElement;
+    const zoomAllBtn = document.getElementById('zoom-all-btn') as HTMLElement;
+    const locateBtn = document.getElementById('locate-btn') as HTMLElement;
+    const cityPills = document.querySelectorAll('.city-pill');
 
-    function showCity(citySlug: string) {
+    // Marker & popup state
+    let currentMarkers: any[] = [];
+    let activeListItem: HTMLElement | null = null;
+    let currentCity = 'all';
+
+    // Bitcoin SVG for list items
+    const btcListSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 64 64"><path fill="#fff" d="M63.04 39.74c-4.27 17.16-21.61 27.58-38.77 23.31C7.12 58.78-3.3 41.44.97 24.28 5.24 7.12 22.58-3.3 39.74.96c17.16 4.28 27.58 21.62 23.3 38.78z"/><path fill="#F7931A" d="M46.11 27.44c.63-4.23-2.59-6.5-6.99-8.02l1.43-5.73-3.49-.87-1.39 5.58c-.92-.23-1.86-.44-2.8-.66l1.4-5.61-3.49-.87-1.43 5.73c-.76-.17-1.5-.35-2.23-.53l0-.02-4.82-1.2-.93 3.73s2.59.59 2.53.63c1.41.35 1.67 1.29 1.63 2.03l-1.63 6.55c.1.02.22.06.36.11-.12-.03-.24-.06-.36-.09l-2.29 9.19c-.17.43-.61 1.07-1.6.83.04.05-2.53-.63-2.53-.63l-1.73 4 4.55 1.13c.85.21 1.68.43 2.49.64l-1.44 5.8 3.49.87 1.43-5.74c.95.26 1.88.5 2.78.73l-1.42 5.71 3.49.87 1.44-5.78c5.95 1.13 10.43.67 12.31-4.71 1.52-4.33-.07-6.83-3.21-8.46 2.28-.53 4-2.03 4.46-5.14zm-7.99 11.2c-1.08 4.33-8.37 1.99-10.73 1.4l1.91-7.68c2.37.59 9.95 1.76 8.82 6.28zm1.08-11.27c-.98 3.94-7.05 1.94-9.02 1.45l1.74-6.96c1.97.49 8.31 1.41 7.28 5.51z"/></svg>`;
+
+    // Build popup HTML
+    function buildPopup(atm: any): string {
+      const isAllDay = atm.hours === '24/7';
+      return `<div class="atm-popup">
+        <div class="atm-popup-header">
+          <div class="atm-popup-name">${atm.name}</div>
+          <div class="atm-popup-operator">${atm.operator}</div>
+        </div>
+        <div class="atm-popup-body">
+          <div class="atm-popup-address">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${atm.address}
+          </div>
+          <div class="atm-popup-tags">
+            <span class="atm-popup-tag hours ${isAllDay ? '' : 'limited'}">${isAllDay ? '24/7 Open' : atm.hours}</span>
+            <span class="atm-popup-tag buy">Buy BTC</span>
+          </div>
+          <div class="atm-popup-directions">
+            <a class="atm-popup-btn" href="https://www.google.com/maps/dir/?api=1&destination=${atm.lat},${atm.lng}" target="_blank" rel="noopener noreferrer">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+              Get Directions
+            </a>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // Build sidebar list item HTML
+    function buildListItem(atm: any, index: number): string {
+      const isAllDay = atm.hours === '24/7';
+      return `<div class="atm-list-item" data-index="${index}">
+        <div class="atm-list-icon">${btcListSvg}</div>
+        <div class="atm-list-details">
+          <div class="atm-list-name">${atm.name}</div>
+          <div class="atm-list-address">${atm.address}</div>
+          <div class="atm-list-meta">
+            <span class="atm-list-hours ${isAllDay ? '' : 'limited'}">${isAllDay ? '24/7' : atm.hours}</span>
+            <span class="atm-list-operator">${atm.operator}</span>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // Show ATMs for a city (or "all")
+    function showATMs(citySlug: string) {
+      currentCity = citySlug;
+
       // Remove old markers
       currentMarkers.forEach(m => map.removeLayer(m));
       currentMarkers = [];
 
-      // Get ATMs for this city
-      const cityATMs = bitcoinATMs.filter(a => a.city === citySlug);
+      // Filter ATMs
+      const atms = citySlug === 'all'
+        ? bitcoinATMs
+        : bitcoinATMs.filter(a => a.city === citySlug);
+
+      // Update count badge
+      countBadge.textContent = `${atms.length} ATM${atms.length !== 1 ? 's' : ''}`;
+
+      // Build sidebar list
+      atmList.innerHTML = atms.map((atm, i) => buildListItem(atm, i)).join('');
 
       // Add markers
-      cityATMs.forEach(atm => {
+      atms.forEach((atm, i) => {
         const marker = L.marker([atm.lat, atm.lng], { icon: btcIcon }).addTo(map);
-        marker.bindPopup(`
-          <div style="font-family:Inter,system-ui,sans-serif;min-width:200px;">
-            <strong style="font-size:14px;color:#1C1C1C;">${atm.name}</strong>
-            <p style="margin:6px 0 4px;font-size:12px;color:#555;">${atm.address}</p>
-            <div style="display:flex;gap:12px;margin:8px 0;font-size:12px;">
-              <span style="color:#2D5A4A;font-weight:600;">⏱ ${atm.hours}</span>
-              <span style="color:#666;">${atm.operator}</span>
-            </div>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${atm.lat},${atm.lng}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:4px;padding:6px 14px;background:#2D5A4A;color:#fff;border-radius:6px;font-size:12px;text-decoration:none;font-weight:600;">Get Directions</a>
-          </div>
-        `);
+        marker.bindPopup(buildPopup(atm), { maxWidth: 280, className: 'btc-popup-container' });
+
+        // When popup opens, highlight sidebar item
+        marker.on('popupopen', () => {
+          highlightListItem(i);
+        });
+        marker.on('popupclose', () => {
+          clearActiveListItem();
+        });
+
         currentMarkers.push(marker);
       });
 
-      // Get city center from tab data
-      const activeTab = document.querySelector(`.city-tab[data-city="${citySlug}"]`);
-      if (activeTab) {
-        const lat = parseFloat(activeTab.getAttribute('data-lat') || '-33.8688');
-        const lng = parseFloat(activeTab.getAttribute('data-lng') || '151.2093');
-        const zoom = parseInt(activeTab.getAttribute('data-zoom') || '12');
-        map.setView([lat, lng], zoom);
+      // Fit map bounds
+      if (atms.length > 0) {
+        if (citySlug === 'all') {
+          // Fit all Australia with padding
+          const bounds = L.latLngBounds(atms.map((a: any) => [a.lat, a.lng]));
+          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 5 });
+        } else {
+          // Use city pill data for center/zoom
+          const pill = document.querySelector(`.city-pill[data-city="${citySlug}"]`);
+          if (pill) {
+            const lat = parseFloat(pill.getAttribute('data-lat') || '-28.5');
+            const lng = parseFloat(pill.getAttribute('data-lng') || '135');
+            const zoom = parseInt(pill.getAttribute('data-zoom') || '12');
+            map.setView([lat, lng], zoom);
+          } else {
+            const bounds = L.latLngBounds(atms.map((a: any) => [a.lat, a.lng]));
+            map.fitBounds(bounds, { padding: [40, 40] });
+          }
+        }
+      }
+
+      // Attach click handlers on list items
+      atmList.querySelectorAll('.atm-list-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = parseInt(el.getAttribute('data-index') || '0');
+          if (currentMarkers[idx]) {
+            map.setView([atms[idx].lat, atms[idx].lng], 16, { animate: true });
+            currentMarkers[idx].openPopup();
+            highlightListItem(idx);
+          }
+        });
+      });
+
+      // Sync city pills active state
+      cityPills.forEach(p => {
+        if (p.getAttribute('data-city') === citySlug) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+
+      // Sync dropdown
+      citySelect.value = citySlug;
+    }
+
+    function highlightListItem(index: number) {
+      clearActiveListItem();
+      const items = atmList.querySelectorAll('.atm-list-item');
+      if (items[index]) {
+        items[index].classList.add('active');
+        activeListItem = items[index] as HTMLElement;
+        // Scroll into view in sidebar
+        activeListItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     }
 
-    // Initial load: show Sydney
-    showCity('sydney');
-
-    // City tab switching
-    const cityTabs = document.querySelectorAll('.city-tab');
-    const cityBtns = document.querySelectorAll('.atm-city-btn');
-
-    function switchCity(citySlug: string) {
-      cityTabs.forEach(tab => {
-        if (tab.getAttribute('data-city') === citySlug) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
-        }
-      });
-      showCity(citySlug);
+    function clearActiveListItem() {
+      if (activeListItem) {
+        activeListItem.classList.remove('active');
+        activeListItem = null;
+      }
     }
 
-    cityTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const city = tab.getAttribute('data-city');
-        if (city) {
-          switchCity(city);
-          document.getElementById('atm-map')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    // City dropdown listener
+    citySelect.addEventListener('change', () => {
+      showATMs(citySelect.value);
+    });
+
+    // City pill click listeners
+    cityPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const city = pill.getAttribute('data-city');
+        if (city) showATMs(city);
       });
     });
 
-    cityBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const city = btn.getAttribute('data-city');
-        if (city) {
-          switchCity(city);
-          document.getElementById('atm-map')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
+    // Zoom-all button
+    zoomAllBtn.addEventListener('click', () => {
+      showATMs('all');
     });
+
+    // Locate-me button
+    locateBtn.addEventListener('click', () => {
+      if ('geolocation' in navigator) {
+        locateBtn.classList.add('loading');
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            locateBtn.classList.remove('loading');
+            const { latitude, longitude } = pos.coords;
+            map.setView([latitude, longitude], 13, { animate: true });
+
+            // Find nearest ATMs and show all
+            if (currentCity !== 'all') {
+              showATMs('all');
+            }
+          },
+          () => {
+            locateBtn.classList.remove('loading');
+          },
+          { timeout: 8000 }
+        );
+      }
+    });
+
+    // Initial load: show all ATMs across Australia
+    showATMs('all');
 
     // Fix map sizing after layout settles
     setTimeout(() => map.invalidateSize(), 200);
+    setTimeout(() => map.invalidateSize(), 600);
   };
 </script>
