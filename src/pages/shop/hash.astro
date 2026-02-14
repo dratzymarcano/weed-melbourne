@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
-import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
 const title = "Buy Hash Online Australia | Moroccan, Afghan & Bubble Hash Near Me";
 const description = "Buy hash online Australia. Traditional Moroccan, Afghan, Lebanese hashish & modern bubble hash. Looking for quality hash near me? Lab-tested, discreet delivery.";
@@ -285,11 +285,18 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                   <a href={`/shop/product/${product.slug}`} class="product-card">
                     <div class="product-badge traditional">{product.type}</div>
                     <div class="product-image">
-                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                        <circle cx="12" cy="12" r="10"/>
-                        <circle cx="12" cy="12" r="6"/>
-                        <circle cx="12" cy="12" r="2"/>
-                      </svg>
+                      {getProductBySlug(product.slug)?.image ? (
+                        <picture>
+                          <source srcset={getProductBySlug(product.slug)!.image!.replace('.jpg', '.webp')} type="image/webp" />
+                          <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
+                        </picture>
+                      ) : (
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                          <circle cx="12" cy="12" r="10"/>
+                          <circle cx="12" cy="12" r="6"/>
+                          <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                      )}
                     </div>
                     <div class="product-content">
                       <h3>{product.name}</h3>
@@ -339,12 +346,19 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                   <a href={`/shop/product/${product.slug}`} class="product-card">
                     <div class="product-badge bubble">{product.type}</div>
                     <div class="product-image">
-                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                        <circle cx="12" cy="12" r="10"/>
-                        <circle cx="8" cy="10" r="2"/>
-                        <circle cx="16" cy="10" r="2"/>
-                        <circle cx="12" cy="15" r="2"/>
-                      </svg>
+                      {getProductBySlug(product.slug)?.image ? (
+                        <picture>
+                          <source srcset={getProductBySlug(product.slug)!.image!.replace('.jpg', '.webp')} type="image/webp" />
+                          <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
+                        </picture>
+                      ) : (
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                          <circle cx="12" cy="12" r="10"/>
+                          <circle cx="8" cy="10" r="2"/>
+                          <circle cx="16" cy="10" r="2"/>
+                          <circle cx="12" cy="15" r="2"/>
+                        </svg>
+                      )}
                     </div>
                     <div class="product-content">
                       <h3>{product.name}</h3>
@@ -394,11 +408,18 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                   <a href={`/shop/product/${product.slug}`} class="product-card">
                     <div class="product-badge dry-sift">{product.type}</div>
                     <div class="product-image">
-                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                        <rect x="4" y="4" width="16" height="16" rx="2"/>
-                        <line x1="4" y1="10" x2="20" y2="10"/>
-                        <line x1="10" y1="4" x2="10" y2="20"/>
-                      </svg>
+                      {getProductBySlug(product.slug)?.image ? (
+                        <picture>
+                          <source srcset={getProductBySlug(product.slug)!.image!.replace('.jpg', '.webp')} type="image/webp" />
+                          <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
+                        </picture>
+                      ) : (
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                          <rect x="4" y="4" width="16" height="16" rx="2"/>
+                          <line x1="4" y1="10" x2="20" y2="10"/>
+                          <line x1="10" y1="4" x2="10" y2="20"/>
+                        </svg>
+                      )}
                     </div>
                     <div class="product-content">
                       <h3>{product.name}</h3>
@@ -448,11 +469,18 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                   <a href={`/shop/product/${product.slug}`} class="product-card">
                     <div class="product-badge pressed">{product.type}</div>
                     <div class="product-image">
-                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                        <rect x="6" y="4" width="12" height="16" rx="2"/>
-                        <line x1="6" y1="8" x2="18" y2="8"/>
-                        <line x1="6" y1="16" x2="18" y2="16"/>
-                      </svg>
+                      {getProductBySlug(product.slug)?.image ? (
+                        <picture>
+                          <source srcset={getProductBySlug(product.slug)!.image!.replace('.jpg', '.webp')} type="image/webp" />
+                          <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
+                        </picture>
+                      ) : (
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                          <rect x="6" y="4" width="12" height="16" rx="2"/>
+                          <line x1="6" y1="8" x2="18" y2="8"/>
+                          <line x1="6" y1="16" x2="18" y2="16"/>
+                        </svg>
+                      )}
                     </div>
                     <div class="product-content">
                       <h3>{product.name}</h3>
@@ -594,7 +622,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
 
   .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: var(--space-lg);
   }
 

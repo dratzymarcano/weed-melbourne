@@ -22,4 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# source image folders (already processed into public/images/products/)
 thc gummies/
+edibbles/
+hash/
+pre-rolls/
+vapes/
+
+# python virtual environment
+.venv/
