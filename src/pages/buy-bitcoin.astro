@@ -1,0 +1,1803 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const title = "How to Buy Bitcoin Australia | Easy Guide for Beginners | Mullaways";
+const description = "Complete beginner's guide to buying Bitcoin in Australia. Step-by-step instructions, best exchanges, Bitcoin ATM locations near you. Pay for cannabis with BTC easily.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Buy Bitcoin in Australia",
+  "description": "A step-by-step guide for beginners to buy Bitcoin in Australia using exchanges or Bitcoin ATMs.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Choose an Exchange",
+      "text": "Pick an AUSTRAC-registered Australian exchange like CoinSpot, CoinJar, or bitcoin.com.au."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Create Your Account",
+      "text": "Sign up with your email address and verify your identity with a valid Australian ID."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Deposit AUD",
+      "text": "Add funds via PayID, bank transfer, POLi, or debit card — most methods are instant."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Buy Bitcoin",
+      "text": "Enter the amount you want to spend in AUD, confirm, and your Bitcoin is ready instantly."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Send to Our Wallet",
+      "text": "Copy our Bitcoin address from checkout and send from your exchange — it's like pasting an email address."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "How to Buy Bitcoin", "item": "https://mullawaysmedicalcannabis.com.au/buy-bitcoin" }
+  ]
+};
+
+const cities = [
+  { name: 'Sydney', state: 'NSW', slug: 'sydney', atms: 14, lat: -33.8688, lng: 151.2093, mapZoom: 12 },
+  { name: 'Melbourne', state: 'VIC', slug: 'melbourne', atms: 13, lat: -37.8136, lng: 144.9631, mapZoom: 12 },
+  { name: 'Brisbane', state: 'QLD', slug: 'brisbane', atms: 6, lat: -27.4698, lng: 153.0251, mapZoom: 12 },
+  { name: 'Perth', state: 'WA', slug: 'perth', atms: 5, lat: -31.9505, lng: 115.8605, mapZoom: 12 },
+  { name: 'Adelaide', state: 'SA', slug: 'adelaide', atms: 4, lat: -34.9285, lng: 138.6007, mapZoom: 12 },
+  { name: 'Gold Coast', state: 'QLD', slug: 'gold-coast', atms: 3, lat: -28.0167, lng: 153.4, mapZoom: 12 },
+  { name: 'Canberra', state: 'ACT', slug: 'canberra', atms: 2, lat: -35.2809, lng: 149.1300, mapZoom: 13 },
+  { name: 'Newcastle', state: 'NSW', slug: 'newcastle', atms: 2, lat: -32.9283, lng: 151.7817, mapZoom: 13 },
+  { name: 'Sunshine Coast', state: 'QLD', slug: 'sunshine-coast', atms: 1, lat: -26.6500, lng: 153.0667, mapZoom: 12 },
+  { name: 'Hobart', state: 'TAS', slug: 'hobart', atms: 1, lat: -42.8821, lng: 147.3272, mapZoom: 13 },
+  { name: 'Darwin', state: 'NT', slug: 'darwin', atms: 1, lat: -12.4634, lng: 130.8456, mapZoom: 13 },
+  { name: 'Wollongong', state: 'NSW', slug: 'wollongong', atms: 1, lat: -34.4248, lng: 150.8931, mapZoom: 13 },
+  { name: 'Central Coast', state: 'NSW', slug: 'central-coast', atms: 1, lat: -33.4200, lng: 151.3400, mapZoom: 13 },
+];
+
+const exchanges = [
+  {
+    name: 'CoinSpot',
+    founded: '2013',
+    ease: 'Very Easy',
+    easeScore: 5,
+    fees: '1%',
+    deposit: 'PayID, POLi, BPAY, Cash',
+    speed: 'Instant',
+    minBuy: '$10',
+    austrac: true,
+    bestFor: 'Absolute beginners',
+    description: 'Australia\'s most beginner-friendly exchange. Sign up, deposit via PayID, and buy Bitcoin in under 5 minutes.',
+    highlight: true,
+  },
+  {
+    name: 'CoinJar',
+    founded: '2013',
+    ease: 'Very Easy',
+    easeScore: 5,
+    fees: '0-2%',
+    deposit: 'PayID, Osko, NPP',
+    speed: 'Instant',
+    minBuy: '$10',
+    austrac: true,
+    bestFor: 'Quick mobile purchases',
+    description: 'Clean interface perfect for first-time buyers. Instant bank transfers and a well-designed mobile app.',
+    highlight: false,
+  },
+  {
+    name: 'bitcoin.com.au',
+    founded: '2015',
+    ease: 'Easy',
+    easeScore: 4,
+    fees: '~1%',
+    deposit: 'PayPal, Card, Bank Transfer',
+    speed: 'Instant',
+    minBuy: '$50',
+    austrac: true,
+    bestFor: 'PayPal users',
+    description: 'Trusted by 300,000+ Australians. One of the few that accepts PayPal and credit/debit cards — no bank transfer needed.',
+    highlight: false,
+  },
+  {
+    name: 'Swyftx',
+    founded: '2017',
+    ease: 'Easy',
+    easeScore: 4,
+    fees: '0.6%',
+    deposit: 'PayID, POLi, Card',
+    speed: 'Instant',
+    minBuy: '$30',
+    austrac: true,
+    bestFor: 'Low-fee purchases',
+    description: 'Great guides and tutorials built in. Instant verification and fast chat support when you need help.',
+    highlight: false,
+  },
+];
+
+const faqs = [
+  {
+    q: 'What do I need to buy Bitcoin in Australia?',
+    a: 'Just an email address, an Australian bank account or card, and a valid ID (driver\'s licence or passport). The whole signup process takes 5-10 minutes on most exchanges.'
+  },
+  {
+    q: 'Is it legal to buy Bitcoin in Australia?',
+    a: 'Absolutely. Bitcoin is 100% legal in Australia. Australian exchanges are registered with AUSTRAC (Australian Transaction Reports and Analysis Centre). Buying, holding, and spending Bitcoin is completely legal.'
+  },
+  {
+    q: 'How much Bitcoin do I need to buy?',
+    a: 'You don\'t need to buy a whole Bitcoin! You can buy as little as $10 worth. Bitcoin is divisible to 8 decimal places (called "satoshis"). Just buy the amount you need for your order.'
+  },
+  {
+    q: 'How long does it take to buy Bitcoin?',
+    a: 'With exchanges like CoinSpot or CoinJar using PayID, you can buy Bitcoin in under 5 minutes from signing up. Bitcoin ATMs are even faster — insert cash and get Bitcoin in about 60 seconds.'
+  },
+  {
+    q: 'What is a Bitcoin wallet?',
+    a: 'A Bitcoin wallet is like a digital bank account for your Bitcoin. When you buy on an exchange, they provide a wallet automatically. To pay us, you just copy our Bitcoin address and paste it in the "Send" section of your exchange.'
+  },
+  {
+    q: 'How do I send Bitcoin to pay for my order?',
+    a: 'At checkout, you\'ll see our Bitcoin address and a QR code. Open your exchange app, tap "Send" or "Withdraw", paste our address (or scan the QR code), enter the amount, and confirm. That\'s it!'
+  },
+  {
+    q: 'What fees are involved?',
+    a: 'Exchange fees are typically 0.5-1% of your purchase. Bitcoin ATMs charge higher fees (5-10%) but require no account setup. Network fees (to send Bitcoin) are usually under $1.'
+  },
+  {
+    q: 'Can I buy Bitcoin with cash?',
+    a: 'Yes! Bitcoin ATMs accept cash and are available in most Australian cities. You can also use services like BuyaBitcoin that let you deposit cash at a bank and receive Bitcoin. See our ATM map below for locations near you.'
+  },
+  {
+    q: 'What if I buy too much Bitcoin?',
+    a: 'No problem — any Bitcoin left in your exchange account stays there for next time. You can also sell it back to AUD whenever you want.'
+  },
+  {
+    q: 'Is Bitcoin anonymous?',
+    a: 'Australian exchanges require identity verification (KYC). However, Bitcoin ATMs for small amounts (under $1,000) often only require a phone number. Bitcoin transactions themselves don\'t show your name on the blockchain.'
+  },
+];
+---
+
+<Layout title={title} description={description} schema={[schema, breadcrumbSchema]}>
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="container">
+      <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'How to Buy Bitcoin'}]} />
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Beginner-Friendly Guide</span>
+        </div>
+        <h1>How to Buy Bitcoin <span class="text-gradient">in Australia</span></h1>
+        <p class="hero-description">Never used crypto before? No problem. This guide will walk you through buying Bitcoin step-by-step — from zero knowledge to making your first payment in under 10 minutes.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </span>
+            <div>
+              <span class="stat-value">5 min</span>
+              <span class="stat-label">To Buy Bitcoin</span>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </span>
+            <div>
+              <span class="stat-value">50+</span>
+              <span class="stat-label">Bitcoin ATMs</span>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span>
+            <div>
+              <span class="stat-value">100%</span>
+              <span class="stat-label">Legal in Australia</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-ctas">
+          <a href="#buy-online" class="btn btn-primary btn-large">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg>
+            Buy Online (Easiest)
+          </a>
+          <a href="#atm-map" class="btn btn-outline-light btn-large">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Find a Bitcoin ATM
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Bitcoin Section -->
+  <section class="section why-bitcoin">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Why Pay With Bitcoin?</span>
+        <h2>Benefits of Bitcoin Payments</h2>
+        <p>Bitcoin is the preferred payment method for cannabis purchases in Australia. Here's why thousands of customers choose it.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>Private & Discreet</h3>
+          <p>No cannabis-related entries on your bank statement. Bitcoin payments keep your purchases completely private.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>Faster Processing</h3>
+          <p>Bitcoin payments are confirmed in minutes, not days. Your order ships sooner because there's no bank processing delay.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Lower Fees</h3>
+          <p>No credit card surcharges or bank transfer delays. Bitcoin network fees are typically under $1 per transaction.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Secure & Safe</h3>
+          <p>Bitcoin uses military-grade encryption. Transactions can't be reversed or intercepted. Your money reaches us directly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buy Online Section -->
+  <section class="section buy-online" id="buy-online">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Method 1 — Recommended</span>
+        <h2>Buy Bitcoin Online <span class="text-accent">(5 Minutes)</span></h2>
+        <p>The easiest way to get Bitcoin. Follow these 5 simple steps — no crypto knowledge required.</p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Choose an Exchange</h3>
+            <p>Pick one of the trusted Australian exchanges below. We recommend <strong>CoinSpot</strong> for absolute beginners — it's the simplest.</p>
+            <div class="step-tip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>All recommended exchanges are registered with AUSTRAC (Australian government regulator)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Create Your Account</h3>
+            <p>Sign up with your email. You'll need to verify your identity with a <strong>driver's licence or passport</strong> — this is required by Australian law and keeps you safe.</p>
+            <div class="step-tip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>Verification is usually instant with CoinSpot & CoinJar — just take a photo of your ID</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Deposit AUD</h3>
+            <p>Add money to your account. The fastest methods are:</p>
+            <ul class="step-list">
+              <li><strong>PayID / Osko</strong> — Instant, free (best option)</li>
+              <li><strong>Bank Transfer</strong> — Free, takes 1-2 hours</li>
+              <li><strong>Debit/Credit Card</strong> — Instant, small fee</li>
+              <li><strong>PayPal</strong> — Instant (bitcoin.com.au only)</li>
+            </ul>
+            <div class="step-tip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>Only deposit the amount you need for your order — don't buy more than you need</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Buy Bitcoin</h3>
+            <p>Click <strong>"Buy"</strong>, select <strong>"Bitcoin (BTC)"</strong>, type the dollar amount you want, and confirm. That's it — you now own Bitcoin!</p>
+            <div class="step-visual">
+              <div class="mock-ui">
+                <div class="mock-header">Buy Bitcoin</div>
+                <div class="mock-input">
+                  <span class="mock-label">You pay</span>
+                  <span class="mock-value">$150.00 <small>AUD</small></span>
+                </div>
+                <div class="mock-arrow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                </div>
+                <div class="mock-input">
+                  <span class="mock-label">You receive</span>
+                  <span class="mock-value mock-btc">≈ 0.00098 <small>BTC</small></span>
+                </div>
+                <div class="mock-btn">Confirm Purchase</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h3>Send to Our Wallet</h3>
+            <p>At checkout on our site, you'll see our <strong>Bitcoin address</strong> and <strong>QR code</strong>. In your exchange app:</p>
+            <ol class="step-list numbered">
+              <li>Tap <strong>"Send"</strong> or <strong>"Withdraw"</strong></li>
+              <li>Paste our Bitcoin address (or scan QR code)</li>
+              <li>Enter the payment amount</li>
+              <li>Tap <strong>"Confirm"</strong></li>
+            </ol>
+            <div class="step-tip success">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Done! We'll receive your payment and start processing your order. It's that simple.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges Comparison -->
+  <section class="section exchanges" id="exchanges">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Recommended Exchanges</span>
+        <h2>Best Places to Buy Bitcoin in Australia</h2>
+        <p>All of these are AUSTRAC-registered, trusted, and accept AUD. We've ranked them by ease of use for beginners.</p>
+      </div>
+
+      <div class="exchanges-grid">
+        {exchanges.map((exchange) => (
+          <div class={`exchange-card ${exchange.highlight ? 'recommended' : ''}`}>
+            {exchange.highlight && <div class="exchange-badge">Most Beginner-Friendly</div>}
+            <div class="exchange-header">
+              <div class="exchange-name-row">
+                <h3>{exchange.name}</h3>
+                <span class="exchange-year">Est. {exchange.founded}</span>
+              </div>
+              <p class="exchange-desc">{exchange.description}</p>
+            </div>
+            <div class="exchange-details">
+              <div class="exchange-detail">
+                <span class="detail-label">Ease of Use</span>
+                <div class="ease-dots">
+                  {[1,2,3,4,5].map((i) => (
+                    <span class={`ease-dot ${i <= exchange.easeScore ? 'active' : ''}`}></span>
+                  ))}
+                </div>
+              </div>
+              <div class="exchange-detail">
+                <span class="detail-label">Fees</span>
+                <span class="detail-value">{exchange.fees}</span>
+              </div>
+              <div class="exchange-detail">
+                <span class="detail-label">Deposit Methods</span>
+                <span class="detail-value">{exchange.deposit}</span>
+              </div>
+              <div class="exchange-detail">
+                <span class="detail-label">Speed</span>
+                <span class="detail-value highlight">{exchange.speed}</span>
+              </div>
+              <div class="exchange-detail">
+                <span class="detail-label">Min. Purchase</span>
+                <span class="detail-value">{exchange.minBuy}</span>
+              </div>
+              <div class="exchange-detail">
+                <span class="detail-label">AUSTRAC Registered</span>
+                <span class="detail-value">
+                  {exchange.austrac && (
+                    <span class="austrac-badge">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      Yes
+                    </span>
+                  )}
+                </span>
+              </div>
+            </div>
+            <div class="exchange-footer">
+              <span class="best-for">Best for: {exchange.bestFor}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bitcoin ATM Section -->
+  <section class="section atm-section" id="buy-with-cash">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Method 2 — No Account Needed</span>
+        <h2>Buy Bitcoin With Cash <span class="text-accent">(Bitcoin ATMs)</span></h2>
+        <p>Don't want to create an exchange account? Bitcoin ATMs let you buy Bitcoin with cash in about 60 seconds. There are over 50 Bitcoin ATMs across Australia.</p>
+      </div>
+
+      <div class="atm-how-it-works">
+        <div class="atm-step">
+          <div class="atm-step-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Find an ATM</h3>
+          <p>Use our map below to locate a Bitcoin ATM near you</p>
+        </div>
+        <div class="atm-step-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="atm-step">
+          <div class="atm-step-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M6 12h.01M6 16h.01M10 8h8M10 12h8M10 16h8"/></svg>
+          </div>
+          <h3>Insert Cash</h3>
+          <p>Feed your Australian dollars into the machine</p>
+        </div>
+        <div class="atm-step-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="atm-step">
+          <div class="atm-step-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          </div>
+          <h3>Scan & Receive</h3>
+          <p>Scan our QR code from checkout and Bitcoin is sent instantly</p>
+        </div>
+      </div>
+
+      <div class="atm-info-cards">
+        <div class="atm-info-card">
+          <div class="info-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </div>
+          <h4>What You Need</h4>
+          <ul>
+            <li>Cash (AUD notes)</li>
+            <li>Mobile phone (for SMS verification)</li>
+            <li>Our Bitcoin address from checkout (QR code)</li>
+          </ul>
+        </div>
+        <div class="atm-info-card">
+          <div class="info-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h4>ATM Fees</h4>
+          <ul>
+            <li>Fees typically 5-10% of transaction</li>
+            <li>No exchange account needed</li>
+            <li>Higher fees but maximum convenience</li>
+          </ul>
+        </div>
+        <div class="atm-info-card">
+          <div class="info-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h4>Limits</h4>
+          <ul>
+            <li>Under $1,000: Phone number only</li>
+            <li>$1,000-$10,000: ID required</li>
+            <li>Some ATMs accept up to $15,000</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATM Map Section -->
+  <section class="section atm-map-section" id="atm-map">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Find a Bitcoin ATM</span>
+        <h2>Bitcoin ATM Locations <span class="text-accent">Across Australia</span></h2>
+        <p>Select your city to view Bitcoin ATM locations near you. Click any ATM on the map for directions and operating hours.</p>
+      </div>
+
+      <!-- City Selector -->
+      <div class="city-selector">
+        {cities.map((city, index) => (
+          <button
+            class={`city-tab ${index === 0 ? 'active' : ''}`}
+            data-city={city.slug}
+            data-lat={city.lat}
+            data-lng={city.lng}
+            data-zoom={city.mapZoom}
+          >
+            <span class="city-name">{city.name}</span>
+            <span class="city-atm-count">{city.atms} ATM{city.atms !== 1 ? 's' : ''}</span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Map Container -->
+      <div class="map-wrapper">
+        <div class="map-container" id="atm-map-container">
+          <iframe
+            id="atm-map-iframe"
+            src="https://coinatmradar.com/bitcoin-atm-map/?location=Sydney%2C+Australia&lang=en"
+            width="100%"
+            height="500"
+            frameborder="0"
+            style="border:0; border-radius: 16px;"
+            allowfullscreen
+            loading="lazy"
+            title="Bitcoin ATM Map - Sydney"
+          ></iframe>
+        </div>
+        <div class="map-info">
+          <p class="map-credit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Map data provided by <a href="https://coinatmradar.com" target="_blank" rel="noopener noreferrer">Coin ATM Radar</a>. Click on any pin for ATM details, hours, and directions.
+          </p>
+        </div>
+      </div>
+
+      <!-- City ATM Summary Cards -->
+      <div class="atm-city-grid">
+        {cities.map((city) => (
+          <div class="atm-city-card">
+            <div class="atm-city-header">
+              <h3>{city.name}</h3>
+              <span class="atm-state">{city.state}</span>
+            </div>
+            <div class="atm-city-count">
+              <span class="count-number">{city.atms}</span>
+              <span class="count-label">Bitcoin ATM{city.atms !== 1 ? 's' : ''}</span>
+            </div>
+            <button class="atm-city-btn" data-city={city.slug} data-lat={city.lat} data-lng={city.lng} data-zoom={city.mapZoom}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              View on Map
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pro Tips Section -->
+  <section class="section tips-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Pro Tips</span>
+        <h2>Tips for First-Time Bitcoin Buyers</h2>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-number">01</div>
+          <h3>Only Buy What You Need</h3>
+          <p>Don't overthink it. Just buy the exact amount of Bitcoin you need for your order. You're not investing — you're making a payment.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">02</div>
+          <h3>Use PayID for Speed</h3>
+          <p>PayID (through your banking app) is the fastest way to deposit AUD to an exchange. It's instant and free at most exchanges.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">03</div>
+          <h3>Buy Slightly More</h3>
+          <p>Buy $5-10 extra to cover the small network fee for sending Bitcoin. This way you won't be short when paying.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">04</div>
+          <h3>Double-Check the Address</h3>
+          <p>When sending Bitcoin, always double-check the first and last 4 characters of the wallet address match. Or just scan the QR code — it's foolproof.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">05</div>
+          <h3>Screenshot Your TX</h3>
+          <p>After sending Bitcoin, screenshot the transaction ID. Share it with us via the order confirmation page for faster processing.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">06</div>
+          <h3>Don't Panic About Fees</h3>
+          <p>Exchange fees (1%) and network fees (&lt;$1) are much lower than credit card surcharges. You're actually saving money with Bitcoin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Common Questions</span>
+        <h2>Bitcoin FAQ for Beginners</h2>
+        <p>Everything you need to know about buying and using Bitcoin for payments in Australia.</p>
+      </div>
+      <div class="faq-container">
+        {faqs.map((faq, index) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span class="faq-q-text">{faq.q}</span>
+              <span class="faq-toggle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h2>Ready to Place Your Order?</h2>
+          <p>Now that you know how to buy Bitcoin, browse our collection of lab-tested cannabis products and pay securely at checkout.</p>
+          <div class="cta-buttons">
+            <a href="/shop" class="btn btn-primary btn-large">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              Browse Products
+            </a>
+            <a href="/how-it-works" class="btn btn-outline">
+              How Ordering Works
+            </a>
+          </div>
+        </div>
+        <div class="cta-decoration">
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+            <path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z" fill="currentColor" opacity="0.15"/>
+            <text x="12" y="14" text-anchor="middle" font-size="8" font-weight="bold" fill="currentColor" opacity="0.15">₿</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-4xl);
+    overflow: hidden;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0a1628 0%, #0d2137 30%, #132d1a 70%, #0a1628 100%);
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(247, 147, 26, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(45, 90, 74, 0.12) 0%, transparent 50%);
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: rgba(247, 147, 26, 0.12);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: var(--radius-full);
+    color: #f7931a;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero h1 {
+    color: white;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    margin-bottom: var(--space-lg);
+    line-height: 1.15;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #f7931a 0%, #ffb347 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-description {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    max-width: 620px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: rgba(247, 147, 26, 0.12);
+    color: #f7931a;
+  }
+
+  .stat-value {
+    display: block;
+    font-weight: 700;
+    color: white;
+    font-size: 1.1rem;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* Why Bitcoin */
+  .why-bitcoin {
+    background: white;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto var(--space-3xl);
+  }
+
+  .section-header p {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .benefit-card {
+    text-align: center;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .benefit-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: rgba(45, 90, 74, 0.08);
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .benefit-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .benefit-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Steps */
+  .buy-online {
+    background: var(--color-bg);
+  }
+
+  .steps-container {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .step-card {
+    display: flex;
+    gap: var(--space-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .step-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .step-content h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .step-content p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  .step-list {
+    margin: var(--space-md) 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .step-list li {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    padding: 8px 12px;
+    background: var(--color-bg);
+    border-radius: var(--radius-sm);
+    list-style: none;
+  }
+
+  .step-list.numbered {
+    counter-reset: step;
+  }
+
+  .step-list.numbered li {
+    counter-increment: step;
+  }
+
+  .step-list.numbered li::before {
+    content: counter(step) ". ";
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .step-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: rgba(45, 90, 74, 0.06);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    border-left: 3px solid var(--color-primary);
+  }
+
+  .step-tip svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-tip.success {
+    background: rgba(16, 185, 129, 0.08);
+    border-left-color: #10b981;
+    color: #065f46;
+  }
+
+  /* Mock UI */
+  .step-visual {
+    margin-top: var(--space-md);
+  }
+
+  .mock-ui {
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    max-width: 320px;
+  }
+
+  .mock-header {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    text-align: center;
+    color: var(--color-text);
+  }
+
+  .mock-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: white;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+  }
+
+  .mock-label {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .mock-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-text);
+  }
+
+  .mock-value small {
+    font-weight: 400;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .mock-btc {
+    color: #f7931a;
+  }
+
+  .mock-arrow {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-sm) 0;
+    color: var(--color-text-muted);
+  }
+
+  .mock-btn {
+    margin-top: var(--space-md);
+    padding: 12px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* Exchanges */
+  .exchanges {
+    background: white;
+  }
+
+  .exchanges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .exchange-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    position: relative;
+    transition: all var(--transition-base);
+  }
+
+  .exchange-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .exchange-card.recommended {
+    border-color: var(--color-primary);
+    background: linear-gradient(180deg, rgba(45, 90, 74, 0.04) 0%, var(--color-bg) 100%);
+  }
+
+  .exchange-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  .exchange-header {
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .exchange-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+  }
+
+  .exchange-name-row h3 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .exchange-year {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .exchange-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .exchange-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .exchange-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  .exchange-detail:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .detail-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+    text-align: right;
+  }
+
+  .detail-value.highlight {
+    color: #10b981;
+    font-weight: 600;
+  }
+
+  .ease-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .ease-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-border-dark);
+  }
+
+  .ease-dot.active {
+    background: var(--color-primary);
+  }
+
+  .austrac-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #10b981;
+    font-weight: 600;
+  }
+
+  .exchange-footer {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .best-for {
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  /* ATM Section */
+  .atm-section {
+    background: var(--color-bg);
+  }
+
+  .atm-how-it-works {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-3xl);
+    padding: var(--space-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .atm-step {
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .atm-step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(247, 147, 26, 0.1);
+    color: #f7931a;
+    margin-bottom: var(--space-sm);
+  }
+
+  .atm-step h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .atm-step p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .atm-step-arrow {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+  }
+
+  .atm-info-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .atm-info-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+  }
+
+  .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: rgba(247, 147, 26, 0.08);
+    color: #f7931a;
+    margin-bottom: var(--space-md);
+  }
+
+  .atm-info-card h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .atm-info-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .atm-info-card li {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .atm-info-card li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+
+  /* ATM Map */
+  .atm-map-section {
+    background: white;
+  }
+
+  .city-selector {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .city-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 10px 18px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-primary);
+  }
+
+  .city-tab:hover {
+    border-color: var(--color-primary);
+    background: rgba(45, 90, 74, 0.04);
+  }
+
+  .city-tab.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+  }
+
+  .city-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .city-atm-count {
+    font-size: 0.7rem;
+    opacity: 0.7;
+  }
+
+  .map-wrapper {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .map-container {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .map-container iframe {
+    display: block;
+    width: 100%;
+    min-height: 500px;
+  }
+
+  .map-info {
+    margin-top: var(--space-md);
+  }
+
+  .map-credit {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .map-credit a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ATM City Grid */
+  .atm-city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+    gap: var(--space-md);
+  }
+
+  .atm-city-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-align: center;
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .atm-city-card:hover {
+    border-color: var(--color-primary);
+  }
+
+  .atm-city-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .atm-city-header h3 {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .atm-state {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    background: rgba(0,0,0,0.05);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .atm-city-count {
+    margin-bottom: var(--space-md);
+  }
+
+  .count-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+  }
+
+  .count-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .atm-city-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-primary);
+  }
+
+  .atm-city-btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  /* Tips */
+  .tips-section {
+    background: var(--color-bg);
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .tip-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .tip-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .tip-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(45, 90, 74, 0.12);
+    font-family: var(--font-display);
+    margin-bottom: var(--space-sm);
+  }
+
+  .tip-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .tip-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* FAQ */
+  .faq-section {
+    background: white;
+  }
+
+  .faq-container {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .faq-item {
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg) var(--space-xl);
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    list-style: none;
+    gap: var(--space-md);
+    min-height: 44px;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::marker {
+    display: none;
+    content: '';
+  }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-bg-alt);
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+  }
+
+  .faq-item[open] .faq-toggle {
+    transform: rotate(180deg);
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-xl) var(--space-lg);
+  }
+
+  .faq-answer p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--color-bg);
+  }
+
+  .cta-card {
+    background: linear-gradient(135deg, #0d2137 0%, #132d1a 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4xl) var(--space-3xl);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-card h2 {
+    color: white;
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.6;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-decoration {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
+    color: rgba(247, 147, 26, 0.15);
+    pointer-events: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .benefits-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .exchanges-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .atm-info-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .tips-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-3xl);
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+    }
+
+    .hero-stats {
+      gap: var(--space-lg);
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+    }
+
+    .hero-ctas .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .step-card {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .atm-how-it-works {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .atm-step-arrow {
+      transform: rotate(90deg);
+    }
+
+    .tips-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .city-selector {
+      gap: var(--space-xs);
+    }
+
+    .city-tab {
+      padding: 8px 14px;
+    }
+
+    .map-container iframe {
+      min-height: 400px;
+    }
+
+    .cta-card {
+      padding: var(--space-2xl) var(--space-lg);
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .city-tab {
+      padding: 8px 10px;
+      font-size: 0.8rem;
+    }
+
+    .city-atm-count {
+      font-size: 0.65rem;
+    }
+
+    .faq-question {
+      padding: var(--space-md);
+      font-size: 0.9rem;
+    }
+
+    .faq-answer {
+      padding: 0 var(--space-md) var(--space-md);
+    }
+
+    .step-content h3 {
+      font-size: 1.05rem;
+    }
+
+    .exchange-card {
+      padding: var(--space-lg);
+    }
+  }
+</style>
+
+<script>
+  // City tab switching for ATM map
+  const cityTabs = document.querySelectorAll('.city-tab');
+  const cityBtns = document.querySelectorAll('.atm-city-btn');
+  const mapIframe = document.getElementById('atm-map-iframe') as HTMLIFrameElement;
+
+  function switchCity(citySlug: string) {
+    // Update active tab
+    cityTabs.forEach(tab => {
+      if (tab.getAttribute('data-city') === citySlug) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    // Map city names for CoinATMRadar URL
+    const cityNames: Record<string, string> = {
+      'sydney': 'Sydney%2C+Australia',
+      'melbourne': 'Melbourne%2C+Australia',
+      'brisbane': 'Brisbane%2C+Australia',
+      'perth': 'Perth%2C+Australia',
+      'adelaide': 'Adelaide%2C+Australia',
+      'gold-coast': 'Gold+Coast%2C+Australia',
+      'canberra': 'Canberra%2C+Australia',
+      'newcastle': 'Newcastle%2C+Australia',
+      'sunshine-coast': 'Sunshine+Coast%2C+Australia',
+      'hobart': 'Hobart%2C+Australia',
+      'darwin': 'Darwin%2C+Australia',
+      'wollongong': 'Wollongong%2C+Australia',
+      'central-coast': 'Central+Coast%2C+Australia',
+    };
+
+    const locationName = cityNames[citySlug] || 'Australia';
+    if (mapIframe) {
+      mapIframe.src = `https://coinatmradar.com/bitcoin-atm-map/?location=${locationName}&lang=en`;
+      mapIframe.title = `Bitcoin ATM Map - ${citySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}`;
+    }
+  }
+
+  cityTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const city = tab.getAttribute('data-city');
+      if (city) {
+        switchCity(city);
+        // Scroll map into view
+        document.getElementById('atm-map')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  cityBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const city = btn.getAttribute('data-city');
+      if (city) {
+        switchCity(city);
+        document.getElementById('atm-map')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
