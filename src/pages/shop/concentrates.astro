@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
-import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
 const title = "THC Concentrates Australia | Buy Cannabis Wax, Shatter & Dabs Online";
 const description = "Looking for THC concentrates in Australia? Buy wax, shatter, live resin & rosin. Lab-tested extracts for dabbing. No bunk product — just clean, potent concentrates.";
@@ -329,7 +329,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge shatter">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
@@ -385,7 +385,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge wax">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
@@ -441,7 +441,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge live-resin">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
@@ -497,7 +497,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge rosin">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
@@ -553,7 +553,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge diamonds">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>

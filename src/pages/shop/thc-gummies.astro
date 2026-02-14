@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
-import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
 const title = "THC Gummies Australia | Weed Gummies | Buy Cannabis Gummies Online";
 const description = "Buy THC gummies & weed gummies Australia. Strongest cannabis gummies, pot gummies for pain & sleep. Lab-tested, discreet shipping. Hemp gummies available.";
@@ -293,7 +293,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge popular">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>
@@ -355,7 +355,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge strong">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>
@@ -417,7 +417,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge sleep">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>
@@ -479,7 +479,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge daytime">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>
@@ -541,7 +541,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge wellness">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>
@@ -603,7 +603,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge beginner">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>
@@ -665,7 +665,7 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
                     <div class="product-badge specialty">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="200" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="200" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <circle cx="12" cy="12" r="10"/>

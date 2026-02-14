@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../data/products';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../data/products';
 
 const title = "Buy Weed Online Australia | Cannabis Shop | Mullaways";
 const description = "Buy cannabis online Australia. THC gummies, flower, edibles, vapes & concentrates. Lab-tested, cheapest prices. Discreet delivery Australia-wide.";
@@ -462,7 +462,7 @@ const itemListSchema = {
                       {(() => {
                         const pd = getProductBySlug(product.slug);
                         return pd?.image ? (
-                          <img src={pd.image} alt={`Buy ${product.name} Australia`} width="300" height="300" loading="lazy" />
+                          <img src={pd.image} alt={getProductImageAlt(pd)} width="300" height="300" loading="lazy" />
                         ) : (
                           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                             <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>

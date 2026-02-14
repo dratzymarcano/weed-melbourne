@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
-import { allProducts, getWeightVariants, getReviewCount, getReviewRating, getProductReviews, getProductDescriptionHook, getProductLongDescription, getProductFaqItems, getMinPrice } from '../../../data/products';
+import { allProducts, getWeightVariants, getReviewCount, getReviewRating, getProductReviews, getProductDescriptionHook, getProductLongDescription, getProductFaqItems, getMinPrice, getProductImageAlt } from '../../../data/products';
 import type { Product, ProductReview } from '../../../data/products';
 
 export function getStaticPaths() {
@@ -132,7 +132,10 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
             <div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
             <div class="product-main-image">
               {product.image ? (
-                <img src={product.image} alt={`Buy ${product.name} Australia - ${product.type} Cannabis`} width="500" height="500" loading="eager" />
+                <picture>
+                  <source srcset={product.image.replace('.jpg', '.webp')} type="image/webp" />
+                  <img src={product.image} alt={getProductImageAlt(product, true)} width="500" height="500" loading="eager" />
+                </picture>
               ) : (
                 <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
                   <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
@@ -339,7 +342,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
                 <div class={`product-badge ${related.type.toLowerCase()}`}>{related.type}</div>
                 <div class="product-image">
                   {related.image ? (
-                    <img src={related.image} alt={`Buy ${related.name} Australia`} width="300" height="300" loading="lazy" />
+                    <img src={related.image} alt={getProductImageAlt(related)} width="300" height="300" loading="lazy" />
                   ) : (
                     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                       <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>

@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
-import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice } from '../../data/products';
+import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
 const title = "Buy Weed Australia | Strongest Strains Near Me | Cannabis Flower Online";
 const description = "Buy weed online Australia. Premium cannabis flower - Indica, Sativa & Hybrid strains. Looking for the strongest weed strains in Australia? We've got you covered.";
@@ -333,7 +333,7 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
                     <div class="product-badge indica">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="300" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="300" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
@@ -397,7 +397,7 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
                     <div class="product-badge sativa">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="300" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="300" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
@@ -461,7 +461,7 @@ const hybridProducts = products.filter(p => p.type === "Hybrid");
                     <div class="product-badge hybrid">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
-                        <img src={getProductBySlug(product.slug)!.image!} alt={`Buy ${product.name} Australia`} width="300" height="300" loading="lazy" />
+                        <img src={getProductBySlug(product.slug)!.image!} alt={getProductImageAlt(getProductBySlug(product.slug)!)} width="300" height="300" loading="lazy" />
                       ) : (
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                           <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
