@@ -1821,15 +1821,15 @@ const faqs = [
       { city: 'central-coast', name: 'Localcoin Bitcoin ATM', address: 'Imperial Shopping Centre, 183 Mann St, Gosford NSW 2250', lat: -33.4265, lng: 151.3418, operator: 'Localcoin', hours: '9am – 9pm' },
     ];
 
-    // Custom Bitcoin marker icon
+    // Custom Bitcoin marker icon — official ₿ logo
     const btcIcon = L.divIcon({
       className: 'btc-marker',
-      html: `<div style="background:#F7931A;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.3);">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M11.5 11.5V6.5h1.875c1.035 0 1.875.84 1.875 1.875S14.41 10.25 13.375 10.25H11.5m0 1.25v5h2.5c1.035 0 1.875-.84 1.875-1.875s-.84-1.875-1.875-1.875H11.5M10 5v14m0-14h4.375a2.625 2.625 0 0 1 1.856 4.48A2.625 2.625 0 0 1 14.375 19H10m2-14V3.5m0 17V19"/></svg>
+      html: `<div style="background:#F7931A;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,0.35);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 64 64"><path fill="#fff" d="M63.04 39.74c-4.27 17.16-21.61 27.58-38.77 23.31C7.12 58.78-3.3 41.44.97 24.28 5.24 7.12 22.58-3.3 39.74.96c17.16 4.28 27.58 21.62 23.3 38.78z"/><path fill="#F7931A" d="M46.11 27.44c.63-4.23-2.59-6.5-6.99-8.02l1.43-5.73-3.49-.87-1.39 5.58c-.92-.23-1.86-.44-2.8-.66l1.4-5.61-3.49-.87-1.43 5.73c-.76-.17-1.5-.35-2.23-.53l0-.02-4.82-1.2-.93 3.73s2.59.59 2.53.63c1.41.35 1.67 1.29 1.63 2.03l-1.63 6.55c.1.02.22.06.36.11-.12-.03-.24-.06-.36-.09l-2.29 9.19c-.17.43-.61 1.07-1.6.83.04.05-2.53-.63-2.53-.63l-1.73 4 4.55 1.13c.85.21 1.68.43 2.49.64l-1.44 5.8 3.49.87 1.43-5.74c.95.26 1.88.5 2.78.73l-1.42 5.71 3.49.87 1.44-5.78c5.95 1.13 10.43.67 12.31-4.71 1.52-4.33-.07-6.83-3.21-8.46 2.28-.53 4-2.03 4.46-5.14zm-7.99 11.2c-1.08 4.33-8.37 1.99-10.73 1.4l1.91-7.68c2.37.59 9.95 1.76 8.82 6.28zm1.08-11.27c-.98 3.94-7.05 1.94-9.02 1.45l1.74-6.96c1.97.49 8.31 1.41 7.28 5.51z"/></svg>
       </div>`,
-      iconSize: [32, 32],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -34]
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -38]
     });
 
     // Initialize map centered on Sydney
