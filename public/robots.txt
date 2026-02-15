@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://mullawaysmedicalcannabis.com.au/sitemap.xml
+Sitemap: https://mullawaysmedicalcannabis.com.au/sitemap-index.xml
 
 # Disallow admin/private areas
 Disallow: /account

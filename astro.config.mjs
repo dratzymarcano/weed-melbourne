@@ -1,9 +1,21 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mullawaysmedicalcannabis.com.au',
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !['/account', '/cart', '/checkout'].some((path) =>
+          page.includes(path)
+        ),
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+    }),
+  ],
   build: {
     inlineStylesheets: 'auto',
   },
