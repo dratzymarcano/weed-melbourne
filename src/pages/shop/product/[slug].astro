@@ -25,13 +25,19 @@ const relatedProducts = allProducts
   .filter((p: Product) => p.category === product.category && p.slug !== product.slug)
   .slice(0, 4);
 
-// Generate proper meta title (under 60 chars ideally)
+// Generate proper meta title (under 60 chars)
 const categoryLabel = product.category === 'flower' ? 'Weed' : product.category.charAt(0).toUpperCase() + product.category.slice(1);
-const title = `Buy ${product.name} Australia | ${product.type} ${categoryLabel} | Mullaways`;
+// Try progressively shorter title formats to stay ≤60 chars
+const titleFull = `Buy ${product.name} Australia | ${product.type} ${categoryLabel}`;
+const titleMid = `Buy ${product.name} | ${product.type} ${categoryLabel}`;
+const titleShort = `${product.name} | Buy Online Australia`;
+const titleMin = product.name.length > 57 ? product.name.substring(0, 57) + '...' : product.name;
+const title = titleFull.length <= 60 ? titleFull : titleMid.length <= 60 ? titleMid : titleShort.length <= 60 ? titleShort : titleMin;
 
-// Generate meta description (160 chars max)
+// Generate meta description (120-160 chars)
 const baseDesc = `Buy ${product.name} online in Australia. ${product.type} ${categoryLabel.toLowerCase()} with ${product.thc} THC. ${product.effects.slice(0, 2).join(', ')} effects.`;
-const description = baseDesc.length > 160 ? baseDesc.substring(0, 157) + '...' : baseDesc + ' Discreet delivery Australia-wide from Mullaways Medical Cannabis.'.substring(0, 160 - baseDesc.length);
+const descSuffix = ' Discreet delivery Australia-wide.';
+const description = baseDesc.length > 160 ? baseDesc.substring(0, 157) + '...' : (baseDesc + descSuffix).length <= 160 ? baseDesc + descSuffix : baseDesc;
 
 // --- Structured Data: Product Schema ---
 const minPrice = Math.round(product.basePrice * weightVariants[0].multiplier);
