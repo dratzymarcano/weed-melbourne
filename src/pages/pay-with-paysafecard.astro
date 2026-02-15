@@ -1,0 +1,1258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const title = "Pay with Paysafecard Australia | Buy Cannabis with Paysafecard | Mullaways";
+const description = "Learn how to pay for cannabis with Paysafecard in Australia. Buy a prepaid voucher with cash, enter your 16-digit PIN at checkout — no bank account needed. Anonymous, fast, and secure.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Pay with Paysafecard in Australia",
+  "description": "A step-by-step guide to buying cannabis online using Paysafecard prepaid vouchers.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Buy a Paysafecard Voucher",
+      "text": "Purchase a Paysafecard voucher with cash at any participating retailer — newsagents, petrol stations, and convenience stores across Australia."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Get Your 16-Digit PIN",
+      "text": "You'll receive a receipt or card with a unique 16-digit PIN code. Keep this safe — it's your payment code."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Select Paysafecard at Checkout",
+      "text": "Add your products to cart, proceed to checkout, and select Paysafecard as your payment method."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Enter Your PIN & Pay",
+      "text": "Enter your 16-digit Paysafecard PIN and confirm your payment. Your order is processed immediately."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Pay with Paysafecard", "item": "https://mullawaysmedicalcannabis.com.au/pay-with-paysafecard" }
+  ]
+};
+
+const retailers = [
+  { name: 'Newsagents & Newspower', icon: 'newspaper', locations: '2,000+', note: 'Most suburban newsagencies carry Paysafecard' },
+  { name: 'BP & Caltex Stations', icon: 'fuel', locations: '1,500+', note: 'Available at the counter in most petrol stations' },
+  { name: 'Australia Post', icon: 'mail', locations: '4,300+', note: 'Available at selected Australia Post outlets nationwide' },
+  { name: '7-Eleven', icon: 'store', locations: '700+', note: 'Ask for Paysafecard at the counter' },
+];
+
+const faqs = [
+  {
+    q: 'What is Paysafecard?',
+    a: 'Paysafecard is a prepaid payment method that lets you pay online using a 16-digit PIN code. You buy the voucher with cash at retail stores, then use the PIN to make payments. No bank account, credit card, or personal details required.'
+  },
+  {
+    q: 'Where can I buy a Paysafecard in Australia?',
+    a: 'Paysafecard vouchers are available at thousands of retail locations across Australia including newsagents, petrol stations (BP, Caltex), 7-Eleven stores, and selected Australia Post outlets. Use the Paysafecard store locator to find your nearest retailer.'
+  },
+  {
+    q: 'What denominations are available?',
+    a: 'Paysafecard vouchers in Australia are available in $10, $20, $30, $50 and $100 denominations. You can combine up to 10 PINs in a single transaction to pay larger amounts.'
+  },
+  {
+    q: 'Is paying with Paysafecard anonymous?',
+    a: 'Yes. Since you buy the voucher with cash at a physical store, there\'s no connection to your bank account or identity. The 16-digit PIN is the only thing needed for payment — no personal details are shared.'
+  },
+  {
+    q: 'How long does Paysafecard payment take?',
+    a: 'Paysafecard payments are processed instantly. As soon as you enter your valid 16-digit PIN at checkout, your payment is confirmed and your order begins processing immediately.'
+  },
+  {
+    q: 'Can I get a refund on a Paysafecard payment?',
+    a: 'Refunds for Paysafecard payments are issued as store credit or to your Paysafecard account (if you have one registered). Please see our refunds policy for full details.'
+  },
+  {
+    q: 'What if my Paysafecard balance isn\'t enough?',
+    a: 'You can combine multiple Paysafecard PINs to cover a larger purchase. At checkout, enter your first PIN, then add additional PINs until the full amount is covered.'
+  },
+  {
+    q: 'Does Paysafecard charge fees?',
+    a: 'There are no fees when purchasing or using a Paysafecard voucher. However, if a voucher is inactive for 12 months, a small maintenance fee may apply. Use your voucher promptly and there are zero fees.'
+  },
+];
+---
+
+<Layout title={title} description={description} schema={[schema, breadcrumbSchema]}>
+  <Header />
+
+  <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Pay with Paysafecard'}]} />
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Cash-Based Payment</span>
+        </div>
+        <h1>Pay with Paysafecard <span class="text-gradient">in Australia</span></h1>
+        <p class="hero-description">No bank account? No problem. Buy a prepaid Paysafecard voucher with cash at any newsagent or petrol station, then pay online with your 16-digit PIN. It's completely anonymous and takes seconds.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </span>
+            <div>
+              <span class="stat-value">Instant</span>
+              <span class="stat-label">Payment Processing</span>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span>
+            <div>
+              <span class="stat-value">100%</span>
+              <span class="stat-label">Anonymous</span>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <div>
+              <span class="stat-value">8,000+</span>
+              <span class="stat-label">Retail Locations</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-ctas">
+          <a href="#how-it-works" class="btn btn-primary btn-large">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3l-4 4-4-4"/></svg>
+            How It Works
+          </a>
+          <a href="#where-to-buy" class="btn btn-outline-light btn-large">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Where to Buy
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Paysafecard Section -->
+  <section class="section why-paysafecard">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Why Pay With Paysafecard?</span>
+        <h2>Benefits of Paysafecard Payments</h2>
+        <p>Paysafecard is one of the easiest and most private ways to pay for cannabis online in Australia. Here's why customers love it.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Completely Anonymous</h3>
+          <p>Buy the voucher with cash — no ID, no bank account, no personal details. Your purchase stays completely private.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>No Bank Account Needed</h3>
+          <p>Perfect if you don't have a bank account or prefer not to use it. Buy with cash and pay online — simple as that.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>Instant Payments</h3>
+          <p>Enter your 16-digit PIN at checkout and your payment is confirmed immediately. No waiting for bank transfers or confirmations.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Safe & Secure</h3>
+          <p>Paysafecard is used by millions worldwide. Your PIN is the only thing needed — no card numbers or sensitive data shared online.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Step-by-Step Guide</span>
+        <h2>How to Pay with Paysafecard <span class="text-accent">(4 Easy Steps)</span></h2>
+        <p>From buying the voucher to completing your order — the whole process takes just a few minutes.</p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Buy a Paysafecard Voucher</h3>
+            <p>Visit any participating retailer — newsagents, petrol stations, 7-Eleven, or Australia Post. Ask for a <strong>Paysafecard voucher</strong> in your desired amount ($10, $20, $30, $50, or $100).</p>
+            <div class="step-tip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>Use the <a href="https://www.paysafecard.com/en-au/find-sales-outlet/" target="_blank" rel="noopener noreferrer">Paysafecard Store Locator</a> to find your nearest retailer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Get Your 16-Digit PIN</h3>
+            <p>After purchase, you'll receive a receipt with a <strong>unique 16-digit PIN code</strong>. This is your payment credential — keep it safe until checkout.</p>
+            <div class="pin-visual">
+              <div class="pin-display">
+                <span class="pin-group">0149</span>
+                <span class="pin-separator">-</span>
+                <span class="pin-group">5832</span>
+                <span class="pin-separator">-</span>
+                <span class="pin-group">7461</span>
+                <span class="pin-separator">-</span>
+                <span class="pin-group">9203</span>
+              </div>
+              <span class="pin-label">Example 16-digit PIN</span>
+            </div>
+            <div class="step-tip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>You can combine up to 10 PINs for larger orders</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Add Products & Go to Checkout</h3>
+            <p>Browse our <a href="/shop">shop</a>, add your products to cart, and proceed to <a href="/checkout">checkout</a>. Fill in your delivery details as usual.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Select Paysafecard & Enter Your PIN</h3>
+            <p>In the payment method section, choose <strong>"Paysafecard"</strong>. Enter your 16-digit PIN code and confirm your payment. That's it!</p>
+            <div class="step-tip success">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Done! Your payment is confirmed instantly and we'll start processing your order right away.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where to Buy Section -->
+  <section class="section retailers-section" id="where-to-buy">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Where to Buy</span>
+        <h2>Find Paysafecard <span class="text-accent">Near You</span></h2>
+        <p>Paysafecard vouchers are available at thousands of retail locations across Australia. Here are the main retailers.</p>
+      </div>
+
+      <div class="retailers-grid">
+        {retailers.map((retailer) => (
+          <div class="retailer-card">
+            <div class="retailer-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>{retailer.name}</h3>
+            <span class="retailer-count">{retailer.locations} locations</span>
+            <p>{retailer.note}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="locator-cta">
+        <div class="locator-content">
+          <h3>Find Your Nearest Retailer</h3>
+          <p>Use the official Paysafecard store locator to find the closest place to buy your voucher.</p>
+          <a href="https://www.paysafecard.com/en-au/find-sales-outlet/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Open Store Locator
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Denominations Section -->
+  <section class="section denominations-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Available Amounts</span>
+        <h2>Paysafecard Denominations</h2>
+        <p>Choose the voucher amount that matches your order. You can combine multiple vouchers for larger purchases.</p>
+      </div>
+
+      <div class="denom-grid">
+        <div class="denom-card">
+          <span class="denom-amount">$10</span>
+          <span class="denom-label">Starter</span>
+        </div>
+        <div class="denom-card">
+          <span class="denom-amount">$20</span>
+          <span class="denom-label">Small Order</span>
+        </div>
+        <div class="denom-card">
+          <span class="denom-amount">$30</span>
+          <span class="denom-label">Most Popular</span>
+        </div>
+        <div class="denom-card popular">
+          <span class="denom-badge">Popular</span>
+          <span class="denom-amount">$50</span>
+          <span class="denom-label">Best Value</span>
+        </div>
+        <div class="denom-card">
+          <span class="denom-amount">$100</span>
+          <span class="denom-label">Larger Orders</span>
+        </div>
+      </div>
+
+      <div class="denom-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <p>Need to pay more than $100? You can combine up to 10 Paysafecard PINs in a single checkout to cover larger orders.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips Section -->
+  <section class="section tips-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Helpful Tips</span>
+        <h2>Tips for Paysafecard Payments</h2>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-number">01</div>
+          <h3>Buy Exact Amount</h3>
+          <p>Check your cart total before buying a voucher so you get the right denomination. Leftover balance stays on your PIN for next time.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">02</div>
+          <h3>Keep Your Receipt</h3>
+          <p>The receipt IS your payment. Don't throw it away until you've used the full balance. Treat it like cash.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">03</div>
+          <h3>Use Within 12 Months</h3>
+          <p>Paysafecard vouchers are valid indefinitely, but a small monthly fee applies after 12 months of inactivity. Use it promptly to avoid any charges.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">04</div>
+          <h3>Check Your Balance</h3>
+          <p>Visit <a href="https://www.paysafecard.com/en-au/check-balance/" target="_blank" rel="noopener noreferrer">paysafecard.com/check-balance</a> to see how much is left on your PIN at any time.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">05</div>
+          <h3>Combine PINs</h3>
+          <p>Need to pay more than one voucher's worth? Enter multiple PINs at checkout — you can stack up to 10 PINs per transaction.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-number">06</div>
+          <h3>No Chargebacks</h3>
+          <p>Unlike credit cards, Paysafecard payments are final. Double-check your order before confirming payment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other Payment Methods -->
+  <section class="section other-payments">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Other Options</span>
+        <h2>Other Payment Methods</h2>
+        <p>Paysafecard not for you? We accept multiple payment methods to suit your preference.</p>
+      </div>
+      <div class="other-grid">
+        <a href="/buy-bitcoin" class="other-card">
+          <div class="other-icon bitcoin">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z"/></svg>
+          </div>
+          <div>
+            <h3>Bitcoin</h3>
+            <p>Buy Bitcoin online or at ATMs. Fast, private, and low fees.</p>
+          </div>
+          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/pay-with-bank-transfer" class="other-card">
+          <div class="other-icon bank">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M3 10l9-7 9 7"/><line x1="7" y1="14" x2="7" y2="17"/><line x1="12" y1="14" x2="12" y2="17"/><line x1="17" y1="14" x2="17" y2="17"/></svg>
+          </div>
+          <div>
+            <h3>Bank Transfer</h3>
+            <p>Direct bank transfer via PayID or BSB. Simple and no fees.</p>
+          </div>
+          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Common Questions</span>
+        <h2>Paysafecard FAQ</h2>
+        <p>Everything you need to know about paying with Paysafecard.</p>
+      </div>
+      <div class="faq-container">
+        {faqs.map((faq) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span class="faq-q-text">{faq.q}</span>
+              <span class="faq-toggle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h2>Ready to Order?</h2>
+          <p>Browse our lab-tested cannabis products and pay securely with Paysafecard at checkout — no bank account required.</p>
+          <div class="cta-buttons">
+            <a href="/shop" class="btn btn-primary btn-large">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              Browse Products
+            </a>
+            <a href="/checkout" class="btn btn-outline">
+              Go to Checkout
+            </a>
+          </div>
+        </div>
+        <div class="cta-decoration">
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+            <rect x="6" y="8" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+            <text x="12" y="14" text-anchor="middle" font-size="5" font-weight="bold" fill="currentColor" opacity="0.15">PSC</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: var(--space-3xl) 0 var(--space-4xl);
+    overflow: hidden;
+    min-height: 550px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero h1 {
+    color: white;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0a1628 0%, #0d1e3a 30%, #1a1040 70%, #0a1628 100%);
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(0, 163, 224, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0, 163, 224, 0.06) 0%, transparent 50%);
+    opacity: 0.8;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(0, 163, 224, 0.12);
+    border: 1px solid rgba(0, 163, 224, 0.25);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4dd4f0;
+    margin-bottom: var(--space-lg);
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--space-lg);
+    line-height: 1.15;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #00a3e0 0%, #4dd4f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-accent {
+    color: var(--color-primary);
+  }
+
+  .hero-description {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    max-width: 620px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: rgba(0, 163, 224, 0.12);
+    color: #4dd4f0;
+  }
+
+  .stat-value {
+    display: block;
+    font-weight: 700;
+    color: white;
+    font-size: 1.1rem;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* Why Paysafecard */
+  .why-paysafecard {
+    background: white;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto var(--space-3xl);
+  }
+
+  .section-header p {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .benefit-card {
+    text-align: center;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .benefit-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: rgba(0, 163, 224, 0.08);
+    color: #00a3e0;
+    margin-bottom: var(--space-md);
+  }
+
+  .benefit-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .benefit-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Steps */
+  .how-section {
+    background: var(--color-bg);
+  }
+
+  .steps-container {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .step-card {
+    display: flex;
+    gap: var(--space-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .step-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00a3e0 0%, #0082b3 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .step-content h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .step-content p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  .step-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: rgba(0, 163, 224, 0.06);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: #0082b3;
+    border-left: 3px solid #00a3e0;
+  }
+
+  .step-tip svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-tip.success {
+    background: rgba(16, 185, 129, 0.08);
+    border-left-color: #10b981;
+    color: #065f46;
+  }
+
+  /* PIN Visual */
+  .pin-visual {
+    margin: var(--space-md) 0;
+    text-align: center;
+  }
+
+  .pin-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 24px;
+    background: var(--color-bg);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: monospace;
+    letter-spacing: 2px;
+  }
+
+  .pin-group {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #00a3e0;
+  }
+
+  .pin-separator {
+    color: var(--color-text-muted);
+    font-size: 1.2rem;
+  }
+
+  .pin-label {
+    display: block;
+    margin-top: var(--space-sm);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Retailers */
+  .retailers-section {
+    background: white;
+  }
+
+  .retailers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .retailer-card {
+    text-align: center;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .retailer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .retailer-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: rgba(0, 163, 224, 0.08);
+    color: #00a3e0;
+    margin-bottom: var(--space-md);
+  }
+
+  .retailer-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .retailer-count {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(0, 163, 224, 0.08);
+    color: #0082b3;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .retailer-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .locator-cta {
+    background: linear-gradient(135deg, rgba(0, 163, 224, 0.06) 0%, rgba(0, 130, 179, 0.04) 100%);
+    border: 1px solid rgba(0, 163, 224, 0.15);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-align: center;
+  }
+
+  .locator-content h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .locator-content p {
+    color: var(--color-text-light);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Denominations */
+  .denominations-section {
+    background: var(--color-bg);
+  }
+
+  .denom-grid {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+  }
+
+  .denom-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xl) var(--space-2xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    position: relative;
+    min-width: 140px;
+  }
+
+  .denom-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .denom-card.popular {
+    border-color: #00a3e0;
+    box-shadow: 0 4px 20px rgba(0, 163, 224, 0.12);
+  }
+
+  .denom-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 12px;
+    background: #00a3e0;
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .denom-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .denom-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .denom-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(0, 163, 224, 0.06);
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    color: var(--color-text-light);
+  }
+
+  .denom-note svg {
+    flex-shrink: 0;
+    color: #00a3e0;
+    margin-top: 2px;
+  }
+
+  .denom-note p {
+    margin: 0;
+  }
+
+  /* Tips */
+  .tips-section {
+    background: white;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .tip-card {
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+  }
+
+  .tip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .tip-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(0, 163, 224, 0.15);
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+  }
+
+  .tip-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .tip-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Other Payments */
+  .other-payments {
+    background: var(--color-bg);
+  }
+
+  .other-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .other-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-base);
+  }
+
+  .other-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+  }
+
+  .other-card:hover .arrow {
+    transform: translateX(3px);
+    color: var(--color-primary);
+  }
+
+  .other-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .other-icon.bitcoin {
+    background: rgba(247, 147, 26, 0.1);
+    color: #f7931a;
+  }
+
+  .other-icon.bank {
+    background: rgba(45, 90, 74, 0.1);
+    color: var(--color-primary);
+  }
+
+  .other-card h3 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .other-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  .other-card .arrow {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--color-text-muted);
+    transition: all var(--transition-base);
+  }
+
+  /* FAQ */
+  .faq-section {
+    background: var(--color-bg);
+  }
+
+  .faq-container {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .faq-item[open] {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--space-xl);
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1rem;
+    gap: var(--space-md);
+    transition: color var(--transition-base);
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    transition: all var(--transition-base);
+  }
+
+  .faq-item[open] .faq-toggle {
+    transform: rotate(180deg);
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-xl) var(--space-lg);
+  }
+
+  .faq-answer p {
+    color: var(--color-text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: white;
+  }
+
+  .cta-card {
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl) var(--space-4xl);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+  }
+
+  .cta-content h2 {
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: var(--space-xl);
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .cta-decoration {
+    color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .benefits-grid,
+    .retailers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding: var(--space-2xl) 0 var(--space-3xl);
+    }
+
+    .hero-stats {
+      gap: var(--space-lg);
+    }
+
+    .step-card {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .tips-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-card {
+      padding: var(--space-2xl);
+    }
+
+    .cta-decoration {
+      display: none;
+    }
+
+    .other-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .benefits-grid,
+    .retailers-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tips-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+    }
+
+    .denom-grid {
+      gap: var(--space-sm);
+    }
+
+    .denom-card {
+      min-width: 100px;
+      padding: var(--space-lg) var(--space-xl);
+    }
+
+    .pin-display {
+      padding: 12px 16px;
+    }
+
+    .pin-group {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<script>
+  // FAQ toggle animation
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if ((item as HTMLDetailsElement).open) {
+        const answer = item.querySelector('.faq-answer') as HTMLElement;
+        if (answer) {
+          answer.style.opacity = '0';
+          answer.style.transform = 'translateY(-8px)';
+          requestAnimationFrame(() => {
+            answer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            answer.style.opacity = '1';
+            answer.style.transform = 'translateY(0)';
+          });
+        }
+      }
+    });
+  });
+</script>

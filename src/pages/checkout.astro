@@ -92,15 +92,34 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 <label class="option-card">
                   <input type="radio" name="payment" value="bitcoin" checked>
                   <div>
-                    <span class="option-title">Bitcoin (Online)</span>
-                    <span class="option-meta">Instant confirmation after payment</span>
+                    <span class="option-title">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:#f7931a;"><circle cx="12" cy="12" r="10"/><path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z"/></svg>
+                      Bitcoin
+                    </span>
+                    <span class="option-meta">Instant confirmation · Private &amp; secure</span>
+                    <a href="/buy-bitcoin" class="payment-info-link">Learn how to pay with Bitcoin &rarr;</a>
                   </div>
                 </label>
                 <label class="option-card">
                   <input type="radio" name="payment" value="bank">
                   <div>
-                    <span class="option-title">Bank Transfer (Offline)</span>
-                    <span class="option-meta">Manual confirmation after transfer</span>
+                    <span class="option-title">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:var(--color-primary);"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M3 10l9-7 9 7"/></svg>
+                      Bank Transfer
+                    </span>
+                    <span class="option-meta">PayID (instant) or BSB transfer · Zero fees</span>
+                    <a href="/pay-with-bank-transfer" class="payment-info-link">Learn how to pay with bank transfer &rarr;</a>
+                  </div>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="payment" value="paysafecard">
+                  <div>
+                    <span class="option-title">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:#00a3e0;"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+                      Paysafecard
+                    </span>
+                    <span class="option-meta">Prepaid voucher · 16-digit PIN · Anonymous</span>
+                    <a href="/pay-with-paysafecard" class="payment-info-link">Learn how to pay with Paysafecard &rarr;</a>
                   </div>
                 </label>
               </div>
@@ -148,6 +167,22 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 </div>
                 <div class="info-alert">
                   After placing your order, make the transfer to the bank account above and email a screenshot of the payment to <a href="mailto:payments@mullawaysmedicalcannabis.com.au">payments@mullawaysmedicalcannabis.com.au</a>.
+                </div>
+                <a href="/pay-with-bank-transfer" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;color:var(--color-primary);font-size:0.85rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;">Need help? Read our bank transfer guide &rarr;</a>
+              </div>
+
+              <div class="payment-panel" id="paysafecard-panel" style="display: none;">
+                <div class="panel-header">
+                  <h3>Pay with Paysafecard</h3>
+                  <p>Enter your 16-digit Paysafecard PIN below to complete payment.</p>
+                </div>
+                <div class="psc-input-group">
+                  <label for="psc-pin">Paysafecard PIN</label>
+                  <input type="text" id="psc-pin" name="psc-pin" placeholder="0000-0000-0000-0000" maxlength="19" autocomplete="off" style="font-family:monospace;letter-spacing:2px;font-size:1.1rem;padding:14px 16px;border-radius:12px;border:1px solid #d8d8d8;width:100%;text-align:center;">
+                  <span style="display:block;margin-top:6px;font-size:0.82rem;color:#666;">Enter the 16-digit code from your Paysafecard voucher</span>
+                </div>
+                <div class="info-alert" style="margin-top:14px;background:#e8f6fe;border-color:#a8d8f0;color:#0a5c82;">
+                  Don't have a Paysafecard yet? Buy one at any newsagent, petrol station, or 7-Eleven with cash. <a href="/pay-with-paysafecard" style="color:#0a5c82;font-weight:600;">Read our full guide &rarr;</a>
                 </div>
               </div>
             </div>
@@ -550,6 +585,32 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       padding: 16px;
     }
   }
+
+  .payment-info-link {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.78rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .payment-info-link:hover {
+    color: var(--color-primary-dark);
+  }
+
+  .psc-input-group {
+    margin-bottom: 8px;
+  }
+
+  .psc-input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
 </style>
 
 <script>
@@ -567,6 +628,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   const bitcoinPanel = document.getElementById('bitcoin-panel');
   const bankPanel = document.getElementById('bank-panel');
+  const paysafecardPanel = document.getElementById('paysafecard-panel');
 
   function getShippingFee() {
     const selected = document.querySelector('input[name="delivery"]:checked');
@@ -604,9 +666,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     if (selectedPayment === 'bank') {
       if (bankPanel) bankPanel.style.display = 'block';
       if (bitcoinPanel) bitcoinPanel.style.display = 'none';
+      if (paysafecardPanel) paysafecardPanel.style.display = 'none';
+    } else if (selectedPayment === 'paysafecard') {
+      if (bankPanel) bankPanel.style.display = 'none';
+      if (bitcoinPanel) bitcoinPanel.style.display = 'none';
+      if (paysafecardPanel) paysafecardPanel.style.display = 'block';
     } else {
       if (bankPanel) bankPanel.style.display = 'none';
       if (bitcoinPanel) bitcoinPanel.style.display = 'block';
+      if (paysafecardPanel) paysafecardPanel.style.display = 'none';
     }
   }
 
@@ -630,6 +698,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     const selectedPayment = selectedPaymentEl instanceof HTMLInputElement ? selectedPaymentEl.value : '';
     if (selectedPayment === 'bank') {
       alert('Order placed. Please complete the bank transfer and email a screenshot of the payment to payments@mullawaysmedicalcannabis.com.au.');
+    } else if (selectedPayment === 'paysafecard') {
+      alert('Order placed. Your Paysafecard payment has been submitted for processing.');
     } else {
       alert('Order placed. Please complete the bitcoin payment using the QR code or address provided.');
     }

@@ -12,7 +12,11 @@ const navLinks = [
     { href: "/shop/hash", label: "Hash" }
   ]},
   { href: "/how-it-works", label: "How It Works" },
-  { href: "/buy-bitcoin", label: "Buy Bitcoin" },
+  { href: "/buy-bitcoin", label: "Payment Options", children: [
+    { href: "/buy-bitcoin", label: "Bitcoin" },
+    { href: "/pay-with-bank-transfer", label: "Bank Transfer" },
+    { href: "/pay-with-paysafecard", label: "Paysafecard" }
+  ]},
   { href: "/blog", label: "Blog" },
   { href: "/about-us", label: "About" },
   { href: "/faq", label: "Help" },
