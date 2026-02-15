@@ -634,12 +634,54 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     align-items: flex-start;
     gap: 8px;
   }
+
+  /* ── Form Validation Styles ────────────────────────────────── */
+  .input-error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.12) !important;
+  }
+
+  .form-error {
+    display: block;
+    color: #dc2626;
+    font-size: 0.78rem;
+    margin-top: 4px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  #place-order-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  #place-order-btn svg.spinner {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
 </style>
 
 <script>
   // @ts-nocheck
+
+  // ── EmailJS Configuration ──────────────────────────────────────────
+  // To enable email notifications:
+  // 1. Sign up at https://www.emailjs.com (free: 200 emails/month)
+  // 2. Create an email service (Gmail, Outlook, etc.)
+  // 3. Create two email templates:
+  //    - "order_confirmation" (for paid orders: Paysafecard)
+  //    - "payment_pending" (for Bitcoin / Bank Transfer orders)
+  // 4. Replace these values with your actual IDs:
+  const EMAILJS_PUBLIC_KEY = '';  // Your EmailJS public key
+  const EMAILJS_SERVICE_ID = '';  // Your EmailJS service ID
+  const EMAILJS_TEMPLATE_PAID = '';      // Template for confirmed payments
+  const EMAILJS_TEMPLATE_PENDING = '';   // Template for pending payments
+  // ──────────────────────────────────────────────────────────────────
+
   const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-    .filter((/** @type {{ name: string, price: number, quantity: number }} */ item) => item && item.name);
+    .filter((item) => item && item.name);
 
   const checkoutLayout = document.getElementById('checkout-layout');
   const checkoutEmpty = document.getElementById('checkout-empty');
@@ -648,30 +690,41 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   const summaryShipping = document.getElementById('summary-shipping');
   const summaryTotal = document.getElementById('summary-total');
   const placeOrderBtn = document.getElementById('place-order-btn');
+  const checkoutForm = document.getElementById('checkout-details');
 
   const bitcoinPanel = document.getElementById('bitcoin-panel');
   const bankPanel = document.getElementById('bank-panel');
   const paysafecardPanel = document.getElementById('paysafecard-panel');
 
+  // ── Helpers ─────────────────────────────────────────────────────
   function getShippingFee() {
     const selected = document.querySelector('input[name="delivery"]:checked');
     if (!(selected instanceof HTMLInputElement)) return 0;
     return Number(selected.dataset.fee || '0');
   }
 
+  function generateOrderRef() {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `MW-${timestamp.slice(-4)}${random}`;
+  }
+
+  function getFormValue(id) {
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement ? el.value.trim() : '';
+  }
+
+  // ── Render Summary ────────────────────────────────────────────
   function renderSummary() {
     if (!summaryItems || !summarySubtotal || !summaryShipping || !summaryTotal) return;
 
-    const subtotal = cart.reduce(
-      (/** @type {number} */ sum, /** @type {{ name: string, price: number, quantity: number }} */ item) => sum + (item.price * item.quantity),
-      0
-    );
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const shipping = getShippingFee();
     const total = subtotal + shipping;
 
-    summaryItems.innerHTML = cart.map((/** @type {{ name: string, price: number, quantity: number }} */ item) => `
+    summaryItems.innerHTML = cart.map((item) => `
       <div class="summary-item">
-        <span>${item.name} × ${item.quantity}</span>
+        <span>${item.name} &times; ${item.quantity}</span>
         <strong>$${(item.price * item.quantity).toFixed(2)}</strong>
       </div>
     `).join('');
@@ -681,25 +734,254 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     summaryTotal.textContent = `$${total.toFixed(2)}`;
   }
 
+  // ── Toggle Payment Panels ─────────────────────────────────────
   function togglePaymentPanels() {
     const selectedPaymentEl = document.querySelector('input[name="payment"]:checked');
     if (!(selectedPaymentEl instanceof HTMLInputElement)) return;
     const selectedPayment = selectedPaymentEl.value;
 
-    if (selectedPayment === 'bank') {
-      if (bankPanel) bankPanel.style.display = 'block';
-      if (bitcoinPanel) bitcoinPanel.style.display = 'none';
-      if (paysafecardPanel) paysafecardPanel.style.display = 'none';
-    } else if (selectedPayment === 'paysafecard') {
-      if (bankPanel) bankPanel.style.display = 'none';
-      if (bitcoinPanel) bitcoinPanel.style.display = 'none';
-      if (paysafecardPanel) paysafecardPanel.style.display = 'block';
-    } else {
-      if (bankPanel) bankPanel.style.display = 'none';
-      if (bitcoinPanel) bitcoinPanel.style.display = 'block';
-      if (paysafecardPanel) paysafecardPanel.style.display = 'none';
+    if (bankPanel) bankPanel.style.display = selectedPayment === 'bank' ? 'block' : 'none';
+    if (bitcoinPanel) bitcoinPanel.style.display = selectedPayment === 'bitcoin' ? 'block' : 'none';
+    if (paysafecardPanel) paysafecardPanel.style.display = selectedPayment === 'paysafecard' ? 'block' : 'none';
+  }
+
+  // ── Validate Form ─────────────────────────────────────────────
+  function validateForm() {
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'postcode'];
+    let firstError = null;
+    let isValid = true;
+
+    // Clear previous errors
+    document.querySelectorAll('.form-error').forEach(el => el.remove());
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+    for (const fieldId of requiredFields) {
+      const el = document.getElementById(fieldId);
+      if (!(el instanceof HTMLInputElement)) continue;
+
+      const value = el.value.trim();
+      let error = '';
+
+      if (!value) {
+        error = 'This field is required';
+      } else if (fieldId === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        error = 'Please enter a valid email address';
+      } else if (fieldId === 'phone' && !/^[\d\s\+\-\(\)]{8,15}$/.test(value)) {
+        error = 'Please enter a valid phone number';
+      } else if (fieldId === 'postcode' && !/^\d{4}$/.test(value)) {
+        error = 'Please enter a valid 4-digit postcode';
+      }
+
+      if (error) {
+        isValid = false;
+        el.classList.add('input-error');
+        const errorEl = document.createElement('span');
+        errorEl.className = 'form-error';
+        errorEl.textContent = error;
+        el.parentElement?.appendChild(errorEl);
+        if (!firstError) firstError = el;
+      }
+    }
+
+    // Paysafecard PIN validation
+    const selectedPayment = document.querySelector('input[name="payment"]:checked');
+    if (selectedPayment instanceof HTMLInputElement && selectedPayment.value === 'paysafecard') {
+      const pinInput = document.getElementById('psc-pin');
+      if (pinInput instanceof HTMLInputElement) {
+        const pinDigits = pinInput.value.replace(/[^0-9]/g, '');
+        if (pinDigits.length !== 16) {
+          isValid = false;
+          pinInput.classList.add('input-error');
+          const errorEl = document.createElement('span');
+          errorEl.className = 'form-error';
+          errorEl.textContent = 'Please enter a valid 16-digit Paysafecard PIN';
+          pinInput.parentElement?.appendChild(errorEl);
+          if (!firstError) firstError = pinInput;
+        }
+      }
+    }
+
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstError.focus();
+    }
+
+    return isValid;
+  }
+
+  // ── Send Email via EmailJS ────────────────────────────────────
+  async function sendOrderEmail(order) {
+    // Skip if EmailJS is not configured
+    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID) {
+      console.log('EmailJS not configured — skipping email send. Configure EMAILJS_PUBLIC_KEY and EMAILJS_SERVICE_ID to enable.');
+      return { success: false, reason: 'not_configured' };
+    }
+
+    try {
+      // Load EmailJS SDK if not loaded
+      if (!window.emailjs) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+        window.emailjs.init(EMAILJS_PUBLIC_KEY);
+      }
+
+      const isPaid = order.payment === 'paysafecard';
+      const templateId = isPaid ? EMAILJS_TEMPLATE_PAID : EMAILJS_TEMPLATE_PENDING;
+
+      if (!templateId) {
+        console.log('Email template ID not configured for payment type:', order.payment);
+        return { success: false, reason: 'no_template' };
+      }
+
+      // Build items list for email
+      const itemsList = order.items.map(i => `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`).join('\n');
+
+      // Payment details for email
+      let paymentDetails = '';
+      if (order.payment === 'bitcoin') {
+        paymentDetails = `Bitcoin Address: bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
+      } else if (order.payment === 'bank') {
+        paymentDetails = `PayID: payments@mullawaysmedicalcannabis.com.au\nBSB: 062-000\nAccount: 1234 5678\nAccount Name: Mullaways Pty Ltd\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
+      } else if (order.payment === 'paysafecard') {
+        paymentDetails = `Paysafecard PIN submitted for verification.\nAmount: $${order.total.toFixed(2)} AUD`;
+      }
+
+      const templateParams = {
+        to_email: order.customer.email,
+        to_name: `${order.customer.firstName} ${order.customer.lastName}`,
+        order_ref: order.ref,
+        order_date: new Date(order.date).toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+        items_list: itemsList,
+        subtotal: `$${order.subtotal.toFixed(2)}`,
+        shipping: `$${order.shipping.toFixed(2)}`,
+        total: `$${order.total.toFixed(2)}`,
+        payment_method: order.payment === 'bitcoin' ? 'Bitcoin' : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard',
+        payment_details: paymentDetails,
+        shipping_address: `${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
+        delivery_method: order.shippingMethod === 'express' ? 'Express (1–2 business days)' : 'Standard (2–5 business days)',
+      };
+
+      await window.emailjs.send(EMAILJS_SERVICE_ID, templateId, templateParams);
+      return { success: true };
+    } catch (err) {
+      console.error('Email send failed:', err);
+      return { success: false, reason: 'send_failed', error: err };
     }
   }
+
+  // ── Place Order ───────────────────────────────────────────────
+  async function placeOrder() {
+    // Validate form
+    if (!validateForm()) return;
+
+    // Gather data
+    const selectedPaymentEl = document.querySelector('input[name="payment"]:checked');
+    const selectedPayment = selectedPaymentEl instanceof HTMLInputElement ? selectedPaymentEl.value : 'bitcoin';
+
+    const selectedDeliveryEl = document.querySelector('input[name="delivery"]:checked');
+    const shippingMethod = selectedDeliveryEl instanceof HTMLInputElement ? selectedDeliveryEl.value : 'standard';
+    const shippingFee = getShippingFee();
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + shippingFee;
+
+    let pscPin = '';
+    if (selectedPayment === 'paysafecard') {
+      const pinInput = document.getElementById('psc-pin');
+      if (pinInput instanceof HTMLInputElement) {
+        pscPin = pinInput.value;
+      }
+    }
+
+    const order = {
+      ref: generateOrderRef(),
+      date: new Date().toISOString(),
+      items: cart.map(item => ({ name: item.name, price: item.price, quantity: item.quantity })),
+      subtotal,
+      shipping: shippingFee,
+      shippingMethod,
+      total,
+      payment: selectedPayment,
+      pscPin,
+      customer: {
+        firstName: getFormValue('firstName'),
+        lastName: getFormValue('lastName'),
+        email: getFormValue('email'),
+        phone: getFormValue('phone'),
+        address: getFormValue('address'),
+        city: getFormValue('city'),
+        state: getFormValue('state'),
+        postcode: getFormValue('postcode'),
+      }
+    };
+
+    // Disable button and show loading
+    if (placeOrderBtn) {
+      placeOrderBtn.disabled = true;
+      placeOrderBtn.innerHTML = `
+        <svg class="spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+        Processing Order...
+      `;
+    }
+
+    try {
+      // Save order to localStorage
+      localStorage.setItem('lastOrder', JSON.stringify(order));
+
+      // Save to order history
+      const orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+      orderHistory.unshift(order);
+      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+      // Send confirmation email (non-blocking — don't fail the order if email fails)
+      sendOrderEmail(order).then(result => {
+        if (result.success) {
+          console.log('Confirmation email sent to', order.customer.email);
+        } else {
+          console.log('Email not sent:', result.reason);
+        }
+      });
+
+      // Clear the cart
+      localStorage.removeItem('cart');
+
+      // Dispatch cart update event for header badge
+      window.dispatchEvent(new CustomEvent('cartUpdated'));
+
+      // Small delay for UX — let user see "Processing..."
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      // Redirect to confirmation page
+      window.location.href = `/order-confirmation?ref=${order.ref}`;
+
+    } catch (err) {
+      console.error('Order placement error:', err);
+      if (placeOrderBtn) {
+        placeOrderBtn.disabled = false;
+        placeOrderBtn.textContent = 'Place Order';
+      }
+      // Show inline error instead of alert
+      let errorBanner = document.getElementById('order-error-banner');
+      if (!errorBanner) {
+        errorBanner = document.createElement('div');
+        errorBanner.id = 'order-error-banner';
+        errorBanner.style.cssText = 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:14px 18px;border-radius:12px;margin-top:14px;font-size:0.9rem;display:flex;align-items:center;gap:8px;';
+        errorBanner.innerHTML = '<strong>Something went wrong.</strong> Please check your details and try again.';
+        placeOrderBtn.parentElement?.appendChild(errorBanner);
+      }
+    }
+  }
+
+  // ── Init ──────────────────────────────────────────────────────
 
   if (cart.length === 0) {
     if (checkoutLayout) checkoutLayout.style.display = 'none';
@@ -708,30 +990,26 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     renderSummary();
   }
 
+  // Delivery change
   document.querySelectorAll('input[name="delivery"]').forEach((input) => {
     input.addEventListener('change', renderSummary);
   });
 
+  // Payment change
   document.querySelectorAll('input[name="payment"]').forEach((input) => {
     input.addEventListener('change', togglePaymentPanels);
   });
 
-  placeOrderBtn?.addEventListener('click', () => {
-    const selectedPaymentEl = document.querySelector('input[name="payment"]:checked');
-    const selectedPayment = selectedPaymentEl instanceof HTMLInputElement ? selectedPaymentEl.value : '';
-    if (selectedPayment === 'bank') {
-      alert('Order placed! Check your email — we\'ve sent you our bank details and PayID so you can complete the transfer.');
-    } else if (selectedPayment === 'paysafecard') {
-      const pinInput = document.getElementById('psc-pin');
-      const pinValue = pinInput instanceof HTMLInputElement ? pinInput.value.replace(/[^0-9]/g, '') : '';
-      if (pinValue.length !== 16) {
-        alert('Please enter a valid 16-digit Paysafecard PIN.');
-        return;
-      }
-      alert('Order placed. Your Paysafecard payment has been submitted for processing.');
-    } else {
-      alert('Order placed. Please complete the bitcoin payment using the QR code or address provided.');
-    }
+  // Place Order button
+  placeOrderBtn?.addEventListener('click', placeOrder);
+
+  // Clear errors on input
+  document.querySelectorAll('#checkout-details input').forEach((input) => {
+    input.addEventListener('input', () => {
+      input.classList.remove('input-error');
+      const error = input.parentElement?.querySelector('.form-error');
+      if (error) error.remove();
+    });
   });
 
   // Paysafecard PIN: digits only, auto-format with dashes
@@ -741,12 +1019,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     pscPinInput.addEventListener('input', () => {
       let raw = pscPinInput.value.replace(/[^0-9]/g, '');
       if (raw.length > 16) raw = raw.slice(0, 16);
-      // Format as 0000-0000-0000-0000
       const parts = [];
       for (let i = 0; i < raw.length; i += 4) {
         parts.push(raw.slice(i, i + 4));
       }
       pscPinInput.value = parts.join('-');
+      // Clear error state
+      pscPinInput.classList.remove('input-error');
+      const error = pscPinInput.parentElement?.querySelector('.form-error');
+      if (error) error.remove();
       // Status feedback
       if (pscPinStatus) {
         if (raw.length === 16) {
@@ -764,16 +1045,14 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         }
       }
     });
-    // Prevent non-numeric keys
     pscPinInput.addEventListener('keypress', (e) => {
       if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab') {
         e.preventDefault();
       }
     });
-    // Prevent paste of non-numeric
     pscPinInput.addEventListener('paste', (e) => {
       e.preventDefault();
-      const text = (e.clipboardData || (window as any).clipboardData)?.getData('text') || '';
+      const text = (e.clipboardData || window.clipboardData)?.getData('text') || '';
       const digits = text.replace(/[^0-9]/g, '').slice(0, 16);
       pscPinInput.value = digits;
       pscPinInput.dispatchEvent(new Event('input'));

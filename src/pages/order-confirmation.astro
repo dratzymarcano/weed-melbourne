@@ -1,0 +1,1230 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Order Confirmation | Mullaways Medical Cannabis" description="Your order has been placed. View your order details and payment instructions.">
+  <Header />
+
+  <main>
+    <!-- Loading State -->
+    <div id="loading-state" class="loading-state">
+      <div class="container">
+        <div class="loading-spinner"></div>
+        <p>Loading your order details...</p>
+      </div>
+    </div>
+
+    <!-- No Order State -->
+    <div id="no-order-state" class="no-order-state" style="display: none;">
+      <div class="container">
+        <div class="empty-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h1>No Order Found</h1>
+        <p>It looks like you haven't placed an order yet, or the order details have expired.</p>
+        <a href="/shop" class="btn btn-primary">Browse Products</a>
+      </div>
+    </div>
+
+    <!-- Order Confirmed State -->
+    <div id="order-state" style="display: none;">
+      <!-- Success Hero -->
+      <section class="confirmation-hero">
+        <div class="hero-bg">
+          <div class="hero-shape hero-shape-1"></div>
+          <div class="hero-shape hero-shape-2"></div>
+        </div>
+        <div class="container">
+          <div class="hero-content">
+            <div class="success-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h1 id="hero-title">Order Placed Successfully!</h1>
+            <p id="hero-subtitle">Your order reference is <strong id="hero-ref">—</strong></p>
+            <div class="hero-email-notice" id="hero-email-notice">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span>A confirmation email has been sent to <strong id="hero-email">—</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Order Content -->
+      <section class="confirmation-section">
+        <div class="container">
+          <div class="confirmation-layout">
+            <!-- Left Column: Payment & Details -->
+            <div class="confirmation-main">
+
+              <!-- Payment Instructions Card (conditional) -->
+              <div class="card payment-card" id="payment-card">
+                <!-- Bitcoin Payment -->
+                <div id="payment-bitcoin" style="display: none;">
+                  <div class="card-header">
+                    <div class="card-icon bitcoin-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z"/></svg>
+                    </div>
+                    <div>
+                      <h2>Complete Your Bitcoin Payment</h2>
+                      <p class="card-subtitle">Send the exact amount to the address below</p>
+                    </div>
+                  </div>
+                  <div class="payment-details-grid">
+                    <div class="qr-section">
+                      <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" alt="Bitcoin QR Code" width="200" height="200" loading="eager">
+                    </div>
+                    <div class="payment-fields">
+                      <div class="field-group">
+                        <label>Bitcoin Address</label>
+                        <div class="copyable-field">
+                          <code id="btc-address">bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5</code>
+                          <button class="copy-btn" data-copy="bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" title="Copy address">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="field-group">
+                        <label>Amount to Send</label>
+                        <div class="copyable-field amount-field">
+                          <code id="btc-amount">$0.00 AUD</code>
+                        </div>
+                      </div>
+                      <div class="field-group">
+                        <label>Order Reference</label>
+                        <div class="copyable-field">
+                          <code id="btc-ref">—</code>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="payment-alert info">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>Send the <strong>exact amount</strong> shown above. Your order will be processed once the payment is confirmed on the blockchain (usually 10–30 minutes).</span>
+                  </div>
+                </div>
+
+                <!-- Bank Transfer Payment -->
+                <div id="payment-bank" style="display: none;">
+                  <div class="card-header">
+                    <div class="card-icon bank-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M3 10l9-7 9 7"/></svg>
+                    </div>
+                    <div>
+                      <h2>Complete Your Bank Transfer</h2>
+                      <p class="card-subtitle">Transfer the exact amount using the details below</p>
+                    </div>
+                  </div>
+                  <div class="bank-details-grid">
+                    <div class="bank-detail-card">
+                      <h3>PayID (Instant)</h3>
+                      <div class="field-group">
+                        <label>PayID Email</label>
+                        <div class="copyable-field">
+                          <code>payments@mullawaysmedicalcannabis.com.au</code>
+                          <button class="copy-btn" data-copy="payments@mullawaysmedicalcannabis.com.au" title="Copy PayID">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bank-detail-card">
+                      <h3>BSB Transfer</h3>
+                      <div class="field-group">
+                        <label>BSB</label>
+                        <div class="copyable-field">
+                          <code>062-000</code>
+                          <button class="copy-btn" data-copy="062-000" title="Copy BSB">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="field-group">
+                        <label>Account Number</label>
+                        <div class="copyable-field">
+                          <code>1234 5678</code>
+                          <button class="copy-btn" data-copy="12345678" title="Copy Account Number">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="field-group">
+                        <label>Account Name</label>
+                        <div class="copyable-field">
+                          <code>Mullaways Pty Ltd</code>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bank-transfer-fields">
+                    <div class="field-group">
+                      <label>Amount to Transfer</label>
+                      <div class="copyable-field amount-field">
+                        <code id="bank-amount">$0.00 AUD</code>
+                        <button class="copy-btn" data-copy-id="bank-amount-raw" title="Copy Amount">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="field-group">
+                      <label>Payment Reference (use this as description)</label>
+                      <div class="copyable-field">
+                        <code id="bank-ref">—</code>
+                        <button class="copy-btn" data-copy-id="bank-ref" title="Copy Reference">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="payment-alert info">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <span>PayID transfers are <strong>instant 24/7</strong> — even on weekends. Standard BSB transfers take 1–2 hours during business days. Use your <strong>order reference</strong> as the payment description.</span>
+                  </div>
+                </div>
+
+                <!-- Paysafecard Confirmed -->
+                <div id="payment-paysafecard" style="display: none;">
+                  <div class="card-header">
+                    <div class="card-icon psc-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+                    </div>
+                    <div>
+                      <h2>Paysafecard Payment Received</h2>
+                      <p class="card-subtitle">Your PIN has been submitted for verification</p>
+                    </div>
+                  </div>
+                  <div class="psc-confirmed">
+                    <div class="psc-status">
+                      <div class="status-badge processing">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Processing Payment
+                      </div>
+                      <p>Your Paysafecard PIN ending in <strong id="psc-pin-last">****</strong> is being verified. This usually takes 1–5 minutes.</p>
+                    </div>
+                  </div>
+                  <div class="payment-alert success">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>You'll receive an email confirmation once payment is verified. No further action needed from you.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Order Timeline -->
+              <div class="card">
+                <h2>What Happens Next</h2>
+                <div class="order-timeline">
+                  <div class="timeline-step completed">
+                    <div class="timeline-dot">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="timeline-content">
+                      <h3>Order Placed</h3>
+                      <p>Your order has been received and is being reviewed.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-step" id="step-payment">
+                    <div class="timeline-dot">
+                      <span>2</span>
+                    </div>
+                    <div class="timeline-content">
+                      <h3 id="step-payment-title">Payment Confirmation</h3>
+                      <p id="step-payment-desc">We'll confirm your payment and begin processing.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="timeline-dot">
+                      <span>3</span>
+                    </div>
+                    <div class="timeline-content">
+                      <h3>Order Processing</h3>
+                      <p>Your order is carefully packed with discreet packaging.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="timeline-dot">
+                      <span>4</span>
+                    </div>
+                    <div class="timeline-content">
+                      <h3>Shipped</h3>
+                      <p>Tracking details will be sent to your email.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="timeline-dot">
+                      <span>5</span>
+                    </div>
+                    <div class="timeline-content">
+                      <h3>Delivered</h3>
+                      <p>Enjoy your order! Discreetly delivered to your door.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Customer Details -->
+              <div class="card">
+                <h2>Delivery Details</h2>
+                <div class="customer-details-grid">
+                  <div>
+                    <h3>Shipping Address</h3>
+                    <p id="customer-name">—</p>
+                    <p id="customer-address">—</p>
+                    <p id="customer-city-state">—</p>
+                  </div>
+                  <div>
+                    <h3>Contact</h3>
+                    <p id="customer-email-display">—</p>
+                    <p id="customer-phone">—</p>
+                  </div>
+                  <div>
+                    <h3>Delivery Method</h3>
+                    <p id="customer-delivery">—</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <aside class="confirmation-sidebar">
+              <div class="summary-card sticky">
+                <h3>Order Summary</h3>
+                <div class="order-ref-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span id="summary-ref">—</span>
+                </div>
+                <div class="summary-date" id="summary-date">—</div>
+                <div class="summary-divider"></div>
+                <div id="summary-items" class="summary-items"></div>
+                <div class="summary-divider"></div>
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Delivery</span>
+                  <span id="summary-shipping">$0.00</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row summary-total">
+                  <span>Total</span>
+                  <span id="summary-total">$0.00</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row">
+                  <span>Payment</span>
+                  <span id="summary-payment">—</span>
+                </div>
+                <div class="summary-actions">
+                  <button class="btn btn-outline btn-full" id="print-order-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Print Order
+                  </button>
+                  <a href="/shop" class="btn btn-primary btn-full">Continue Shopping</a>
+                </div>
+              </div>
+
+              <!-- Support Card -->
+              <div class="support-card">
+                <h4>Need Help?</h4>
+                <p>Our support team is available Mon–Fri, 9am–6pm AEST.</p>
+                <a href="mailto:hello@mullawaysmedicalcannabis.com.au" class="support-link">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  hello@mullawaysmedicalcannabis.com.au
+                </a>
+                <a href="tel:1800268265" class="support-link">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.35a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0 1 22 16.92z"/></svg>
+                  1800 BOTANICAL
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Loading State */
+  .loading-state {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #666;
+  }
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e8e4de;
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* No Order State */
+  .no-order-state {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .no-order-state .empty-icon {
+    color: #aaa;
+    margin-bottom: 16px;
+  }
+
+  .no-order-state h1 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  .no-order-state p {
+    color: #666;
+    margin-bottom: 24px;
+  }
+
+  /* Confirmation Hero */
+  .confirmation-hero {
+    position: relative;
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+    padding: 60px 0 48px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-shape-1 {
+    width: 320px;
+    height: 320px;
+    top: -100px;
+    right: -60px;
+  }
+
+  .hero-shape-2 {
+    width: 240px;
+    height: 240px;
+    bottom: -80px;
+    left: -40px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: #fff;
+    animation: scaleIn 0.5s ease;
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .confirmation-hero h1 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-family: var(--font-display);
+  }
+
+  .confirmation-hero p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.05rem;
+  }
+
+  .confirmation-hero strong {
+    color: #fff;
+    font-weight: 700;
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
+
+  .hero-email-notice {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin-top: 20px;
+  }
+
+  .hero-email-notice strong {
+    font-family: inherit;
+    letter-spacing: 0;
+  }
+
+  /* Main Layout */
+  .confirmation-section {
+    padding: 48px 0 80px;
+    background: #f9faf8;
+  }
+
+  .confirmation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* Cards */
+  .card {
+    background: #fff;
+    border: 1px solid #e8e4de;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+
+  .card h2 {
+    font-size: 1.3rem;
+    margin: 0 0 20px;
+    color: #1a1a1a;
+    font-family: var(--font-display);
+  }
+
+  .card-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .bitcoin-icon { background: #fff7ed; color: #f7931a; }
+  .bank-icon { background: #f0fdf4; color: #16a34a; }
+  .psc-icon { background: #eff6ff; color: #2563eb; }
+
+  .card-header h2 {
+    margin: 0 0 4px;
+    font-size: 1.2rem;
+  }
+
+  .card-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* Payment Details */
+  .payment-details-grid {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .qr-section {
+    flex-shrink: 0;
+  }
+
+  .qr-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    border: 1px solid #e8e4de;
+    background: #fff;
+  }
+
+  .payment-fields {
+    flex: 1;
+    min-width: 240px;
+    display: grid;
+    gap: 14px;
+  }
+
+  .field-group {
+    margin-bottom: 6px;
+  }
+
+  .field-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+
+  .copyable-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f6f2;
+    border: 1px solid #e8e4de;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .copyable-field code {
+    flex: 1;
+    font-size: 0.92rem;
+    word-break: break-all;
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  .amount-field {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  .amount-field code {
+    font-size: 1.15rem;
+    color: #059669;
+    font-weight: 700;
+  }
+
+  .copy-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #888;
+    border-radius: 6px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover {
+    color: var(--color-primary);
+    background: rgba(0,0,0,0.04);
+  }
+
+  /* Bank Details */
+  .bank-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .bank-detail-card {
+    background: #f8f6f2;
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .bank-detail-card h3 {
+    font-size: 0.95rem;
+    margin: 0 0 14px;
+    color: #1a1a1a;
+  }
+
+  .bank-transfer-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  /* PSC Status */
+  .psc-confirmed {
+    margin-bottom: 20px;
+  }
+
+  .psc-status {
+    background: #eff6ff;
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .status-badge.processing {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .psc-status p {
+    color: #444;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Alerts */
+  .payment-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+
+  .payment-alert svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .payment-alert.info {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+  }
+
+  .payment-alert.success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #14532d;
+  }
+
+  /* Order Timeline */
+  .order-timeline {
+    position: relative;
+    padding-left: 36px;
+  }
+
+  .timeline-step {
+    position: relative;
+    padding-bottom: 28px;
+  }
+
+  .timeline-step:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-step::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: #e8e4de;
+  }
+
+  .timeline-step:last-child::before {
+    display: none;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -36px;
+    top: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #f8f6f2;
+    border: 2px solid #d8d4ce;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #888;
+  }
+
+  .timeline-step.completed .timeline-dot {
+    background: #059669;
+    border-color: #059669;
+    color: #fff;
+  }
+
+  .timeline-content h3 {
+    font-size: 0.95rem;
+    margin: 0 0 4px;
+    color: #1a1a1a;
+  }
+
+  .timeline-content p {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Customer Details */
+  .customer-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .customer-details-grid h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin: 0 0 10px;
+  }
+
+  .customer-details-grid p {
+    font-size: 0.92rem;
+    color: #333;
+    margin: 0 0 4px;
+  }
+
+  /* Sidebar */
+  .confirmation-sidebar .sticky {
+    position: sticky;
+    top: 100px;
+  }
+
+  .summary-card {
+    background: #fff;
+    border: 1px solid #e8e4de;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .summary-card h3 {
+    font-size: 1.15rem;
+    margin: 0 0 14px;
+    font-family: var(--font-display);
+  }
+
+  .order-ref-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0fdf4;
+    color: #059669;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: monospace;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .summary-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .summary-items {
+    display: grid;
+    gap: 10px;
+    padding: 4px 0;
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+
+  .summary-item span:first-child {
+    color: #444;
+  }
+
+  .summary-item strong {
+    color: #1a1a1a;
+    white-space: nowrap;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: #eee;
+    margin: 12px 0;
+  }
+
+  .summary-total {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #1a1a1a;
+  }
+
+  .summary-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid #1a1a1a;
+    color: #1a1a1a;
+  }
+
+  .btn-outline:hover {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .btn-full {
+    width: 100%;
+  }
+
+  /* Support Card */
+  .support-card {
+    background: #fff;
+    border: 1px solid #e8e4de;
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .support-card h4 {
+    font-size: 1rem;
+    margin: 0 0 8px;
+  }
+
+  .support-card p {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0 0 14px;
+  }
+
+  .support-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .support-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .confirmation-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .confirmation-sidebar .sticky {
+      position: static;
+    }
+
+    .bank-details-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bank-transfer-fields {
+      grid-template-columns: 1fr;
+    }
+
+    .customer-details-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .confirmation-hero {
+      padding: 40px 0 32px;
+    }
+
+    .confirmation-hero h1 {
+      font-size: 1.5rem;
+    }
+
+    .hero-email-notice {
+      flex-direction: column;
+      text-align: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+    }
+
+    .payment-details-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .qr-image {
+      width: 160px;
+      height: 160px;
+    }
+
+    .customer-details-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      padding: 18px;
+    }
+
+    .card-header {
+      flex-direction: column;
+    }
+  }
+
+  /* Print Styles */
+  @media print {
+    .confirmation-hero {
+      background: #059669 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .summary-actions,
+    .support-card,
+    header,
+    footer {
+      display: none !important;
+    }
+
+    .confirmation-sidebar .sticky {
+      position: static;
+    }
+
+    .confirmation-layout {
+      grid-template-columns: 1fr 300px;
+    }
+  }
+</style>
+
+<script>
+  // @ts-nocheck
+  (function() {
+    const loadingState = document.getElementById('loading-state');
+    const noOrderState = document.getElementById('no-order-state');
+    const orderState = document.getElementById('order-state');
+
+    // Read order from localStorage
+    const orderData = JSON.parse(localStorage.getItem('lastOrder') || 'null');
+
+    if (!orderData || !orderData.ref) {
+      if (loadingState) loadingState.style.display = 'none';
+      if (noOrderState) noOrderState.style.display = 'block';
+      return;
+    }
+
+    // Show the order
+    if (loadingState) loadingState.style.display = 'none';
+    if (orderState) orderState.style.display = 'block';
+
+    const order = orderData;
+
+    // Hero Section
+    const heroRef = document.getElementById('hero-ref');
+    const heroEmail = document.getElementById('hero-email');
+    const heroTitle = document.getElementById('hero-title');
+    const heroSubtitle = document.getElementById('hero-subtitle');
+    const heroEmailNotice = document.getElementById('hero-email-notice');
+
+    if (heroRef) heroRef.textContent = order.ref;
+    if (heroEmail) heroEmail.textContent = order.customer.email;
+
+    // Customize hero based on payment
+    if (order.payment === 'paysafecard') {
+      if (heroTitle) heroTitle.textContent = 'Payment Submitted!';
+    } else if (order.payment === 'bank') {
+      if (heroTitle) heroTitle.textContent = 'Order Placed — Complete Payment';
+    } else if (order.payment === 'bitcoin') {
+      if (heroTitle) heroTitle.textContent = 'Order Placed — Complete Payment';
+    }
+
+    // Payment Panels
+    const bitcoinPanel = document.getElementById('payment-bitcoin');
+    const bankPanel = document.getElementById('payment-bank');
+    const pscPanel = document.getElementById('payment-paysafecard');
+
+    if (order.payment === 'bitcoin') {
+      if (bitcoinPanel) bitcoinPanel.style.display = 'block';
+      document.getElementById('btc-amount').textContent = `$${order.total.toFixed(2)} AUD`;
+      document.getElementById('btc-ref').textContent = order.ref;
+    } else if (order.payment === 'bank') {
+      if (bankPanel) bankPanel.style.display = 'block';
+      document.getElementById('bank-amount').textContent = `$${order.total.toFixed(2)} AUD`;
+      document.getElementById('bank-ref').textContent = order.ref;
+      // Store raw amount for copy
+      const bankAmountEl = document.getElementById('bank-amount');
+      if (bankAmountEl) bankAmountEl.dataset.rawAmount = order.total.toFixed(2);
+    } else if (order.payment === 'paysafecard') {
+      if (pscPanel) pscPanel.style.display = 'block';
+      const pinLast = document.getElementById('psc-pin-last');
+      if (pinLast && order.pscPin) {
+        pinLast.textContent = order.pscPin.slice(-4);
+      }
+    }
+
+    // Payment step timeline customization
+    const stepPayment = document.getElementById('step-payment');
+    const stepPaymentTitle = document.getElementById('step-payment-title');
+    const stepPaymentDesc = document.getElementById('step-payment-desc');
+
+    if (order.payment === 'paysafecard' && stepPayment) {
+      stepPaymentTitle.textContent = 'Verifying Paysafecard';
+      stepPaymentDesc.textContent = 'Your PIN is being verified. Usually takes 1–5 minutes.';
+    } else if (order.payment === 'bank') {
+      stepPaymentTitle.textContent = 'Awaiting Bank Transfer';
+      stepPaymentDesc.textContent = 'Transfer the exact amount using the details above.';
+    } else if (order.payment === 'bitcoin') {
+      stepPaymentTitle.textContent = 'Awaiting Bitcoin Payment';
+      stepPaymentDesc.textContent = 'Send the exact amount to the BTC address shown above.';
+    }
+
+    // Customer Details
+    document.getElementById('customer-name').textContent =
+      `${order.customer.firstName} ${order.customer.lastName}`;
+    document.getElementById('customer-address').textContent = order.customer.address;
+    document.getElementById('customer-city-state').textContent =
+      `${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`;
+    document.getElementById('customer-email-display').textContent = order.customer.email;
+    document.getElementById('customer-phone').textContent = order.customer.phone;
+    document.getElementById('customer-delivery').textContent =
+      order.shippingMethod === 'express' ? 'Express Delivery (1–2 business days)' : 'Standard Delivery (2–5 business days)';
+
+    // Order Summary
+    document.getElementById('summary-ref').textContent = order.ref;
+    document.getElementById('summary-date').textContent = new Date(order.date).toLocaleDateString('en-AU', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    const summaryItems = document.getElementById('summary-items');
+    if (summaryItems) {
+      summaryItems.innerHTML = order.items.map(item =>
+        `<div class="summary-item">
+          <span>${item.name} × ${item.quantity}</span>
+          <strong>$${(item.price * item.quantity).toFixed(2)}</strong>
+        </div>`
+      ).join('');
+    }
+
+    document.getElementById('summary-subtotal').textContent = `$${order.subtotal.toFixed(2)}`;
+    document.getElementById('summary-shipping').textContent = `$${order.shipping.toFixed(2)}`;
+    document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
+
+    const paymentLabels = {
+      bitcoin: 'Bitcoin',
+      bank: 'Bank Transfer',
+      paysafecard: 'Paysafecard'
+    };
+    document.getElementById('summary-payment').textContent = paymentLabels[order.payment] || order.payment;
+
+    // Copy buttons
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        let text = btn.dataset.copy;
+        // Handle dynamic copy targets
+        if (!text && btn.dataset.copyId) {
+          const el = document.getElementById(btn.dataset.copyId);
+          if (el) {
+            text = el.dataset.rawAmount || el.textContent;
+          }
+        }
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const originalHTML = btn.innerHTML;
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+          btn.style.color = '#059669';
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.style.color = '';
+          }, 2000);
+        } catch (e) {
+          // Fallback
+          const el = document.createElement('textarea');
+          el.value = text;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+        }
+      });
+    });
+
+    // Print button
+    document.getElementById('print-order-btn')?.addEventListener('click', () => {
+      window.print();
+    });
+
+  })();
+</script>
