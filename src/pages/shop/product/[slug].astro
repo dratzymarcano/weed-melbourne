@@ -138,12 +138,17 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
             <div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
             <div class="product-main-image">
               {product.image ? (
-                <picture>
-                  <source srcset={product.image.replace('.jpg', '.webp')} type="image/webp" />
-                  <img src={product.image} alt={getProductImageAlt(product, true)} width="500" height="500" loading="eager" />
-                </picture>
+                <img 
+                  src={product.image} 
+                  alt={getProductImageAlt(product, true)} 
+                  width="600" 
+                  height="400" 
+                  loading="eager"
+                  decoding="async"
+                  onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('img-failed');"
+                />
               ) : (
-                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+                <svg class="placeholder-icon" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
                   <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
                   <path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/>
                   <path d="M12 6c0 0 4 4 4 8s-4 6-4 6"/>
@@ -574,10 +579,6 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   .product-main-image {
     background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
     border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2d5a3f;
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
@@ -585,6 +586,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   }
 
   .product-main-image img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -592,11 +594,23 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
     top: 0;
     left: 0;
     border-radius: 20px;
+    z-index: 1;
   }
 
-  .product-main-image svg {
+  .product-main-image .placeholder-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 120px;
     height: 120px;
+    color: #2d5a3f;
+  }
+
+  .product-main-image.img-failed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .product-image-area .product-badge {
@@ -1528,11 +1542,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
       gap: 12px;
     }
 
-    .product-main-image {
-      padding: 50px;
-    }
-
-    .product-main-image svg {
+    .product-main-image .placeholder-icon {
       width: 80px;
       height: 80px;
     }
