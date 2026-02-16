@@ -165,7 +165,7 @@ function orderAdminHTML(data) {
   <div style="max-width:600px;margin:20px auto;background:#fff;border-radius:12px;overflow:hidden;">
 
     <div style="background:#1a1a2e;padding:24px 40px;">
-      <h1 style="margin:0;color:#fff;font-size:20px;">🛒 New Order Received</h1>
+      <h1 style="margin:0;color:#fff;font-size:20px;">New Order Received</h1>
     </div>
 
     <div style="padding:24px 40px;font-size:14px;color:#333;line-height:1.6;">
@@ -208,7 +208,7 @@ function contactAdminHTML({ from_name, from_email, order_ref, subject, message }
   <div style="max-width:600px;margin:20px auto;background:#fff;border-radius:12px;overflow:hidden;">
 
     <div style="background:#1a1a2e;padding:24px 40px;">
-      <h1 style="margin:0;color:#fff;font-size:20px;">📩 New Contact Message</h1>
+      <h1 style="margin:0;color:#fff;font-size:20px;">New Contact Message</h1>
     </div>
 
     <div style="padding:24px 40px;font-size:14px;color:#333;line-height:1.6;">
@@ -279,7 +279,7 @@ export async function onRequestPost(context) {
         from: fromAddress,
         to: data.to_email,
         replyTo: ADMIN_EMAIL,
-        subject: `Order ${data.order_ref} – We've Received Your Order`,
+        subject: `Order ${data.order_ref} - We've Received Your Order`,
         html: orderCustomerHTML(data),
       });
 
@@ -293,7 +293,7 @@ export async function onRequestPost(context) {
         from: fromAddress,
         to: ADMIN_EMAIL,
         replyTo: data.customer_email,
-        subject: `🛒 New Order ${data.order_ref} – ${data.total} via ${data.payment_method}`,
+        subject: `New Order ${data.order_ref} - ${data.total} via ${data.payment_method}`,
         html: orderAdminHTML(data),
       });
 
@@ -313,7 +313,7 @@ export async function onRequestPost(context) {
         from: fromAddress,
         to: ADMIN_EMAIL,
         replyTo: data.from_email,
-        subject: `📩 Contact: ${data.subject}`,
+        subject: `Contact Form: ${data.subject}`,
         html: contactAdminHTML(data),
       });
 
