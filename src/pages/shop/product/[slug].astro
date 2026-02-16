@@ -53,7 +53,7 @@ const productSchema: Record<string, any> = {
     "name": "Mullaways Medical Cannabis"
   },
   "sku": product.slug,
-  "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}`,
+  "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/`,
   "image": product.image ? `https://mullawaysmedicalcannabis.com.au${product.image}` : "https://mullawaysmedicalcannabis.com.au/og-default.png",
   "category": categoryLabel,
   "offers": {
@@ -99,9 +99,9 @@ const breadcrumbSchema = {
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop" },
-    { "@type": "ListItem", "position": 3, "name": categoryLabel, "item": `https://mullawaysmedicalcannabis.com.au/shop/${product.category}` },
-    { "@type": "ListItem", "position": 4, "name": product.name, "item": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}` }
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
+    { "@type": "ListItem", "position": 3, "name": categoryLabel, "item": `https://mullawaysmedicalcannabis.com.au/shop/${product.category}/` },
+    { "@type": "ListItem", "position": 4, "name": product.name, "item": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/` }
   ]
 };
 
@@ -127,7 +127,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   
   <main>
     <!-- Breadcrumb -->
-    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop'}, {label: product.category.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join('-'), href: `/shop/${product.category}`}, {label: product.name}]} />
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop'}, {label: product.category.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join('-'), href: `/shop/${product.category}/`}, {label: product.name}]} />
 
     <!-- Product Detail -->
     <section class="product-detail-section">

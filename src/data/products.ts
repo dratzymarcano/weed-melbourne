@@ -329,7 +329,8 @@ const reviewLocations = [
 ];
 
 function formatReviewDate(daysAgo: number): string {
-  const date = new Date();
+  // Use a fixed reference date so review dates are deterministic across builds
+  const date = new Date('2025-11-15T00:00:00Z');
   date.setDate(date.getDate() - daysAgo);
   return date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
 }
