@@ -262,9 +262,7 @@ export async function onRequestPost(context) {
 
   const { type } = body;
 
-  // Determine the "from" address — use env override or default to onboarding
-  // Once you verify your domain on Resend, change this to your own address
-  const fromAddress = env.FROM_EMAIL || `${BRAND} <onboarding@resend.dev>`;
+  const fromAddress = `${BRAND} <hello@mullawaysmedicalcannabis.com.au>`;
 
   try {
     if (type === 'order-customer') {
