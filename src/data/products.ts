@@ -331,7 +331,7 @@ const reviewLocations = [
 
 function getReviewDate(daysAgo: number): { display: string; iso: string } {
   // Use a fixed reference date so review dates are deterministic across builds
-  const date = new Date('2025-11-15T00:00:00Z');
+  const date = new Date('2026-02-16T00:00:00Z');
   date.setDate(date.getDate() - daysAgo);
   return {
     display: date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }),
@@ -351,7 +351,7 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
     const body = reviewBodies[seed % reviewBodies.length];
     const location = reviewLocations[seed % reviewLocations.length];
     const rating = 3 + (seed % 3);
-    const daysAgo = seed % 365;
+    const daysAgo = seed % 75;
     const reviewDate = getReviewDate(daysAgo);
 
     reviews.push({
