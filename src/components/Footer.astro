@@ -311,16 +311,17 @@ const legalLinks = [
     color: #1a1a1a;
     border: none;
     padding: 14px 24px;
-    border-radius: var(--radius-md);
+    border-radius: 12px;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .newsletter-form button:hover {
     background: #9dbc9a;
     transform: translateX(2px);
+    box-shadow: 0 4px 14px rgba(139, 168, 136, 0.35);
   }
 
   .form-note {

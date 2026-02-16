@@ -997,16 +997,17 @@ const itemListSchema = {
     padding: 12px 24px;
     font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 25px;
-    background: #1a472a;
-    color: white;
+    border-radius: 12px;
+    background: var(--color-sage);
+    color: #1a1a1a;
     border: none;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .product-footer .btn:hover {
-    background: #2d5a3f;
-    transform: translateY(-1px);
+    background: #9dbc9a;
+    transform: translateX(2px);
+    box-shadow: 0 4px 14px rgba(139, 168, 136, 0.35);
   }
 
   @media (max-width: 1024px) {

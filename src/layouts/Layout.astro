@@ -787,68 +787,71 @@ const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-sm);
+		gap: 8px;
 		padding: 14px 28px;
 		font-family: var(--font-primary);
 		font-size: 0.9rem;
-		font-weight: 500;
+		font-weight: 600;
 		text-align: center;
-		border-radius: var(--radius-full);
+		border-radius: 12px;
 		cursor: pointer;
-		transition: all var(--transition-base);
-		border: 2px solid transparent;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: none;
 		letter-spacing: 0.01em;
+		text-decoration: none;
 	}
 
 	.btn-primary {
-		background: var(--color-primary);
-		color: var(--color-white);
-		border-color: var(--color-primary);
+		background: var(--color-sage);
+		color: #1a1a1a;
 	}
 
 	.btn-primary:hover {
-		background: var(--color-primary-dark);
-		border-color: var(--color-primary-dark);
-		color: var(--color-white);
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
+		background: #9dbc9a;
+		transform: translateX(2px);
+		box-shadow: 0 4px 14px rgba(139, 168, 136, 0.35);
+		color: #1a1a1a;
 	}
 
 	.btn-secondary {
-		background: var(--color-accent);
-		color: var(--color-white);
-		border-color: var(--color-accent);
+		background: rgba(139, 168, 136, 0.2);
+		color: #ffffff;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
 	}
 
 	.btn-secondary:hover {
-		background: var(--color-accent-light);
-		border-color: var(--color-accent-light);
-		color: var(--color-white);
-		transform: translateY(-2px);
+		background: rgba(139, 168, 136, 0.35);
+		color: #ffffff;
+		transform: translateX(2px);
 	}
 
 	.btn-outline {
 		background: transparent;
-		border: 2px solid var(--color-primary);
+		border: 1.5px solid rgba(139, 168, 136, 0.5);
 		color: var(--color-primary);
 	}
 
 	.btn-outline:hover {
-		background: var(--color-primary);
-		color: var(--color-white);
-		transform: translateY(-2px);
+		background: var(--color-sage);
+		color: #1a1a1a;
+		border-color: var(--color-sage);
+		transform: translateX(2px);
 	}
 
 	.btn-outline-light {
-		background: transparent;
-		border: 2px solid rgba(255, 255, 255, 0.5);
-		color: var(--color-white);
+		background: rgba(255, 255, 255, 0.08);
+		border: 1.5px solid rgba(255, 255, 255, 0.25);
+		color: #ffffff;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
 	}
 
 	.btn-outline-light:hover {
-		background: var(--color-white);
-		border-color: var(--color-white);
-		color: var(--color-primary);
+		background: var(--color-sage);
+		color: #1a1a1a;
+		border-color: var(--color-sage);
+		transform: translateX(2px);
 	}
 
 	.btn-ghost {
@@ -858,8 +861,9 @@ const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 	}
 
 	.btn-ghost:hover {
-		background: rgba(45, 90, 74, 0.08);
+		background: rgba(139, 168, 136, 0.1);
 		color: var(--color-primary);
+		transform: translateX(2px);
 	}
 
 	.btn-large {

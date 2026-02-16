@@ -851,35 +851,39 @@ const locationsSchema = {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2rem;
-    border-radius: 50px;
+    padding: 14px 28px;
+    border-radius: 12px;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
   }
 
   .btn-primary {
-    background: var(--color-terracotta);
-    color: white;
+    background: var(--color-sage);
+    color: #1a1a1a;
   }
 
   .btn-primary:hover {
-    background: #b3613e;
-    transform: translateY(-2px);
+    background: #9dbc9a;
+    transform: translateX(2px);
+    box-shadow: 0 4px 14px rgba(139, 168, 136, 0.35);
   }
 
   .btn-secondary {
-    background: rgba(255,255,255,0.15);
+    background: rgba(139, 168, 136, 0.2);
     color: white;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .btn-secondary:hover {
-    background: rgba(255,255,255,0.25);
+    background: rgba(139, 168, 136, 0.35);
+    transform: translateX(2px);
   }
 
   .btn-lg {
-    padding: 1.125rem 2.5rem;
+    padding: 18px 36px;
     font-size: 1.0625rem;
   }
 
