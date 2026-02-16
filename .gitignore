@@ -32,3 +32,8 @@ vapes/
 
 # python virtual environment
 .venv/
+
+# local audit artifacts
+*.csv:Zone.Identifier
+*:Zone.Identifier
+*_page-has_*.csv
