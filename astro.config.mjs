@@ -9,7 +9,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !['/account', '/cart', '/checkout', '/order-confirmation'].some((path) =>
+        !['/cart', '/checkout', '/order-confirmation'].some((path) =>
           page.includes(path)
         ),
       changefreq: 'weekly',
