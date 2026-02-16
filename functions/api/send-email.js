@@ -130,6 +130,12 @@ function orderCustomerHTML(data) {
         <p style="margin:0;font-size:13px;color:#78350f;line-height:1.5;">${payment_next_step}</p>
       </div>
 
+      <!-- Payment screenshot reminder -->
+      <div style="margin-top:16px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:18px;">
+        <p style="margin:0 0 6px;font-size:14px;color:#1e40af;"><strong>Important: Send Proof of Payment</strong></p>
+        <p style="margin:0;font-size:13px;color:#1e3a8a;line-height:1.6;">Once you've completed your payment, please reply to this email with a <strong>screenshot of the payment confirmation</strong>. This helps us verify and process your order faster.</p>
+      </div>
+
       <!-- Shipping address -->
       <div style="margin-top:20px;">
         <p style="margin:0 0 4px;font-size:14px;color:#333;"><strong>Delivery Address</strong></p>
