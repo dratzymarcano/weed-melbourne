@@ -686,53 +686,39 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   // @ts-nocheck
 
   // ══════════════════════════════════════════════════════════════════
-  // ── EmailJS Configuration ─────────────────────────────────────────
+  // ── EmailJS Configuration (2 templates only) ─────────────────────
   // ══════════════════════════════════════════════════════════════════
-  //
-  // HOW TO SET UP EMAIL NOTIFICATIONS (2 templates)
   //
   // 1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
   //
   // 2. Create an Email Service:
-  //    - Go to "Email Services" → "Add New Service"
-  //    - Connect your email (hello@mullawaysmedicalcannabis.com.au)
-  //    - Copy the Service ID (e.g. "service_abc123")
+  //    - "Email Services" → "Add New Service" → connect your email
+  //    - Copy the Service ID
   //
-  // 3. Create TWO email templates under "Email Templates":
+  // 3. Create TWO email templates:
   //
-  //    Template 1: "Customer – Order Confirmation"
-  //      To Email: {{to_email}}
-  //      Subject: "Order {{order_ref}} – We've Received Your Order"
+  //    ── Template 1: "Customer Order Confirmation" ──
+  //    To Email:  {{to_email}}
+  //    Subject:   Order {{order_ref}} – We've Received Your Order
+  //    Body vars: {{to_name}}, {{order_ref}}, {{order_date}},
+  //              {{items_list}}, {{subtotal}}, {{discount}},
+  //              {{shipping}}, {{total}}, {{payment_method}},
+  //              {{payment_status}}, {{payment_next_step}},
+  //              {{shipping_address}}, {{delivery_method}}
   //
-  //    Template 2: "Admin – New Order"
-  //      To Email: hello@mullawaysmedicalcannabis.com.au (hardcode)
-  //      Reply To: {{customer_email}}
-  //      Subject: "🛒 New Order {{order_ref}} – {{total}} via {{payment_method}}"
+  //    ── Template 2: "Admin Notification" (shared) ──
+  //    To Email:  hello@mullawaysmedicalcannabis.com.au (hardcode)
+  //    Reply To:  {{reply_email}}
+  //    Subject:   {{subject}}
+  //    Body vars: {{reply_name}}, {{reply_email}}, {{message_body}}
+  //    (This template is reused for order alerts AND contact form)
   //
-  //    Available template variables:
-  //      {{to_email}}           – Customer email
-  //      {{to_name}}            – Customer full name
-  //      {{order_ref}}          – Order reference (e.g. MW-A1B2CDEF)
-  //      {{order_date}}         – Formatted date
-  //      {{items_list}}         – Line-by-line item list
-  //      {{subtotal}}           – Subtotal amount
-  //      {{discount}}           – Discount amount
-  //      {{shipping}}           – Shipping fee
-  //      {{total}}              – Total amount
-  //      {{payment_method}}     – Bitcoin / Bank Transfer / Paysafecard
-  //      {{payment_status}}     – e.g. "Awaiting payment" or "Pending verification"
-  //      {{payment_next_step}}  – What the customer should do next
-  //      {{shipping_address}}   – Full delivery address
-  //      {{delivery_method}}    – Standard or Express
-  //      {{customer_email}}     – Customer email (for admin reply-to)
-  //      {{customer_phone}}     – Customer phone
+  // 4. Paste your keys and template IDs below:
   //
-  // 4. Copy each Template ID and paste below:
-  //
-  const EMAILJS_PUBLIC_KEY = '';               // Your EmailJS public key (Account → API Keys)
-  const EMAILJS_SERVICE_ID = '';               // Your EmailJS service ID
-  const EMAILJS_TEMPLATE_CUSTOMER = '';        // Template: Customer – Order Confirmation
-  const EMAILJS_TEMPLATE_ADMIN = '';           // Template: Admin – New Order
+  const EMAILJS_PUBLIC_KEY = '';               // Account → API Keys
+  const EMAILJS_SERVICE_ID = '';               // Your service ID
+  const EMAILJS_TEMPLATE_CUSTOMER = '';        // Template 1: Customer confirmation
+  const EMAILJS_TEMPLATE_ADMIN = '';           // Template 2: Admin notification (shared)
   //
   // ══════════════════════════════════════════════════════════════════
 
@@ -986,7 +972,27 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
     try {
       const params = buildTemplateParams(order);
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, params);
+      // Build admin-specific params using the shared admin template format
+      const adminParams = {
+        subject: `New Order ${order.ref} – ${params.total} via ${params.payment_method}`,
+        reply_name: params.to_name,
+        reply_email: order.customer.email,
+        message_body:
+          `Order: ${order.ref}\n` +
+          `Date: ${params.order_date}\n` +
+          `Customer: ${params.to_name}\n` +
+          `Email: ${order.customer.email}\n` +
+          `Phone: ${order.customer.phone}\n\n` +
+          `Items:\n${params.items_list}\n\n` +
+          `Subtotal: ${params.subtotal}\n` +
+          (order.discount > 0 ? `Discount: ${params.discount}\n` : '') +
+          `Shipping: ${params.shipping} (${params.delivery_method})\n` +
+          `Total: ${params.total}\n\n` +
+          `Payment: ${params.payment_method}\n` +
+          `Status: ${params.payment_status}\n\n` +
+          `Delivery Address:\n${params.shipping_address}`,
+      };
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, adminParams);
       console.log('✓ Admin notification email sent for order', order.ref);
       return { success: true };
     } catch (err) {

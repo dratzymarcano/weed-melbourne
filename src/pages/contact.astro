@@ -21,6 +21,7 @@ const pageSchema = {
 <Layout title="Contact Us | Mullaways Medical Cannabis" description="Send us a message about your order, delivery, or product questions." schema={pageSchema}>
   <Header />
   <main>
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
     <section class="page-hero">
       <div class="hero-bg">
         <div class="hero-shape hero-shape-1"></div>
@@ -28,7 +29,6 @@ const pageSchema = {
       </div>
       <div class="container">
         <div class="hero-content">
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
           <h1>Contact Us</h1>
           <p>Send us a message and we’ll reply by email. Live chat is coming soon.</p>
         </div>
@@ -293,13 +293,12 @@ const pageSchema = {
 <script>
   // @ts-nocheck
 
-  // EmailJS config for contact form
-  // Create a template like:
-  // Subject: "New Contact Message: {{subject}}"
-  // Body vars: {{from_name}}, {{from_email}}, {{order_ref}}, {{message}}
-  const EMAILJS_PUBLIC_KEY = '';
-  const EMAILJS_SERVICE_ID = '';
-  const EMAILJS_TEMPLATE_CONTACT = '';
+  // EmailJS config — reuses the shared "Admin Notification" template
+  // Same keys as checkout.astro. Template vars: {{subject}}, {{reply_name}},
+  // {{reply_email}}, {{message_body}}
+  const EMAILJS_PUBLIC_KEY = '';               // Same as checkout
+  const EMAILJS_SERVICE_ID = '';               // Same as checkout
+  const EMAILJS_TEMPLATE_ADMIN = '';           // Template 2: Admin notification (shared)
 
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('contact-submit');
@@ -416,7 +415,7 @@ const pageSchema = {
     submitBtn.textContent = 'Sending...';
 
     try {
-      if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_CONTACT) {
+      if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ADMIN) {
         openMailtoFallback(payload);
         setStatus('Email service is not configured yet. Your email app has been opened as a fallback.', 'success');
         return;
@@ -429,7 +428,17 @@ const pageSchema = {
         return;
       }
 
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONTACT, payload);
+      // Map contact form data to the shared admin template format
+      const adminPayload = {
+        subject: `Contact: ${payload.subject}`,
+        reply_name: payload.from_name,
+        reply_email: payload.from_email,
+        message_body:
+          (payload.order_ref ? `Order Ref: ${payload.order_ref}\n\n` : '') +
+          payload.message,
+      };
+
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, adminPayload);
       form.reset();
       setStatus('Thanks — your message has been sent. We’ll reply by email soon.', 'success');
     } catch {
