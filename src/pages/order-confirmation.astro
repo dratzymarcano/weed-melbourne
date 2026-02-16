@@ -275,6 +275,7 @@ import Footer from '../components/Footer.astro';
                   <div>
                     <h3>Contact</h3>
                     <p id="customer-email-display">—</p>
+                    <p id="customer-phone">—</p>
                   </div>
                   <div>
                     <h3>Delivery Method</h3>
@@ -314,10 +315,6 @@ import Footer from '../components/Footer.astro';
                   <span id="summary-total">$0.00</span>
                 </div>
                 <div class="summary-divider"></div>
-                <div class="summary-row">
-                  <span>Payment</span>
-                  <span id="summary-payment">—</span>
-                </div>
                 <div class="summary-actions">
                   <button class="btn btn-outline btn-full" id="download-order-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -1154,6 +1151,7 @@ import Footer from '../components/Footer.astro';
     document.getElementById('customer-city-state').textContent =
       `${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`;
     document.getElementById('customer-email-display').textContent = order.customer.email;
+    document.getElementById('customer-phone').textContent = order.customer.phone || '';
     document.getElementById('customer-delivery').textContent =
       order.shippingMethod === 'express' ? 'Express Delivery (1–2 business days)' : 'Standard Delivery (2–5 business days)';
 
@@ -1190,13 +1188,6 @@ import Footer from '../components/Footer.astro';
 
     document.getElementById('summary-shipping').textContent = `$${order.shipping.toFixed(2)}`;
     document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
-
-    const paymentLabels = {
-      bitcoin: 'Bitcoin',
-      bank: 'Bank Transfer',
-      paysafecard: 'Paysafecard'
-    };
-    document.getElementById('summary-payment').textContent = paymentLabels[order.payment] || order.payment;
 
     // Copy buttons
     document.querySelectorAll('.copy-btn').forEach(btn => {
@@ -1247,9 +1238,6 @@ import Footer from '../components/Footer.astro';
         hour: '2-digit', minute: '2-digit'
       });
 
-      let paymentLabel = order.payment === 'bitcoin' ? 'Bitcoin'
-        : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard';
-
       let deliveryLabel = order.shippingMethod === 'express'
         ? 'Express Delivery (1–2 business days)'
         : 'Standard Delivery (2–5 business days)';
@@ -1268,6 +1256,7 @@ import Footer from '../components/Footer.astro';
         '───────────────────────────────────────────────────',
         `Name:      ${order.customer.firstName} ${order.customer.lastName}`,
         `Email:     ${order.customer.email}`,
+        `Phone:     ${order.customer.phone || ''}`,
         `Address:   ${order.customer.address}`,
         `           ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
         `Delivery:  ${deliveryLabel}`,
@@ -1291,8 +1280,6 @@ import Footer from '../components/Footer.astro';
       }
       lines.push(`  Delivery:          $${order.shipping.toFixed(2)}`);
       lines.push(`  TOTAL:             $${order.total.toFixed(2)}`);
-      lines.push('');
-      lines.push(`  Payment Method:    ${paymentLabel}`);
       lines.push('');
       lines.push('═══════════════════════════════════════════════════');
       lines.push('  Contact: hello@mullawaysmedicalcannabis.com.au');

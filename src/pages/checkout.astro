@@ -43,6 +43,10 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                   <label for="email">Email Address</label>
                   <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 </div>
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
                 <div class="form-group full">
                   <label for="address">Street Address</label>
                   <input type="text" id="address" name="address" placeholder="Street address" required>
@@ -721,6 +725,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   //      {{shipping_address}}   – Full delivery address
   //      {{delivery_method}}    – Standard or Express
   //      {{customer_email}}     – Customer email (for admin reply-to)
+  //      {{customer_phone}}     – Customer phone
   //
   // 4. Copy each Template ID and paste below:
   //
@@ -824,7 +829,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   // ── Validate Form ─────────────────────────────────────────────
   function validateForm() {
-    const requiredFields = ['firstName', 'lastName', 'email', 'address', 'city', 'state', 'postcode'];
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'postcode'];
     let firstError = null;
     let isValid = true;
 
@@ -843,6 +848,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         error = 'This field is required';
       } else if (fieldId === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
         error = 'Please enter a valid email address';
+      } else if (fieldId === 'phone' && !/^[\d\s\+\-\(\)]{8,15}$/.test(value)) {
+        error = 'Please enter a valid phone number';
       } else if (fieldId === 'postcode' && !/^\d{4}$/.test(value)) {
         error = 'Please enter a valid 4-digit postcode';
       }
@@ -948,6 +955,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         ? 'Express (1–2 business days)'
         : 'Standard (2–5 business days)',
       customer_email: order.customer.email,
+      customer_phone: order.customer.phone,
     };
   }
 
@@ -1047,6 +1055,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         firstName: getFormValue('firstName'),
         lastName: getFormValue('lastName'),
         email: getFormValue('email'),
+        phone: getFormValue('phone'),
         address: getFormValue('address'),
         city: getFormValue('city'),
         state: getFormValue('state'),
