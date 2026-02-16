@@ -685,19 +685,62 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 <script>
   // @ts-nocheck
 
-  // ── EmailJS Configuration ──────────────────────────────────────────
-  // To enable email notifications:
-  // 1. Sign up at https://www.emailjs.com (free: 200 emails/month)
-  // 2. Create an email service (Gmail, Outlook, etc.)
-  // 3. Create two email templates:
-  //    - "order_confirmation" (for paid orders: Paysafecard)
-  //    - "payment_pending" (for Bitcoin / Bank Transfer orders)
-  // 4. Replace these values with your actual IDs:
-  const EMAILJS_PUBLIC_KEY = '';  // Your EmailJS public key
-  const EMAILJS_SERVICE_ID = '';  // Your EmailJS service ID
-  const EMAILJS_TEMPLATE_PAID = '';      // Template for confirmed payments
-  const EMAILJS_TEMPLATE_PENDING = '';   // Template for pending payments
-  // ──────────────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════
+  // ── EmailJS Configuration ─────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════
+  //
+  // HOW TO SET UP EMAIL NOTIFICATIONS:
+  //
+  // 1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
+  //
+  // 2. Create an Email Service:
+  //    - Go to "Email Services" → "Add New Service"
+  //    - Connect your Gmail, Outlook, or custom SMTP
+  //    - Copy the Service ID (e.g. "service_abc123")
+  //
+  // 3. Create THREE email templates under "Email Templates":
+  //
+  //    Template 1: "Customer – Order Confirmed" (for Paysafecard)
+  //      Subject: "Order {{order_ref}} – Confirmed ✓"
+  //      To Email: {{to_email}}
+  //      Body: Use variables below (order_ref, to_name, items_list, etc.)
+  //
+  //    Template 2: "Customer – Payment Pending" (for Bitcoin / Bank Transfer)
+  //      Subject: "Order {{order_ref}} – Awaiting Payment"
+  //      To Email: {{to_email}}
+  //      Body: Include payment_details variable for payment instructions
+  //
+  //    Template 3: "Admin – New Order Notification"
+  //      Subject: "🛒 New Order {{order_ref}} – ${{total}}"
+  //      To Email: SET YOUR ADMIN EMAIL DIRECTLY IN THE TEMPLATE
+  //      Body: Use all variables below for full order details
+  //
+  //    Available template variables:
+  //      {{to_email}}          – Customer email (for customer templates)
+  //      {{to_name}}           – Customer full name
+  //      {{order_ref}}         – Order reference (e.g. MW-A1B2CDEF)
+  //      {{order_date}}        – Formatted date
+  //      {{items_list}}        – Line-by-line item list
+  //      {{subtotal}}          – Subtotal amount
+  //      {{discount}}          – Discount amount (if any)
+  //      {{shipping}}          – Shipping fee
+  //      {{total}}             – Total amount
+  //      {{payment_method}}    – Bitcoin / Bank Transfer / Paysafecard
+  //      {{payment_details}}   – Payment instructions
+  //      {{shipping_address}}  – Full delivery address
+  //      {{delivery_method}}   – Standard or Express
+  //      {{customer_email}}    – Customer email (for admin template)
+  //      {{customer_phone}}    – Customer phone (for admin template)
+  //
+  // 4. Copy each Template ID and paste below:
+  //
+  const EMAILJS_PUBLIC_KEY = '';                   // Your EmailJS public key (Account → API Keys)
+  const EMAILJS_SERVICE_ID = '';                   // Your EmailJS service ID
+  const EMAILJS_TEMPLATE_CUSTOMER_PAID = '';       // Template: Customer – Order Confirmed
+  const EMAILJS_TEMPLATE_CUSTOMER_PENDING = '';    // Template: Customer – Payment Pending
+  const EMAILJS_TEMPLATE_ADMIN = '';               // Template: Admin – New Order Notification
+  //
+  // ══════════════════════════════════════════════════════════════════
 
   const cart = JSON.parse(localStorage.getItem('cart') || '[]')
     .filter((item) => item && item.name);
@@ -854,70 +897,125 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     return isValid;
   }
 
-  // ── Send Email via EmailJS ────────────────────────────────────
-  async function sendOrderEmail(order) {
-    // Skip if EmailJS is not configured
-    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID) {
-      console.log('EmailJS not configured — skipping email send. Configure EMAILJS_PUBLIC_KEY and EMAILJS_SERVICE_ID to enable.');
-      return { success: false, reason: 'not_configured' };
+  // ── Load EmailJS SDK ───────────────────────────────────────────
+  async function loadEmailJS() {
+    if (window.emailjs) return true;
+    try {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+      window.emailjs.init(EMAILJS_PUBLIC_KEY);
+      return true;
+    } catch (err) {
+      console.error('Failed to load EmailJS SDK:', err);
+      return false;
+    }
+  }
+
+  // ── Build shared template params ─────────────────────────────
+  function buildTemplateParams(order) {
+    const itemsList = order.items.map(i =>
+      `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`
+    ).join('\n');
+
+    let paymentDetails = '';
+    if (order.payment === 'bitcoin') {
+      paymentDetails = `Bitcoin Address: bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
+    } else if (order.payment === 'bank') {
+      paymentDetails = `PayID: payments@mullawaysmedicalcannabis.com.au\nBSB: 062-000\nAccount: 1234 5678\nAccount Name: Mullaways Pty Ltd\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
+    } else if (order.payment === 'paysafecard') {
+      paymentDetails = `Paysafecard PIN submitted for verification.\nAmount: $${order.total.toFixed(2)} AUD`;
+    }
+
+    return {
+      to_email: order.customer.email,
+      to_name: `${order.customer.firstName} ${order.customer.lastName}`,
+      order_ref: order.ref,
+      order_date: new Date(order.date).toLocaleDateString('en-AU', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      }),
+      items_list: itemsList,
+      subtotal: `$${order.subtotal.toFixed(2)}`,
+      discount: order.discount > 0
+        ? `-$${order.discount.toFixed(2)} (Bitcoin 15% discount)`
+        : '$0.00',
+      shipping: `$${order.shipping.toFixed(2)}`,
+      total: `$${order.total.toFixed(2)}`,
+      payment_method: order.payment === 'bitcoin' ? 'Bitcoin'
+        : order.payment === 'bank' ? 'Bank Transfer'
+        : 'Paysafecard',
+      payment_details: paymentDetails,
+      shipping_address: `${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
+      delivery_method: order.shippingMethod === 'express'
+        ? 'Express (1–2 business days)'
+        : 'Standard (2–5 business days)',
+      customer_email: order.customer.email,
+      customer_phone: order.customer.phone,
+    };
+  }
+
+  // ── Send Customer Confirmation Email ─────────────────────────
+  async function sendCustomerEmail(order) {
+    const isPaid = order.payment === 'paysafecard';
+    const templateId = isPaid ? EMAILJS_TEMPLATE_CUSTOMER_PAID : EMAILJS_TEMPLATE_CUSTOMER_PENDING;
+
+    if (!templateId) {
+      console.log('Customer email template not configured for payment type:', order.payment);
+      return { success: false, reason: 'no_template' };
     }
 
     try {
-      // Load EmailJS SDK if not loaded
-      if (!window.emailjs) {
-        await new Promise((resolve, reject) => {
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-          script.onload = resolve;
-          script.onerror = reject;
-          document.head.appendChild(script);
-        });
-        window.emailjs.init(EMAILJS_PUBLIC_KEY);
-      }
-
-      const isPaid = order.payment === 'paysafecard';
-      const templateId = isPaid ? EMAILJS_TEMPLATE_PAID : EMAILJS_TEMPLATE_PENDING;
-
-      if (!templateId) {
-        console.log('Email template ID not configured for payment type:', order.payment);
-        return { success: false, reason: 'no_template' };
-      }
-
-      // Build items list for email
-      const itemsList = order.items.map(i => `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`).join('\n');
-
-      // Payment details for email
-      let paymentDetails = '';
-      if (order.payment === 'bitcoin') {
-        paymentDetails = `Bitcoin Address: bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
-      } else if (order.payment === 'bank') {
-        paymentDetails = `PayID: payments@mullawaysmedicalcannabis.com.au\nBSB: 062-000\nAccount: 1234 5678\nAccount Name: Mullaways Pty Ltd\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
-      } else if (order.payment === 'paysafecard') {
-        paymentDetails = `Paysafecard PIN submitted for verification.\nAmount: $${order.total.toFixed(2)} AUD`;
-      }
-
-      const templateParams = {
-        to_email: order.customer.email,
-        to_name: `${order.customer.firstName} ${order.customer.lastName}`,
-        order_ref: order.ref,
-        order_date: new Date(order.date).toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-        items_list: itemsList,
-        subtotal: `$${order.subtotal.toFixed(2)}`,
-        discount: order.discount > 0 ? `-$${order.discount.toFixed(2)} (Bitcoin 15% discount)` : '$0.00',
-        shipping: `$${order.shipping.toFixed(2)}`,
-        total: `$${order.total.toFixed(2)}`,
-        payment_method: order.payment === 'bitcoin' ? 'Bitcoin' : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard',
-        payment_details: paymentDetails,
-        shipping_address: `${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
-        delivery_method: order.shippingMethod === 'express' ? 'Express (1–2 business days)' : 'Standard (2–5 business days)',
-      };
-
-      await window.emailjs.send(EMAILJS_SERVICE_ID, templateId, templateParams);
+      const params = buildTemplateParams(order);
+      await window.emailjs.send(EMAILJS_SERVICE_ID, templateId, params);
+      console.log('✓ Customer confirmation email sent to', order.customer.email);
       return { success: true };
     } catch (err) {
-      console.error('Email send failed:', err);
+      console.error('Customer email failed:', err);
       return { success: false, reason: 'send_failed', error: err };
     }
+  }
+
+  // ── Send Admin Notification Email ────────────────────────────
+  async function sendAdminEmail(order) {
+    if (!EMAILJS_TEMPLATE_ADMIN) {
+      console.log('Admin notification template not configured — skipping.');
+      return { success: false, reason: 'no_template' };
+    }
+
+    try {
+      const params = buildTemplateParams(order);
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, params);
+      console.log('✓ Admin notification email sent for order', order.ref);
+      return { success: true };
+    } catch (err) {
+      console.error('Admin notification email failed:', err);
+      return { success: false, reason: 'send_failed', error: err };
+    }
+  }
+
+  // ── Send All Order Emails ────────────────────────────────────
+  async function sendOrderEmails(order) {
+    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID) {
+      console.log('EmailJS not configured — skipping email notifications. Fill in EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, and template IDs in checkout.astro to enable.');
+      return { customer: { success: false, reason: 'not_configured' }, admin: { success: false, reason: 'not_configured' } };
+    }
+
+    const sdkLoaded = await loadEmailJS();
+    if (!sdkLoaded) {
+      return { customer: { success: false, reason: 'sdk_failed' }, admin: { success: false, reason: 'sdk_failed' } };
+    }
+
+    // Send both emails in parallel
+    const [customerResult, adminResult] = await Promise.all([
+      sendCustomerEmail(order),
+      sendAdminEmail(order),
+    ]);
+
+    return { customer: customerResult, admin: adminResult };
   }
 
   // ── Place Order ───────────────────────────────────────────────
@@ -989,12 +1087,17 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       orderHistory.unshift(order);
       localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
 
-      // Send confirmation email (non-blocking — don't fail the order if email fails)
-      sendOrderEmail(order).then(result => {
-        if (result.success) {
-          console.log('Confirmation email sent to', order.customer.email);
+      // Send confirmation emails (non-blocking — don't fail the order if email fails)
+      sendOrderEmails(order).then(result => {
+        if (result.customer.success) {
+          console.log('✓ Customer confirmation email sent to', order.customer.email);
         } else {
-          console.log('Email not sent:', result.reason);
+          console.log('Customer email not sent:', result.customer.reason);
+        }
+        if (result.admin.success) {
+          console.log('✓ Admin notification email sent for order', order.ref);
+        } else {
+          console.log('Admin email not sent:', result.admin.reason);
         }
       });
 
