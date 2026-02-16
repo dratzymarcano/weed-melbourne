@@ -1180,7 +1180,6 @@ const navLinks = [
       searchOverlay?.classList.remove('active');
       cartModal?.classList.remove('active');
       cartOverlay?.classList.remove('active');
-      accountDropdown?.classList.remove('active');
       closeMobileMenu();
       document.body.classList.remove('no-scroll');
     }
@@ -1218,7 +1217,6 @@ const navLinks = [
   function openCartModal() {
     cartModal?.classList.add('active');
     cartOverlay?.classList.add('active');
-    accountDropdown?.classList.remove('active');
     document.body.classList.add('no-scroll');
     updateCartModal();
   }

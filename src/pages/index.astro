@@ -215,27 +215,24 @@ const orgSchema = {
 			<div class="hero-bg"></div>
 			<div class="container">
 				<div class="hero-grid">
-				<div class="hero-content">
-					<div class="hero-badge">
-						<span class="badge-dot"></span>
-						Australia's #1 Online Cannabis Dispensary — Weed Shop Near Me
+					<div class="hero-content">
+						<div class="hero-badge">
+							<span class="badge-dot"></span>
+							Australia's #1 Online Cannabis Dispensary — Weed Shop Near Me
+						</div>
+						<h1>Buy Weed Online Australia</h1>
+						<p class="hero-subtitle">Looking for a cannabis dispensary near me? We've got you covered. Shop THC gummies, premium flower, edibles & vapes with fast, discreet delivery to Sydney, Melbourne, Brisbane & all of Australia. Real people, real quality, real results.</p>
+						
+						<div class="hero-ctas">
+							<a href="/shop/" class="btn btn-primary btn-large">
+								Shop Cannabis Online
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M5 12h14M12 5l7 7-7 7"/>
+								</svg>
+							</a>
+							<a href="/how-it-works/" class="btn btn-outline-light btn-large">How to Buy Weed</a>
+						</div>
 					</div>
-					<h1>Buy Weed Online Australia</h1>
-					<p class="hero-subtitle">Looking for a cannabis dispensary near me? We've got you covered. Shop THC gummies, premium flower, edibles & vapes with fast, discreet delivery to Sydney, Melbourne, Brisbane & all of Australia. Real people, real quality, real results.</p>
-					
-					<div class="hero-ctas">
-						<a href="/shop/" class="btn btn-primary btn-large">
-							Shop Cannabis Online
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M5 12h14M12 5l7 7-7 7"/>
-							</svg>
-						</a>
-						<a href="/how-it-works/" class="btn btn-outline-light btn-large">How to Buy Weed</a>
-					</div>
-				</div>
-				<div class="hero-image">
-					<img src="/images/homepage/weed-delivery.webp" alt="Fast discreet cannabis delivery across Australia" width="1200" height="799" />
-				</div>
 				</div>
 
 				<div class="hero-stats">
@@ -648,6 +645,13 @@ const orgSchema = {
 		pointer-events: none;
 	}
 
+	.hero-bg::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 35%), radial-gradient(circle at 85% 10%, rgba(196, 112, 75, 0.22) 0%, transparent 35%);
+	}
+
 	.hero-bg::after {
 		content: '';
 		position: absolute;
@@ -657,8 +661,8 @@ const orgSchema = {
 
 	.hero-grid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: var(--space-3xl);
+		grid-template-columns: 1fr;
+		gap: var(--space-xl);
 		align-items: center;
 		margin-bottom: var(--space-4xl);
 		position: relative;
@@ -668,21 +672,7 @@ const orgSchema = {
 	.hero-content {
 		position: relative;
 		z-index: 5;
-	}
-
-	.hero-image {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.hero-image img {
-		width: 100%;
-		max-width: 520px;
-		height: auto;
-		border-radius: var(--radius-xl);
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-		border: 3px solid rgba(255, 255, 255, 0.1);
+		max-width: 760px;
 	}
 
 	.hero-badge {
@@ -749,6 +739,8 @@ const orgSchema = {
 		gap: var(--space-3xl);
 		padding-top: var(--space-2xl);
 		border-top: 1px solid rgba(255, 255, 255, 0.15);
+		position: relative;
+		z-index: 5;
 	}
 
 	.stat-item {
@@ -1525,14 +1517,6 @@ const orgSchema = {
 			gap: var(--space-2xl);
 		}
 
-		.hero-image {
-			order: -1;
-		}
-
-		.hero-image img {
-			max-width: 400px;
-		}
-
 		.categories-grid,
 		.products-grid,
 		.process-grid {
@@ -1574,10 +1558,6 @@ const orgSchema = {
 		.hero {
 			padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-3xl);
 			min-height: auto;
-		}
-
-		.hero-image img {
-			max-width: 320px;
 		}
 
 		.hero-ctas {

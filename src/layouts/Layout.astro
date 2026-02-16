@@ -1031,4 +1031,22 @@ const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 		background: var(--color-sage);
 		color: var(--color-charcoal);
 	}
+
+	/* Global title-section dark background image treatment */
+	main .hero .hero-bg,
+	main .page-hero .hero-bg {
+		background-image: linear-gradient(160deg, rgba(8, 20, 12, 0.86) 0%, rgba(14, 30, 18, 0.84) 55%, rgba(8, 22, 14, 0.9) 100%), url('/images/homepage/hero-bg.webp') !important;
+		background-size: cover !important;
+		background-position: center !important;
+		background-repeat: no-repeat !important;
+	}
+
+	main .hero .hero-bg::after,
+	main .page-hero .hero-bg::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.06) 0%, transparent 38%), radial-gradient(circle at 82% 10%, rgba(196, 112, 75, 0.18) 0%, transparent 32%);
+	}
 </style>
