@@ -1,0 +1,443 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Mullaways Medical Cannabis",
+  "url": "https://mullawaysmedicalcannabis.com.au/contact/",
+  "description": "Contact Mullaways Medical Cannabis by email using our contact form.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Mullaways Medical Cannabis",
+    "email": "hello@mullawaysmedicalcannabis.com.au"
+  }
+};
+---
+
+<Layout title="Contact Us | Mullaways Medical Cannabis" description="Send us a message about your order, delivery, or product questions." schema={pageSchema}>
+  <Header />
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
+          <h1>Contact Us</h1>
+          <p>Send us a message and we’ll reply by email. Live chat is coming soon.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section">
+      <div class="container contact-grid">
+        <div class="contact-card">
+          <h2>Send an Email</h2>
+          <p class="contact-lead">Use the form and our team will get back to you as soon as possible.</p>
+
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input id="firstName" name="firstName" type="text" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input id="lastName" name="lastName" type="text" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" type="text" required />
+              </div>
+              <div class="form-group">
+                <label for="orderRef">Order Reference (Optional)</label>
+                <input id="orderRef" name="orderRef" type="text" placeholder="MW-XXXX" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large" id="contact-submit">
+              Send Message
+            </button>
+
+            <p id="contact-status" class="contact-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <aside class="info-card">
+          <h3>Support</h3>
+          <p>All support is handled via email (and live chat soon).</p>
+          <a href="mailto:hello@mullawaysmedicalcannabis.com.au" class="support-email">hello@mullawaysmedicalcannabis.com.au</a>
+
+          <div class="support-meta">
+            <div class="meta-item">
+              <strong>Response Time</strong>
+              <span>Usually within 24 hours</span>
+            </div>
+            <div class="meta-item">
+              <strong>Order Help</strong>
+              <span>Include your order reference for faster support</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-2xl);
+    color: white;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #1a3d32) 100%);
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-shape-1 {
+    width: 380px;
+    height: 380px;
+    right: -140px;
+    top: -140px;
+  }
+
+  .hero-shape-2 {
+    width: 260px;
+    height: 260px;
+    left: -100px;
+    bottom: -80px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+  }
+
+  .hero-content h1 {
+    color: white;
+    margin: var(--space-lg) 0 var(--space-sm);
+  }
+
+  .hero-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  .contact-section {
+    background: var(--color-bg-alt);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .contact-card,
+  .info-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .contact-card h2,
+  .info-card h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+  }
+
+  .contact-lead {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font: inherit;
+    color: var(--color-text);
+    background: white;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(45, 90, 74, 0.15);
+  }
+
+  .input-error {
+    border-color: #dc2626 !important;
+  }
+
+  .form-error {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 2px;
+  }
+
+  .contact-status {
+    min-height: 20px;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .contact-status.success {
+    color: #15803d;
+  }
+
+  .contact-status.error {
+    color: #b91c1c;
+  }
+
+  .support-email {
+    display: inline-block;
+    margin: var(--space-md) 0 var(--space-lg);
+    font-weight: 600;
+  }
+
+  .support-meta {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-item strong {
+    color: var(--color-text);
+  }
+
+  .meta-item span {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // @ts-nocheck
+
+  // EmailJS config for contact form
+  // Create a template like:
+  // Subject: "New Contact Message: {{subject}}"
+  // Body vars: {{from_name}}, {{from_email}}, {{order_ref}}, {{message}}
+  const EMAILJS_PUBLIC_KEY = '';
+  const EMAILJS_SERVICE_ID = '';
+  const EMAILJS_TEMPLATE_CONTACT = '';
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('contact-submit');
+  const statusEl = document.getElementById('contact-status');
+
+  function setStatus(message, type = '') {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+    statusEl.className = `contact-status ${type}`.trim();
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.form-error').forEach(el => el.remove());
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+  }
+
+  function addFieldError(input, message) {
+    input.classList.add('input-error');
+    const error = document.createElement('span');
+    error.className = 'form-error';
+    error.textContent = message;
+    input.parentElement?.appendChild(error);
+  }
+
+  function getVal(id) {
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement ? el.value.trim() : '';
+  }
+
+  function validate() {
+    clearErrors();
+
+    const fields = [
+      ['firstName', 'First name is required'],
+      ['lastName', 'Last name is required'],
+      ['email', 'Email is required'],
+      ['subject', 'Subject is required'],
+      ['message', 'Message is required'],
+    ];
+
+    let firstInvalid = null;
+
+    for (const [id, message] of fields) {
+      const el = document.getElementById(id);
+      const val = getVal(id);
+      if (!el || !val) {
+        if (el) addFieldError(el, message);
+        if (!firstInvalid) firstInvalid = el;
+      }
+    }
+
+    const email = getVal('email');
+    const emailEl = document.getElementById('email');
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && emailEl) {
+      addFieldError(emailEl, 'Please enter a valid email address');
+      if (!firstInvalid) firstInvalid = emailEl;
+    }
+
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalid.focus();
+      return false;
+    }
+
+    return true;
+  }
+
+  async function loadEmailJS() {
+    if (window.emailjs) return true;
+    try {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+      window.emailjs.init(EMAILJS_PUBLIC_KEY);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function openMailtoFallback(payload) {
+    const subject = encodeURIComponent(`[Contact] ${payload.subject}`);
+    const body = encodeURIComponent(
+      `Name: ${payload.from_name}\n` +
+      `Email: ${payload.from_email}\n` +
+      `Order Ref: ${payload.order_ref || 'N/A'}\n\n` +
+      `${payload.message}`
+    );
+    window.location.href = `mailto:hello@mullawaysmedicalcannabis.com.au?subject=${subject}&body=${body}`;
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    setStatus('');
+
+    if (!validate()) return;
+
+    const payload = {
+      from_name: `${getVal('firstName')} ${getVal('lastName')}`,
+      from_email: getVal('email'),
+      order_ref: getVal('orderRef'),
+      subject: getVal('subject'),
+      message: getVal('message'),
+      to_email: 'hello@mullawaysmedicalcannabis.com.au',
+    };
+
+    if (!(submitBtn instanceof HTMLButtonElement)) return;
+    submitBtn.disabled = true;
+    const original = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+
+    try {
+      if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_CONTACT) {
+        openMailtoFallback(payload);
+        setStatus('Email service is not configured yet. Your email app has been opened as a fallback.', 'success');
+        return;
+      }
+
+      const ready = await loadEmailJS();
+      if (!ready) {
+        openMailtoFallback(payload);
+        setStatus('Could not load email service. Your email app has been opened as a fallback.', 'error');
+        return;
+      }
+
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONTACT, payload);
+      form.reset();
+      setStatus('Thanks — your message has been sent. We’ll reply by email soon.', 'success');
+    } catch {
+      openMailtoFallback(payload);
+      setStatus('Something went wrong sending your message. Your email app has been opened as a fallback.', 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = original || 'Send Message';
+    }
+  });
+</script>
