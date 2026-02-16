@@ -71,16 +71,42 @@ import Footer from '../components/Footer.astro';
                       <p class="card-subtitle">Send the exact amount to the address below</p>
                     </div>
                   </div>
+
+                  <!-- Payment Timer -->
+                  <div class="btc-timer-bar" id="btc-timer-bar">
+                    <div class="timer-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="timer-text">
+                      <span>Time remaining to complete payment:</span>
+                      <strong id="btc-timer-countdown">30:00</strong>
+                    </div>
+                    <div class="timer-progress">
+                      <div class="timer-progress-fill" id="btc-timer-fill"></div>
+                    </div>
+                  </div>
+
+                  <!-- Blockchain Status -->
+                  <div class="btc-status-bar" id="btc-status-bar">
+                    <div class="status-indicator" id="btc-status-indicator">
+                      <div class="status-dot pending"></div>
+                      <span id="btc-status-text">Waiting for payment...</span>
+                    </div>
+                    <div class="confirmations-info" id="btc-confirmations" style="display:none;">
+                      <span id="btc-confirm-count">0</span>/3 confirmations
+                    </div>
+                  </div>
+
                   <div class="payment-details-grid">
                     <div class="qr-section">
-                      <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" alt="Bitcoin QR Code" width="200" height="200" loading="eager">
+                      <img class="qr-image" id="btc-qr-image" src="" alt="Bitcoin QR Code" width="200" height="200" loading="eager">
                     </div>
                     <div class="payment-fields">
                       <div class="field-group">
                         <label>Bitcoin Address</label>
                         <div class="copyable-field">
-                          <code id="btc-address">bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5</code>
-                          <button class="copy-btn" data-copy="bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" title="Copy address">
+                          <code id="btc-address">—</code>
+                          <button class="copy-btn" id="btc-copy-address" title="Copy address">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                           </button>
                         </div>
@@ -101,7 +127,7 @@ import Footer from '../components/Footer.astro';
                   </div>
                   <div class="payment-alert info">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    <span>Send the <strong>exact amount</strong> shown above. Your order will be processed once the payment is confirmed on the blockchain (usually 10–30 minutes).</span>
+                    <span>Send the <strong>exact amount</strong> shown above. Your order will be processed once the payment reaches 2-3 confirmations on the blockchain (usually 20-30 minutes).</span>
                   </div>
                 </div>
 
@@ -273,7 +299,7 @@ import Footer from '../components/Footer.astro';
                   <span id="summary-subtotal">$0.00</span>
                 </div>
                 <div class="summary-row" id="summary-discount-row" style="display: none;">
-                  <span style="color:#059669;font-weight:600;">Bitcoin Discount (15%)</span>
+                  <span style="color:#059669;font-weight:600;">Bitcoin Discount (10%)</span>
                   <span id="summary-discount" style="color:#059669;font-weight:600;">-$0.00</span>
                 </div>
                 <div class="summary-row">
@@ -515,6 +541,62 @@ import Footer from '../components/Footer.astro';
   .bitcoin-icon { background: #fff7ed; color: #f7931a; }
   .bank-icon { background: #f0fdf4; color: #16a34a; }
   .psc-icon { background: #eff6ff; color: #2563eb; }
+
+  /* Bitcoin Timer */
+  .btc-timer-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .btc-timer-bar.expired {
+    background: #fef2f2;
+    border-color: #fecaca;
+  }
+  .timer-icon { flex-shrink: 0; color: #b45309; }
+  .btc-timer-bar.expired .timer-icon { color: #dc2626; }
+  .timer-text { flex: 1; font-size: 0.9rem; color: #92400e; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .btc-timer-bar.expired .timer-text { color: #991b1b; }
+  .timer-text strong { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+  .timer-progress { width: 100%; height: 4px; background: #fde68a; border-radius: 4px; overflow: hidden; }
+  .timer-progress-fill { height: 100%; background: #f59e0b; border-radius: 4px; transition: width 1s linear; width: 100%; }
+  .btc-timer-bar.expired .timer-progress-fill { background: #dc2626; }
+
+  /* Blockchain Status */
+  .btc-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #f8f8fc;
+    border: 1px solid #e8e4de;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+  .btc-status-bar.detected {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  .btc-status-bar.confirmed {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+  .status-indicator { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #555; }
+  .status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .status-dot.pending { background: #d1d5db; animation: pulse-dot 2s infinite; }
+  .status-dot.detected { background: #3b82f6; animation: pulse-dot 1.5s infinite; }
+  .status-dot.confirmed { background: #16a34a; }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .confirmations-info { font-size: 0.85rem; color: #666; white-space: nowrap; }
 
   .card-header h2 {
     margin: 0 0 4px;
@@ -1086,8 +1168,108 @@ import Footer from '../components/Footer.astro';
 
     if (order.payment === 'bitcoin') {
       if (bitcoinPanel) bitcoinPanel.style.display = 'block';
+      const btcAddress = order.btcAddress || '';
+      document.getElementById('btc-address').textContent = btcAddress;
       document.getElementById('btc-amount').textContent = `$${order.total.toFixed(2)} AUD`;
       document.getElementById('btc-ref').textContent = order.ref;
+
+      // Set copy button data
+      const copyBtn = document.getElementById('btc-copy-address');
+      if (copyBtn) copyBtn.dataset.copy = btcAddress;
+
+      // Generate QR code with the address
+      const qrImg = document.getElementById('btc-qr-image');
+      if (qrImg && btcAddress) {
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:${btcAddress}`;
+      }
+
+      // ── Payment Timer (30 minutes) ──────────────────────────────
+      const TIMER_DURATION = 30 * 60; // 30 minutes in seconds
+      const orderTime = new Date(order.date).getTime();
+      const timerBar = document.getElementById('btc-timer-bar');
+      const timerCountdown = document.getElementById('btc-timer-countdown');
+      const timerFill = document.getElementById('btc-timer-fill');
+
+      function updateTimer() {
+        const elapsed = Math.floor((Date.now() - orderTime) / 1000);
+        const remaining = Math.max(0, TIMER_DURATION - elapsed);
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        const pct = (remaining / TIMER_DURATION) * 100;
+
+        if (timerCountdown) timerCountdown.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        if (timerFill) timerFill.style.width = `${pct}%`;
+
+        if (remaining <= 0 && timerBar) {
+          timerBar.classList.add('expired');
+          if (timerCountdown) timerCountdown.textContent = 'Expired';
+          return;
+        }
+        requestAnimationFrame(() => setTimeout(updateTimer, 1000));
+      }
+      updateTimer();
+
+      // ── Blockchain Confirmation Polling ─────────────────────────
+      const statusBar = document.getElementById('btc-status-bar');
+      const statusDot = statusBar?.querySelector('.status-dot');
+      const statusText = document.getElementById('btc-status-text');
+      const confirmationsEl = document.getElementById('btc-confirmations');
+      const confirmCount = document.getElementById('btc-confirm-count');
+
+      let btcPollingActive = true;
+      let currentOrderStatus = order.status || 'pending';
+
+      async function checkBlockchain() {
+        if (!btcAddress || !btcPollingActive) return;
+        try {
+          const res = await fetch(`/api/check-btc?address=${btcAddress}&order_ref=${order.ref}`);
+          if (!res.ok) return;
+          const data = await res.json();
+
+          if (data.status === 'confirmed' && data.confirmations >= 2) {
+            // Payment confirmed!
+            if (statusDot) { statusDot.className = 'status-dot confirmed'; }
+            if (statusText) statusText.textContent = 'Payment confirmed!';
+            if (statusBar) statusBar.className = 'btc-status-bar confirmed';
+            if (confirmationsEl) confirmationsEl.style.display = 'block';
+            if (confirmCount) confirmCount.textContent = data.confirmations;
+
+            // Update order in localStorage
+            order.status = 'processing';
+            localStorage.setItem('lastOrder', JSON.stringify(order));
+            const history = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+            const idx = history.findIndex(o => o.ref === order.ref);
+            if (idx !== -1) { history[idx].status = 'processing'; localStorage.setItem('orderHistory', JSON.stringify(history)); }
+
+            // Update step timeline
+            const stepPayment = document.getElementById('step-payment');
+            if (stepPayment) {
+              stepPayment.querySelector('.step-title').textContent = 'Payment Confirmed';
+              stepPayment.querySelector('.step-desc').textContent = `${data.confirmations} blockchain confirmations received.`;
+              stepPayment.classList.add('completed');
+            }
+
+            btcPollingActive = false;
+            return;
+          } else if (data.status === 'detected' || (data.confirmations > 0 && data.confirmations < 2)) {
+            // Transaction detected, awaiting confirmations
+            if (statusDot) { statusDot.className = 'status-dot detected'; }
+            if (statusText) statusText.textContent = 'Payment detected - awaiting confirmations...';
+            if (statusBar) statusBar.className = 'btc-status-bar detected';
+            if (confirmationsEl) confirmationsEl.style.display = 'block';
+            if (confirmCount) confirmCount.textContent = data.confirmations || 0;
+          }
+        } catch (e) {
+          console.log('Blockchain check failed:', e);
+        }
+      }
+
+      // Poll every 30 seconds
+      checkBlockchain();
+      const btcPollInterval = setInterval(() => {
+        if (!btcPollingActive) { clearInterval(btcPollInterval); return; }
+        checkBlockchain();
+      }, 30000);
     } else if (order.payment === 'bank') {
       if (bankPanel) bankPanel.style.display = 'block';
       document.getElementById('bank-amount').textContent = `$${order.total.toFixed(2)} AUD`;

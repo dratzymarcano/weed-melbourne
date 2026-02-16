@@ -49,13 +49,24 @@ function orderCustomerHTML(data) {
   const {
     to_name, order_ref, order_date, items_list, subtotal,
     discount, shipping, total, payment_method, payment_status,
-    payment_next_step, shipping_address, delivery_method,
+    payment_next_step, shipping_address, delivery_method, btc_address,
   } = data;
 
   const itemRows = items_list
     .split('\n')
     .map((line) => `<tr><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">${line}</td></tr>`)
     .join('');
+
+  // Bitcoin payment section (only for BTC orders)
+  const btcSection = btc_address ? `
+      <!-- Bitcoin Payment Details -->
+      <div style="margin-top:24px;background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;padding:20px;text-align:center;">
+        <p style="margin:0 0 12px;font-size:15px;color:#92400e;font-weight:600;">Bitcoin Payment Details</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:${btc_address}" alt="Bitcoin QR Code" width="180" height="180" style="border-radius:8px;margin-bottom:12px;">
+        <p style="margin:0 0 4px;font-size:12px;color:#92400e;">Wallet Address:</p>
+        <p style="margin:0;font-size:13px;color:#78350f;font-family:monospace;word-break:break-all;background:#fff7ed;border-radius:6px;padding:10px;">${btc_address}</p>
+        <p style="margin:12px 0 0;font-size:12px;color:#92400e;">Send the exact total to this address. Your order will be processed once 2-3 blockchain confirmations are received.</p>
+      </div>` : '';
 
   return `
 <!DOCTYPE html>
@@ -129,6 +140,8 @@ function orderCustomerHTML(data) {
         <p style="margin:0 0 6px;font-size:13px;color:#92400e;">Status: ${payment_status}</p>
         <p style="margin:0;font-size:13px;color:#78350f;line-height:1.5;">${payment_next_step}</p>
       </div>
+
+      ${btcSection}
 
       <!-- Payment screenshot reminder -->
       <div style="margin-top:16px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:18px;">

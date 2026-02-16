@@ -95,9 +95,9 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                     <span class="option-title">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:#f7931a;"><circle cx="12" cy="12" r="10"/><path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z"/></svg>
                       Bitcoin
-                      <span class="btc-discount-badge">15% OFF</span>
+                      <span class="btc-discount-badge">10% OFF</span>
                     </span>
-                    <span class="option-meta">Instant confirmation · Private &amp; secure · <strong style="color:#059669;">Save 15% when you pay with Bitcoin</strong></span>
+                    <span class="option-meta">Instant confirmation · Private &amp; secure · <strong style="color:#059669;">Save 10% when you pay with Bitcoin</strong></span>
                     <a href="/buy-bitcoin/" class="payment-info-link">Learn how to pay with Bitcoin &rarr;</a>
                   </div>
                 </label>
@@ -127,8 +127,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
               <div class="payment-panel" id="bitcoin-panel">
                 <div class="panel-header">
-                  <h3>Pay with Bitcoin <span class="btc-discount-badge">15% OFF Applied</span></h3>
-                  <p>Scan the QR code or copy the address below. Your <strong>15% Bitcoin discount</strong> has been applied to the total.</p>
+                  <h3>Pay with Bitcoin <span class="btc-discount-badge">10% OFF Applied</span></h3>
+                  <p>Scan the QR code or copy the address below. Your <strong>10% Bitcoin discount</strong> has been applied to the total.</p>
                 </div>
                 <div class="qr-layout">
                   <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
@@ -199,7 +199,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 <span id="summary-shipping">$0.00</span>
               </div>
               <div class="summary-row summary-discount" id="summary-discount-row" style="display: none;">
-                <span style="color:#059669;font-weight:600;">Bitcoin Discount (15%)</span>
+                <span style="color:#059669;font-weight:600;">Bitcoin Discount (10%)</span>
                 <span id="summary-discount" style="color:#059669;font-weight:600;">-$0.00</span>
               </div>
               <div class="summary-divider"></div>
@@ -724,7 +724,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   const paysafecardPanel = document.getElementById('paysafecard-panel');
 
   // ── Helpers ─────────────────────────────────────────────────────
-  const BTC_DISCOUNT_RATE = 0.15; // 15% Bitcoin discount
+  const BTC_DISCOUNT_RATE = 0.10; // 10% Bitcoin discount
+  const BTC_ADDRESS = 'bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5';
 
   function getSelectedPayment() {
     const el = document.querySelector('input[name="payment"]:checked');
@@ -890,7 +891,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       items_list: itemsList,
       subtotal: `$${order.subtotal.toFixed(2)}`,
       discount: order.discount > 0
-        ? `-$${order.discount.toFixed(2)} (Bitcoin 15% discount)`
+        ? `-$${order.discount.toFixed(2)} (Bitcoin 10% discount)`
         : '$0.00',
       shipping: `$${order.shipping.toFixed(2)}`,
       total: `$${order.total.toFixed(2)}`,
@@ -905,6 +906,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         : 'Standard (2–5 business days)',
       customer_email: order.customer.email,
       customer_phone: order.customer.phone,
+      btc_address: order.btcAddress || '',
     };
   }
 
@@ -991,6 +993,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       discount,
       total,
       payment: selectedPayment,
+      btcAddress: selectedPayment === 'bitcoin' ? BTC_ADDRESS : '',
+      status: 'pending',
       pscPin,
       customer: {
         firstName: getFormValue('firstName'),
