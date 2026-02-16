@@ -318,7 +318,7 @@ const itemListSchema = {
                 {singleProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class={`product-badge ${product.strain.toLowerCase()}`}>{product.strain}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -376,7 +376,7 @@ const itemListSchema = {
                 {packProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class={`product-badge ${product.strain.toLowerCase()}`}>{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -434,7 +434,7 @@ const itemListSchema = {
                 {infusedProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge infused">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -492,7 +492,7 @@ const itemListSchema = {
                 {bluntProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class={`product-badge ${product.strain.toLowerCase()}`}>{product.strain}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (

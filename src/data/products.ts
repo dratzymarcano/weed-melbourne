@@ -101,6 +101,7 @@ export interface ProductReview {
   title: string;
   body: string;
   date: string;
+  isoDate: string;
   location: string;
   verified: boolean;
 }
@@ -282,7 +283,7 @@ function hashString(value: string): number {
 }
 
 export function getReviewCount(slug: string): number {
-  return hashString(slug) % 30;
+  return (hashString(slug) % 27) + 3;
 }
 
 export function getReviewRating(slug: string): number {
@@ -328,17 +329,18 @@ const reviewLocations = [
   'Newcastle, NSW'
 ];
 
-function formatReviewDate(daysAgo: number): string {
+function getReviewDate(daysAgo: number): { display: string; iso: string } {
   // Use a fixed reference date so review dates are deterministic across builds
   const date = new Date('2025-11-15T00:00:00Z');
   date.setDate(date.getDate() - daysAgo);
-  return date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+  return {
+    display: date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }),
+    iso: date.toISOString().split('T')[0],
+  };
 }
 
 export function getProductReviews(slug: string, limit = 3): ProductReview[] {
   const count = getReviewCount(slug);
-  if (count === 0) return [];
-
   const total = Math.min(count, limit);
   const reviews: ProductReview[] = [];
 
@@ -350,6 +352,7 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
     const location = reviewLocations[seed % reviewLocations.length];
     const rating = 3 + (seed % 3);
     const daysAgo = seed % 365;
+    const reviewDate = getReviewDate(daysAgo);
 
     reviews.push({
       id: `${slug}-${seed}`,
@@ -357,7 +360,8 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
       rating,
       title,
       body,
-      date: formatReviewDate(daysAgo),
+      date: reviewDate.display,
+      isoDate: reviewDate.iso,
       location,
       verified: true
     });

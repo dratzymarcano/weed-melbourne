@@ -283,7 +283,7 @@ const itemListSchema = {
             <div class="sidebar-card">
               <h3>Need Help?</h3>
               <p>Not sure which edible is right for you? Our team can help you find the perfect match.</p>
-              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+              <a href="/faq/" class="btn btn-outline btn-sm">View FAQ</a>
             </div>
           </aside>
 
@@ -300,7 +300,7 @@ const itemListSchema = {
                 {gummiesProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge gummies">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -362,7 +362,7 @@ const itemListSchema = {
                 {chocolateProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge chocolate">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -423,7 +423,7 @@ const itemListSchema = {
                 {bakedProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge baked">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -486,7 +486,7 @@ const itemListSchema = {
                 {drinksProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge drinks">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -546,7 +546,7 @@ const itemListSchema = {
                 {candyProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge candy">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -607,7 +607,7 @@ const itemListSchema = {
                 {honeyProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge honey">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (

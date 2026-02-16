@@ -338,7 +338,7 @@ const itemListSchema = {
             <div class="sidebar-card">
               <h3>Need Help?</h3>
               <p>Not sure which strain is right for you? Our team can help you find the perfect match.</p>
-              <a href="/faq" class="btn btn-outline btn-sm">View FAQ</a>
+              <a href="/faq/" class="btn btn-outline btn-sm">View FAQ</a>
             </div>
           </aside>
 
@@ -353,7 +353,7 @@ const itemListSchema = {
               <p class="section-desc">Relaxing strains perfect for evening use, pain relief, and sleep support.</p>
               <div class="products-grid">
                 {indicaProducts.map((product) => (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge indica">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -417,7 +417,7 @@ const itemListSchema = {
               <p class="section-desc">Energising strains for daytime use, creativity, and social activities.</p>
               <div class="products-grid">
                 {sativaProducts.map((product) => (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge sativa">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -481,7 +481,7 @@ const itemListSchema = {
               <p class="section-desc">Balanced strains offering the best of indica and sativa effects.</p>
               <div class="products-grid">
                 {hybridProducts.map((product) => (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge hybrid">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (

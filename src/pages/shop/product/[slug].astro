@@ -70,28 +70,26 @@ const productSchema: Record<string, any> = {
   }
 };
 
-if (reviewCount > 0) {
-  productSchema["aggregateRating"] = {
-    "@type": "AggregateRating",
-    "ratingValue": reviewRating.toFixed(1),
-    "reviewCount": reviewCount,
+productSchema["aggregateRating"] = {
+  "@type": "AggregateRating",
+  "ratingValue": reviewRating.toFixed(1),
+  "reviewCount": reviewCount,
+  "bestRating": "5",
+  "worstRating": "1"
+};
+productSchema["review"] = reviewItems.slice(0, 5).map((r: ProductReview) => ({
+  "@type": "Review",
+  "author": { "@type": "Person", "name": r.name },
+  "datePublished": r.isoDate,
+  "reviewBody": r.body,
+  "name": r.title,
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": r.rating.toFixed(1),
     "bestRating": "5",
     "worstRating": "1"
-  };
-  productSchema["review"] = reviewItems.slice(0, 5).map((r: ProductReview) => ({
-    "@type": "Review",
-    "author": { "@type": "Person", "name": r.name },
-    "datePublished": r.date,
-    "reviewBody": r.body,
-    "name": r.title,
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": r.rating.toFixed(1),
-      "bestRating": "5",
-      "worstRating": "1"
-    }
-  }));
-}
+  }
+}));
 
 // --- Structured Data: BreadcrumbList ---
 const breadcrumbSchema = {
@@ -391,7 +389,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
               const relatedReviewRating = getReviewRating(related.slug);
 
               return (
-              <a href={`/shop/product/${related.slug}`} class="product-card">
+              <a href={`/shop/product/${related.slug}/`} class="product-card">
                 <div class={`product-badge ${related.type.toLowerCase()}`}>{related.type}</div>
                 <div class="product-image">
                   {related.image ? (

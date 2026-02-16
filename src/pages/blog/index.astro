@@ -155,7 +155,7 @@ const blogSchema = {
         <div class="featured-grid">
           {featuredPosts.map((post) => (
             <article class="featured-card">
-              <a href={`/blog/${post.slug}`} class="card-link">
+              <a href={`/blog/${post.slug}/`} class="card-link">
                 <div class="card-image">
                   <span class="card-emoji" set:html={iconMap[post.image] || iconMap.leaf}></span>
                   <span class="card-category">{post.category}</span>
@@ -197,7 +197,7 @@ const blogSchema = {
         <div class="posts-grid">
           {recentPosts.map((post) => (
             <article class="post-card">
-              <a href={`/blog/${post.slug}`} class="card-link">
+              <a href={`/blog/${post.slug}/`} class="card-link">
                 <div class="post-image">
                   <span set:html={iconMap[post.image] || iconMap.leaf}></span>
                 </div>

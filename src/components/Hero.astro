@@ -1,10 +1,10 @@
 ---
 const locations = [
-  { href: "/adelaide", label: "Adelaide" },
-  { href: "/brisbane", label: "Brisbane" },
-  { href: "/melbourne", label: "Melbourne" },
-  { href: "/perth", label: "Perth" },
-  { href: "/sydney", label: "Sydney" },
+  { href: "/adelaide/", label: "Adelaide" },
+  { href: "/brisbane/", label: "Brisbane" },
+  { href: "/melbourne/", label: "Melbourne" },
+  { href: "/perth/", label: "Perth" },
+  { href: "/sydney/", label: "Sydney" },
 ];
 
 const features = [
@@ -41,13 +41,13 @@ const features = [
         </p>
 
         <div class="hero-ctas">
-          <a href="/shop" class="btn btn-primary btn-large hero-btn">
+          <a href="/shop/" class="btn btn-primary btn-large hero-btn">
             Shop Cannabis Online
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
-          <a href="/how-it-works" class="btn btn-outline-light btn-large hero-btn">How to Buy Weed</a>
+          <a href="/how-it-works/" class="btn btn-outline-light btn-large hero-btn">How to Buy Weed</a>
         </div>
 
         <div class="hero-features">
@@ -111,7 +111,7 @@ const features = [
         {locations.map((loc, i) => (
           <a href={loc.href} class="location-tag">{loc.label}</a>
         ))}
-        <a href="/locations" class="location-more">+ More</a>
+        <a href="/locations/" class="location-more">+ More</a>
       </div>
     </div>
   </div>

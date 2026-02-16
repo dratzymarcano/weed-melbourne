@@ -305,8 +305,8 @@ const breadcrumbSchema = {
             </div>
           </div>
           <div class="hero-buttons">
-            <a href="/shop" class="btn btn-primary btn-lg">Buy Cannabis Online</a>
-            <a href="/how-it-works" class="btn btn-secondary btn-lg">How to Order</a>
+            <a href="/shop/" class="btn btn-primary btn-lg">Buy Cannabis Online</a>
+            <a href="/how-it-works/" class="btn btn-secondary btn-lg">How to Order</a>
           </div>
         </div>
         <div class="hero-visual">
@@ -376,7 +376,7 @@ const breadcrumbSchema = {
             const displayPrice = productData ? getMinPrice(productData.basePrice, productData.category) : product.price;
 
             return (
-            <a href={`/shop/product/${product.slug}`} class="product-card">
+            <a href={`/shop/product/${product.slug}/`} class="product-card">
               <div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
               <div class="product-image">
                 {productData?.image ? (
@@ -425,7 +425,7 @@ const breadcrumbSchema = {
           })}
         </div>
         <div class="products-cta">
-          <a href="/shop" class="btn btn-primary btn-lg">View All Products</a>
+          <a href="/shop/" class="btn btn-primary btn-lg">View All Products</a>
         </div>
       </div>
     </section>
@@ -519,7 +519,7 @@ const breadcrumbSchema = {
           </div>
         </div>
         <div class="faq-cta">
-          <a href="/faq" class="btn btn-secondary">View All FAQs</a>
+          <a href="/faq/" class="btn btn-secondary">View All FAQs</a>
         </div>
       </div>
     </section>
@@ -533,8 +533,8 @@ const breadcrumbSchema = {
             <h2>Ready to Order to {cityName}?</h2>
             <p>Buy weed online from Mullaways Medical Cannabis. Premium products with fast, discreet delivery to {cityName} and all of {state}.</p>
             <div class="cta-buttons">
-              <a href="/shop" class="btn btn-primary btn-lg">Shop Now</a>
-              <a href="/how-it-works" class="btn btn-secondary btn-lg">Learn More</a>
+              <a href="/shop/" class="btn btn-primary btn-lg">Shop Now</a>
+              <a href="/how-it-works/" class="btn btn-secondary btn-lg">Learn More</a>
             </div>
           </div>
           <div class="cta-bg">

@@ -230,7 +230,7 @@ const locationsSchema = {
         </div>
         <div class="featured-grid">
           {featuredLocations.map((location) => (
-            <a href={`/${location.slug}`} class="featured-card">
+            <a href={`/${location.slug}/`} class="featured-card">
               <div class="card-icon" set:html={iconMap[location.icon] || iconMap.pin}></div>
               <div class="card-content">
                 <h3>{location.city}</h3>
@@ -258,7 +258,7 @@ const locationsSchema = {
         </div>
         <div class="locations-grid">
           {otherLocations.map((location) => (
-            <a href={`/${location.slug}`} class="location-card">
+            <a href={`/${location.slug}/`} class="location-card">
               <div class="card-icon" set:html={iconMap[location.icon] || iconMap.pin}></div>
               <h3>{location.city}</h3>
               <p class="state">{location.state}</p>
@@ -340,8 +340,8 @@ const locationsSchema = {
             <h2>Ready to Order?</h2>
             <p>Browse our selection of premium cannabis products and place your order today.</p>
             <div class="cta-buttons">
-              <a href="/shop" class="btn btn-primary btn-lg">Shop Now</a>
-              <a href="/how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
+              <a href="/shop/" class="btn btn-primary btn-lg">Shop Now</a>
+              <a href="/how-it-works/" class="btn btn-secondary btn-lg">How It Works</a>
             </div>
           </div>
           <div class="cta-bg">

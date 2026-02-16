@@ -7,10 +7,5 @@ Allow: /
 # Sitemap location
 Sitemap: https://mullawaysmedicalcannabis.com.au/sitemap-index.xml
 
-# Disallow admin/private areas
-Disallow: /account
-Disallow: /cart
-Disallow: /checkout
-
 # Crawl-delay for polite crawling
 Crawl-delay: 1

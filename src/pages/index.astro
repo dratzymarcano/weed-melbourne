@@ -5,10 +5,10 @@ import Footer from '../components/Footer.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getWeightVariants, getProductImageAlt } from '../data/products';
 
 const categories = [
-  { name: "Flower", description: "Premium dried cannabis", href: "/shop/flower" },
-  { name: "Concentrates", description: "Shatter, wax & rosin", href: "/shop/concentrates" },
-  { name: "Edibles", description: "Gummies & infused treats", href: "/shop/edibles" },
-  { name: "Vapes", description: "Cartridges & pens", href: "/shop/vapes" },
+  { name: "Flower", description: "Premium dried cannabis", href: "/shop/flower/" },
+  { name: "Concentrates", description: "Shatter, wax & rosin", href: "/shop/concentrates/" },
+  { name: "Edibles", description: "Gummies & infused treats", href: "/shop/edibles/" },
+  { name: "Vapes", description: "Cartridges & pens", href: "/shop/vapes/" },
 ];
 
 const complianceNote = `This description is written in Australian English and structured for SEO, geo intent, and AEO clarity. We prioritise E-E-A-T by providing evidence-focused details on potency ranges, expected effects, and lab verification, and we avoid exaggerated claims. We also address common Australian buyer questions about discretion, storage, and delivery timeframes. Store products in a cool, dark place, keep them secure, and follow local requirements. If you are new to cannabis, begin with a low dose and wait long enough to feel full effects before taking more. Effects vary by individual tolerance, metabolism, and setting. This note is included to provide consistent, trustworthy guidance for customers across Australia, including NSW, VIC, QLD, WA, SA, the ACT, and Tasmania. Always use responsibly and prioritise wellbeing.`;
@@ -224,13 +224,13 @@ const orgSchema = {
 					<p class="hero-subtitle">Looking for a cannabis dispensary near me? We've got you covered. Shop THC gummies, premium flower, edibles & vapes with fast, discreet delivery to Sydney, Melbourne, Brisbane & all of Australia. Real people, real quality, real results.</p>
 					
 					<div class="hero-ctas">
-						<a href="/shop" class="btn btn-primary btn-large">
+						<a href="/shop/" class="btn btn-primary btn-large">
 							Shop Cannabis Online
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M5 12h14M12 5l7 7-7 7"/>
 							</svg>
 						</a>
-						<a href="/how-it-works" class="btn btn-outline-light btn-large">How to Buy Weed</a>
+						<a href="/how-it-works/" class="btn btn-outline-light btn-large">How to Buy Weed</a>
 					</div>
 				</div>
 				<div class="hero-image">
@@ -285,7 +285,7 @@ const orgSchema = {
 						<span class="section-label">Featured</span>
 						<h2>Popular Products</h2>
 					</div>
-					<a href="/shop" class="btn btn-ghost">
+					<a href="/shop/" class="btn btn-ghost">
 						View All
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M5 12h14M12 5l7 7-7 7"/>
@@ -305,7 +305,7 @@ const orgSchema = {
 						const displayPrice = productData ? Math.round(productData.basePrice * variantMultiplier) : product.price;
 
 						return (
-							<a href={`/shop/product/${resolvedSlug}`} class="product-card" style={`--delay: ${i * 0.1}s`}>
+							<a href={`/shop/product/${resolvedSlug}/`} class="product-card" style={`--delay: ${i * 0.1}s`}>
 							<div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
 							<div class="product-image">
 								{productData?.image ? (
@@ -379,7 +379,7 @@ const orgSchema = {
 				</div>
 
 				<div class="process-cta">
-					<a href="/how-it-works" class="btn btn-secondary btn-large">Learn More</a>
+					<a href="/how-it-works/" class="btn btn-secondary btn-large">Learn More</a>
 				</div>
 			</div>
 		</section>
@@ -517,42 +517,42 @@ const orgSchema = {
 				</div>
 
 				<div class="locations-grid">
-					<a href="/sydney" class="location-item">
+					<a href="/sydney/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Sydney</span>
 					</a>
-					<a href="/melbourne" class="location-item">
+					<a href="/melbourne/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Melbourne</span>
 					</a>
-					<a href="/brisbane" class="location-item">
+					<a href="/brisbane/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Brisbane</span>
 					</a>
-					<a href="/perth" class="location-item">
+					<a href="/perth/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Perth</span>
 					</a>
-					<a href="/adelaide" class="location-item">
+					<a href="/adelaide/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Adelaide</span>
 					</a>
-					<a href="/gold-coast" class="location-item">
+					<a href="/gold-coast/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Gold Coast</span>
 					</a>
-					<a href="/canberra" class="location-item">
+					<a href="/canberra/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Canberra</span>
 					</a>
-					<a href="/newcastle" class="location-item">
+					<a href="/newcastle/" class="location-item">
 						<span class="location-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
 						<span class="location-name">Newcastle</span>
 					</a>
 				</div>
 
 				<div class="locations-cta">
-					<a href="/locations" class="btn btn-outline">View All Locations →</a>
+					<a href="/locations/" class="btn btn-outline">View All Locations →</a>
 				</div>
 			</div>
 		</section>
@@ -565,7 +565,7 @@ const orgSchema = {
 						<span class="section-label">Cannabis Guide</span>
 						<h2>Latest Articles</h2>
 					</div>
-					<a href="/blog" class="btn btn-ghost">
+					<a href="/blog/" class="btn btn-ghost">
 						View All
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M5 12h14M12 5l7 7-7 7"/>
@@ -574,19 +574,19 @@ const orgSchema = {
 				</div>
 
 				<div class="blog-grid">
-					<a href="/blog/is-weed-legal-in-australia" class="blog-card">
+					<a href="/blog/is-weed-legal-in-australia/" class="blog-card">
 						<div class="blog-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M1 12h22M5 5l14 14M19 5L5 19"/></svg></div>
 						<span class="blog-category">Legal Guide</span>
 						<h3>Is Weed Legal in Australia? 2026 Laws Explained</h3>
 						<p>Complete breakdown of cannabis laws across all Australian states and territories.</p>
 					</a>
-					<a href="/blog/cannabis-prices-australia" class="blog-card">
+					<a href="/blog/cannabis-prices-australia/" class="blog-card">
 						<div class="blog-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M8 14h8"/></svg></div>
 						<span class="blog-category">Price Guide</span>
 						<h3>How Much Does Weed Cost in Australia?</h3>
 						<p>Comprehensive pricing guide for cannabis products across Australia.</p>
 					</a>
-					<a href="/blog/strongest-strains-australia" class="blog-card">
+					<a href="/blog/strongest-strains-australia/" class="blog-card">
 						<div class="blog-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg></div>
 						<span class="blog-category">Strain Guide</span>
 						<h3>10 Strongest Weed Strains in Australia</h3>
@@ -604,8 +604,8 @@ const orgSchema = {
 					<h2>Ready to Find Out Why We're Australia's Most Trusted Weed Shop?</h2>
 					<p>Join thousands of satisfied customers who've made the switch. Lab-tested THC gummies, premium flower, edibles & more — all delivered discreetly to your door. No judgement, no hassle, just quality cannabis when you need it.</p>
 					<div class="cta-buttons">
-						<a href="/shop" class="btn btn-primary btn-large">Shop THC Gummies & More</a>
-						<a href="/how-it-works" class="btn btn-outline btn-large">See How Easy It Is</a>
+						<a href="/shop/" class="btn btn-primary btn-large">Shop THC Gummies & More</a>
+						<a href="/how-it-works/" class="btn btn-outline btn-large">See How Easy It Is</a>
 					</div>
 				</div>
 			</div>

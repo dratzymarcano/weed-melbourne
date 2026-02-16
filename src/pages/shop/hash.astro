@@ -288,7 +288,7 @@ const itemListSchema = {
             <div class="sidebar-card">
               <h3>How to Use Hash</h3>
               <p>Hash can be crumbled into joints, vaped at low temps, dabbed (full melt), or added to bowls.</p>
-              <a href="/faq" class="btn btn-outline btn-sm">Learn More</a>
+              <a href="/faq/" class="btn btn-outline btn-sm">Learn More</a>
             </div>
           </aside>
 
@@ -302,7 +302,7 @@ const itemListSchema = {
                 {traditionalProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge traditional">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -363,7 +363,7 @@ const itemListSchema = {
                 {bubbleProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge bubble">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -425,7 +425,7 @@ const itemListSchema = {
                 {drySiftProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge dry-sift">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
@@ -486,7 +486,7 @@ const itemListSchema = {
                 {pressedProducts.map((product) => {
                   const { price, reviewCount, reviewRating } = getCardMeta(product.slug, product.price);
                   return (
-                  <a href={`/shop/product/${product.slug}`} class="product-card">
+                  <a href={`/shop/product/${product.slug}/`} class="product-card">
                     <div class="product-badge pressed">{product.type}</div>
                     <div class="product-image">
                       {getProductBySlug(product.slug)?.image ? (
