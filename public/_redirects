@@ -1,25 +1,5 @@
-# Sitemap redirect — @astrojs/sitemap generates sitemap-index.xml
-/sitemap.xml       /sitemap-index.xml       301
-
-# Enforce trailing slashes — prevents "Alternate page with proper canonical"
-# and "Page with redirect" issues in Search Console
-/shop/product/*    /shop/product/:splat/    301
-/shop/*            /shop/:splat/            301
-/blog/*            /blog/:splat/            301
-/about-us          /about-us/               301
-/buy-bitcoin       /buy-bitcoin/            301
-/cookies-policy    /cookies-policy/         301
-/disclaimer        /disclaimer/             301
-/faq               /faq/                    301
-/how-it-works      /how-it-works/           301
-/locations         /locations/              301
-/pay-with-bank-transfer   /pay-with-bank-transfer/   301
-/pay-with-paysafecard     /pay-with-paysafecard/     301
-/privacy-policy    /privacy-policy/         301
-/refunds           /refunds/                301
-/resources         /resources/              301
-/shipping-and-delivery    /shipping-and-delivery/    301
-/terms-and-conditions     /terms-and-conditions/     301
+# Sitemap — serve sitemap-index.xml content at /sitemap.xml
+/sitemap.xml       /sitemap-index.xml       200
 
 # SPA client-side routes (rewrite, not redirect)
 /account/    /account/    200

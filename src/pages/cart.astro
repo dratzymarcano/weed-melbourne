@@ -926,7 +926,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   // Create account button
   createAccountBtn?.addEventListener('click', () => {
     localStorage.setItem('checkoutMode', 'create-account');
-    window.location.href = '/account?redirect=checkout';
+    window.location.href = '/account/?redirect=checkout';
   });
 
   // Social login for checkout
@@ -959,6 +959,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   });
 
   function proceedToCheckout() {
-    window.location.href = '/checkout';
+    window.location.href = '/checkout/';
   }
 </script>

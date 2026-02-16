@@ -9,7 +9,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   <Header />
 
   <main>
-    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Cart', href: '/cart'}, {label: 'Checkout'}]} />
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Cart', href: '/cart/'}, {label: 'Checkout'}]} />
     <section class="page-hero">
       <div class="hero-bg">
         <div class="hero-shape hero-shape-1"></div>
@@ -1111,7 +1111,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       await new Promise(resolve => setTimeout(resolve, 800));
 
       // Redirect to confirmation page
-      window.location.href = `/order-confirmation?ref=${order.ref}`;
+      window.location.href = `/order-confirmation/?ref=${order.ref}`;
 
     } catch (err) {
       console.error('Order placement error:', err);

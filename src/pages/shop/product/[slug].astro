@@ -125,7 +125,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   
   <main>
     <!-- Breadcrumb -->
-    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop'}, {label: product.category.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join('-'), href: `/shop/${product.category}/`}, {label: product.name}]} />
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop/'}, {label: product.category.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join('-'), href: `/shop/${product.category}/`}, {label: product.name}]} />
 
     <!-- Product Detail -->
     <section class="product-detail-section">
