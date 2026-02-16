@@ -1,7 +1,3 @@
-# Redirect old sitemap files to the single canonical sitemap
-/sitemap-index.xml  /sitemap.xml  301
-/sitemap-0.xml      /sitemap.xml  301
-
 # SPA client-side routes (rewrite, not redirect)
 /cart/       /cart/       200
 /checkout/   /checkout/   200
