@@ -329,10 +329,20 @@ const reviewLocations = [
   'Newcastle, NSW'
 ];
 
-function getReviewDate(daysAgo: number): { display: string; iso: string } {
-  // Use a fixed reference date so review dates are deterministic across builds
-  const date = new Date('2026-02-16T00:00:00Z');
-  date.setDate(date.getDate() - daysAgo);
+function getReviewDate(seed: number, index: number): { display: string; iso: string } {
+  const monthPattern = [12, 1, 2, 1, 12, 2];
+  const month = monthPattern[index % monthPattern.length];
+  const year = month === 12 ? 2025 : 2026;
+
+  const dayOptionsByMonth: Record<number, number[]> = {
+    12: [4, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+    1: [3, 7, 11, 14, 18, 22, 26, 29, 31],
+    2: [2, 5, 8, 11, 13, 16],
+  };
+
+  const dayOptions = dayOptionsByMonth[month];
+  const day = dayOptions[seed % dayOptions.length];
+  const date = new Date(Date.UTC(year, month - 1, day));
   return {
     display: date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }),
     iso: date.toISOString().split('T')[0],
@@ -351,8 +361,7 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
     const body = reviewBodies[seed % reviewBodies.length];
     const location = reviewLocations[seed % reviewLocations.length];
     const rating = 3 + (seed % 3);
-    const daysAgo = seed % 75;
-    const reviewDate = getReviewDate(daysAgo);
+    const reviewDate = getReviewDate(seed, i);
 
     reviews.push({
       id: `${slug}-${seed}`,
