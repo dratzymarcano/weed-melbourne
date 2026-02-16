@@ -293,12 +293,8 @@ const pageSchema = {
 <script>
   // @ts-nocheck
 
-  // EmailJS config — reuses the shared "Admin Notification" template
-  // Same keys as checkout.astro. Template vars: {{subject}}, {{reply_name}},
-  // {{reply_email}}, {{message_body}}
-  const EMAILJS_PUBLIC_KEY = '';               // Same as checkout
-  const EMAILJS_SERVICE_ID = '';               // Same as checkout
-  const EMAILJS_TEMPLATE_ADMIN = '';           // Template 2: Admin notification (shared)
+  // Emails are sent server-side via /api/send-email (Cloudflare Pages Function + Resend).
+  // No client-side keys needed. See functions/api/send-email.js for setup instructions.
 
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('contact-submit');
@@ -366,23 +362,6 @@ const pageSchema = {
     return true;
   }
 
-  async function loadEmailJS() {
-    if (window.emailjs) return true;
-    try {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-      window.emailjs.init(EMAILJS_PUBLIC_KEY);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   function openMailtoFallback(payload) {
     const subject = encodeURIComponent(`[Contact] ${payload.subject}`);
     const body = encodeURIComponent(
@@ -415,30 +394,27 @@ const pageSchema = {
     submitBtn.textContent = 'Sending...';
 
     try {
-      if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ADMIN) {
-        openMailtoFallback(payload);
-        setStatus('Email service is not configured yet. Your email app has been opened as a fallback.', 'success');
-        return;
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contact',
+          data: {
+            from_name: payload.from_name,
+            from_email: payload.from_email,
+            order_ref: payload.order_ref,
+            subject: payload.subject,
+            message: payload.message,
+          },
+        }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        // API returned an error — fall back to mailto
+        throw new Error(result.error || 'Send failed');
       }
-
-      const ready = await loadEmailJS();
-      if (!ready) {
-        openMailtoFallback(payload);
-        setStatus('Could not load email service. Your email app has been opened as a fallback.', 'error');
-        return;
-      }
-
-      // Map contact form data to the shared admin template format
-      const adminPayload = {
-        subject: `Contact: ${payload.subject}`,
-        reply_name: payload.from_name,
-        reply_email: payload.from_email,
-        message_body:
-          (payload.order_ref ? `Order Ref: ${payload.order_ref}\n\n` : '') +
-          payload.message,
-      };
-
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, adminPayload);
       form.reset();
       setStatus('Thanks — your message has been sent. We’ll reply by email soon.', 'success');
     } catch {

@@ -686,39 +686,22 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   // @ts-nocheck
 
   // ══════════════════════════════════════════════════════════════════
-  // ── EmailJS Configuration (2 templates only) ─────────────────────
+  // ── Email Setup (Resend via Cloudflare Pages Function) ───────────
   // ══════════════════════════════════════════════════════════════════
   //
-  // 1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
+  // Emails are sent server-side through /api/send-email
+  // (Cloudflare Pages Function using the Resend API).
   //
-  // 2. Create an Email Service:
-  //    - "Email Services" → "Add New Service" → connect your email
-  //    - Copy the Service ID
+  // To enable:
+  //   1. Sign up at https://resend.com (free: 3,000 emails/month)
+  //   2. Create an API key
+  //   3. In Cloudflare Pages → Settings → Environment variables, add:
+  //        RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  //   4. (Optional) Verify your domain on Resend for custom "from" address.
+  //      Set FROM_EMAIL env var, e.g.:
+  //        FROM_EMAIL = Mullaways Medical Cannabis <noreply@mullawaysmedicalcannabis.com.au>
   //
-  // 3. Create TWO email templates:
-  //
-  //    ── Template 1: "Customer Order Confirmation" ──
-  //    To Email:  {{to_email}}
-  //    Subject:   Order {{order_ref}} – We've Received Your Order
-  //    Body vars: {{to_name}}, {{order_ref}}, {{order_date}},
-  //              {{items_list}}, {{subtotal}}, {{discount}},
-  //              {{shipping}}, {{total}}, {{payment_method}},
-  //              {{payment_status}}, {{payment_next_step}},
-  //              {{shipping_address}}, {{delivery_method}}
-  //
-  //    ── Template 2: "Admin Notification" (shared) ──
-  //    To Email:  hello@mullawaysmedicalcannabis.com.au (hardcode)
-  //    Reply To:  {{reply_email}}
-  //    Subject:   {{subject}}
-  //    Body vars: {{reply_name}}, {{reply_email}}, {{message_body}}
-  //    (This template is reused for order alerts AND contact form)
-  //
-  // 4. Paste your keys and template IDs below:
-  //
-  const EMAILJS_PUBLIC_KEY = '';               // Account → API Keys
-  const EMAILJS_SERVICE_ID = '';               // Your service ID
-  const EMAILJS_TEMPLATE_CUSTOMER = '';        // Template 1: Customer confirmation
-  const EMAILJS_TEMPLATE_ADMIN = '';           // Template 2: Admin notification (shared)
+  // No client-side keys are needed — everything goes through the function.
   //
   // ══════════════════════════════════════════════════════════════════
 
@@ -877,32 +860,12 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     return isValid;
   }
 
-  // ── Load EmailJS SDK ───────────────────────────────────────────
-  async function loadEmailJS() {
-    if (window.emailjs) return true;
-    try {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-      window.emailjs.init(EMAILJS_PUBLIC_KEY);
-      return true;
-    } catch (err) {
-      console.error('Failed to load EmailJS SDK:', err);
-      return false;
-    }
-  }
-
-  // ── Build shared template params ─────────────────────────────
+  // ── Build email data from order ────────────────────────────────
   function buildTemplateParams(order) {
     const itemsList = order.items.map(i =>
       `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`
     ).join('\n');
 
-    // Payment status & next steps differ per method
     let paymentStatus = '';
     let paymentNextStep = '';
 
@@ -947,14 +910,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   // ── Send Customer Confirmation Email ─────────────────────────
   async function sendCustomerEmail(order) {
-    if (!EMAILJS_TEMPLATE_CUSTOMER) {
-      console.log('Customer email template not configured.');
-      return { success: false, reason: 'no_template' };
-    }
-
     try {
-      const params = buildTemplateParams(order);
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CUSTOMER, params);
+      const data = buildTemplateParams(order);
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'order-customer', data }),
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || 'Failed');
       console.log('✓ Customer confirmation email sent to', order.customer.email);
       return { success: true };
     } catch (err) {
@@ -965,34 +929,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   // ── Send Admin Notification Email ────────────────────────────
   async function sendAdminEmail(order) {
-    if (!EMAILJS_TEMPLATE_ADMIN) {
-      console.log('Admin notification template not configured.');
-      return { success: false, reason: 'no_template' };
-    }
-
     try {
-      const params = buildTemplateParams(order);
-      // Build admin-specific params using the shared admin template format
-      const adminParams = {
-        subject: `New Order ${order.ref} – ${params.total} via ${params.payment_method}`,
-        reply_name: params.to_name,
-        reply_email: order.customer.email,
-        message_body:
-          `Order: ${order.ref}\n` +
-          `Date: ${params.order_date}\n` +
-          `Customer: ${params.to_name}\n` +
-          `Email: ${order.customer.email}\n` +
-          `Phone: ${order.customer.phone}\n\n` +
-          `Items:\n${params.items_list}\n\n` +
-          `Subtotal: ${params.subtotal}\n` +
-          (order.discount > 0 ? `Discount: ${params.discount}\n` : '') +
-          `Shipping: ${params.shipping} (${params.delivery_method})\n` +
-          `Total: ${params.total}\n\n` +
-          `Payment: ${params.payment_method}\n` +
-          `Status: ${params.payment_status}\n\n` +
-          `Delivery Address:\n${params.shipping_address}`,
-      };
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, adminParams);
+      const data = buildTemplateParams(order);
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'order-admin', data }),
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || 'Failed');
       console.log('✓ Admin notification email sent for order', order.ref);
       return { success: true };
     } catch (err) {
@@ -1003,16 +948,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   // ── Send All Order Emails ────────────────────────────────────
   async function sendOrderEmails(order) {
-    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID) {
-      console.log('EmailJS not configured — skipping email notifications. Fill in EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, and template IDs in checkout.astro to enable.');
-      return { customer: { success: false, reason: 'not_configured' }, admin: { success: false, reason: 'not_configured' } };
-    }
-
-    const sdkLoaded = await loadEmailJS();
-    if (!sdkLoaded) {
-      return { customer: { success: false, reason: 'sdk_failed' }, admin: { success: false, reason: 'sdk_failed' } };
-    }
-
     // Send both emails in parallel
     const [customerResult, adminResult] = await Promise.all([
       sendCustomerEmail(order),
