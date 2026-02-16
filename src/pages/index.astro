@@ -212,13 +212,9 @@ const orgSchema = {
 	<main>
 		<!-- Hero Section -->
 		<section class="hero">
-			<div class="hero-bg">
-				<div class="hero-shape hero-shape-1"></div>
-				<div class="hero-shape hero-shape-2"></div>
-				<div class="hero-shape hero-shape-3"></div>
-				<div class="hero-dots"></div>
-			</div>
+			<div class="hero-bg"></div>
 			<div class="container">
+				<div class="hero-grid">
 				<div class="hero-content">
 					<div class="hero-badge">
 						<span class="badge-dot"></span>
@@ -236,6 +232,10 @@ const orgSchema = {
 						</a>
 						<a href="/how-it-works" class="btn btn-outline-light btn-large">How to Buy Weed</a>
 					</div>
+				</div>
+				<div class="hero-image">
+					<img src="/images/homepage/weed-delivery.webp" alt="Fast discreet cannabis delivery across Australia" width="1200" height="799" />
+				</div>
 				</div>
 
 				<div class="hero-stats">
@@ -444,19 +444,7 @@ const orgSchema = {
 					</div>
 
 					<div class="trust-visual">
-						<div class="visual-card">
-							<div class="visual-pattern"></div>
-							<div class="visual-content">
-								<span class="visual-icon">
-									<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-										<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-										<path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/>
-									</svg>
-								</span>
-								<h3>Australian Owned</h3>
-								<p>Proudly supporting local customers with premium cannabis solutions.</p>
-							</div>
-						</div>
+						<img src="/images/homepage/weed-aussie.webp" alt="Premium Australian cannabis flower and glass pipe smoking accessories" class="trust-image" width="900" height="900" loading="lazy" />
 					</div>
 				</div>
 			</div>
@@ -610,10 +598,7 @@ const orgSchema = {
 
 		<!-- CTA Section -->
 		<section class="section cta-section">
-			<div class="cta-bg">
-				<div class="cta-shape cta-shape-1"></div>
-				<div class="cta-shape cta-shape-2"></div>
-			</div>
+			<div class="cta-bg"></div>
 			<div class="container">
 				<div class="cta-content">
 					<h2>Ready to Find Out Why We're Australia's Most Trusted Weed Shop?</h2>
@@ -653,61 +638,51 @@ const orgSchema = {
 		display: flex;
 		align-items: center;
 		padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-4xl);
-		background: linear-gradient(165deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-eucalyptus-light) 100%);
 		overflow: hidden;
 	}
 
 	.hero-bg {
 		position: absolute;
 		inset: 0;
-		overflow: hidden;
+		background: url('/images/homepage/hero-bg.webp') center/cover no-repeat;
 		pointer-events: none;
 	}
 
-	.hero-shape {
+	.hero-bg::after {
+		content: '';
 		position: absolute;
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.03);
+		inset: 0;
+		background: linear-gradient(165deg, rgba(10, 25, 10, 0.88) 0%, rgba(15, 35, 15, 0.78) 50%, rgba(10, 30, 15, 0.82) 100%);
 	}
 
-	.hero-shape-1 {
-		width: 600px;
-		height: 600px;
-		top: -200px;
-		right: -200px;
-	}
-
-	.hero-shape-2 {
-		width: 400px;
-		height: 400px;
-		bottom: -100px;
-		left: -100px;
-	}
-
-	.hero-shape-3 {
-		width: 200px;
-		height: 200px;
-		top: 50%;
-		left: 60%;
-		border: 2px solid rgba(255, 255, 255, 0.1);
-		background: transparent;
-	}
-
-	.hero-dots {
-		position: absolute;
-		top: 20%;
-		right: 10%;
-		width: 150px;
-		height: 150px;
-		background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
-		background-size: 15px 15px;
-	}
-
-	.hero-content {
-		max-width: 720px;
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-3xl);
+		align-items: center;
 		margin-bottom: var(--space-4xl);
 		position: relative;
 		z-index: 5;
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 5;
+	}
+
+	.hero-image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.hero-image img {
+		width: 100%;
+		max-width: 520px;
+		height: auto;
+		border-radius: var(--radius-xl);
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+		border: 3px solid rgba(255, 255, 255, 0.1);
 	}
 
 	.hero-badge {
@@ -1252,54 +1227,14 @@ const orgSchema = {
 		justify-content: center;
 	}
 
-	.visual-card {
-		position: relative;
-		background: var(--color-white);
+	.trust-image {
+		width: 100%;
+		max-width: 480px;
+		height: auto;
 		border-radius: var(--radius-xl);
-		padding: var(--space-3xl);
-		text-align: center;
-		box-shadow: var(--shadow-lg);
-		max-width: 360px;
-		overflow: hidden;
-	}
-
-	.visual-pattern {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 100px;
-		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-	}
-
-	.visual-content {
-		position: relative;
-		z-index: 1;
-	}
-
-	.visual-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 80px;
-		height: 80px;
-		background: var(--color-white);
-		border-radius: 50%;
-		font-size: 2.5rem;
-		margin-top: 20px;
-		margin-bottom: var(--space-lg);
-		box-shadow: var(--shadow-md);
-	}
-
-	.visual-card h3 {
-		font-size: 1.25rem;
-		margin-bottom: var(--space-sm);
-	}
-
-	.visual-card p {
-		font-size: 0.95rem;
-		color: var(--color-text-muted);
-		margin: 0;
+		box-shadow: var(--shadow-xl);
+		object-fit: cover;
+		aspect-ratio: 1;
 	}
 
 	/* ========== Testimonials ========== */
@@ -1382,34 +1317,21 @@ const orgSchema = {
 	/* ========== CTA Section ========== */
 	.cta-section {
 		position: relative;
-		background: var(--color-bg);
 		overflow: hidden;
 	}
 
 	.cta-bg {
 		position: absolute;
 		inset: 0;
+		background: url('/images/homepage/buy-weed-australia.webp') center/cover no-repeat;
 		pointer-events: none;
 	}
 
-	.cta-shape {
+	.cta-bg::after {
+		content: '';
 		position: absolute;
-		border-radius: 50%;
-		background: var(--color-sand);
-	}
-
-	.cta-shape-1 {
-		width: 400px;
-		height: 400px;
-		top: -200px;
-		right: 10%;
-	}
-
-	.cta-shape-2 {
-		width: 300px;
-		height: 300px;
-		bottom: -150px;
-		left: 5%;
+		inset: 0;
+		background: linear-gradient(135deg, rgba(10, 25, 10, 0.88) 0%, rgba(20, 40, 20, 0.82) 100%);
 	}
 
 	.cta-content {
@@ -1417,15 +1339,18 @@ const orgSchema = {
 		max-width: 700px;
 		margin: 0 auto;
 		text-align: center;
+		z-index: 2;
 	}
 
 	.cta-content h2 {
 		margin-bottom: var(--space-md);
+		color: var(--color-white);
 	}
 
 	.cta-content p {
 		font-size: 1.1rem;
 		margin-bottom: var(--space-xl);
+		color: rgba(255, 255, 255, 0.85);
 	}
 
 	.cta-buttons {
@@ -1440,6 +1365,16 @@ const orgSchema = {
 	.cta-buttons .btn {
 		pointer-events: auto;
 		cursor: pointer;
+	}
+
+	.cta-buttons .btn-outline {
+		border-color: rgba(255, 255, 255, 0.4);
+		color: var(--color-white);
+	}
+
+	.cta-buttons .btn-outline:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.7);
 	}
 
 	/* ========== Compliance Notice ========== */
@@ -1585,6 +1520,19 @@ const orgSchema = {
 
 	/* ========== Responsive ========== */
 	@media (max-width: 1024px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+			gap: var(--space-2xl);
+		}
+
+		.hero-image {
+			order: -1;
+		}
+
+		.hero-image img {
+			max-width: 400px;
+		}
+
 		.categories-grid,
 		.products-grid,
 		.process-grid {
@@ -1626,6 +1574,10 @@ const orgSchema = {
 		.hero {
 			padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-3xl);
 			min-height: auto;
+		}
+
+		.hero-image img {
+			max-width: 320px;
 		}
 
 		.hero-ctas {
