@@ -315,6 +315,10 @@ import Footer from '../components/Footer.astro';
                   <span id="summary-total">$0.00</span>
                 </div>
                 <div class="summary-divider"></div>
+                <div class="summary-row">
+                  <span>Payment</span>
+                  <span id="summary-payment">—</span>
+                </div>
                 <div class="summary-actions">
                   <button class="btn btn-outline btn-full" id="download-order-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -1189,6 +1193,9 @@ import Footer from '../components/Footer.astro';
     document.getElementById('summary-shipping').textContent = `$${order.shipping.toFixed(2)}`;
     document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
 
+    const paymentLabels = { bitcoin: 'Bitcoin', bank: 'Bank Transfer', paysafecard: 'Paysafecard' };
+    document.getElementById('summary-payment').textContent = paymentLabels[order.payment] || order.payment;
+
     // Copy buttons
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
@@ -1280,6 +1287,10 @@ import Footer from '../components/Footer.astro';
       }
       lines.push(`  Delivery:          $${order.shipping.toFixed(2)}`);
       lines.push(`  TOTAL:             $${order.total.toFixed(2)}`);
+      lines.push('');
+      let pmLabel = order.payment === 'bitcoin' ? 'Bitcoin'
+        : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard';
+      lines.push(`  Payment Method:    ${pmLabel}`);
       lines.push('');
       lines.push('═══════════════════════════════════════════════════');
       lines.push('  Contact: hello@mullawaysmedicalcannabis.com.au');
