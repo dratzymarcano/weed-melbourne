@@ -319,7 +319,7 @@ import Footer from '../components/Footer.astro';
                 <div class="summary-actions">
                   <button class="btn btn-outline btn-full" id="download-order-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download Order Summary
+                    Download PDF
                   </button>
                   <button class="btn btn-outline btn-full" id="print-order-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -1454,78 +1454,217 @@ import Footer from '../components/Footer.astro';
       window.print();
     });
 
-    // Download Order Summary as text file
-    document.getElementById('download-order-btn')?.addEventListener('click', () => {
+    // Download Order Summary as PDF
+    document.getElementById('download-order-btn')?.addEventListener('click', async () => {
       const order = JSON.parse(localStorage.getItem('lastOrder') || 'null');
       if (!order) return;
 
-      const date = new Date(order.date).toLocaleDateString('en-AU', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      });
+      const btn = document.getElementById('download-order-btn');
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Generating PDF...';
+      btn.disabled = true;
 
-      let deliveryLabel = order.shippingMethod === 'express'
-        ? 'Express Delivery (1–2 business days)'
-        : 'Standard Delivery (2–5 business days)';
+      try {
+        // Load jsPDF on demand
+        if (!window.jspdf) {
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js';
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        }
 
-      let lines = [
-        '═══════════════════════════════════════════════════',
-        '         MULLAWAYS MEDICAL CANNABIS',
-        '              ORDER CONFIRMATION',
-        '═══════════════════════════════════════════════════',
-        '',
-        `Order Reference:  ${order.ref}`,
-        `Date:             ${date}`,
-        '',
-        '───────────────────────────────────────────────────',
-        '  DELIVERY DETAILS',
-        '───────────────────────────────────────────────────',
-        `Name:      ${order.customer.firstName} ${order.customer.lastName}`,
-        `Email:     ${order.customer.email}`,
-        `Phone:     ${order.customer.phone || ''}`,
-        `Address:   ${order.customer.address}`,
-        `           ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
-        `Delivery:  ${deliveryLabel}`,
-        '',
-        '───────────────────────────────────────────────────',
-        '  ORDER ITEMS',
-        '───────────────────────────────────────────────────',
-      ];
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+        const pw = doc.internal.pageSize.getWidth();
+        const ph = doc.internal.pageSize.getHeight();
+        const mx = 24;
+        const cw = pw - mx * 2;
+        let y = 0;
 
-      (order.items || []).forEach(item => {
-        const itemTotal = (item.price * item.quantity).toFixed(2);
-        lines.push(`${item.name}  x${item.quantity}  $${itemTotal}`);
-        if (item.selectedWeight) lines.push(`  Weight: ${item.selectedWeight}`);
-      });
+        // Palette
+        const green = [45, 90, 74];
+        const terra = [196, 112, 75];
+        const sage = [139, 168, 136];
+        const dark = [26, 26, 26];
+        const gray = [102, 102, 102];
+        const line = [232, 230, 225];
+        const bg = [247, 246, 243];
 
-      lines.push('');
-      lines.push('───────────────────────────────────────────────────');
-      lines.push(`  Subtotal:          $${order.subtotal.toFixed(2)}`);
-      if (order.discount > 0) {
-        lines.push(`  Bitcoin Discount:  -$${order.discount.toFixed(2)}`);
+        // Top accent
+        doc.setFillColor(...terra);
+        doc.rect(0, 0, pw, 3, 'F');
+
+        // Header
+        doc.setFillColor(...green);
+        doc.rect(0, 3, pw, 32, 'F');
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...sage);
+        doc.text('ORDER CONFIRMATION', mx, 16);
+        doc.setFontSize(20);
+        doc.setTextColor(255, 255, 255);
+        doc.text('Mullaways Medical Cannabis', mx, 28);
+
+        // Geometric divider
+        doc.setFillColor(...terra);
+        doc.rect(0, 35, pw * 0.6, 2, 'F');
+        doc.setFillColor(...sage);
+        doc.rect(pw * 0.6, 35, pw * 0.4, 2, 'F');
+
+        y = 47;
+
+        // -- Order info card --
+        const orderDate = new Date(order.date).toLocaleDateString('en-AU', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+        });
+        const pmLabel = order.payment === 'bitcoin' ? 'Bitcoin'
+          : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard';
+        const delLabel = order.shippingMethod === 'express'
+          ? 'Express Delivery (1-2 business days)'
+          : 'Standard Delivery (2-5 business days)';
+
+        // Left accent + background
+        doc.setFillColor(...green);
+        doc.rect(mx, y - 2, 2, 28, 'F');
+        doc.setFillColor(...bg);
+        doc.rect(mx + 2, y - 2, cw - 2, 28, 'F');
+
+        const kvX = mx + 8;
+        const kvVX = mx + 44;
+
+        function kv(label, value) {
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(9);
+          doc.setTextColor(...gray);
+          doc.text(label, kvX, y);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...dark);
+          const lines = doc.splitTextToSize(String(value || ''), cw - 50);
+          doc.text(lines, kvVX, y);
+          y += lines.length * 4.5 + 2.5;
+        }
+
+        kv('Reference', order.ref);
+        kv('Date', orderDate);
+        kv('Payment', pmLabel);
+
+        y += 8;
+
+        // Divider
+        doc.setDrawColor(...line);
+        doc.setLineWidth(0.3);
+        doc.line(mx, y, mx + cw, y);
+        y += 8;
+
+        // -- Delivery --
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8);
+        doc.setTextColor(...sage);
+        doc.text('DELIVERY DETAILS', mx, y);
+        y += 7;
+
+        kv('Name', order.customer.firstName + ' ' + order.customer.lastName);
+        kv('Email', order.customer.email);
+        if (order.customer.phone) kv('Phone', order.customer.phone);
+        kv('Address', order.customer.address + ', ' + order.customer.city + ', ' + order.customer.state + ' ' + order.customer.postcode);
+        kv('Method', delLabel);
+
+        y += 4;
+        doc.setDrawColor(...line);
+        doc.line(mx, y, mx + cw, y);
+        y += 8;
+
+        // -- Items --
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8);
+        doc.setTextColor(...sage);
+        doc.text('ITEMS ORDERED', mx, y);
+        y += 7;
+
+        (order.items || []).forEach(item => {
+          const t = (item.price * item.quantity).toFixed(2);
+          const label = item.name + (item.selectedWeight ? ' (' + item.selectedWeight + ')' : '');
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(10);
+          doc.setTextColor(...dark);
+          const wrapped = doc.splitTextToSize(label, cw - 50);
+          doc.text(wrapped, mx, y);
+          doc.setFontSize(9);
+          doc.setTextColor(...gray);
+          doc.text('x' + item.quantity, mx + cw - 28, y);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(10);
+          doc.setTextColor(...dark);
+          doc.text('$' + t, mx + cw, y, { align: 'right' });
+          y += wrapped.length * 5 + 3;
+        });
+
+        y += 4;
+
+        // -- Totals --
+        let tH = 24;
+        if (order.discount > 0) tH += 6;
+        doc.setFillColor(...bg);
+        doc.rect(mx, y - 2, cw, tH, 'F');
+        y += 2;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...gray);
+        doc.text('Subtotal', mx + 6, y);
+        doc.text('$' + order.subtotal.toFixed(2), mx + cw - 6, y, { align: 'right' });
+        y += 6;
+
+        if (order.discount > 0) {
+          doc.setTextColor(...green);
+          doc.text('Bitcoin Discount', mx + 6, y);
+          doc.setFont('helvetica', 'bold');
+          doc.text('-$' + order.discount.toFixed(2), mx + cw - 6, y, { align: 'right' });
+          y += 6;
+        }
+
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...gray);
+        doc.text('Shipping', mx + 6, y);
+        doc.text('$' + order.shipping.toFixed(2), mx + cw - 6, y, { align: 'right' });
+        y += 4;
+
+        doc.setDrawColor(...line);
+        doc.line(mx + 6, y, mx + cw - 6, y);
+        y += 6;
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(...dark);
+        doc.text('Total', mx + 6, y);
+        doc.text('$' + order.total.toFixed(2), mx + cw - 6, y, { align: 'right' });
+
+        // -- Footer --
+        doc.setDrawColor(...line);
+        doc.setLineWidth(0.3);
+        doc.line(mx, ph - 24, mx + cw, ph - 24);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8);
+        doc.setTextColor(...green);
+        doc.text('MULLAWAYS MEDICAL CANNABIS', mx, ph - 18);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...gray);
+        doc.text('hello@mullawaysmedicalcannabis.com.au', mx, ph - 13);
+
+        // Bottom accent
+        doc.setFillColor(...green);
+        doc.rect(0, ph - 3, pw, 3, 'F');
+
+        doc.save('order-' + order.ref + '.pdf');
+      } catch (err) {
+        console.error('PDF generation error:', err);
+      } finally {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
       }
-      lines.push(`  Delivery:          $${order.shipping.toFixed(2)}`);
-      lines.push(`  TOTAL:             $${order.total.toFixed(2)}`);
-      lines.push('');
-      let pmLabel = order.payment === 'bitcoin' ? 'Bitcoin'
-        : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard';
-      lines.push(`  Payment Method:    ${pmLabel}`);
-      lines.push('');
-      lines.push('═══════════════════════════════════════════════════');
-      lines.push('  Contact: hello@mullawaysmedicalcannabis.com.au');
-      lines.push('  Website: mullawaysmedicalcannabis.com.au');
-      lines.push('═══════════════════════════════════════════════════');
-
-      const text = lines.join('\n');
-      const blob = new Blob([text], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `order-${order.ref}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
     });
 
   })();
