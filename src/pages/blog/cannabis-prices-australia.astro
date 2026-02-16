@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import ArticleFooter from '../../components/ArticleFooter.astro';
 
 const title = "How Much Does Weed Cost in Australia? 2026 Prices";
 const description = "Complete guide to Australian weed prices in 2026. How much does a gram cost? Compare cannabis prices by state, strain, and product type.";
@@ -325,11 +326,18 @@ const breadcrumbSchema = {
             <p>For those seeking legal, quality-assured cannabis products, medical access remains the recommended pathway. Consult with a healthcare provider to explore your options.</p>
           </section>
 
+          <ArticleFooter
+            datePublished="January 28, 2026"
+            dateReviewed="February 10, 2026"
+            sources={[
+              { title: "TGA — Access to Medicinal Cannabis Products", url: "https://www.tga.gov.au/medicinal-cannabis" },
+              { title: "Alcohol and Drug Foundation — Cannabis", url: "https://adf.org.au/drug-facts/cannabis/" },
+              { title: "AIHW — National Drug Strategy Household Survey", url: "https://www.aihw.gov.au/reports/illicit-use-of-drugs/national-drug-strategy-household-survey/" }
+            ]}
+          />
+
           <!-- Related Posts -->
           <div class="related-posts">
-            <h3>Related Articles</h3>
-            <div class="related-grid">
-              <a href="/blog/is-weed-legal-in-australia" class="related-card">
                 <span><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
                 <h4>Is Weed Legal in Australia?</h4>
               </a>

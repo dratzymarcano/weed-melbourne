@@ -3,9 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Cookies Policy", "item": "https://mullawaysmedicalcannabis.com.au/cookies-policy" }
+  ]
+};
 ---
 
-<Layout title="Cookies Policy | Mullaways Medical Cannabis Australia" description="Learn how Mullaways Medical Cannabis uses cookies to enhance your browsing experience. Cookie types, purposes, and how to manage your preferences.">
+<Layout title="Cookies Policy | Mullaways Medical Cannabis Australia" description="Learn how Mullaways Medical Cannabis uses cookies to enhance your browsing experience. Cookie types, purposes, and how to manage your preferences." schema={breadcrumbSchema}>
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Cookies Policy'}]} />

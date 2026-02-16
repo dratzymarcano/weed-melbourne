@@ -251,9 +251,33 @@ const categories = [
 const indicaProducts = products.filter(p => p.type === "Indica");
 const sativaProducts = products.filter(p => p.type === "Sativa");
 const hybridProducts = products.filter(p => p.type === "Hybrid");
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop" },
+    { "@type": "ListItem", "position": 3, "name": "Flower", "item": "https://mullawaysmedicalcannabis.com.au/shop/flower" }
+  ]
+};
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Cannabis Flower Australia",
+  "description": description,
+  "numberOfItems": products.length,
+  "itemListElement": products.map((p, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": p.name,
+    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}`
+  }))
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema]}>
   <Header />
   
   <main>

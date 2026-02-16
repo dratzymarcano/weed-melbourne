@@ -95,9 +95,38 @@ const iconMap: Record<string, string> = {
 const featuredPosts = posts.filter(p => p.featured);
 const recentPosts = posts.filter(p => !p.featured);
 const categories = [...new Set(posts.map(p => p.category))];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mullawaysmedicalcannabis.com.au/blog" }
+  ]
+};
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Mullaways Cannabis Blog",
+  "url": "https://mullawaysmedicalcannabis.com.au/blog",
+  "description": description,
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mullaways Medical Cannabis",
+    "url": "https://mullawaysmedicalcannabis.com.au"
+  },
+  "blogPost": posts.map(p => ({
+    "@type": "BlogPosting",
+    "headline": p.title,
+    "url": `https://mullawaysmedicalcannabis.com.au/blog/${p.slug}`,
+    "datePublished": p.date,
+    "description": p.excerpt
+  }))
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, blogSchema]}>
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog'}]} />

@@ -5,6 +5,7 @@ interface Props {
 	schema?: object | object[];
 	ogType?: string;
 	ogImage?: string;
+	noindex?: boolean;
 }
 
 const { 
@@ -12,8 +13,13 @@ const {
 	description = "Mullaways Medical Cannabis - Australia's trusted online dispensary. Buy weed online with discreet Australia-wide delivery. Lab-tested medical cannabis products.", 
 	schema,
 	ogType = "website",
-	ogImage = "https://mullawaysmedicalcannabis.com.au/og-default.png"
+	ogImage = "https://mullawaysmedicalcannabis.com.au/og-default.png",
+	noindex = false
 } = Astro.props;
+
+// Ensure canonical URL always has trailing slash for consistency
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://mullawaysmedicalcannabis.com.au');
+if (!canonicalURL.pathname.endsWith('/')) canonicalURL.pathname += '/';
 
 const defaultSchema = {
 	"@context": "https://schema.org",
@@ -47,14 +53,19 @@ const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="canonical" href={Astro.url.href} />
+		<link rel="canonical" href={canonicalURL.href} />
 		<meta name="generator" content={Astro.generator} />
+		{noindex ? (
+			<meta name="robots" content="noindex, nofollow" />
+		) : (
+			<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+		)}
 		
 		<!-- Open Graph -->
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content={ogType} />
-		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:url" content={canonicalURL.href} />
 		<meta property="og:site_name" content="Mullaways Medical Cannabis" />
 		<meta property="og:locale" content="en_AU" />
 		<meta property="og:image" content={ogImage} />

@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import ArticleFooter from '../../components/ArticleFooter.astro';
 
 const title = "THCA Australia 2026 | Legal Status and Where to Buy";
 const description = "Complete guide to THCA in Australia 2026. Legal status, benefits, how THCA differs from THC & where to buy THCA products. Expert information.";
@@ -367,11 +368,18 @@ const breadcrumbSchema = {
             </div>
           </section>
 
+          <ArticleFooter
+            datePublished="February 5, 2026"
+            dateReviewed="February 12, 2026"
+            sources={[
+              { title: "TGA — Medicinal Cannabis Regulation", url: "https://www.tga.gov.au/medicinal-cannabis" },
+              { title: "Health Direct Australia — Cannabis Information", url: "https://www.healthdirect.gov.au/cannabis" },
+              { title: "Australian Government — Drug Scheduling (Poisons Standard)", url: "https://www.legislation.gov.au/Series/F2020L01532" }
+            ]}
+          />
+
           <!-- Related Articles -->
           <div class="related-posts">
-            <h3>Related Articles</h3>
-            <div class="related-grid">
-              <a href="/blog/is-weed-legal-in-australia" class="related-card">
                 <span class="related-tag">Legal Guide</span>
                 <h4>Is Weed Legal in Australia?</h4>
                 <p>Complete breakdown of cannabis laws across all Australian states.</p>

@@ -1,0 +1,207 @@
+---
+interface Props {
+  datePublished: string;
+  dateReviewed: string;
+  sources: { title: string; url: string }[];
+}
+
+const { datePublished, dateReviewed, sources } = Astro.props;
+---
+
+<!-- E-E-A-T: Author Box, Sources & Review Date -->
+<aside class="eeat-section" aria-label="Article credentials and sources">
+  <!-- Author / Editorial Box -->
+  <div class="author-box">
+    <div class="author-avatar">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+    </div>
+    <div class="author-info">
+      <p class="author-label">Reviewed by</p>
+      <p class="author-name">Mullaways Medical Cannabis Editorial Team</p>
+      <p class="author-bio">Our editorial team includes qualified professionals with experience in cannabis science, Australian drug policy, and health communications. All content is fact-checked against government sources and peer-reviewed research before publication.</p>
+    </div>
+  </div>
+
+  <!-- Dates -->
+  <div class="review-dates">
+    <span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Published: {datePublished}
+    </span>
+    <span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Last reviewed: {dateReviewed}
+    </span>
+  </div>
+
+  <!-- Sources -->
+  {sources.length > 0 && (
+    <div class="sources-box">
+      <h3 class="sources-heading">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+        Sources &amp; References
+      </h3>
+      <ol class="sources-list">
+        {sources.map((s) => (
+          <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a></li>
+        ))}
+      </ol>
+    </div>
+  )}
+
+  <!-- Editorial Policy Notice -->
+  <p class="editorial-notice">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <strong>Editorial policy:</strong> This article is for informational purposes only and does not constitute medical or legal advice. Cannabis laws in Australia change frequently — always verify current legislation with official government sources. Consult a healthcare professional for medical cannabis guidance.
+  </p>
+</aside>
+
+<style>
+  .eeat-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e5e7eb;
+  }
+
+  .author-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .author-avatar {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #1a5632, #2d7a4a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .author-info {
+    flex: 1;
+  }
+
+  .author-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 2px;
+  }
+
+  .author-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 6px;
+  }
+
+  .author-bio {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .review-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+
+  .review-dates span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sources-box {
+    background: #fafaf9;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .sources-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 0.75rem;
+  }
+
+  .sources-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sources-list li {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.5;
+  }
+
+  .sources-list a {
+    color: #1a5632;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sources-list a:hover {
+    color: #2d7a4a;
+  }
+
+  .editorial-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #6b7280;
+    line-height: 1.6;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .editorial-notice svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #d97706;
+  }
+
+  @media (max-width: 640px) {
+    .author-box {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .review-dates {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

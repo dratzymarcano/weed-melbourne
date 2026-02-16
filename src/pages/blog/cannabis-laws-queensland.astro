@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import ArticleFooter from '../../components/ArticleFooter.astro';
 
 const title = "Cannabis Laws Queensland 2026 | Is Weed Legal QLD?";
 const description = "Complete guide to cannabis laws in Queensland 2026. Weed possession limits, penalties, medical cannabis access & recent QLD law changes explained.";
@@ -323,11 +324,18 @@ const breadcrumbSchema = {
             </div>
           </section>
 
+          <ArticleFooter
+            datePublished="January 20, 2026"
+            dateReviewed="February 10, 2026"
+            sources={[
+              { title: "Queensland Government — Drug Offences", url: "https://www.qld.gov.au/law/crime-and-police/types-of-crime/drug-offences" },
+              { title: "TGA — Special Access Scheme for Medicinal Cannabis", url: "https://www.tga.gov.au/medicinal-cannabis" },
+              { title: "Queensland Health — Alcohol, Tobacco and Other Drugs", url: "https://www.health.qld.gov.au/" }
+            ]}
+          />
+
           <!-- Related Articles -->
           <div class="related-posts">
-            <h3>Related Articles</h3>
-            <div class="related-grid">
-              <a href="/blog/is-weed-legal-in-australia" class="related-card">
                 <span><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
                 <h4>Is Weed Legal in Australia? Complete Guide</h4>
                 <p>State-by-state breakdown of cannabis laws across Australia.</p>

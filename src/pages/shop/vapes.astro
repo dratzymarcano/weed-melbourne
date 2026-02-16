@@ -268,9 +268,33 @@ const getCardMeta = (slug: string, fallbackPrice: number) => {
     reviewRating: getReviewRating(canonicalSlug),
   };
 };
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop" },
+    { "@type": "ListItem", "position": 3, "name": "Vapes", "item": "https://mullawaysmedicalcannabis.com.au/shop/vapes" }
+  ]
+};
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Cannabis Vapes Australia",
+  "description": description,
+  "numberOfItems": products.length,
+  "itemListElement": products.map((p, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": p.name,
+    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}`
+  }))
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema]}>
   <Header />
   
   <main>

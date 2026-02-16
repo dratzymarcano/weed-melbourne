@@ -51,9 +51,34 @@ const team = [
     description: "Working with quality suppliers to ensure premium products that meet the highest standards."
   }
 ];
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Mullaways Medical Cannabis",
+  "url": "https://mullawaysmedicalcannabis.com.au/about-us",
+  "description": description,
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Mullaways Medical Cannabis",
+    "url": "https://mullawaysmedicalcannabis.com.au",
+    "foundingLocation": { "@type": "Place", "name": "Mullaways, New South Wales, Australia" },
+    "areaServed": { "@type": "Country", "name": "Australia" },
+    "description": "Australia's trusted online cannabis dispensary delivering lab-tested medical cannabis products nationwide."
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
+    { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://mullawaysmedicalcannabis.com.au/about-us" }
+  ]
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={[aboutSchema, breadcrumbSchema]}>
   <Header />
   
   <main>

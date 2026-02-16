@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import ArticleFooter from '../../components/ArticleFooter.astro';
 
 const title = "Edibles vs Smoking Cannabis | Comparison Guide 2026";
 const description = "Compare edibles vs smoking cannabis in Australia. Onset times, duration, dosing & health effects explained. Find which method suits you best.";
@@ -332,11 +333,18 @@ const breadcrumbSchema = {
             </div>
           </section>
 
+          <ArticleFooter
+            datePublished="January 22, 2026"
+            dateReviewed="February 10, 2026"
+            sources={[
+              { title: "Health Direct Australia — Cannabis Effects", url: "https://www.healthdirect.gov.au/cannabis" },
+              { title: "TGA — Medicinal Cannabis Product Information", url: "https://www.tga.gov.au/medicinal-cannabis" },
+              { title: "Alcohol and Drug Foundation — Cannabis", url: "https://adf.org.au/drug-facts/cannabis/" }
+            ]}
+          />
+
           <!-- Related Articles -->
           <div class="related-posts">
-            <h3>Related Articles</h3>
-            <div class="related-grid">
-              <a href="/blog/cannabis-prices-australia" class="related-card">
                 <span><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg></span>
                 <h4>Cannabis Prices in Australia 2026</h4>
                 <p>Complete guide to weed prices across Australia.</p>

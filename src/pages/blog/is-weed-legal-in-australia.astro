@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import ArticleFooter from '../../components/ArticleFooter.astro';
 
 const title = "Is Weed Legal in Australia? 2026 Cannabis Laws";
 const description = "Australia weed laws explained. Is marijuana legal in Australia? Cannabis laws by state, penalties, and legal medical cannabis. Complete 2026 guide.";
@@ -291,11 +292,19 @@ const breadcrumbSchema = {
             <p>The landscape is evolving, and staying informed about your state's specific laws is essential. For those seeking legal cannabis products, medical access provides a lawful pathway to quality-controlled cannabis medicines.</p>
           </section>
 
+          <ArticleFooter
+            datePublished="January 15, 2026"
+            dateReviewed="February 10, 2026"
+            sources={[
+              { title: "Therapeutic Goods Administration — Medicinal Cannabis", url: "https://www.tga.gov.au/medicinal-cannabis" },
+              { title: "ACT Government — Cannabis Possession Laws", url: "https://www.legislation.act.gov.au/" },
+              { title: "NSW Government — Drug Penalties", url: "https://www.health.nsw.gov.au/" },
+              { title: "Health Direct Australia — Cannabis", url: "https://www.healthdirect.gov.au/cannabis" }
+            ]}
+          />
+
           <!-- Related Posts -->
           <div class="related-posts">
-            <h3>Related Articles</h3>
-            <div class="related-grid">
-              <a href="/blog/cannabis-laws-queensland" class="related-card">
                 <span><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></span>
                 <h4>Cannabis Laws in Queensland</h4>
               </a>
