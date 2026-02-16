@@ -1177,10 +1177,10 @@ import Footer from '../components/Footer.astro';
       const copyBtn = document.getElementById('btc-copy-address');
       if (copyBtn) copyBtn.dataset.copy = btcAddress;
 
-      // Generate QR code with the address
+      // Generate QR code with the address (URL-encode the bitcoin: URI for wallet compatibility)
       const qrImg = document.getElementById('btc-qr-image');
       if (qrImg && btcAddress) {
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:${btcAddress}`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('bitcoin:' + btcAddress)}`;
       }
 
       // ── Payment Timer (30 minutes) ──────────────────────────────
@@ -1249,6 +1249,11 @@ import Footer from '../components/Footer.astro';
               stepPayment.classList.add('completed');
             }
 
+            // Send order emails now that payment is confirmed (2+ confirmations)
+            if (!order.emailsSent) {
+              sendBtcOrderEmails(order);
+            }
+
             btcPollingActive = false;
             return;
           } else if (data.status === 'detected' || (data.confirmations > 0 && data.confirmations < 2)) {
@@ -1261,6 +1266,67 @@ import Footer from '../components/Footer.astro';
           }
         } catch (e) {
           console.log('Blockchain check failed:', e);
+        }
+      }
+
+      // ── Send BTC Order Emails (after 2 confirmations) ────────
+      async function sendBtcOrderEmails(order) {
+        const itemsList = order.items.map(i =>
+          `${i.name} x ${i.quantity} -- $${(i.price * i.quantity).toFixed(2)}`
+        ).join('\n');
+
+        const emailData = {
+          to_email: order.customer.email,
+          to_name: `${order.customer.firstName} ${order.customer.lastName}`,
+          order_ref: order.ref,
+          order_date: new Date(order.date).toLocaleDateString('en-AU', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+          }),
+          items_list: itemsList,
+          subtotal: `$${order.subtotal.toFixed(2)}`,
+          discount: order.discount > 0
+            ? `-$${order.discount.toFixed(2)} (Bitcoin 10% discount)`
+            : '$0.00',
+          shipping: `$${order.shipping.toFixed(2)}`,
+          total: `$${order.total.toFixed(2)}`,
+          payment_method: 'Bitcoin',
+          payment_status: 'Payment confirmed on blockchain',
+          payment_next_step: 'Your Bitcoin payment has been verified with 2+ blockchain confirmations. Your order is now being processed.',
+          shipping_address: `${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
+          delivery_method: order.shippingMethod === 'express'
+            ? 'Express (1-2 business days)'
+            : 'Standard (2-5 business days)',
+          customer_email: order.customer.email,
+          customer_phone: order.customer.phone,
+          btc_address: order.btcAddress || '',
+          psc_pin: '',
+        };
+
+        try {
+          const [custRes, adminRes] = await Promise.all([
+            fetch('/api/send-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ type: 'order-customer', data: emailData }),
+            }),
+            fetch('/api/send-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ type: 'order-admin', data: emailData }),
+            }),
+          ]);
+
+          if (custRes.ok) console.log('Customer confirmation email sent (BTC verified)');
+          if (adminRes.ok) console.log('Admin notification email sent (BTC verified)');
+
+          // Mark emails as sent
+          order.emailsSent = true;
+          localStorage.setItem('lastOrder', JSON.stringify(order));
+          const hist = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+          const hIdx = hist.findIndex(o => o.ref === order.ref);
+          if (hIdx !== -1) { hist[hIdx].emailsSent = true; localStorage.setItem('orderHistory', JSON.stringify(hist)); }
+        } catch (e) {
+          console.error('Failed to send BTC confirmation emails:', e);
         }
       }
 

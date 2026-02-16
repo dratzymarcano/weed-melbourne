@@ -62,7 +62,7 @@ function orderCustomerHTML(data) {
       <!-- Bitcoin Payment Details -->
       <div style="margin-top:24px;background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;padding:20px;text-align:center;">
         <p style="margin:0 0 12px;font-size:15px;color:#92400e;font-weight:600;">Bitcoin Payment Details</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:${btc_address}" alt="Bitcoin QR Code" width="180" height="180" style="border-radius:8px;margin-bottom:12px;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin%3A${btc_address}" alt="Bitcoin QR Code" width="180" height="180" style="border-radius:8px;margin-bottom:12px;">
         <p style="margin:0 0 4px;font-size:12px;color:#92400e;">Wallet Address:</p>
         <p style="margin:0;font-size:13px;color:#78350f;font-family:monospace;word-break:break-all;background:#fff7ed;border-radius:6px;padding:10px;">${btc_address}</p>
         <p style="margin:12px 0 0;font-size:12px;color:#92400e;">Send the exact total to this address. Your order will be processed once 2-3 blockchain confirmations are received.</p>

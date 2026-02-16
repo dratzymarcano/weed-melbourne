@@ -131,7 +131,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                   <p>Scan the QR code or copy the address below. Your <strong>10% Bitcoin discount</strong> has been applied to the total.</p>
                 </div>
                 <div class="qr-layout">
-                  <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
+                  <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin%3Abc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
                   <div class="qr-details">
                     <div class="qr-field">
                       <span>Bitcoin Address</span>
@@ -996,6 +996,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       payment: selectedPayment,
       btcAddress: selectedPayment === 'bitcoin' ? BTC_ADDRESS : '',
       status: 'pending',
+      emailsSent: false,
       pscPin,
       customer: {
         firstName: getFormValue('firstName'),
@@ -1031,19 +1032,31 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       orderHistory.unshift(order);
       localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
 
-      // Send confirmation emails (non-blocking — don't fail the order if email fails)
-      sendOrderEmails(order).then(result => {
-        if (result.customer.success) {
-          console.log('✓ Customer confirmation email sent to', order.customer.email);
-        } else {
-          console.log('Customer email not sent:', result.customer.reason);
-        }
-        if (result.admin.success) {
-          console.log('✓ Admin notification email sent for order', order.ref);
-        } else {
-          console.log('Admin email not sent:', result.admin.reason);
-        }
-      });
+      // Send confirmation emails
+      // For Bitcoin orders, emails are deferred until 2 blockchain confirmations
+      // (handled on the order-confirmation page after verification)
+      if (order.payment !== 'bitcoin') {
+        sendOrderEmails(order).then(result => {
+          if (result.customer.success) {
+            console.log('✓ Customer confirmation email sent to', order.customer.email);
+          } else {
+            console.log('Customer email not sent:', result.customer.reason);
+          }
+          if (result.admin.success) {
+            console.log('✓ Admin notification email sent for order', order.ref);
+          } else {
+            console.log('Admin email not sent:', result.admin.reason);
+          }
+          // Mark emails as sent
+          order.emailsSent = true;
+          localStorage.setItem('lastOrder', JSON.stringify(order));
+          const h = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+          const hi = h.findIndex(o => o.ref === order.ref);
+          if (hi !== -1) { h[hi].emailsSent = true; localStorage.setItem('orderHistory', JSON.stringify(h)); }
+        });
+      } else {
+        console.log('Bitcoin order — emails will be sent after 2 blockchain confirmations');
+      }
 
       // Clear the cart
       localStorage.removeItem('cart');
