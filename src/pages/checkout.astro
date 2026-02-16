@@ -689,56 +689,50 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   // ── EmailJS Configuration ─────────────────────────────────────────
   // ══════════════════════════════════════════════════════════════════
   //
-  // HOW TO SET UP EMAIL NOTIFICATIONS:
+  // HOW TO SET UP EMAIL NOTIFICATIONS (2 templates)
   //
   // 1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
   //
   // 2. Create an Email Service:
   //    - Go to "Email Services" → "Add New Service"
-  //    - Connect your Gmail, Outlook, or custom SMTP
+  //    - Connect your email (hello@mullawaysmedicalcannabis.com.au)
   //    - Copy the Service ID (e.g. "service_abc123")
   //
-  // 3. Create THREE email templates under "Email Templates":
+  // 3. Create TWO email templates under "Email Templates":
   //
-  //    Template 1: "Customer – Order Confirmed" (for Paysafecard)
-  //      Subject: "Order {{order_ref}} – Confirmed ✓"
+  //    Template 1: "Customer – Order Confirmation"
   //      To Email: {{to_email}}
-  //      Body: Use variables below (order_ref, to_name, items_list, etc.)
+  //      Subject: "Order {{order_ref}} – We've Received Your Order"
   //
-  //    Template 2: "Customer – Payment Pending" (for Bitcoin / Bank Transfer)
-  //      Subject: "Order {{order_ref}} – Awaiting Payment"
-  //      To Email: {{to_email}}
-  //      Body: Include payment_details variable for payment instructions
-  //
-  //    Template 3: "Admin – New Order Notification"
-  //      Subject: "🛒 New Order {{order_ref}} – ${{total}}"
-  //      To Email: SET YOUR ADMIN EMAIL DIRECTLY IN THE TEMPLATE
-  //      Body: Use all variables below for full order details
+  //    Template 2: "Admin – New Order"
+  //      To Email: hello@mullawaysmedicalcannabis.com.au (hardcode)
+  //      Reply To: {{customer_email}}
+  //      Subject: "🛒 New Order {{order_ref}} – {{total}} via {{payment_method}}"
   //
   //    Available template variables:
-  //      {{to_email}}          – Customer email (for customer templates)
-  //      {{to_name}}           – Customer full name
-  //      {{order_ref}}         – Order reference (e.g. MW-A1B2CDEF)
-  //      {{order_date}}        – Formatted date
-  //      {{items_list}}        – Line-by-line item list
-  //      {{subtotal}}          – Subtotal amount
-  //      {{discount}}          – Discount amount (if any)
-  //      {{shipping}}          – Shipping fee
-  //      {{total}}             – Total amount
-  //      {{payment_method}}    – Bitcoin / Bank Transfer / Paysafecard
-  //      {{payment_details}}   – Payment instructions
-  //      {{shipping_address}}  – Full delivery address
-  //      {{delivery_method}}   – Standard or Express
-  //      {{customer_email}}    – Customer email (for admin template)
-  //      {{customer_phone}}    – Customer phone (for admin template)
+  //      {{to_email}}           – Customer email
+  //      {{to_name}}            – Customer full name
+  //      {{order_ref}}          – Order reference (e.g. MW-A1B2CDEF)
+  //      {{order_date}}         – Formatted date
+  //      {{items_list}}         – Line-by-line item list
+  //      {{subtotal}}           – Subtotal amount
+  //      {{discount}}           – Discount amount
+  //      {{shipping}}           – Shipping fee
+  //      {{total}}              – Total amount
+  //      {{payment_method}}     – Bitcoin / Bank Transfer / Paysafecard
+  //      {{payment_status}}     – e.g. "Awaiting payment" or "Pending verification"
+  //      {{payment_next_step}}  – What the customer should do next
+  //      {{shipping_address}}   – Full delivery address
+  //      {{delivery_method}}    – Standard or Express
+  //      {{customer_email}}     – Customer email (for admin reply-to)
+  //      {{customer_phone}}     – Customer phone
   //
   // 4. Copy each Template ID and paste below:
   //
-  const EMAILJS_PUBLIC_KEY = '';                   // Your EmailJS public key (Account → API Keys)
-  const EMAILJS_SERVICE_ID = '';                   // Your EmailJS service ID
-  const EMAILJS_TEMPLATE_CUSTOMER_PAID = '';       // Template: Customer – Order Confirmed
-  const EMAILJS_TEMPLATE_CUSTOMER_PENDING = '';    // Template: Customer – Payment Pending
-  const EMAILJS_TEMPLATE_ADMIN = '';               // Template: Admin – New Order Notification
+  const EMAILJS_PUBLIC_KEY = '';               // Your EmailJS public key (Account → API Keys)
+  const EMAILJS_SERVICE_ID = '';               // Your EmailJS service ID
+  const EMAILJS_TEMPLATE_CUSTOMER = '';        // Template: Customer – Order Confirmation
+  const EMAILJS_TEMPLATE_ADMIN = '';           // Template: Admin – New Order
   //
   // ══════════════════════════════════════════════════════════════════
 
@@ -922,13 +916,19 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`
     ).join('\n');
 
-    let paymentDetails = '';
+    // Payment status & next steps differ per method
+    let paymentStatus = '';
+    let paymentNextStep = '';
+
     if (order.payment === 'bitcoin') {
-      paymentDetails = `Bitcoin Address: bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
+      paymentStatus = 'Awaiting Bitcoin payment';
+      paymentNextStep = 'Please send the exact amount shown on the order page to the Bitcoin address provided. Your order will be processed once the payment is confirmed on the blockchain.';
     } else if (order.payment === 'bank') {
-      paymentDetails = `PayID: payments@mullawaysmedicalcannabis.com.au\nBSB: 062-000\nAccount: 1234 5678\nAccount Name: Mullaways Pty Ltd\nAmount: $${order.total.toFixed(2)} AUD\nReference: ${order.ref}`;
+      paymentStatus = 'Awaiting bank transfer';
+      paymentNextStep = 'We will reply to this email with our bank/PayID details shortly. Once you receive them, please transfer the exact amount and include your order reference in the description.';
     } else if (order.payment === 'paysafecard') {
-      paymentDetails = `Paysafecard PIN submitted for verification.\nAmount: $${order.total.toFixed(2)} AUD`;
+      paymentStatus = 'Pending Paysafecard verification';
+      paymentNextStep = 'We are verifying your Paysafecard PIN. You will receive a confirmation once the payment has been validated. This usually takes a few hours.';
     }
 
     return {
@@ -948,7 +948,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       payment_method: order.payment === 'bitcoin' ? 'Bitcoin'
         : order.payment === 'bank' ? 'Bank Transfer'
         : 'Paysafecard',
-      payment_details: paymentDetails,
+      payment_status: paymentStatus,
+      payment_next_step: paymentNextStep,
       shipping_address: `${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
       delivery_method: order.shippingMethod === 'express'
         ? 'Express (1–2 business days)'
@@ -960,17 +961,14 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   // ── Send Customer Confirmation Email ─────────────────────────
   async function sendCustomerEmail(order) {
-    const isPaid = order.payment === 'paysafecard';
-    const templateId = isPaid ? EMAILJS_TEMPLATE_CUSTOMER_PAID : EMAILJS_TEMPLATE_CUSTOMER_PENDING;
-
-    if (!templateId) {
-      console.log('Customer email template not configured for payment type:', order.payment);
+    if (!EMAILJS_TEMPLATE_CUSTOMER) {
+      console.log('Customer email template not configured.');
       return { success: false, reason: 'no_template' };
     }
 
     try {
       const params = buildTemplateParams(order);
-      await window.emailjs.send(EMAILJS_SERVICE_ID, templateId, params);
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CUSTOMER, params);
       console.log('✓ Customer confirmation email sent to', order.customer.email);
       return { success: true };
     } catch (err) {
@@ -982,7 +980,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   // ── Send Admin Notification Email ────────────────────────────
   async function sendAdminEmail(order) {
     if (!EMAILJS_TEMPLATE_ADMIN) {
-      console.log('Admin notification template not configured — skipping.');
+      console.log('Admin notification template not configured.');
       return { success: false, reason: 'no_template' };
     }
 
