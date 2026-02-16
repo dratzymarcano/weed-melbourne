@@ -279,8 +279,8 @@ const breadcrumbSchema = {
       }
     });
 
-    // Smooth scroll for navigation
-    document.querySelectorAll('.nav-item').forEach(link => {
+    // Smooth scroll for category navigation only (scoped to avoid hijacking main nav)
+    document.querySelectorAll('.category-nav .nav-item').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const href = (link as HTMLAnchorElement).getAttribute('href');
@@ -335,6 +335,8 @@ const breadcrumbSchema = {
   }
 
   .hero-content {
+    position: relative;
+    z-index: 1;
     max-width: 640px;
     text-align: center;
     margin: 0 auto;
