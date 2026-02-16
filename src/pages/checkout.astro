@@ -9,6 +9,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   <Header />
 
   <main>
+    <!-- Bitcoin Discount Banner -->
+    <div class="btc-promo-bar">
+      <div class="container btc-promo-inner">
+        <svg width="18" height="18" viewBox="0 0 64 64" style="flex-shrink:0;"><circle cx="32" cy="32" r="32" fill="#F7931A"/><path d="M46.1 27.4c.6-4.2-2.6-6.5-7-8l1.4-5.7-3.5-.9-1.4 5.5c-.9-.2-1.9-.4-2.8-.7l1.4-5.5-3.5-.9-1.4 5.7c-.8-.2-1.5-.3-2.2-.5l0 0-4.8-1.2-.9 3.7s2.6.6 2.5.6c1.4.4 1.7 1.3 1.6 2l-1.6 6.6c.1 0 .2 0 .3.1l-.3-.1-2.3 9.2c-.2.4-.6 1.1-1.6.8 0 0-2.5-.6-2.5-.6l-1.7 4 4.5 1.1c.8.2 1.7.4 2.5.6l-1.5 5.8 3.5.9 1.4-5.7c1 .3 1.9.5 2.8.7l-1.4 5.7 3.5.9 1.5-5.8c5.8 1.1 10.2.7 12-4.6 1.5-4.3-.1-6.7-3.2-8.3 2.2-.5 3.9-2 4.4-5.1zm-7.8 10.9c-1.1 4.3-8.2 2-10.5 1.4l1.9-7.5c2.3.6 9.7 1.7 8.6 6.1zm1-11c-1 3.9-6.9 1.9-8.8 1.4l1.7-6.8c1.9.5 8.2 1.4 7.1 5.4z" fill="#FFF"/></svg>
+        <span><strong>Save 10%</strong> when you pay with Bitcoin &mdash; discount applied automatically at checkout</span>
+        <a href="/buy-bitcoin/" class="btc-promo-link">Learn more &rarr;</a>
+      </div>
+    </div>
+
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Cart', href: '/cart/'}, {label: 'Checkout'}]} />
     <section class="page-hero">
       <div class="hero-bg">
@@ -105,7 +114,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                   <input type="radio" name="payment" value="bank">
                   <div>
                     <span class="option-title">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:var(--color-primary);"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M3 10l9-7 9 7"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;"><circle cx="12" cy="12" r="12" fill="#2D5A4A"/><path d="M12 4.5L5 8.5V9.5H19V8.5L12 4.5Z" fill="#fff"/><rect x="6.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="9.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="12.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="15.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="5" y="16" width="14" height="1.5" rx="0.3" fill="#fff"/></svg>
                       Bank Transfer
                     </span>
                     <span class="option-meta">PayID (instant) or BSB transfer · Zero fees</span>
@@ -116,31 +125,13 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                   <input type="radio" name="payment" value="paysafecard">
                   <div>
                     <span class="option-title">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:#00a3e0;"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;"><rect width="24" height="24" rx="12" fill="#00B9F5"/><rect x="4" y="7" width="16" height="10" rx="2" fill="#fff"/><rect x="4" y="7" width="16" height="3.5" fill="#003D6A"/><rect x="6" y="13" width="5" height="1.5" rx="0.5" fill="#00B9F5"/><rect x="6" y="11.5" width="3" height="1" rx="0.5" fill="#ccc"/></svg>
                       Paysafecard
                     </span>
                     <span class="option-meta">Prepaid voucher · 16-digit PIN · Anonymous</span>
                     <a href="/pay-with-paysafecard/" class="payment-info-link">Learn how to pay with Paysafecard &rarr;</a>
                   </div>
                 </label>
-              </div>
-
-              <div class="payment-panel" id="bitcoin-panel">
-                <div class="panel-header">
-                  <h3>Pay with Bitcoin <span class="btc-discount-badge">10% OFF Applied</span></h3>
-                  <p>Scan the QR code or copy the address below. Your <strong>10% Bitcoin discount</strong> has been applied to the total.</p>
-                </div>
-                <div class="qr-layout">
-                  <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin%3Abc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
-                  <div class="qr-details">
-                    <div class="qr-field">
-                      <span>Bitcoin Address</span>
-                      <code>bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr</code>
-                    </div>
-                    <p class="helper">Send the exact total shown in your order summary.</p>
-                    <a href="/buy-bitcoin/" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--color-primary);font-size:0.85rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;">New to Bitcoin? Read our easy guide &rarr;</a>
-                  </div>
-                </div>
               </div>
 
               <div class="payment-panel" id="bank-panel" style="display: none;">
@@ -286,6 +277,43 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   .page-hero p {
     color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* ── Bitcoin Discount Promo Bar ───────────────────────── */
+  .btc-promo-bar {
+    background: linear-gradient(135deg, #1A3D32 0%, #2D5A4A 100%);
+    padding: 12px 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .btc-promo-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.92rem;
+    color: #FFFFFF;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .btc-promo-inner strong {
+    color: #F7931A;
+  }
+
+  .btc-promo-link {
+    color: #8BA888;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .btc-promo-link:hover {
+    color: #F7931A;
   }
 
   .checkout-section {
@@ -719,7 +747,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   const placeOrderBtn = document.getElementById('place-order-btn');
   const checkoutForm = document.getElementById('checkout-details');
 
-  const bitcoinPanel = document.getElementById('bitcoin-panel');
   const bankPanel = document.getElementById('bank-panel');
   const paysafecardPanel = document.getElementById('paysafecard-panel');
 
@@ -790,7 +817,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     const selectedPayment = getSelectedPayment();
 
     if (bankPanel) bankPanel.style.display = selectedPayment === 'bank' ? 'block' : 'none';
-    if (bitcoinPanel) bitcoinPanel.style.display = selectedPayment === 'bitcoin' ? 'block' : 'none';
     if (paysafecardPanel) paysafecardPanel.style.display = selectedPayment === 'paysafecard' ? 'block' : 'none';
 
     // Re-render summary to update Bitcoin discount
