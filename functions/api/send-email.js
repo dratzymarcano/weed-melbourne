@@ -174,7 +174,17 @@ function orderAdminHTML(data) {
     to_name, order_ref, order_date, items_list, subtotal,
     discount, shipping, total, payment_method, payment_status,
     shipping_address, delivery_method, customer_email, customer_phone,
+    psc_pin,
   } = data;
+
+  // Paysafecard PIN section (only when PIN is provided)
+  const pscPinSection = psc_pin ? `
+      <hr style="border:none;border-top:1px solid #eee;margin:16px 0;">
+      <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:16px;">
+        <p style="margin:0 0 6px;font-size:14px;color:#92400e;font-weight:600;">Paysafecard PIN</p>
+        <p style="margin:0;font-size:18px;color:#78350f;font-family:monospace;letter-spacing:2px;font-weight:bold;">${psc_pin}</p>
+        <p style="margin:8px 0 0;font-size:12px;color:#92400e;">Please verify this PIN at paysafecard.com before processing the order.</p>
+      </div>` : '';
 
   return `
 <!DOCTYPE html>
@@ -210,6 +220,7 @@ function orderAdminHTML(data) {
         <tr><td style="padding:3px 0;">Shipping:</td><td style="text-align:right;">${shipping}</td></tr>
         <tr><td style="padding:6px 0;font-weight:bold;font-size:16px;">Total:</td><td style="text-align:right;font-weight:bold;font-size:16px;">${total}</td></tr>
       </table>
+      ${pscPinSection}
     </div>
 
   </div>

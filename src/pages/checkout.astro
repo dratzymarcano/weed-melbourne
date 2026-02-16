@@ -131,11 +131,11 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                   <p>Scan the QR code or copy the address below. Your <strong>10% Bitcoin discount</strong> has been applied to the total.</p>
                 </div>
                 <div class="qr-layout">
-                  <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
+                  <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
                   <div class="qr-details">
                     <div class="qr-field">
                       <span>Bitcoin Address</span>
-                      <code>bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5</code>
+                      <code>bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr</code>
                     </div>
                     <p class="helper">Send the exact total shown in your order summary.</p>
                     <a href="/buy-bitcoin/" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--color-primary);font-size:0.85rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;">New to Bitcoin? Read our easy guide &rarr;</a>
@@ -725,7 +725,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   // ── Helpers ─────────────────────────────────────────────────────
   const BTC_DISCOUNT_RATE = 0.10; // 10% Bitcoin discount
-  const BTC_ADDRESS = 'bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5';
+  const BTC_ADDRESS = 'bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr';
 
   function getSelectedPayment() {
     const el = document.querySelector('input[name="payment"]:checked');
@@ -907,6 +907,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       customer_email: order.customer.email,
       customer_phone: order.customer.phone,
       btc_address: order.btcAddress || '',
+      psc_pin: order.pscPin || '',
     };
   }
 
