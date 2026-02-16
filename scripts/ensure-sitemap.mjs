@@ -20,7 +20,7 @@ export function normalizeSitemap(distDir) {
 
   const sitemapPath = join(distDir, 'sitemap.xml');
   let xml = readFileSync(sitemapPath, 'utf-8');
-  const xslPI = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>';
+  const xslPI = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl?v=20260216"?>';
   if (!xml.includes('xml-stylesheet')) {
     xml = xml.replace('<?xml version="1.0" encoding="UTF-8"?>', `<?xml version="1.0" encoding="UTF-8"?>\n${xslPI}`);
     writeFileSync(sitemapPath, xml);
