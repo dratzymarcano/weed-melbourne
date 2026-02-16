@@ -126,7 +126,8 @@ const products = [
     thc: "18-25%",
     price: 260,
     unit: "28g",
-    bestseller: false
+    bestseller: false,
+    newArrival: true
   },
   {
     id: 7,
@@ -136,7 +137,8 @@ const products = [
     thc: "15-20%",
     price: 250,
     unit: "28g",
-    bestseller: false
+    bestseller: false,
+    newArrival: true
   },
   {
     id: 8,
@@ -206,7 +208,8 @@ const products = [
     thc: "75-80%",
     price: 270,
     unit: "7g",
-    bestseller: false
+    bestseller: false,
+    newArrival: true
   },
   {
     id: 15,
@@ -266,7 +269,8 @@ const products = [
     thc: "50mg",
     price: 250,
     unit: "50 Pack",
-    bestseller: false
+    bestseller: false,
+    newArrival: true
   },
   {
     id: 21,
@@ -326,7 +330,8 @@ const products = [
     thc: "50-55%",
     price: 420,
     unit: "7g",
-    bestseller: false
+    bestseller: false,
+    newArrival: true
   }
 ];
 
@@ -443,6 +448,15 @@ const itemListSchema = {
               </div>
             </div>
 
+            <div class="sidebar-card sidebar-promo">
+              <div class="promo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z"/></svg>
+              </div>
+              <strong>Pay with Bitcoin &amp; Save 15%</strong>
+              <p>Get an automatic 15% discount when you pay with Bitcoin at checkout.</p>
+              <a href="/buy-bitcoin" class="btn btn-sm btn-primary">Learn More</a>
+            </div>
+
             <div class="sidebar-card">
               <h3>Need Help?</h3>
               <p>Not sure which product is right for you? Our team can help you find the perfect match.</p>
@@ -457,7 +471,11 @@ const itemListSchema = {
               <div class="products-grid">
                 {products.map((product) => (
                   <a href={`/shop/product/${product.slug}`} class="product-card">
-                    <div class={`product-badge ${categoryColors[product.category] || 'default'}`}>{product.category}</div>
+                    <div class="product-badges">
+                      <div class={`product-badge ${categoryColors[product.category] || 'default'}`}>{product.category}</div>
+                      {product.bestseller && <div class="product-badge badge-bestseller">Best Seller</div>}
+                      {product.newArrival && <div class="product-badge badge-new">New</div>}
+                    </div>
                     <div class="product-image">
                       {(() => {
                         const pd = getProductBySlug(product.slug);
@@ -648,6 +666,38 @@ const itemListSchema = {
     box-shadow: var(--shadow-sm);
   }
 
+  .sidebar-promo {
+    background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+    border: 1px solid #f59e0b33;
+    text-align: center;
+  }
+
+  .sidebar-promo .promo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #f7931a;
+    color: white;
+    border-radius: 50%;
+    margin-bottom: var(--space-sm);
+  }
+
+  .sidebar-promo strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: #92400e;
+  }
+
+  .sidebar-promo p {
+    font-size: 0.85rem;
+    color: #78350f;
+    margin-bottom: var(--space-md);
+    line-height: 1.5;
+  }
+
   .sidebar-card h3 {
     font-size: 1rem;
     margin-bottom: var(--space-md);
@@ -753,9 +803,6 @@ const itemListSchema = {
   }
 
   .product-badge {
-    position: absolute;
-    top: 16px;
-    left: 16px;
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.7rem;
@@ -764,6 +811,26 @@ const itemListSchema = {
     letter-spacing: 0.03em;
     z-index: 2;
     background: #f59e0b;
+    color: white;
+  }
+
+  .product-badges {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    z-index: 2;
+  }
+
+  .badge-bestseller {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    color: white;
+  }
+
+  .badge-new {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
     color: white;
   }
 

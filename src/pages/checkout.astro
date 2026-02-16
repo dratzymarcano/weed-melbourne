@@ -95,8 +95,9 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                     <span class="option-title">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;color:#f7931a;"><circle cx="12" cy="12" r="10"/><path d="M9.5 7.5V9H8V11H9.5V16.5H11.5V11H13.5L14 9H11.5V7.8C11.5 7.36 11.72 7.15 12.22 7.15H14V5H12.22C10.24 5 9.5 6.06 9.5 7.5Z"/></svg>
                       Bitcoin
+                      <span class="btc-discount-badge">15% OFF</span>
                     </span>
-                    <span class="option-meta">Instant confirmation · Private &amp; secure</span>
+                    <span class="option-meta">Instant confirmation · Private &amp; secure · <strong style="color:#059669;">Save 15% when you pay with Bitcoin</strong></span>
                     <a href="/buy-bitcoin" class="payment-info-link">Learn how to pay with Bitcoin &rarr;</a>
                   </div>
                 </label>
@@ -126,8 +127,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
               <div class="payment-panel" id="bitcoin-panel">
                 <div class="panel-header">
-                  <h3>Pay with Bitcoin</h3>
-                  <p>Scan the QR code or copy the address below.</p>
+                  <h3>Pay with Bitcoin <span class="btc-discount-badge">15% OFF Applied</span></h3>
+                  <p>Scan the QR code or copy the address below. Your <strong>15% Bitcoin discount</strong> has been applied to the total.</p>
                 </div>
                 <div class="qr-layout">
                   <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:bc1q9u4m8xj6z2s8n3m5s2m9vte0y6q5k9w8v4w0v5" alt="Bitcoin payment QR code for Mullaways Medical Cannabis checkout" width="180" height="180" loading="lazy">
@@ -196,6 +197,10 @@ import Breadcrumb from '../components/Breadcrumb.astro';
               <div class="summary-row">
                 <span>Delivery</span>
                 <span id="summary-shipping">$0.00</span>
+              </div>
+              <div class="summary-row summary-discount" id="summary-discount-row" style="display: none;">
+                <span style="color:#059669;font-weight:600;">Bitcoin Discount (15%)</span>
+                <span id="summary-discount" style="color:#059669;font-weight:600;">-$0.00</span>
               </div>
               <div class="summary-divider"></div>
               <div class="summary-row summary-total">
@@ -661,6 +666,20 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     vertical-align: middle;
     margin-right: 6px;
   }
+
+  .btc-discount-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
 </style>
 
 <script>
@@ -689,6 +708,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   const summarySubtotal = document.getElementById('summary-subtotal');
   const summaryShipping = document.getElementById('summary-shipping');
   const summaryTotal = document.getElementById('summary-total');
+  const summaryDiscountRow = document.getElementById('summary-discount-row');
+  const summaryDiscount = document.getElementById('summary-discount');
   const placeOrderBtn = document.getElementById('place-order-btn');
   const checkoutForm = document.getElementById('checkout-details');
 
@@ -697,6 +718,17 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   const paysafecardPanel = document.getElementById('paysafecard-panel');
 
   // ── Helpers ─────────────────────────────────────────────────────
+  const BTC_DISCOUNT_RATE = 0.15; // 15% Bitcoin discount
+
+  function getSelectedPayment() {
+    const el = document.querySelector('input[name="payment"]:checked');
+    return el instanceof HTMLInputElement ? el.value : 'bitcoin';
+  }
+
+  function getBtcDiscount(subtotal) {
+    return getSelectedPayment() === 'bitcoin' ? Math.round(subtotal * BTC_DISCOUNT_RATE * 100) / 100 : 0;
+  }
+
   function getShippingFee() {
     const selected = document.querySelector('input[name="delivery"]:checked');
     if (!(selected instanceof HTMLInputElement)) return 0;
@@ -720,7 +752,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const shipping = getShippingFee();
-    const total = subtotal + shipping;
+    const discount = getBtcDiscount(subtotal);
+    const total = subtotal + shipping - discount;
 
     summaryItems.innerHTML = cart.map((item) => `
       <div class="summary-item">
@@ -731,18 +764,30 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
     summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
     summaryShipping.textContent = `$${shipping.toFixed(2)}`;
+
+    // Show/hide Bitcoin discount row
+    if (summaryDiscountRow && summaryDiscount) {
+      if (discount > 0) {
+        summaryDiscountRow.style.display = 'flex';
+        summaryDiscount.textContent = `-$${discount.toFixed(2)}`;
+      } else {
+        summaryDiscountRow.style.display = 'none';
+      }
+    }
+
     summaryTotal.textContent = `$${total.toFixed(2)}`;
   }
 
   // ── Toggle Payment Panels ─────────────────────────────────────
   function togglePaymentPanels() {
-    const selectedPaymentEl = document.querySelector('input[name="payment"]:checked');
-    if (!(selectedPaymentEl instanceof HTMLInputElement)) return;
-    const selectedPayment = selectedPaymentEl.value;
+    const selectedPayment = getSelectedPayment();
 
     if (bankPanel) bankPanel.style.display = selectedPayment === 'bank' ? 'block' : 'none';
     if (bitcoinPanel) bitcoinPanel.style.display = selectedPayment === 'bitcoin' ? 'block' : 'none';
     if (paysafecardPanel) paysafecardPanel.style.display = selectedPayment === 'paysafecard' ? 'block' : 'none';
+
+    // Re-render summary to update Bitcoin discount
+    renderSummary();
   }
 
   // ── Validate Form ─────────────────────────────────────────────
@@ -858,6 +903,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         order_date: new Date(order.date).toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
         items_list: itemsList,
         subtotal: `$${order.subtotal.toFixed(2)}`,
+        discount: order.discount > 0 ? `-$${order.discount.toFixed(2)} (Bitcoin 15% discount)` : '$0.00',
         shipping: `$${order.shipping.toFixed(2)}`,
         total: `$${order.total.toFixed(2)}`,
         payment_method: order.payment === 'bitcoin' ? 'Bitcoin' : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard',
@@ -880,15 +926,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     if (!validateForm()) return;
 
     // Gather data
-    const selectedPaymentEl = document.querySelector('input[name="payment"]:checked');
-    const selectedPayment = selectedPaymentEl instanceof HTMLInputElement ? selectedPaymentEl.value : 'bitcoin';
+    const selectedPayment = getSelectedPayment();
 
     const selectedDeliveryEl = document.querySelector('input[name="delivery"]:checked');
     const shippingMethod = selectedDeliveryEl instanceof HTMLInputElement ? selectedDeliveryEl.value : 'standard';
     const shippingFee = getShippingFee();
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const total = subtotal + shippingFee;
+    const discount = getBtcDiscount(subtotal);
+    const total = subtotal + shippingFee - discount;
 
     let pscPin = '';
     if (selectedPayment === 'paysafecard') {
@@ -905,6 +951,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       subtotal,
       shipping: shippingFee,
       shippingMethod,
+      discount,
       total,
       payment: selectedPayment,
       pscPin,

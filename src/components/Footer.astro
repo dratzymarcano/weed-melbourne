@@ -89,6 +89,19 @@ const legalLinks = [
           </a>
           <p class="brand-description">Australia's most trusted online cannabis dispensary. Premium products, discreet delivery, and expert support since 2024.</p>
           
+          <!-- Social Media -->
+          <div class="social-links">
+            <a href="https://www.instagram.com/mullawaysmedical" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram" class="social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.facebook.com/mullawaysmedical" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook" class="social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://x.com/mullawaysmed" target="_blank" rel="noopener noreferrer" aria-label="Follow us on X" class="social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+            </a>
+          </div>
+
           <!-- Trust Indicators -->
           <div class="trust-badges">
             <div class="trust-badge">
@@ -379,7 +392,33 @@ const legalLinks = [
     color: rgba(255, 255, 255, 0.55);
     font-size: 0.9rem;
     line-height: 1.7;
-    margin: 0 0 var(--space-xl);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .social-links {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    color: rgba(255, 255, 255, 0.6);
+    transition: all var(--transition-fast);
+  }
+
+  .social-link:hover {
+    background: rgba(139, 168, 136, 0.2);
+    border-color: rgba(139, 168, 136, 0.4);
+    color: var(--color-sage);
+    transform: translateY(-2px);
   }
 
   .trust-badges {
@@ -646,6 +685,10 @@ const legalLinks = [
     .trust-badges {
       flex-direction: row;
       flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .social-links {
       justify-content: center;
     }
 

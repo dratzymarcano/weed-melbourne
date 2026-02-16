@@ -301,6 +301,10 @@ import Footer from '../components/Footer.astro';
                   <span>Subtotal</span>
                   <span id="summary-subtotal">$0.00</span>
                 </div>
+                <div class="summary-row" id="summary-discount-row" style="display: none;">
+                  <span style="color:#059669;font-weight:600;">Bitcoin Discount (15%)</span>
+                  <span id="summary-discount" style="color:#059669;font-weight:600;">-$0.00</span>
+                </div>
                 <div class="summary-row">
                   <span>Delivery</span>
                   <span id="summary-shipping">$0.00</span>
@@ -1177,6 +1181,15 @@ import Footer from '../components/Footer.astro';
     }
 
     document.getElementById('summary-subtotal').textContent = `$${order.subtotal.toFixed(2)}`;
+    
+    // Show Bitcoin discount if applicable
+    const discountRow = document.getElementById('summary-discount-row');
+    const discountEl = document.getElementById('summary-discount');
+    if (order.discount && order.discount > 0 && discountRow && discountEl) {
+      discountRow.style.display = 'flex';
+      discountEl.textContent = `-$${order.discount.toFixed(2)}`;
+    }
+
     document.getElementById('summary-shipping').textContent = `$${order.shipping.toFixed(2)}`;
     document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
 
