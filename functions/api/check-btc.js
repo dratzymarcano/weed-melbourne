@@ -22,7 +22,7 @@ export async function onRequestGet(context) {
 
   const headers = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://mullawaysmedicalcannabis.com.au',
     // Cache for 30 seconds to avoid hammering the API
     'Cache-Control': 'public, max-age=30',
   };

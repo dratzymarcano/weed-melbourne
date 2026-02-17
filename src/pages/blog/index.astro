@@ -14,6 +14,7 @@ const posts = [
     excerpt: "Everything you need to know about cannabis laws in Australia. Is weed legal? What are the penalties? We break down the current legal status of marijuana in Australia.",
     category: "Legal",
     date: "February 3, 2026",
+    isoDate: "2026-02-03",
     readTime: "8 min read",
     image: "scales",
     featured: true
@@ -24,6 +25,7 @@ const posts = [
     excerpt: "Complete guide to Australian weed prices. How much does a gram cost? What are medicinal cannabis prices? Compare costs across states and product types.",
     category: "Guide",
     date: "January 28, 2026",
+    isoDate: "2026-01-28",
     readTime: "6 min read",
     image: "dollar",
     featured: true
@@ -34,6 +36,7 @@ const posts = [
     excerpt: "Compare cannabis edibles and smoking. Onset times, duration, effects, and health considerations. Find out which consumption method is right for you.",
     category: "Education",
     date: "January 20, 2026",
+    isoDate: "2026-01-20",
     readTime: "7 min read",
     image: "gummy",
     featured: true
@@ -44,6 +47,7 @@ const posts = [
     excerpt: "Discover the most potent weed strains available in Australia. From OG Kush to Gorilla Glue, we rank the strongest medical strains by THC content.",
     category: "Strains",
     date: "January 15, 2026",
+    isoDate: "2026-01-15",
     readTime: "10 min read",
     image: "leaf",
     featured: false
@@ -54,6 +58,7 @@ const posts = [
     excerpt: "Is weed legal in QLD? How many plants for personal use? Complete guide to Queensland cannabis laws including penalties and medical access.",
     category: "Legal",
     date: "January 10, 2026",
+    isoDate: "2026-01-10",
     readTime: "7 min read",
     image: "clipboard",
     featured: false
@@ -64,6 +69,7 @@ const posts = [
     excerpt: "Safe ways to purchase cannabis in Australia. How to find reliable sources, avoid scams, and ensure product quality. Your complete safety guide.",
     category: "Guide",
     date: "January 5, 2026",
+    isoDate: "2026-01-05",
     readTime: "6 min read",
     image: "shield",
     featured: false
@@ -74,6 +80,7 @@ const posts = [
     excerpt: "Is THCA illegal in Australia? Understanding the difference between THCA and THC, legal considerations, and what it means for Australian consumers.",
     category: "Education",
     date: "December 28, 2025",
+    isoDate: "2025-12-28",
     readTime: "5 min read",
     image: "microscope",
     featured: false
@@ -120,7 +127,7 @@ const blogSchema = {
     "@type": "BlogPosting",
     "headline": p.title,
     "url": `https://mullawaysmedicalcannabis.com.au/blog/${p.slug}/`,
-    "datePublished": p.date,
+    "datePublished": p.isoDate,
     "description": p.excerpt
   }))
 };
