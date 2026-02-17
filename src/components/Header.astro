@@ -1167,7 +1167,7 @@ const productImageMap = Object.fromEntries(
   document.addEventListener('touchmove', (e) => {
     if (!nav?.classList.contains('active')) return;
     // Allow scrolling inside the nav itself
-    if (nav && nav.contains(e.target as Node)) return;
+    if (nav && nav.contains(e.target)) return;
     e.preventDefault();
   }, { passive: false });
 
@@ -1252,7 +1252,7 @@ const productImageMap = Object.fromEntries(
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     
     // Clean up invalid cart items (no name or undefined)
-    const cleanedCart = cart.filter((item: any) => item.name && item.name !== 'undefined');
+    const cleanedCart = cart.filter((item) => item.name && item.name !== 'undefined');
     if (cleanedCart.length !== cart.length) {
       localStorage.setItem('cart', JSON.stringify(cleanedCart));
       cart = cleanedCart;
@@ -1260,7 +1260,7 @@ const productImageMap = Object.fromEntries(
     }
     
     // Calculate total items
-    const totalItems = cart.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0);
+    const totalItems = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
     
     // Update item count in header
     if (cartModalCount) {
@@ -1277,7 +1277,7 @@ const productImageMap = Object.fromEntries(
         cartModalItems.style.display = 'flex';
         const leafIcon = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg>';
 
-        const getImageForItem = (item: any) => {
+        const getImageForItem = (item) => {
           if (item?.image) return item.image;
           const baseName = String(item?.name || '')
             .replace(/\s*\([^)]*\)\s*$/, '')
@@ -1287,7 +1287,7 @@ const productImageMap = Object.fromEntries(
           return '';
         };
 
-        cartModalItems.innerHTML = cart.map((item: any, index: number) => `
+        cartModalItems.innerHTML = cart.map((item, index) => `
           <div class="cart-modal-item">
             <div class="cart-modal-item-image">${getImageForItem(item) ? `<img src="${getImageForItem(item)}" alt="${item.name || 'Product'}" loading="lazy" />` : (item.icon || leafIcon)}</div>
             <div class="cart-modal-item-details">
@@ -1309,21 +1309,21 @@ const productImageMap = Object.fromEntries(
         // Add remove handlers
         cartModalItems.querySelectorAll('.cart-modal-item-remove').forEach(btn => {
           btn.addEventListener('click', (e) => {
-            const index = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
+            const index = parseInt(e.currentTarget.getAttribute('data-index') || '0');
             removeFromCart(index);
           });
         });
       }
       if (cartModalFooter) cartModalFooter.style.display = 'block';
       
-      const total = cart.reduce((acc: number, item: any) => {
+      const total = cart.reduce((acc, item) => {
         return acc + ((parseFloat(item.price) || 0) * (item.quantity || 1));
       }, 0);
       if (cartModalTotal) cartModalTotal.textContent = `$${total.toFixed(2)}`;
     }
   }
 
-  function removeFromCart(index: number) {
+  function removeFromCart(index) {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -1334,7 +1334,7 @@ const productImageMap = Object.fromEntries(
   // Cart count from localStorage
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const count = cart.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0);
+    const count = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
     const cartCountEl = document.getElementById('cart-count');
     if (cartCountEl) {
       cartCountEl.textContent = count.toString();
