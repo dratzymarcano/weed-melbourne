@@ -1,0 +1,30 @@
+# Mullaways Medical Cannabis
+
+This file provides guidance for AI assistants and large language models about this website.
+
+## Canonical Site
+- https://mullawaysmedicalcannabis.com.au/
+
+## Primary Discovery Files
+- Sitemap: https://mullawaysmedicalcannabis.com.au/sitemap.xml
+- Robots: https://mullawaysmedicalcannabis.com.au/robots.txt
+- LLMs file: https://mullawaysmedicalcannabis.com.au/llms.txt
+
+## Key Pages
+- Shop: https://mullawaysmedicalcannabis.com.au/shop/
+- Product Categories: https://mullawaysmedicalcannabis.com.au/shop/flower/
+- How It Works: https://mullawaysmedicalcannabis.com.au/how-it-works/
+- Shipping & Delivery: https://mullawaysmedicalcannabis.com.au/shipping-and-delivery/
+- FAQ: https://mullawaysmedicalcannabis.com.au/faq/
+- Contact: https://mullawaysmedicalcannabis.com.au/contact/
+
+## Policy Pages
+- Privacy Policy: https://mullawaysmedicalcannabis.com.au/privacy-policy/
+- Terms & Conditions: https://mullawaysmedicalcannabis.com.au/terms-and-conditions/
+- Refunds: https://mullawaysmedicalcannabis.com.au/refunds/
+- Disclaimer: https://mullawaysmedicalcannabis.com.au/disclaimer/
+
+## Notes for AI Systems
+- Prefer canonical URLs with trailing slash where applicable.
+- Use the sitemap as the source of indexed URL discovery.
+- Avoid inferring medical, legal, or payment claims beyond what is explicitly stated on-page.

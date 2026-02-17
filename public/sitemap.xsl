@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0"
+<xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9">
 
@@ -28,16 +28,19 @@
             color: #666;
           }
           .list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            margin: 0;
+            padding-left: 24px;
           }
-          a {
+          .list li {
+            margin: 0 0 8px;
+          }
+          .list a {
             color: #1a56db;
             text-decoration: none;
             word-break: break-all;
+            cursor: pointer;
           }
-          a:hover {
+          .list a:hover {
             text-decoration: underline;
           }
         </style>
@@ -45,11 +48,13 @@
       <body>
         <h1>Sitemap</h1>
         <p class="count">URLs: <xsl:value-of select="count(sitemap:urlset/sitemap:url)"/></p>
-        <div class="list">
+        <ul class="list">
           <xsl:for-each select="sitemap:urlset/sitemap:url">
-            <a href="{sitemap:loc}"><xsl:value-of select="sitemap:loc"/></a>
+            <li>
+              <a href="{sitemap:loc}"><xsl:value-of select="sitemap:loc"/></a>
+            </li>
           </xsl:for-each>
-        </div>
+        </ul>
       </body>
     </html>
   </xsl:template>
