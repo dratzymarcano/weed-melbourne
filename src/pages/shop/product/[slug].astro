@@ -237,7 +237,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
               <div class="price-display">
                 <span class="current-price" id="current-price">${Math.round(product.basePrice * weightVariants[0].multiplier)}</span>
               </div>
-              <button class="btn btn-primary btn-large add-to-cart-btn" id="add-to-cart-btn" data-name={product.name} data-base-price={product.basePrice}>
+              <button class="btn btn-primary btn-large add-to-cart-btn" id="add-to-cart-btn" data-name={product.name} data-base-price={product.basePrice} data-image={product.image || ''}>
                 Add to Cart
               </button>
             </div>
@@ -1646,6 +1646,7 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
   document.getElementById('add-to-cart-btn')?.addEventListener('click', () => {
     const btn = document.getElementById('add-to-cart-btn') as HTMLButtonElement;
     const name = btn.dataset.name;
+    const image = btn.dataset.image || '';
     const selectedOption = document.querySelector('.weight-option.selected input') as HTMLInputElement;
     const multiplier = parseFloat(selectedOption?.dataset.multiplier || '1');
     const basePrice = parseFloat(btn.dataset.basePrice || '0');
@@ -1658,8 +1659,11 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
     
     if (existingItem) {
       existingItem.quantity = (existingItem.quantity || 1) + 1;
+      if (!existingItem.image && image) {
+        existingItem.image = image;
+      }
     } else {
-      cart.push({ name: productName, price, quantity: 1 });
+      cart.push({ name: productName, price, quantity: 1, image });
     }
     
     localStorage.setItem('cart', JSON.stringify(cart));
