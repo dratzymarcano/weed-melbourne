@@ -358,6 +358,34 @@ const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 		overflow: hidden;
 	}
 
+	:where(main, section, article, aside, .container, .grid-2, .grid-3, .grid-4) {
+		min-width: 0;
+	}
+
+	main :where(h1, h2, h3, h4, h5, h6, p, a, li, span, strong) {
+		overflow-wrap: anywhere;
+	}
+
+	main table,
+	main iframe,
+	main video,
+	main embed,
+	main object,
+	main canvas {
+		max-width: 100%;
+	}
+
+	main table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	main pre {
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
 	a {
 		text-decoration: none;
 		color: inherit;
@@ -997,6 +1025,11 @@ const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
 		
 		.container {
 			padding: 0 var(--space-md);
+		}
+
+		.cookie-btn-accept {
+			white-space: normal;
+			text-align: center;
 		}
 	}
 
