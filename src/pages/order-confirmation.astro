@@ -469,7 +469,7 @@ import Footer from '../components/Footer.astro';
 
   /* Main Layout */
   .confirmation-section {
-    padding: 48px 0 80px;
+    padding: var(--space-2xl) 0 var(--space-4xl);
     background: #f9faf8;
   }
 
@@ -485,7 +485,7 @@ import Footer from '../components/Footer.astro';
     background: #fff;
     border: 1px solid #e8e4de;
     border-radius: 16px;
-    padding: 28px;
+    padding: clamp(18px, 3vw, 28px);
     margin-bottom: 24px;
   }
 
@@ -1033,6 +1033,36 @@ import Footer from '../components/Footer.astro';
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
+
+    .confirmation-section {
+      padding: var(--space-2xl) 0 var(--space-3xl);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .btc-timer-bar,
+    .btc-status-bar,
+    .payment-alert,
+    .copyable-field {
+      align-items: flex-start;
+    }
+
+    .btc-status-bar,
+    .payment-details-grid {
+      flex-direction: column;
+    }
+
+    .copyable-field {
+      flex-wrap: wrap;
+    }
+
+    .copy-btn {
+      margin-left: auto;
+    }
+
+    .summary-actions .btn {
+      width: 100%;
+    }
   }
 
   @media (max-width: 600px) {
@@ -1072,6 +1102,14 @@ import Footer from '../components/Footer.astro';
 
     .card-header {
       flex-direction: column;
+    }
+
+    .timeline-step {
+      padding-bottom: 20px;
+    }
+
+    .confirmation-section {
+      padding-bottom: var(--space-2xl);
     }
   }
 

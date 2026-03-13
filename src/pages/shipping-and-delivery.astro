@@ -7,6 +7,29 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 const title = "Shipping & Delivery | Mullaways Medical Cannabis";
 const description = "Fast, discreet cannabis delivery across Australia. Standard $9.95 (2-5 days), Express $19.95 (1-2 days). Vacuum sealed, tracked shipping.";
 
+const shippingFaqs = [
+  {
+    q: 'Can I change my delivery address after ordering?',
+    a: 'Contact us immediately after placing your order. We can update the address if the order has not been dispatched yet. Once dispatched, address changes are not possible.'
+  },
+  {
+    q: 'Do you offer free shipping?',
+    a: 'Shipping promotions can change over time. Check the homepage or checkout for any current delivery offers before placing your order.'
+  },
+  {
+    q: 'Can someone else sign for my package?',
+    a: 'Yes. Any adult at the delivery address can sign, provided they can accept a signature-required parcel.'
+  },
+  {
+    q: 'What if I am not home for delivery?',
+    a: 'The courier will usually leave instructions so you can reschedule delivery or collect from a nearby pickup point.'
+  },
+  {
+    q: 'How is my package labelled?',
+    a: 'All packages use plain, unmarked packaging with a generic return label and no reference to the contents.'
+  }
+];
+
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -15,9 +38,91 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 2, "name": "Shipping & Delivery", "item": "https://mullawaysmedicalcannabis.com.au/shipping-and-delivery/" }
   ]
 };
+
+const shippingPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": title,
+  "url": "https://mullawaysmedicalcannabis.com.au/shipping-and-delivery/",
+  "description": description,
+  "about": {
+    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+  }
+};
+
+const standardShippingSchema = {
+  "@context": "https://schema.org",
+  "@type": "OfferShippingDetails",
+  "shippingRate": {
+    "@type": "MonetaryAmount",
+    "value": "9.95",
+    "currency": "AUD"
+  },
+  "shippingDestination": {
+    "@type": "DefinedRegion",
+    "addressCountry": "AU"
+  },
+  "deliveryTime": {
+    "@type": "ShippingDeliveryTime",
+    "handlingTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 1,
+      "maxValue": 2,
+      "unitCode": "DAY"
+    },
+    "transitTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 2,
+      "maxValue": 5,
+      "unitCode": "DAY"
+    }
+  }
+};
+
+const expressShippingSchema = {
+  "@context": "https://schema.org",
+  "@type": "OfferShippingDetails",
+  "shippingRate": {
+    "@type": "MonetaryAmount",
+    "value": "19.95",
+    "currency": "AUD"
+  },
+  "shippingDestination": {
+    "@type": "DefinedRegion",
+    "addressCountry": "AU"
+  },
+  "deliveryTime": {
+    "@type": "ShippingDeliveryTime",
+    "handlingTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 0,
+      "maxValue": 1,
+      "unitCode": "DAY"
+    },
+    "transitTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 1,
+      "maxValue": 2,
+      "unitCode": "DAY"
+    }
+  }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": shippingFaqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
 ---
 
-<Layout title={title} description={description} schema={breadcrumbSchema}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, shippingPageSchema, standardShippingSchema, expressShippingSchema, faqSchema]}>
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shipping & Delivery'}]} />
@@ -390,30 +495,12 @@ const breadcrumbSchema = {
               <h2>Frequently Asked Questions</h2>
               
               <div class="faq-list">
-                <div class="faq-item">
-                  <h3>Can I change my delivery address after ordering?</h3>
-                  <p>Contact us immediately after placing your order. We can update the address if the order hasn't been dispatched yet. Once dispatched, address changes are not possible.</p>
-                </div>
-
-                <div class="faq-item">
-                  <h3>Do you offer free shipping?</h3>
-                  <p>We occasionally offer free shipping promotions for orders over a certain value. Check our homepage for current offers.</p>
-                </div>
-
-                <div class="faq-item">
-                  <h3>Can someone else sign for my package?</h3>
-                  <p>Yes, anyone at the delivery address who is 18 or older can sign for the package. They will need to show ID to verify their age.</p>
-                </div>
-
-                <div class="faq-item">
-                  <h3>What if I'm not home for delivery?</h3>
-                  <p>The courier will leave a card with instructions. You can reschedule delivery or collect from a nearby pickup point (usually a post office or parcel locker).</p>
-                </div>
-
-                <div class="faq-item">
-                  <h3>How is my package labelled?</h3>
-                  <p>All packages use plain, unmarked packaging with a generic business name on the return label. There's no indication of the contents.</p>
-                </div>
+                {shippingFaqs.map((faq) => (
+                  <div class="faq-item">
+                    <h3>{faq.q}</h3>
+                    <p>{faq.a}</p>
+                  </div>
+                ))}
               </div>
             </section>
           </article>
@@ -540,7 +627,7 @@ const breadcrumbSchema = {
     position: relative;
     background: white;
     border-radius: var(--radius-xl);
-    padding: var(--space-2xl);
+    padding: clamp(18px, 3vw, 32px);
     border: 1px solid var(--color-sand);
     text-align: center;
   }
@@ -849,6 +936,7 @@ const breadcrumbSchema = {
   .dispatch-row {
     display: flex;
     justify-content: space-between;
+    gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
     border-bottom: 1px solid var(--color-sand);
   }
@@ -981,6 +1069,10 @@ const breadcrumbSchema = {
       top: 0;
     }
 
+    .content-wrapper {
+      gap: var(--space-2xl);
+    }
+
     .feature-grid {
       grid-template-columns: 1fr;
     }
@@ -992,8 +1084,41 @@ const breadcrumbSchema = {
       padding: var(--space-2xl) 0;
     }
 
+    .shape-1 {
+      width: 240px;
+      height: 240px;
+      top: -100px;
+      right: -80px;
+    }
+
+    .shape-2 {
+      width: 180px;
+      height: 180px;
+      bottom: -90px;
+      left: -70px;
+    }
+
     .times-grid {
       grid-template-columns: 1fr;
+    }
+
+    .table-of-contents {
+      padding: var(--space-lg);
+    }
+
+    .note-box,
+    .warning-box,
+    .feature-item {
+      flex-direction: column;
+    }
+
+    .dispatch-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .policy-content {
+      max-width: 100%;
     }
 
     .policy-section h2 {

@@ -219,6 +219,39 @@ const products = [
   { name: "THC Gummies 10mg", slug: "premium-thc-gummies-10mg", type: "Edible", thc: "10mg", weight: "20 pack", price: 69, description: "Delicious THC gummies Australia", effects: ["Happy", "Relaxed", "Uplifted"], flavour: "Mixed Fruit" },
 ];
 
+const cityFaqs = [
+  {
+    q: `Do you deliver to all ${cityName} suburbs?`,
+    a: `Yes. We deliver to metro and regional addresses linked to ${cityName} and throughout ${state}, subject to courier coverage and signature-required delivery.`
+  },
+  {
+    q: `How long does delivery to ${cityName} usually take?`,
+    a: `Most orders to ${cityName} arrive in ${deliveryTime}. Delivery times can shift slightly during public holidays or heavy courier periods.`
+  },
+  {
+    q: 'Is the packaging discreet?',
+    a: 'Yes. Orders are packed in plain, unmarked packaging with tracking and signature requirements for a more secure handover.'
+  },
+  {
+    q: 'Where can I get help before ordering?',
+    a: 'Use the FAQ, shipping page, or contact form if you need help with delivery times, payment options, or choosing the right category.'
+  }
+];
+
+const trustLinks = [
+  { href: '/shipping-and-delivery/', title: 'Shipping & Delivery', detail: `Full dispatch standards and packaging details for ${cityName} orders.` },
+  { href: '/faq/', title: 'Cannabis FAQ Australia', detail: 'Answer-first support for ordering, delivery, and general buying questions.' },
+  { href: '/pay-with-bank-transfer/', title: 'Bank Transfer Guide', detail: 'Clear checkout guidance for customers using bank transfer.' },
+  { href: '/contact/#contact-form', title: 'Email Support', detail: 'Ask questions or submit feedback with your order reference.' },
+];
+
+const intentLinks = [
+  { href: '/shop/flower/', title: 'Cannabis Flower', detail: 'Popular flower strains with clear THC, flavour, and effect summaries.' },
+  { href: '/shop/edibles/', title: 'THC Gummies & Edibles', detail: 'Discreet edible options with dosage-led format intent.' },
+  { href: '/blog/is-weed-legal-in-australia/', title: 'Legal Guide', detail: 'Context for legality, access, and high-intent informational searches.' },
+  { href: '/locations/', title: 'More Delivery Areas', detail: 'Internal links to other city and regional delivery pages across Australia.' },
+];
+
 const benefits = [
   { icon: "✓", title: "Trusted Dispensary", description: "Australia's trusted online cannabis dispensary" },
   { icon: "✓", title: "Lab-Tested Products", description: "Every product tested for potency and purity" },
@@ -238,33 +271,51 @@ const steps = [
 // Generate SEO meta description (under 160 chars)
 const metaDescription = `Buy weed ${cityName} with fast ${deliveryTime} delivery. Lab-tested cannabis flower, edibles, vapes. Discreet shipping to ${cityName}, ${stateAbbr}.`;
 
-// MedicalClinic Schema for city pages to support E-E-A-T
-const localBusinessSchema = {
+const cityPageSchema = {
   "@context": "https://schema.org",
-  "@type": "MedicalClinic",
-  "name": `Mullaways Medical Cannabis - Delivery to ${cityName}`,
-  "description": `Safe, legal, and educational access to medical cannabis in ${cityName}, ${state}. Empowering patients with lab-tested products and discreet delivery to ${cityName} and surrounding areas.`,
+  "@type": "WebPage",
+  "name": `Buy Weed ${cityName} | Cannabis Delivery ${stateAbbr}`,
+  "description": metaDescription,
   "url": `https://mullawaysmedicalcannabis.com.au/${city}/`,
-  "medicalSpecialty": "https://en.wikipedia.org/wiki/Medical_cannabis",
-  "availableService": {
-    "@type": "MedicalProcedure",
-    "name": "Cannabis Dispensing & Patient Education"
+  "about": {
+    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
   },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": cityName,
-    "addressRegion": stateAbbr,
-    "addressCountry": "AU"
+  "mainEntity": {
+    "@type": "Service",
+    "name": `Cannabis delivery ${cityName}`,
+    "areaServed": {
+      "@type": "City",
+      "name": cityName
+    },
+    "provider": {
+      "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+    }
   },
-  "areaServed": {
-    "@type": "City",
-    "name": cityName
-  },
-  "parentOrganization": {
-    "@type": "Organization",
-    "name": "Mullaways Medical Cannabis",
-    "url": "https://mullawaysmedicalcannabis.com.au"
-  }
+  "keywords": keywords.join(', ')
+};
+
+const cityFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": cityFaqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const cityItemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `Popular cannabis products in ${cityName}`,
+  "itemListElement": products.map((product, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/`
+  }))
 };
 
 const breadcrumbSchema = {
@@ -278,7 +329,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={`Buy Weed ${cityName} | Cannabis Delivery ${stateAbbr} | Mullaways`} description={metaDescription} schema={[localBusinessSchema, breadcrumbSchema]}>
+<Layout title={`Buy Weed ${cityName} | Cannabis Delivery ${stateAbbr} | Mullaways`} description={metaDescription} schema={[cityPageSchema, cityFaqSchema, cityItemListSchema, breadcrumbSchema]}>
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Locations', href: '/locations/'}, {label: `Buy Weed ${cityName}`}]} />
@@ -332,8 +383,8 @@ const breadcrumbSchema = {
                 <span class="stat-label">Products</span>
               </div>
               <div class="stat">
-                <span class="stat-value">4.9</span>
-                <span class="stat-label">Rating</span>
+                <span class="stat-value">Tracked</span>
+                <span class="stat-label">Shipping</span>
               </div>
             </div>
           </div>
@@ -358,6 +409,24 @@ const breadcrumbSchema = {
                 <p>{benefit.description}</p>
               </div>
             </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Trust & Support</span>
+          <h2>Proof Signals for {cityName} Orders</h2>
+          <p>These pages support the delivery, payment, and support claims made on this location page.</p>
+        </div>
+        <div class="proof-grid">
+          {trustLinks.map((link) => (
+            <a href={link.href} class="proof-card">
+              <strong>{link.title}</strong>
+              <span>{link.detail}</span>
+            </a>
           ))}
         </div>
       </div>
@@ -480,8 +549,8 @@ const breadcrumbSchema = {
               <li>
                 <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
                 <div>
-                  <strong>Free Shipping</strong>
-                  <p>On all orders over $150</p>
+                  <strong>Shipping Standards</strong>
+                  <p>See the delivery page for current pricing, dispatch windows, and coverage details</p>
                 </div>
               </li>
             </ul>
@@ -505,25 +574,33 @@ const breadcrumbSchema = {
           <h2>Frequently Asked About {cityName} Delivery</h2>
         </div>
         <div class="faq-grid">
-          <div class="faq-item">
-            <h3>Do you deliver to all {cityName} suburbs?</h3>
-            <p>Yes! We deliver to all suburbs in {cityName} and throughout {state}. Regional areas are also covered with slightly longer delivery times.</p>
-          </div>
-          <div class="faq-item">
-            <h3>What do I need to order?</h3>
-            <p>You need to be 18 years or older with a valid Australian address. Simply add products to your cart, enter your delivery details, and complete checkout.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Is the packaging discreet?</h3>
-            <p>Absolutely. All orders are shipped in plain, unmarked packaging with no indication of the contents. Your privacy is our priority.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Can I track my order?</h3>
-            <p>Yes, you'll receive tracking information via email once your order ships. Track your delivery in real-time from our warehouse to your door.</p>
-          </div>
+          {cityFaqs.map((faq) => (
+            <div class="faq-item">
+              <h3>{faq.q}</h3>
+              <p>{faq.a}</p>
+            </div>
+          ))}
         </div>
         <div class="faq-cta">
           <a href="/faq/" class="btn btn-secondary">View All FAQs</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="intent-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Related Paths</span>
+          <h2>More Ways to Explore Before You Order</h2>
+          <p>Commercial and informational internal links help this page connect with the rest of the site’s coverage.</p>
+        </div>
+        <div class="intent-grid">
+          {intentLinks.map((link) => (
+            <a href={link.href} class="intent-card">
+              <strong>{link.title}</strong>
+              <span>{link.detail}</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
@@ -760,6 +837,55 @@ const breadcrumbSchema = {
     font-size: 1.125rem;
     max-width: 600px;
     margin: 0 auto;
+  }
+
+  .proof-section,
+  .intent-section {
+    padding: 4.5rem 0;
+    background: #f8f5ef;
+  }
+
+  .intent-section {
+    background: white;
+  }
+
+  .proof-grid,
+  .intent-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .proof-card,
+  .intent-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    text-decoration: none;
+    color: var(--color-eucalyptus);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .proof-card:hover,
+  .intent-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  }
+
+  .proof-card strong,
+  .intent-card strong {
+    font-size: 1rem;
+  }
+
+  .proof-card span,
+  .intent-card span {
+    color: #667085;
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
   /* Benefits Section */
@@ -1299,6 +1425,11 @@ const breadcrumbSchema = {
   }
 
   @media (max-width: 1024px) {
+    .proof-grid,
+    .intent-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     .hero .container {
       grid-template-columns: 1fr;
       text-align: center;
@@ -1335,6 +1466,11 @@ const breadcrumbSchema = {
   }
 
   @media (max-width: 768px) {
+    .proof-grid,
+    .intent-grid {
+      grid-template-columns: 1fr;
+    }
+
     .hero {
       padding: 60px 0 80px;
     }

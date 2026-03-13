@@ -28,7 +28,7 @@ const shopLinks = [
 const supportLinks = [
   { href: "/contact/", label: "Contact Us" },
   { href: "/how-it-works/", label: "How It Works" },
-  { href: "/buy-weed-online-australia/", label: "How to Buy Weed Safely" },
+  { href: "/buy-weed-online-australia/", label: "Safety Guide" },
   { href: "/shipping-and-delivery/", label: "Shipping & Delivery" },
   { href: "/refunds/", label: "Returns & Refunds" },
   { href: "/faq/", label: "FAQs" },
@@ -693,6 +693,10 @@ const legalLinks = [
     .footer-links-grid {
       grid-template-columns: repeat(4, 1fr);
     }
+
+    .contact-cards {
+      max-width: 420px;
+    }
   }
 
   @media (max-width: 600px) {
@@ -706,6 +710,10 @@ const legalLinks = [
 
     .newsletter-form .form-group {
       flex-direction: column;
+    }
+
+    .newsletter-form input {
+      min-height: 48px;
     }
 
     .newsletter-form button {
@@ -734,6 +742,10 @@ const legalLinks = [
       grid-template-columns: repeat(2, 1fr);
     }
 
+    .contact-card {
+      padding: 12px;
+    }
+
     .footer-bottom-inner {
       flex-direction: column;
       text-align: center;
@@ -745,6 +757,10 @@ const legalLinks = [
 
     .legal-links {
       justify-content: center;
+    }
+
+    .footer-disclaimer {
+      text-align: left;
     }
   }
 </style>

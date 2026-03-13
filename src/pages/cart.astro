@@ -503,6 +503,10 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     .social-login-buttons {
       grid-template-columns: 1fr;
     }
+
+    .promo-input {
+      flex-direction: column;
+    }
   }
 
   @media (max-width: 600px) {
@@ -527,6 +531,18 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
     .quantity-control {
       gap: var(--space-xs);
+      width: fit-content;
+    }
+
+    .item-price,
+    .quantity-control,
+    .remove-btn {
+      grid-column: 2;
+    }
+
+    .remove-btn {
+      justify-self: flex-start;
+      padding-left: 0;
     }
 
     .summary-card {
@@ -544,6 +560,10 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     .category-link {
       flex-direction: row;
       justify-content: flex-start;
+    }
+
+    .promo-input .btn {
+      width: 100%;
     }
 
   }

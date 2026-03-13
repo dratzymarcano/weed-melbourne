@@ -83,6 +83,39 @@ const faqs = [
   }
 ];
 
+const internalGuides = [
+  {
+    title: 'THC Gummies Sydney',
+    description: 'Localised product-intent coverage for Sydney buyers comparing gummies, dosing, and delivery expectations.',
+    href: '/guides/thc-gummies-sydney/'
+  },
+  {
+    title: 'THC Gummies Melbourne',
+    description: 'Melbourne-focused landing page that routes local searches into gummies, support, and comparison pages.',
+    href: '/guides/thc-gummies-melbourne/'
+  },
+  {
+    title: 'THC Gummies Dosage Guide',
+    description: 'A simple strength comparison for 2.5mg, 10mg, 25mg, and 50mg gummy searches.',
+    href: '/guides/thc-gummies-dosage-guide/'
+  },
+  {
+    title: 'THC Gummies Legal Guide',
+    description: 'Short-form legality content that complements the national law explainer and FAQ.',
+    href: '/guides/thc-gummies-legal-australia/'
+  },
+  {
+    title: 'Weed Delivery Australia',
+    description: 'Delivery-intent page covering dispatch, tracking, privacy, and support paths.',
+    href: '/guides/weed-delivery-australia/'
+  },
+  {
+    title: 'THC Gummies vs Vapes',
+    description: 'Comparison-intent content for people choosing between edible and vape formats.',
+    href: '/guides/thc-gummies-vs-vapes/'
+  }
+];
+
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -180,6 +213,31 @@ const faqSchema = {
             <div class="fact-number">AUS</div>
             <p>Australia-wide delivery available</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resources-section internal-guides">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Internal Guides</span>
+          <h2>Google-Style Long-Tail Coverage</h2>
+        </div>
+        <div class="resources-grid">
+          {internalGuides.map((guide) => (
+            <a href={guide.href} class="resource-card resource-card-internal">
+              <div class="card-content">
+                <h3>{guide.title}</h3>
+                <p>{guide.description}</p>
+              </div>
+              <div class="card-link">
+                <span>Open Guide</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>

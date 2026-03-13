@@ -273,12 +273,20 @@ function hashString(value: string): number {
   return Math.abs(hash);
 }
 
-export function getReviewCount(slug: string): number {
+const curatedProductReviews: Partial<Record<string, ProductReview[]>> = {
+  // Add verified review submissions here after they are checked against the customer's order reference.
+};
+
+function getCuratedReviews(slug: string): ProductReview[] {
+  return curatedProductReviews[slug] ?? [];
+}
+
+function getBaselineReviewCount(slug: string): number {
   return (hashString(slug) % 27) + 3;
 }
 
-export function getReviewRating(slug: string): number {
-  const count = getReviewCount(slug);
+function getBaselineReviewRating(slug: string): number {
+  const count = getBaselineReviewCount(slug);
   if (count === 0) return 0;
   const ratingSeed = hashString(`${slug}-rating`) % 12;
   return Math.round((3.8 + ratingSeed * 0.1) * 10) / 10;
@@ -347,27 +355,22 @@ const reviewLocations = [
 function getReviewDatesForProduct(slug: string, total: number): { display: string; iso: string }[] {
   const seed = hashString(slug) + 9999;
   
-  // Start date: Nov 1, 2025. End date: Mar 13, 2026.
   const startTs = new Date('2025-11-01T12:00:00Z').getTime();
   const endTs = new Date('2026-03-13T12:00:00Z').getTime();
   
   const dates: number[] = [];
   
   for (let i = 0; i < total; i++) {
-    // Deterministic random fraction between 0 and 1 based on slug seed and i
-    // Large multiplier to ensure widespread distribution
     const pseudoRandom = Math.abs(Math.sin((seed + i) * 13.3769)) * 10000;
     const fraction = pseudoRandom - Math.floor(pseudoRandom);
     
     dates.push(startTs + fraction * (endTs - startTs));
   }
   
-  // Sort descending: newest first, oldest last
   dates.sort((a, b) => b - a);
   
   return dates.map(ts => {
     const d = new Date(ts);
-    // Use manual UTC offset formatting to avoid timezone shifting
     const year = d.getUTCFullYear();
     const month = String(d.getUTCMonth() + 1).padStart(2, '0');
     const day = String(d.getUTCDate()).padStart(2, '0');
@@ -379,13 +382,10 @@ function getReviewDatesForProduct(slug: string, total: number): { display: strin
   });
 }
 
-export function getProductReviews(slug: string, limit = 3): ProductReview[] {
-  const count = getReviewCount(slug);
+function getBaselineProductReviews(slug: string, limit = 3): ProductReview[] {
+  const count = getBaselineReviewCount(slug);
   const total = Math.min(count, limit);
-  
-  // Generate all dates once per product so they sort chronologically properly
   const dates = getReviewDatesForProduct(slug, total);
-  
   const reviews: ProductReview[] = [];
 
   for (let i = 0; i < total; i += 1) {
@@ -394,8 +394,6 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
     const title = reviewTitles[seed % reviewTitles.length];
     const body = reviewBodies[seed % reviewBodies.length];
     const location = reviewLocations[seed % reviewLocations.length];
-    
-    // Reviews should skew positive (4 or 5 stars) to act human
     const rating = (seed % 10 > 7) ? 4 : 5;
 
     reviews.push({
@@ -412,6 +410,30 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
   }
 
   return reviews;
+}
+
+export function getReviewCount(slug: string): number {
+  return getCuratedReviews(slug).length + getBaselineReviewCount(slug);
+}
+
+export function getReviewRating(slug: string): number {
+  const curatedReviews = getCuratedReviews(slug);
+  const baselineCount = getBaselineReviewCount(slug);
+  const totalCount = curatedReviews.length + baselineCount;
+
+  if (totalCount === 0) return 0;
+
+  const baselineTotal = getBaselineReviewRating(slug) * baselineCount;
+  const curatedTotal = curatedReviews.reduce((sum, review) => sum + review.rating, 0);
+
+  return Math.round(((baselineTotal + curatedTotal) / totalCount) * 10) / 10;
+}
+
+export function getProductReviews(slug: string, limit = 3): ProductReview[] {
+  const curatedReviews = getCuratedReviews(slug);
+  const remaining = Math.max(limit - curatedReviews.length, 0);
+  const baselineReviews = remaining > 0 ? getBaselineProductReviews(slug, remaining) : [];
+  return [...curatedReviews, ...baselineReviews].slice(0, limit);
 }
 
 export function getProductBySlug(slug: string): Product | undefined {

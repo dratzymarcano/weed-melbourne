@@ -1,0 +1,332 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { getSeoGuideBySlug, seoGuides } from '../../data/seo-guides';
+
+export function getStaticPaths() {
+  return seoGuides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide }
+  }));
+}
+
+const { guide } = Astro.props;
+
+if (!guide) {
+  throw new Error('SEO guide not found');
+}
+
+const canonicalUrl = `https://mullawaysmedicalcannabis.com.au/guides/${guide.slug}/`;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mullawaysmedicalcannabis.com.au/' },
+    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://mullawaysmedicalcannabis.com.au/resources/' },
+    { '@type': 'ListItem', position: 3, name: guide.h1, item: canonicalUrl }
+  ]
+};
+
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.h1,
+  description: guide.description,
+  datePublished: '2026-03-13',
+  dateModified: '2026-03-13',
+  author: {
+    '@type': 'Organization',
+    name: 'Mullaways Medical Cannabis'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Mullaways Medical Cannabis',
+    url: 'https://mullawaysmedicalcannabis.com.au/'
+  },
+  mainEntityOfPage: canonicalUrl
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: guide.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer
+    }
+  }))
+};
+---
+
+<Layout title={guide.title} description={guide.description} schema={[breadcrumbSchema, pageSchema, faqSchema]}>
+  <Header />
+  <main>
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Resources', href: '/resources/' }, { label: guide.h1 }]} />
+
+    <section class="guide-hero">
+      <div class="guide-hero-bg"></div>
+      <div class="container guide-hero-content">
+        <span class="guide-label">{guide.heroLabel}</span>
+        <h1>{guide.h1}</h1>
+        <p>{guide.intro}</p>
+        <div class="guide-stats">
+          {guide.stats.map((stat) => (
+            <div class="guide-stat">
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section guide-main">
+      <div class="container guide-layout">
+        <div class="guide-copy">
+          {guide.sections.map((section) => (
+            <article class="guide-section">
+              <h2>{section.heading}</h2>
+              {section.body.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+              {section.bullets && (
+                <ul>
+                  {section.bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))}
+
+          <section class="guide-faqs">
+            <h2>Quick Answers</h2>
+            <div class="faq-grid">
+              {guide.faqs.map((faq) => (
+                <article class="faq-card">
+                  <h3>{faq.question}</h3>
+                  <p>{faq.answer}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <aside class="guide-sidebar">
+          <div class="sidebar-card">
+            <h3>Next Steps</h3>
+            <div class="sidebar-links">
+              {guide.relatedLinks.map((link) => (
+                <a href={link.href} class="sidebar-link">
+                  <strong>{link.label}</strong>
+                  <span>{link.detail}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Why this page exists</h3>
+            <p>These guide pages are designed to answer the last specific question before a buyer moves into category, shipping, legality, or support pages.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .guide-hero {
+    position: relative;
+    overflow: hidden;
+    color: white;
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+  }
+
+  .guide-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(222, 175, 78, 0.25), transparent 30%), linear-gradient(135deg, #18382e 0%, #10241e 100%);
+  }
+
+  .guide-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+  }
+
+  .guide-label {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.86rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .guide-hero h1 {
+    color: white;
+    margin: var(--space-md) 0 var(--space-sm);
+    max-width: 840px;
+  }
+
+  .guide-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  .guide-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .guide-stat {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+  }
+
+  .guide-stat strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+
+  .guide-stat span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+  }
+
+  .guide-main {
+    background: var(--color-bg-alt);
+  }
+
+  .guide-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 0.9fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .guide-copy,
+  .sidebar-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .guide-copy {
+    padding: var(--space-xl);
+  }
+
+  .guide-section + .guide-section,
+  .guide-faqs {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .guide-section h2,
+  .guide-faqs h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-md);
+  }
+
+  .guide-section p,
+  .faq-card p,
+  .sidebar-card p {
+    color: var(--color-text-muted);
+  }
+
+  .guide-section ul {
+    margin: var(--space-md) 0 0;
+    padding-left: 1.2rem;
+    color: var(--color-text);
+  }
+
+  .guide-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-card {
+    padding: var(--space-lg);
+  }
+
+  .sidebar-card h3 {
+    margin-top: 0;
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sidebar-link {
+    display: block;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .sidebar-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .sidebar-link strong,
+  .sidebar-link span {
+    display: block;
+  }
+
+  .sidebar-link span {
+    margin-top: 4px;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .faq-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    background: var(--color-bg-alt);
+  }
+
+  .faq-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 960px) {
+    .guide-layout,
+    .guide-stats,
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -23,18 +23,14 @@ if (!canonicalURL.pathname.endsWith('/')) canonicalURL.pathname += '/';
 
 const defaultSchema = {
 	"@context": "https://schema.org",
-	"@type": "MedicalClinic",
+	"@type": ["Organization", "OnlineStore"],
 	"@id": "https://mullawaysmedicalcannabis.com.au/#organization",
 	"name": "Mullaways Medical Cannabis",
 	"url": "https://mullawaysmedicalcannabis.com.au",
 	"logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
 	"image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
-	"description": "Australia's trusted medical cannabis dispensary and educational resource. Providing safe, discreet, and compliant access to premium, lab-tested cannabis products Australia-wide.",
-	"medicalSpecialty": "https://en.wikipedia.org/wiki/Medical_cannabis",
-	"availableService": {
-		"@type": "MedicalProcedure",
-		"name": "Cannabis Dispensing & Patient Education"
-	},
+	"description": "Australian online cannabis dispensary and educational resource focused on discreet delivery, clear product information, and customer support nationwide.",
+	"foundingDate": "2024",
 	"address": {
 		"@type": "PostalAddress",
 		"addressLocality": "Mullaways",
@@ -47,11 +43,21 @@ const defaultSchema = {
 		"longitude": "153.1979"
 	},
 	"priceRange": "$$",
+	"areaServed": {
+		"@type": "Country",
+		"name": "Australia"
+	},
+	"knowsAbout": [
+		"Cannabis delivery Australia",
+		"THC gummies Australia",
+		"Cannabis flower Australia",
+		"Discreet shipping",
+		"Cannabis product education"
+	],
 	"contactPoint": {
 		"@type": "ContactPoint",
-		"contactType": "patient support",
-		"telephone": "+61-1800-000-000",
-		"email": "support@mullawaysmedicalcannabis.com.au",
+		"contactType": "customer support",
+		"email": "hello@mullawaysmedicalcannabis.com.au",
 		"areaServed": ["AU", "Australian Capital Territory", "New South Wales", "Northern Territory", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia"],
 		"availableLanguage": "en"
 	},
@@ -59,15 +65,7 @@ const defaultSchema = {
 		"https://www.instagram.com/mullawaysmedical",
 		"https://www.facebook.com/mullawaysmedical",
 		"https://x.com/mullawaysmed"
-	],
-	"hasCredential": {
-		"@type": "EducationalOccupationalCredential",
-		"credentialCategory": "Medical Dispensing Authority",
-		"recognizedBy": {
-			"@type": "Organization",
-			"name": "Australian Medical Standards"
-		}
-	}
+	]
 };
 
 const passedSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
@@ -314,12 +312,21 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		/* Spacing Scale */
 		--space-xs: 4px;
 		--space-sm: 8px;
-		--space-md: 16px;
-		--space-lg: 24px;
-		--space-xl: 32px;
-		--space-2xl: 48px;
-		--space-3xl: 64px;
-		--space-4xl: 96px;
+		--space-md: clamp(12px, 1.4vw, 16px);
+		--space-lg: clamp(18px, 2vw, 24px);
+		--space-xl: clamp(24px, 3vw, 32px);
+		--space-2xl: clamp(32px, 4.5vw, 48px);
+		--space-3xl: clamp(44px, 6vw, 64px);
+		--space-4xl: clamp(56px, 9vw, 96px);
+
+		/* Type Scale */
+		--text-xs: 0.75rem;
+		--text-sm: 0.875rem;
+		--text-md: 1rem;
+		--text-lg: clamp(1rem, 1.4vw, 1.125rem);
+		--text-xl: clamp(1.125rem, 2.2vw, 1.35rem);
+		--text-2xl: clamp(1.45rem, 3vw, 2rem);
+		--text-3xl: clamp(1.8rem, 4vw, 2.5rem);
 		
 		/* Layout */
 		--max-width: 1280px;
@@ -364,6 +371,8 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		scroll-behavior: smooth;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
 		overflow-x: hidden;
 	}
 
@@ -375,7 +384,7 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		background-color: var(--color-bg);
 		font-weight: 400;
 		letter-spacing: -0.01em;
-		overflow-x: hidden;
+		overflow-x: clip;
 	}
 
 	body.no-scroll {
@@ -424,6 +433,21 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		max-width: 100%;
 		height: auto;
 		display: block;
+	}
+
+	input,
+	select,
+	textarea,
+	button {
+		font: inherit;
+	}
+
+	button,
+	a,
+	input,
+	select,
+	textarea {
+		touch-action: manipulation;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -796,13 +820,13 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 	.container {
 		max-width: var(--max-width);
 		margin: 0 auto;
-		padding: 0 var(--space-lg);
+		padding: 0 clamp(14px, 3vw, 24px);
 	}
 
 	.container-narrow {
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
-		padding: 0 var(--space-lg);
+		padding: 0 clamp(14px, 3vw, 24px);
 	}
 
 	/* Sections */
@@ -842,6 +866,7 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		justify-content: center;
 		gap: 8px;
 		padding: 14px 28px;
+		min-height: 48px;
 		font-family: var(--font-primary);
 		font-size: 0.9rem;
 		font-weight: 600;
@@ -922,13 +947,14 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 	.btn-large {
 		padding: 18px 36px;
 		font-size: 1rem;
+		min-height: 54px;
 	}
 
 	/* Cards */
 	.card {
 		background: var(--color-white);
 		border-radius: var(--radius-lg);
-		padding: var(--space-xl);
+		padding: clamp(18px, 3vw, 32px);
 		transition: all var(--transition-base);
 		border: 1px solid var(--color-border);
 	}
@@ -1042,18 +1068,38 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		.section {
 			padding: var(--space-3xl) 0;
 		}
+
+		.section-sm {
+			padding: var(--space-2xl) 0;
+		}
 		
 		.grid-2, .grid-3, .grid-4 {
 			grid-template-columns: 1fr;
-		}
-		
-		.container {
-			padding: 0 var(--space-md);
 		}
 
 		.cookie-btn-accept {
 			white-space: normal;
 			text-align: center;
+		}
+	}
+
+	@media (max-width: 560px) {
+		body {
+			line-height: 1.6;
+		}
+
+		.btn,
+		.btn-large {
+			width: 100%;
+		}
+
+		.age-gate-card {
+			border-radius: 20px;
+			padding: 32px 20px 24px;
+		}
+
+		.cookie-banner-inner {
+			padding: 18px;
 		}
 	}
 

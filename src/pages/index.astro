@@ -155,11 +155,54 @@ const steps = [
   { number: "04", title: "Fast Delivery", desc: "Discreet shipping Australia-wide" },
 ];
 
+const featuredProductCards = featuredProducts.map((product) => {
+	const resolvedSlug = product.linkSlug ?? product.slug;
+	const productData = getProductBySlug(resolvedSlug);
+	const canonicalSlug = productData?.slug ?? resolvedSlug;
+	const reviewCount = getReviewCount(canonicalSlug);
+	const reviewRating = getReviewRating(canonicalSlug);
+	const variants = productData ? getWeightVariants(productData.category) : [];
+	const variantMultiplier = variants[0]?.multiplier ?? 1;
+	const displayPrice = productData ? Math.round(productData.basePrice * variantMultiplier) : product.price;
+
+	return {
+		...product,
+		resolvedSlug,
+		productData,
+		canonicalSlug,
+		reviewCount,
+		reviewRating,
+		displayPrice,
+	};
+});
+
 const stats = [
-  { value: "10k+", label: "Happy Customers" },
-  { value: "4.9", label: "Google Rating" },
-  { value: "100%", label: "Lab Tested" },
-  { value: "24hr", label: "Fast Dispatch" },
+	{ value: "Since 2024", label: "Operating Online" },
+	{ value: "AU Wide", label: "Tracked Delivery" },
+	{ value: "Bank + BTC", label: "Checkout Options" },
+	{ value: "AU Wide", label: "Tracked Delivery" },
+	{ value: "24-48hr", label: "Dispatch Window" },
+];
+
+const categoryLinks = [
+	{ href: '/shop/flower/', title: 'Cannabis Flower', detail: 'Commercial category coverage for flower, ounce pricing, and strain intent.' },
+	{ href: '/shop/thc-gummies/', title: 'THC Gummies', detail: 'One of the strongest product-intent terms on the site and a key homepage anchor.' },
+	{ href: '/shop/edibles/', title: 'Cannabis Edibles', detail: 'Supports edible, dosage, and discreet-format searches.' },
+	{ href: '/shop/vapes/', title: 'Vapes & Cartridges', detail: 'Captures fast-use and device-based shopping intent.' },
+];
+
+const proofLinks = [
+	{ href: '/shipping-and-delivery/', title: 'Tracked Delivery Standards', description: 'Dispatch windows, discreet packaging, signatures, and location-specific shipping times.' },
+	{ href: '/pay-with-bank-transfer/', title: 'Bank Transfer Payments', description: 'Clear payment instructions, support guidance, and secure manual checkout flow.' },
+	{ href: '/buy-bitcoin/', title: 'Bitcoin Checkout', description: 'Alternative payment option for customers who prefer crypto checkout.' },
+	{ href: '/refunds/', title: 'Returns & Delivery Issues', description: 'What happens when an order is late, damaged, or needs support.' },
+];
+
+const intentLinks = [
+	{ href: '/faq/', title: 'Cannabis FAQ Australia', detail: 'Answer-first help for buying, shipping, and product questions.' },
+	{ href: '/blog/is-weed-legal-in-australia/', title: 'Is Weed Legal in Australia?', detail: 'Legal-intent content that matches one of the core Brave ranking patterns.' },
+	{ href: '/locations/', title: 'Delivery by City', detail: 'Crawlable city and regional delivery coverage across Australia.' },
+	{ href: '/contact/#contact-form', title: 'Share Your Experience', detail: 'Customers can email feedback with an order reference for review follow-up.' },
 ];
 
 // WebSite schema with SearchAction for sitelinks search box
@@ -191,39 +234,22 @@ const itemListSchema = {
   })
 };
 
-const aggregateRatingSchema = {
+const homePageSchema = {
   "@context": "https://schema.org",
-  "@type": "MedicalClinic",
-  "@id": "https://mullawaysmedicalcannabis.com.au/#organization",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "1250"
-  },
-  "review": [
-    {
-      "@type": "Review",
-      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-      "author": { "@type": "Person", "name": "Sarah" },
-      "reviewBody": "Fast shipping, great quality products. Much easier than my local clinic."
-    },
-    {
-      "@type": "Review",
-      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-      "author": { "@type": "Person", "name": "James M." },
-      "reviewBody": "The medical consultation was professional and the products arrived exactly as described."
-    },
-    {
-      "@type": "Review",
-      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-      "author": { "@type": "Person", "name": "Michelle" },
-      "reviewBody": "Discreet packaging and excellent customer service when I had questions about dosage."
-    }
-  ]
+	"@type": "WebPage",
+	"name": "Buy Weed Online Australia | Mullaways",
+	"url": "https://mullawaysmedicalcannabis.com.au/",
+	"about": {
+		"@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+	},
+	"isPartOf": {
+		"@type": "WebSite",
+		"url": "https://mullawaysmedicalcannabis.com.au"
+	}
 };
 ---
 
-<Layout title="Buy Weed Online Australia | Cannabis Dispensary | Mullaways" description="Buy weed online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary. Lab-tested, discreet delivery Australia-wide." schema={[webSiteSchema, itemListSchema, aggregateRatingSchema]}>
+<Layout title="Buy Weed Online Australia | Cannabis Dispensary | Mullaways" description="Buy weed online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary. Lab-tested, discreet delivery Australia-wide." schema={[webSiteSchema, itemListSchema, homePageSchema]}>
 	<Header />
 	<main>
 		<!-- Hero Section -->
@@ -234,7 +260,7 @@ const aggregateRatingSchema = {
 					<div class="hero-content">
 						<div class="hero-badge">
 							<span class="badge-dot"></span>
-							Australia's #1 Online Cannabis Dispensary — Weed Shop Near Me
+							Australia-Wide Cannabis Delivery & Support
 						</div>
 						<h1>Buy Weed Online Australia</h1>
 						<p class="hero-subtitle">Looking for a cannabis dispensary near me? We've got you covered. Shop THC gummies, premium flower, edibles & vapes with fast, discreet delivery to Sydney, Melbourne, Brisbane & all of Australia. Real people, real quality, real results.</p>
@@ -307,16 +333,9 @@ const aggregateRatingSchema = {
 				</div>
 
 				<div class="products-grid">
-					{featuredProducts.map((product, i) => {
-						const resolvedSlug = product.linkSlug ?? product.slug;
-						const productData = getProductBySlug(resolvedSlug);
-						const canonicalSlug = productData?.slug ?? resolvedSlug;
-						const reviewCount = getReviewCount(canonicalSlug);
-						const reviewRating = getReviewRating(canonicalSlug);
-						const variants = productData ? getWeightVariants(productData.category) : [];
-						const variantMultiplier = variants[0]?.multiplier ?? 1;
-						const displayPrice = productData ? Math.round(productData.basePrice * variantMultiplier) : product.price;
-
+					{featuredProductCards.map((product, i) => {
+						const resolvedSlug = product.resolvedSlug;
+						const productData = product.productData;
 						return (
 							<a href={`/shop/product/${resolvedSlug}/`} class="product-card" style={`--delay: ${i * 0.1}s`}>
 							<div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
@@ -338,10 +357,10 @@ const aggregateRatingSchema = {
 									<span class="weight">{product.weight}</span>
 								</div>
 									<div class="product-reviews">
-										{reviewCount > 0 ? (
+										{product.reviewCount > 0 ? (
 											<>
-												<span class="rating">★ {reviewRating.toFixed(1)}</span>
-												<span class="review-count">({reviewCount} reviews)</span>
+												<span class="rating">★ {product.reviewRating.toFixed(1)}</span>
+												<span class="review-count">({product.reviewCount} reviews)</span>
 											</>
 										) : (
 											<span class="review-count">No reviews yet</span>
@@ -356,8 +375,8 @@ const aggregateRatingSchema = {
 									<strong>Flavour:</strong> {product.flavour}
 								</div>
 								<div class="product-footer">
-										<span class="price">From ${displayPrice}</span>
-										<span class="btn btn-primary btn-sm" data-price={displayPrice} data-slug={resolvedSlug}>
+										<span class="price">From ${product.displayPrice}</span>
+										<span class="btn btn-primary btn-sm" data-price={product.displayPrice} data-slug={resolvedSlug}>
 										View Options
 									</span>
 								</div>
@@ -365,6 +384,63 @@ const aggregateRatingSchema = {
 							</a>
 						);
 					})}
+				</div>
+			</div>
+		</section>
+
+		<section class="section merch-section">
+			<div class="container">
+				<div class="section-intro">
+					<span class="section-label">Shop Signals</span>
+					<h2>Best Sellers, Top Rated & Helpful Links</h2>
+					<p>Brave rewards pages that make buying, delivery, reviews, and support obvious. This section gives those signals more crawlable depth without turning the homepage into clutter.</p>
+				</div>
+
+				<div class="merch-grid">
+					<div class="merch-card">
+						<h3>Category Shortcuts</h3>
+						<p class="merch-copy">Commercial anchors that make your product footprint more explicit to both users and crawlers.</p>
+						<ul class="merch-list">
+							{categoryLinks.map((link) => (
+								<li>
+									<a href={link.href}>
+										<span>{link.title}</span>
+										<small>{link.detail}</small>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<div class="merch-card">
+						<h3>Delivery & Payment</h3>
+						<p class="merch-copy">Commercial trust pages that support privacy, checkout confidence, and order handling intent.</p>
+						<ul class="merch-list">
+							{proofLinks.map((link) => (
+								<li>
+									<a href={link.href}>
+										<span>{link.title}</span>
+										<small>{link.description}</small>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<div class="merch-card">
+						<h3>Helpful Links</h3>
+						<p class="merch-copy">Commercial, legal, and support pages that strengthen coverage for users and crawlers.</p>
+						<ul class="merch-list intent-list">
+							{intentLinks.map((link) => (
+								<li>
+									<a href={link.href}>
+										<span>{link.title}</span>
+										<small>{link.detail}</small>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -402,7 +478,7 @@ const aggregateRatingSchema = {
 			<div class="container">
 				<div class="trust-grid">
 					<div class="trust-content">
-						<span class="section-label">Why Thousands of Australians Choose Us</span>
+						<span class="section-label">Why Customers Choose Us</span>
 						<h2>The Cannabis Dispensary Near Me You've Been Searching For</h2>
 						<p>We get it — finding a reliable weed shop near me feels impossible. That's why we built Mullaways from the ground up in regional NSW: to give everyday Australians honest access to lab-tested cannabis without the sketchy dealers or ridiculous markups. Whether you're in Sydney looking to buy weed, searching for THC gummies in Melbourne, or need cannabis delivery in Brisbane — we're here for you.</p>
 						
@@ -454,6 +530,15 @@ const aggregateRatingSchema = {
 								</div>
 							</li>
 						</ul>
+
+						<div class="proof-links-grid">
+							{proofLinks.map((link) => (
+								<a href={link.href} class="proof-link-card">
+									<strong>{link.title}</strong>
+									<span>{link.description}</span>
+								</a>
+							))}
+						</div>
 					</div>
 
 					<div class="trust-visual">
@@ -466,13 +551,16 @@ const aggregateRatingSchema = {
 		<!-- Testimonials -->
 		<section class="section testimonials-section">
 			<div class="container">
-				<div class="section-intro">
+				<div class="section-header-row testimonials-header">
+					<div>
 					<span class="section-label">Testimonials</span>
-					<h2>What Our Patients Say</h2>
+					<h2>Why Orders Feel Safer Here</h2>
+					</div>
+					<a href="/contact/#contact-form" class="btn btn-ghost">Share Your Experience</a>
 				</div>
 
 				<div class="testimonials-grid">
-					<blockquote class="testimonial-card">
+					<article class="testimonial-card">
 						<div class="testimonial-rating">
 							{[1,2,3,4,5].map(() => (
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -480,14 +568,14 @@ const aggregateRatingSchema = {
 								</svg>
 							))}
 						</div>
-						<p>"Exceptional quality and service. The ordering process was smooth, and my package arrived discreetly within days. Finally found an online dispensary I can trust."</p>
+						<p>Plain packaging, tracked delivery, and a published shipping page reduce the biggest trust gap we see on competing AU weed sites.</p>
 						<footer>
-							<strong>Sarah M.</strong>
-							<span>Sydney, NSW</span>
+							<strong>Shipping Standards</strong>
+							<span>Dispatch windows, signatures, and coverage are all documented.</span>
 						</footer>
-					</blockquote>
+					</article>
 
-					<blockquote class="testimonial-card featured">
+					<article class="testimonial-card featured">
 						<div class="testimonial-rating">
 							{[1,2,3,4,5].map(() => (
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -495,14 +583,14 @@ const aggregateRatingSchema = {
 								</svg>
 							))}
 						</div>
-						<p>"The team helped me find the perfect product for my chronic pain. Professional, knowledgeable, and genuinely caring about customer outcomes. Best weed delivery in Australia."</p>
+						<p>Customers can use the contact form for order issues, product questions, and review submissions tied to an order reference instead of relying on a fake live chat promise.</p>
 						<footer>
-							<strong>James T.</strong>
-							<span>Brisbane, QLD</span>
+							<strong>Support Workflow</strong>
+							<span>Email-first support with review verification and order help.</span>
 						</footer>
-					</blockquote>
+					</article>
 
-					<blockquote class="testimonial-card">
+					<article class="testimonial-card">
 						<div class="testimonial-rating">
 							{[1,2,3,4,5].map(() => (
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -510,12 +598,12 @@ const aggregateRatingSchema = {
 								</svg>
 							))}
 						</div>
-						<p>"Best online dispensary in Australia. Lab-tested products, transparent pricing, and the fastest delivery I've experienced. Highly recommend Mullaways Medical."</p>
+						<p>Payment guidance now points users to bank transfer and Bitcoin support pages so the checkout journey matches what the site actually offers.</p>
 						<footer>
-							<strong>Michelle R.</strong>
-							<span>Melbourne, VIC</span>
+							<strong>Payment Clarity</strong>
+							<span>Dedicated bank transfer and Bitcoin instructions support conversion.</span>
 						</footer>
-					</blockquote>
+					</article>
 				</div>
 			</div>
 		</section>
@@ -614,7 +702,7 @@ const aggregateRatingSchema = {
 			<div class="cta-bg"></div>
 			<div class="container">
 				<div class="cta-content">
-					<h2>Ready to Find Out Why We're Australia's Most Trusted Weed Shop?</h2>
+					<h2>Ready to Buy with Clear Delivery and Payment Guidance?</h2>
 					<p>Join thousands of satisfied customers who've made the switch. Lab-tested THC gummies, premium flower, edibles & more — all delivered discreetly to your door. No judgement, no hassle, just quality cannabis when you need it.</p>
 					<div class="cta-buttons">
 						<a href="/shop/" class="btn btn-primary btn-large">Shop THC Gummies & More</a>
@@ -891,6 +979,70 @@ const aggregateRatingSchema = {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: var(--space-lg);
+	}
+
+	.merch-section {
+		background: var(--color-sand);
+	}
+
+	.merch-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-lg);
+	}
+
+	.merch-card {
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-xl);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.merch-card h3 {
+		margin-bottom: var(--space-sm);
+	}
+
+	.merch-copy {
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-lg);
+	}
+
+	.merch-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.merch-list li a {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding: 14px 16px;
+		border-radius: var(--radius-md);
+		background: var(--color-bg);
+		color: var(--color-text);
+		text-decoration: none;
+		transition: all var(--transition-base);
+	}
+
+	.merch-list li a:hover {
+		background: rgba(45, 90, 74, 0.08);
+		transform: translateX(3px);
+	}
+
+	.merch-list li span {
+		font-weight: 600;
+	}
+
+	.merch-list li small {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		line-height: 1.6;
 	}
 
 	/* Product Card - Updated Design */
@@ -1231,6 +1383,42 @@ const aggregateRatingSchema = {
 		color: var(--color-text-muted);
 	}
 
+	.proof-links-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-md);
+		margin-top: var(--space-2xl);
+	}
+
+	.proof-link-card {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding: var(--space-lg);
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		text-decoration: none;
+		color: var(--color-text);
+		transition: all var(--transition-base);
+	}
+
+	.proof-link-card:hover {
+		transform: translateY(-3px);
+		box-shadow: var(--shadow-md);
+		border-color: rgba(45, 90, 74, 0.2);
+	}
+
+	.proof-link-card strong {
+		font-size: 0.95rem;
+	}
+
+	.proof-link-card span {
+		font-size: 0.88rem;
+		line-height: 1.6;
+		color: var(--color-text-muted);
+	}
+
 	.trust-visual {
 		display: flex;
 		justify-content: center;
@@ -1255,6 +1443,10 @@ const aggregateRatingSchema = {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: var(--space-lg);
+	}
+
+	.testimonials-header {
+		align-items: center;
 	}
 
 	.testimonial-card {
@@ -1297,6 +1489,44 @@ const aggregateRatingSchema = {
 		gap: 2px;
 		margin-bottom: var(--space-md);
 		color: var(--color-terracotta);
+	}
+
+	.testimonial-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-md);
+		flex-wrap: wrap;
+	}
+
+	.verified-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 6px 10px;
+		border-radius: var(--radius-full);
+		background: rgba(45, 90, 74, 0.08);
+		color: var(--color-primary);
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.testimonial-product {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.testimonial-product:hover {
+		text-decoration: underline;
+	}
+
+	.testimonial-card.featured .verified-badge {
+		background: rgba(255, 255, 255, 0.12);
+		color: var(--color-white);
 	}
 
 	.testimonial-card p {
@@ -1540,7 +1770,8 @@ const aggregateRatingSchema = {
 
 		.categories-grid,
 		.products-grid,
-		.process-grid {
+		.process-grid,
+		.merch-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 
@@ -1596,7 +1827,8 @@ const aggregateRatingSchema = {
 
 		.categories-grid,
 		.products-grid,
-		.process-grid {
+			.process-grid,
+			.merch-grid {
 			grid-template-columns: 1fr;
 		}
 
@@ -1620,6 +1852,10 @@ const aggregateRatingSchema = {
 
 		.locations-grid {
 			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.proof-links-grid {
+			grid-template-columns: 1fr;
 		}
 
 		.blog-grid {
