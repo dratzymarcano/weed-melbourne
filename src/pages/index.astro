@@ -178,34 +178,52 @@ const webSiteSchema = {
   }
 };
 
-// Organization schema (enhanced)
-const orgSchema = {
+const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Mullaways Medical Cannabis",
-  "url": "https://mullawaysmedicalcannabis.com.au",
-  "logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
-  "description": "Australia's trusted online cannabis dispensary. Buy weed online with discreet delivery Australia-wide.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Mullaways",
-    "addressRegion": "NSW",
-    "addressCountry": "AU"
+  "@type": "ItemList",
+  "itemListElement": featuredProducts.map((p, index) => {
+    const slug = p.linkSlug ?? p.slug;
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${slug}/`
+    };
+  })
+};
+
+const aggregateRatingSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "@id": "https://mullawaysmedicalcannabis.com.au/#organization",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "1250"
   },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "areaServed": "AU"
-  },
-  "sameAs": [
-    "https://www.instagram.com/mullawaysmedical",
-    "https://www.facebook.com/mullawaysmedical",
-    "https://x.com/mullawaysmed"
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "author": { "@type": "Person", "name": "Sarah" },
+      "reviewBody": "Fast shipping, great quality products. Much easier than my local clinic."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "author": { "@type": "Person", "name": "James M." },
+      "reviewBody": "The medical consultation was professional and the products arrived exactly as described."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "author": { "@type": "Person", "name": "Michelle" },
+      "reviewBody": "Discreet packaging and excellent customer service when I had questions about dosage."
+    }
   ]
 };
 ---
 
-<Layout title="Buy Weed Online Australia | Cannabis Dispensary | Mullaways" description="Buy weed online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary. Lab-tested, discreet delivery Australia-wide." schema={[webSiteSchema, orgSchema]}>
+<Layout title="Buy Weed Online Australia | Cannabis Dispensary | Mullaways" description="Buy weed online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary. Lab-tested, discreet delivery Australia-wide." schema={[webSiteSchema, itemListSchema, aggregateRatingSchema]}>
 	<Header />
 	<main>
 		<!-- Hero Section -->

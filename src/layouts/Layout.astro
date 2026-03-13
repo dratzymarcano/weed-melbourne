@@ -24,6 +24,7 @@ if (!canonicalURL.pathname.endsWith('/')) canonicalURL.pathname += '/';
 const defaultSchema = {
 	"@context": "https://schema.org",
 	"@type": "MedicalClinic",
+	"@id": "https://mullawaysmedicalcannabis.com.au/#organization",
 	"name": "Mullaways Medical Cannabis",
 	"url": "https://mullawaysmedicalcannabis.com.au",
 	"logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
@@ -69,8 +70,8 @@ const defaultSchema = {
 	}
 };
 
-const schemaData = schema || defaultSchema;
-const schemaArray = Array.isArray(schemaData) ? schemaData : [schemaData];
+const passedSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const schemaArray = [defaultSchema, ...passedSchemas];
 ---
 
 <!doctype html>
