@@ -20,9 +20,13 @@ const reviewRating = getReviewRating(product.slug);
 const reviewItems = getProductReviews(product.slug, reviewCount);
 const faqItems = getProductFaqItems(product);
 
-// Related products from same category
-const relatedProducts = allProducts
-  .filter((p: Product) => p.category === product.category && p.slug !== product.slug)
+// Rotate related products so every product receives links from multiple sibling pages.
+const categoryProducts = allProducts.filter((p: Product) => p.category === product.category);
+const currentCategoryIndex = categoryProducts.findIndex((p: Product) => p.slug === product.slug);
+const relatedProducts = categoryProducts
+  .filter((_: Product, index: number) => index !== currentCategoryIndex)
+  .map((_: Product, offset: number) => categoryProducts[(currentCategoryIndex + offset + 1) % categoryProducts.length])
+  .filter((candidate: Product) => candidate.slug !== product.slug)
   .slice(0, 4);
 
 // Generate proper meta title (under 60 chars)
@@ -73,10 +77,10 @@ const productSchema: Record<string, any> = {
 if (reviewCount > 0) {
   productSchema["aggregateRating"] = {
     "@type": "AggregateRating",
-    "ratingValue": reviewRating.toFixed(1),
+    "ratingValue": Number(reviewRating.toFixed(1)),
     "reviewCount": reviewCount,
-    "bestRating": "5",
-    "worstRating": "1"
+    "bestRating": 5,
+    "worstRating": 1
   };
 
   productSchema["review"] = reviewItems.slice(0, 5).map((r: ProductReview) => ({
@@ -87,9 +91,9 @@ if (reviewCount > 0) {
     "name": r.title,
     "reviewRating": {
       "@type": "Rating",
-      "ratingValue": r.rating.toFixed(1),
-      "bestRating": "5",
-      "worstRating": "1"
+      "ratingValue": Number(r.rating.toFixed(1)),
+      "bestRating": 5,
+      "worstRating": 1
     }
   }));
 }

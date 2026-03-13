@@ -3,9 +3,43 @@ interface Props {
   datePublished: string;
   dateReviewed: string;
   sources: { title: string; url: string }[];
+  internalLinks?: { title: string; href: string; description: string }[];
 }
 
-const { datePublished, dateReviewed, sources } = Astro.props;
+const {
+  datePublished,
+  dateReviewed,
+  sources,
+  internalLinks = [
+    {
+      title: 'Queensland Cannabis Laws',
+      href: '/blog/cannabis-laws-queensland/',
+      description: 'State-specific legal guidance for Queensland readers and searchers.'
+    },
+    {
+      title: 'Edibles vs Smoking',
+      href: '/blog/edibles-vs-smoking/',
+      description: 'A method-comparison guide covering onset, duration, and control.'
+    },
+    {
+      title: 'THCA Legal Status',
+      href: '/blog/thca-australia-legal-status/',
+      description: 'A practical explainer on THCA versus THC in Australia.'
+    },
+    {
+      title: 'THC Gummies Legal Guide',
+      href: '/guides/thc-gummies-legal-australia/',
+      description: 'A short-form legality page tied to one of the main product intents.'
+    },
+    {
+      title: 'Weed Delivery Australia',
+      href: '/guides/weed-delivery-australia/',
+      description: 'Shipping, privacy, dispatch, and tracking guidance for delivery-intent visitors.'
+    }
+  ]
+} = Astro.props;
+
+const visibleInternalLinks = internalLinks.filter((link) => link.href !== Astro.url.pathname);
 ---
 
 <!-- E-E-A-T: Author Box, Sources & Review Date -->
@@ -50,6 +84,21 @@ const { datePublished, dateReviewed, sources } = Astro.props;
       </ol>
     </div>
   )}
+
+  <div class="internal-links-box">
+    <h3 class="sources-heading">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Continue Exploring
+    </h3>
+    <div class="internal-links-grid">
+      {visibleInternalLinks.map((link) => (
+        <a class="internal-link-card" href={link.href}>
+          <strong>{link.title}</strong>
+          <span>{link.description}</span>
+        </a>
+      ))}
+    </div>
+  </div>
 
   <!-- Editorial Policy Notice -->
   <p class="editorial-notice">
@@ -138,6 +187,50 @@ const { datePublished, dateReviewed, sources } = Astro.props;
     margin-bottom: 1.25rem;
   }
 
+  .internal-links-box {
+    background: #f5f7f2;
+    border: 1px solid #dfe7d7;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .internal-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.875rem;
+  }
+
+  .internal-link-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.95rem;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #dfe7d7;
+    color: #1f2937;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .internal-link-card:hover {
+    border-color: #8ba888;
+    box-shadow: 0 10px 24px rgba(45, 90, 74, 0.08);
+    transform: translateY(-1px);
+    color: #1f2937;
+  }
+
+  .internal-link-card strong {
+    color: #1a5632;
+    font-size: 0.92rem;
+  }
+
+  .internal-link-card span {
+    color: #4b5563;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
   .sources-heading {
     display: flex;
     align-items: center;
@@ -202,6 +295,10 @@ const { datePublished, dateReviewed, sources } = Astro.props;
     .review-dates {
       flex-direction: column;
       gap: 0.5rem;
+    }
+
+    .internal-links-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

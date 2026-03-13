@@ -1,4 +1,6 @@
 ---
+import { organizationSchema } from '../lib/schema';
+
 interface Props {
 	title: string;
 	description?: string;
@@ -21,55 +23,8 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://mullawaysmedicalcannabis.com.au');
 if (!canonicalURL.pathname.endsWith('/')) canonicalURL.pathname += '/';
 
-const defaultSchema = {
-	"@context": "https://schema.org",
-	"@type": ["Organization", "OnlineStore"],
-	"@id": "https://mullawaysmedicalcannabis.com.au/#organization",
-	"name": "Mullaways Medical Cannabis",
-	"url": "https://mullawaysmedicalcannabis.com.au",
-	"logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
-	"image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
-	"description": "Australian online cannabis dispensary and educational resource focused on discreet delivery, clear product information, and customer support nationwide.",
-	"foundingDate": "2024",
-	"address": {
-		"@type": "PostalAddress",
-		"addressLocality": "Mullaways",
-		"addressRegion": "NSW",
-		"addressCountry": "AU"
-	},
-	"geo": {
-		"@type": "GeoCoordinates",
-		"latitude": "-30.0766",
-		"longitude": "153.1979"
-	},
-	"priceRange": "$$",
-	"areaServed": {
-		"@type": "Country",
-		"name": "Australia"
-	},
-	"knowsAbout": [
-		"Cannabis delivery Australia",
-		"THC gummies Australia",
-		"Cannabis flower Australia",
-		"Discreet shipping",
-		"Cannabis product education"
-	],
-	"contactPoint": {
-		"@type": "ContactPoint",
-		"contactType": "customer support",
-		"email": "hello@mullawaysmedicalcannabis.com.au",
-		"areaServed": ["AU", "Australian Capital Territory", "New South Wales", "Northern Territory", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia"],
-		"availableLanguage": "en"
-	},
-	"sameAs": [
-		"https://www.instagram.com/mullawaysmedical",
-		"https://www.facebook.com/mullawaysmedical",
-		"https://x.com/mullawaysmed"
-	]
-};
-
 const passedSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
-const schemaArray = [defaultSchema, ...passedSchemas];
+const schemaArray = [organizationSchema, ...passedSchemas];
 ---
 
 <!doctype html>
@@ -82,7 +37,7 @@ const schemaArray = [defaultSchema, ...passedSchemas];
 		<link rel="canonical" href={canonicalURL.href} />
 		<meta name="generator" content={Astro.generator} />
 		{noindex ? (
-			<meta name="robots" content="noindex, nofollow" />
+			<meta name="robots" content="noindex, follow" />
 		) : (
 			<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		)}
