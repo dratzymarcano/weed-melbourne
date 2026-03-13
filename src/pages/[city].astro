@@ -238,13 +238,18 @@ const steps = [
 // Generate SEO meta description (under 160 chars)
 const metaDescription = `Buy weed ${cityName} with fast ${deliveryTime} delivery. Lab-tested cannabis flower, edibles, vapes. Discreet shipping to ${cityName}, ${stateAbbr}.`;
 
-// LocalBusiness Schema for city pages
+// MedicalClinic Schema for city pages to support E-E-A-T
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": `Mullaways Medical Cannabis - ${cityName}`,
-  "description": `Buy weed online in ${cityName}, ${state}. Lab-tested cannabis products with discreet delivery to ${cityName} and surrounding areas.`,
+  "@type": "MedicalClinic",
+  "name": `Mullaways Medical Cannabis - Delivery to ${cityName}`,
+  "description": `Safe, legal, and educational access to medical cannabis in ${cityName}, ${state}. Empowering patients with lab-tested products and discreet delivery to ${cityName} and surrounding areas.`,
   "url": `https://mullawaysmedicalcannabis.com.au/${city}/`,
+  "medicalSpecialty": "https://en.wikipedia.org/wiki/Medical_cannabis",
+  "availableService": {
+    "@type": "MedicalProcedure",
+    "name": "Cannabis Dispensing & Patient Education"
+  },
   "address": {
     "@type": "PostalAddress",
     "addressLocality": cityName,

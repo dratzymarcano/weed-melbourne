@@ -159,7 +159,7 @@ import Footer from '../components/Footer.astro';
                       <label>Amount to Transfer</label>
                       <div class="copyable-field amount-field">
                         <code id="bank-amount">$0.00 AUD</code>
-                        <button class="copy-btn" data-copy-id="bank-amount-raw" title="Copy Amount">
+                        <button class="copy-btn" data-copy-id="bank-amount" title="Copy Amount">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                         </button>
                       </div>
@@ -180,31 +180,6 @@ import Footer from '../components/Footer.astro';
                   </div>
                 </div>
 
-                <!-- Paysafecard Confirmed -->
-                <div id="payment-paysafecard" style="display: none;">
-                  <div class="card-header">
-                    <div class="card-icon psc-icon">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
-                    </div>
-                    <div>
-                      <h2>Paysafecard Payment Received</h2>
-                      <p class="card-subtitle">Your PIN has been submitted for verification</p>
-                    </div>
-                  </div>
-                  <div class="psc-confirmed">
-                    <div class="psc-status">
-                      <div class="status-badge processing">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        Processing Payment
-                      </div>
-                      <p>Your Paysafecard PIN ending in <strong id="psc-pin-last">****</strong> is being verified. This usually takes 1–5 minutes.</p>
-                    </div>
-                  </div>
-                  <div class="payment-alert success">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>You'll receive an email confirmation once payment is verified. No further action needed from you.</span>
-                  </div>
-                </div>
               </div>
 
               <!-- Order Timeline -->
@@ -1158,9 +1133,7 @@ import Footer from '../components/Footer.astro';
     if (heroEmail) heroEmail.textContent = order.customer.email;
 
     // Customize hero based on payment
-    if (order.payment === 'paysafecard') {
-      if (heroTitle) heroTitle.textContent = 'Payment Submitted!';
-    } else if (order.payment === 'bank') {
+    if (order.payment === 'bank') {
       if (heroTitle) heroTitle.textContent = 'Order Placed — Complete Payment';
     } else if (order.payment === 'bitcoin') {
       if (heroTitle) heroTitle.textContent = 'Order Placed — Complete Payment';
@@ -1169,7 +1142,6 @@ import Footer from '../components/Footer.astro';
     // Payment Panels
     const bitcoinPanel = document.getElementById('payment-bitcoin');
     const bankPanel = document.getElementById('payment-bank');
-    const pscPanel = document.getElementById('payment-paysafecard');
 
     if (order.payment === 'bitcoin') {
       if (bitcoinPanel) bitcoinPanel.style.display = 'block';
@@ -1248,11 +1220,13 @@ import Footer from '../components/Footer.astro';
 
             // Update step timeline
             const stepPayment = document.getElementById('step-payment');
+            const stepPaymentTitle = document.getElementById('step-payment-title');
+            const stepPaymentDesc = document.getElementById('step-payment-desc');
             if (stepPayment) {
-              stepPayment.querySelector('.step-title').textContent = 'Payment Confirmed';
-              stepPayment.querySelector('.step-desc').textContent = `${data.confirmations} blockchain confirmations received.`;
               stepPayment.classList.add('completed');
             }
+            if (stepPaymentTitle) stepPaymentTitle.textContent = 'Payment Confirmed';
+            if (stepPaymentDesc) stepPaymentDesc.textContent = `${data.confirmations} blockchain confirmations received.`;
 
             // Send order emails now that payment is confirmed (2+ confirmations)
             if (!order.emailsSent) {
@@ -1348,12 +1322,6 @@ import Footer from '../components/Footer.astro';
       // Store raw amount for copy
       const bankAmountEl = document.getElementById('bank-amount');
       if (bankAmountEl) bankAmountEl.dataset.rawAmount = order.total.toFixed(2);
-    } else if (order.payment === 'paysafecard') {
-      if (pscPanel) pscPanel.style.display = 'block';
-      const pinLast = document.getElementById('psc-pin-last');
-      if (pinLast && order.pscPin) {
-        pinLast.textContent = order.pscPin.slice(-4);
-      }
     }
 
     // Payment step timeline customization
@@ -1361,10 +1329,7 @@ import Footer from '../components/Footer.astro';
     const stepPaymentTitle = document.getElementById('step-payment-title');
     const stepPaymentDesc = document.getElementById('step-payment-desc');
 
-    if (order.payment === 'paysafecard' && stepPayment) {
-      stepPaymentTitle.textContent = 'Verifying Paysafecard';
-      stepPaymentDesc.textContent = 'Your PIN is being verified. Usually takes 1–5 minutes.';
-    } else if (order.payment === 'bank') {
+    if (order.payment === 'bank') {
       stepPaymentTitle.textContent = 'Awaiting Bank Transfer';
       stepPaymentDesc.textContent = 'Transfer the exact amount using the details above.';
     } else if (order.payment === 'bitcoin') {
@@ -1417,7 +1382,7 @@ import Footer from '../components/Footer.astro';
     document.getElementById('summary-shipping').textContent = `$${order.shipping.toFixed(2)}`;
     document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
 
-    const paymentLabels = { bitcoin: 'Bitcoin', bank: 'Bank Transfer', paysafecard: 'Paysafecard' };
+    const paymentLabels = { bitcoin: 'Bitcoin', bank: 'Bank Transfer' };
     document.getElementById('summary-payment').textContent = paymentLabels[order.payment] || order.payment;
 
     // Copy buttons
@@ -1526,7 +1491,7 @@ import Footer from '../components/Footer.astro';
           weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
         });
         const pmLabel = order.payment === 'bitcoin' ? 'Bitcoin'
-          : order.payment === 'bank' ? 'Bank Transfer' : 'Paysafecard';
+          : order.payment === 'bank' ? 'Bank Transfer' : 'Payment pending review';
         const delLabel = order.shippingMethod === 'express'
           ? 'Express Delivery (1-2 business days)'
           : 'Standard Delivery (2-5 business days)';

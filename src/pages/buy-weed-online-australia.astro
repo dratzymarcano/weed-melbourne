@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const breadcrumbs = [
+  { label: 'Home', url: '/' },
+  { label: 'Educational Guides', url: '/resources/' },
+  { label: 'How to Buy Weed Online in Australia' }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it legal to buy weed online in Australia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Medical cannabis is legally accessible in Australia via prescriptions. Licensed clinics and dispensaries ensure compliance with the Therapeutic Goods Administration (TGA), providing safe and legal pathways for patients."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the delivery process work for medical cannabis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Deliveries are strictly regulated, sent via express courier or Australia Post in completely discreet, odor-proof, and tamper-evident packaging to prioritize patient privacy and safety."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a prescription to order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Legitimate cannabis access requires consultation with an authorized prescriber to ensure patient eligibility under current Australian health frameworks."
+      }
+    }
+  ]
+};
+---
+
+<Layout 
+	title="How to Buy Weed Online in Australia (Legally & Safely) | Mullaways"
+	description="The ultimate guide to buying medical cannabis safely in Australia. Learn about TGA regulations, delivery methods, and finding trusted, reputable dispensaries."
+    schema={faqSchema}
+>
+	<Header />
+	
+	<main class="bg-primary/5 pt-24 pb-16 min-h-screen">
+		<div class="container mx-auto px-4 max-w-4xl">
+			<Breadcrumb items={breadcrumbs} />
+			
+			<div class="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-black/5 mt-6 mb-12">
+                <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">Patient Resource & Guide</span>
+				<h1 class="text-3xl md:text-5xl font-bold text-secondary mb-6 leading-tight">
+					How to Buy Weed Online in Australia: The Safe & Legal Guide
+				</h1>
+
+                <div class="prose prose-lg prose-green max-w-none">
+                    <p class="lead text-xl text-neutral mb-8">
+                        Navigating the Australian cannabis landscape can be confusing. With strict regulations governed by the Therapeutic Goods Administration (TGA), knowing how to securely and legally access premium products is essential for patient health and safety.
+                    </p>
+
+                    <div class="bg-accent/10 p-6 rounded-xl mb-10 border border-accent/20">
+                        <strong class="text-accent flex items-center gap-2 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Medical Disclaimer
+                        </strong>
+                        <p class="text-sm m-0">This guide is strictly for educational purposes to assist patients in understanding current Australian access frameworks. Always consult with a registered healthcare professional regarding your medical needs.</p>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-4">1. Understanding the Australian Landscape</h2>
+                    <p>
+                        In Australia, the recreational sale of cannabis remains restricted. However, medical cannabis has been legal federally since 2016. Patients suffering from chronic conditions who cannot find relief through conventional treatments may be eligible. Accessing these treatments requires working with authorized clinics and dispensaries to ensure your product is lab-tested, unadulterated, and high-quality.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-4">2. The Dangers of Unregulated Sources</h2>
+                    <p>
+                        When people search for "buy weed online australia", they are often targeted by illicit, unverified vendors. Purchasing from unregulated sources carries significant risks:
+                    </p>
+                    <ul>
+                        <li><strong>Contamination:</strong> Illicit products are not lab-tested and may contain mould, heavy metals, or synthetic pesticides.</li>
+                        <li><strong>Inconsistent Dosage:</strong> Accurate THC and CBD ratios are critical for effective symptom management.</li>
+                        <li><strong>Legal Risk:</strong> Intercepted packages from unlicensed vendors can lead to severe legal consequences.</li>
+                        <li><strong>Financial Fraud:</strong> Many illegitimate sites operate as scams, taking payment without ever shipping products.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-4">3. How Our Dispensary Prioritizes Safety</h2>
+                    <p>
+                        At Mullaways Medical Cannabis, our operations are designed to provide maximum safety, discretion, and compliance for Australian patients:
+                    </p>
+                    <ul>
+                        <li><strong>Lab-Tested Quality:</strong> All our flower, oils, and concentrates undergo stringent laboratory testing to ensure purity and precise cannabinoid profiles.</li>
+                        <li><strong>Express, Discreet Shipping:</strong> Patient privacy is paramount. Orders are packaged in vacuum-sealed, odor-proof bags and shipped via standard postal channels without external branding. Learn more on our <a href="/shipping-and-delivery/" class="text-primary hover:underline font-medium">Shipping Policy</a> page.</li>
+                        <li><strong>Secure Transactions:</strong> We employ end-to-end encryption for all patient correspondence and order fulfillment details.</li>
+                    </ul>
+
+                    <div class="my-12">
+                        <a href="/shop/" class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-lg inline-flex items-center transition-colors">
+                            View Our Product Catalog
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-6 border-b pb-2">Frequently Asked Questions</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-bold text-lg text-secondary">Is it legal to buy weed online in Australia?</h3>
+                            <p class="text-neutral mt-2">Medical cannabis is legally accessible in Australia via prescriptions. Licensed clinics and dispensaries ensure compliance with the Therapeutic Goods Administration (TGA), providing safe and legal pathways for patients.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-bold text-lg text-secondary">How does the delivery process work for medical cannabis?</h3>
+                            <p class="text-neutral mt-2">Deliveries are strictly regulated, sent via express courier or Australia Post in completely discreet, odor-proof, and tamper-evident packaging to prioritize patient privacy and safety.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-bold text-lg text-secondary">Do I need a prescription to order?</h3>
+                            <p class="text-neutral mt-2">Legitimate cannabis access requires consultation with an authorized prescriber to ensure patient eligibility under current Australian health frameworks. Always consult a professional regarding your eligibility.</p>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</main>
+	
+	<Footer />
+</Layout>

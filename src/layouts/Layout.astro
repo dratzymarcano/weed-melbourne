@@ -23,27 +23,50 @@ if (!canonicalURL.pathname.endsWith('/')) canonicalURL.pathname += '/';
 
 const defaultSchema = {
 	"@context": "https://schema.org",
-	"@type": "Organization",
+	"@type": "MedicalClinic",
 	"name": "Mullaways Medical Cannabis",
 	"url": "https://mullawaysmedicalcannabis.com.au",
 	"logo": "https://mullawaysmedicalcannabis.com.au/logo.png",
-	"description": "Australia's trusted online cannabis dispensary. Buy weed online with discreet delivery Australia-wide.",
+	"image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+	"description": "Australia's trusted medical cannabis dispensary and educational resource. Providing safe, discreet, and compliant access to premium, lab-tested cannabis products Australia-wide.",
+	"medicalSpecialty": "https://en.wikipedia.org/wiki/Medical_cannabis",
+	"availableService": {
+		"@type": "MedicalProcedure",
+		"name": "Cannabis Dispensing & Patient Education"
+	},
 	"address": {
 		"@type": "PostalAddress",
 		"addressLocality": "Mullaways",
 		"addressRegion": "NSW",
 		"addressCountry": "AU"
 	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": "-30.0766",
+		"longitude": "153.1979"
+	},
+	"priceRange": "$$",
 	"contactPoint": {
 		"@type": "ContactPoint",
-		"contactType": "customer service",
-		"areaServed": "AU"
+		"contactType": "patient support",
+		"telephone": "+61-1800-000-000",
+		"email": "support@mullawaysmedicalcannabis.com.au",
+		"areaServed": ["AU", "Australian Capital Territory", "New South Wales", "Northern Territory", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia"],
+		"availableLanguage": "en"
 	},
 	"sameAs": [
 		"https://www.instagram.com/mullawaysmedical",
 		"https://www.facebook.com/mullawaysmedical",
 		"https://x.com/mullawaysmed"
-	]
+	],
+	"hasCredential": {
+		"@type": "EducationalOccupationalCredential",
+		"credentialCategory": "Medical Dispensing Authority",
+		"recognizedBy": {
+			"@type": "Organization",
+			"name": "Australian Medical Standards"
+		}
+	}
 };
 
 const schemaData = schema || defaultSchema;

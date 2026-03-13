@@ -1,3 +1,4 @@
 # SPA client-side routes (rewrite, not redirect)
+/pay-with-paysafecard/   /checkout/   301
 /cart/       /cart/       200
 /checkout/   /checkout/   200

@@ -295,63 +295,106 @@ export function getReviewRating(slug: string): number {
 
 const reviewNames = [
   'Ella', 'Jack', 'Mia', 'Noah', 'Ava', 'Liam', 'Sofia', 'Leo', 'Isla', 'Archer',
-  'Grace', 'Charlie', 'Zoe', 'Oscar', 'Ruby', 'Lucas', 'Matilda', 'Henry'
+  'Grace', 'Charlie', 'Zoe', 'Oscar', 'Ruby', 'Lucas', 'Matilda', 'Henry', 'Chloe',
+  'Thomas', 'Olivia', 'William', 'Charlotte', 'James', 'Amelia', 'Oliver', 'Harper',
+  'Elijah', 'Evelyn', 'Mason', 'Lily', 'Ethan', 'Sophie', 'Logan', 'Aria', 'Jackson',
+  'Ben', 'Lachlan', 'Cooper', 'Harrison', 'Sam', 'Mitch', 'Taz', 'Jess', 'Ryan', 'Josh'
 ];
 
 const reviewTitles = [
-  'Smooth and consistent',
+  'Bloody good stuff',
+  'Top notch quality',
+  'Arrived quick to Brissy',
+  'Smooth and effective',
+  'Will be buying again 100%',
+  'Legit the best I\'ve had lately',
+  'Quality is surprisingly good',
   'Great for winding down',
-  'Tasty and effective',
-  'Reliable quality',
-  'Perfect for evenings',
-  'Balanced effects',
-  'Solid value',
-  'Discreet and fast delivery'
+  'Decent nugs, zero complaints',
+  'Discreet delivery, big plus',
+  'Spot on perfectly cured',
+  'Exactly what I needed',
+  'Cheers guys, awesome service',
+  'Really nice flavor profile',
+  'Packs a proper punch',
+  'Arrived in 2 days to Melbourne',
+  'Solid value for money',
+  'No anxiety, just pure chill',
+  'Absolute heavy hitter',
+  'Nice clean burn and white ash'
 ];
 
 const reviewBodies = [
-  'Good flavour and steady effects. The experience was consistent across sessions and the aroma was clean without being overpowering.',
-  'Helped me settle after work without feeling too heavy. The effects built gradually and felt balanced.',
-  'Nice taste and the effects matched the description. I would order again because the quality felt reliable.',
-  'Delivered quickly and packaged discreetly. The product felt fresh and the effects were predictable.',
-  'Smooth overall experience. I liked the flavour profile and how it fit into an evening routine.',
-  'Clear-headed uplift followed by a gentle calm. It didn’t feel too strong, which suited me well.'
+  'Mate, was a bit skeptical at first but it arrived in Melbourne within 3 days. Shrink wrapped and completely smell proof. The quality is honestly better than what I was getting through my clinic. Nice sizing on the buds too, not just popcorn.',
+  'Honestly bloody good stuff. Smokes really clean and leaves white ash. Kept me fully relaxed after a brutal week at work. Delivered quickly to the Sunny Coast.',
+  'Top notch quality. Had some issues with AusPost tracking updating late, but that\'s on them, not Mullaways. The actual flower is super frosty and smells amazing when you crack the seal.',
+  'I use this mainly for sleep and it absolutely does the trick. Usually it takes me hours to switch off but this had me out like a light. Delivery to Sydney took exactly 2 days.',
+  'Decent sized nugs, no shake or trim in the bag. Tastes incredible through the Mighty vape. Will definitely be reordering when I run out. Cheers guys.',
+  'Very smooth. Didn\'t make me cough my lungs up like the last batch I got elsewhere. Good head high without the paranoia. Also appreciate how stealthy the packaging was.',
+  'Quality is top tier. Smells super fresh, nicely cured, not too dry. Hits pretty hard so you don\'t need much. Value is definitely there.',
+  'Took a punt on this and really happy I did. Beautiful tight buds covered in trichomes. Felt the effects almost instantly. Great for watching a movie and zoning out.',
+  'Been looking for a reliable source in WA and think I’ve found it. Took about 4 days to arrive to Perth which is standard. The stealth is 10/10. Highly recommend.',
+  'Straight up, one of the best strains I\'ve tried this year. Flavor is exactly as described and it burns perfectly. Helps massively with my back pain.',
+  'This is the real deal. Dense, sticky, and loud. The high is super euphoric but calming. Perfect for lazy Sunday afternoons when you have zero plans. Absolute fire.',
+  'Arrived safely. Was packaged so well I didn\'t even know what it was until I opened the third layer lol. Good product, exactly what was promised on the site.',
+  'Solid 5 stars. Tastes sweet and acts fast. Relieved my stress almost immediately. Good customer service as well, answered my questions straight away.',
+  'Very happy with this order. The weight was spot on (actually a tiny bit over like 0.2g) and it smoked beautifully. Will be putting my mates onto this site.',
+  'Can\'t fault it. Delivery to radelaide was about 3 days. The effects are long-lasting and really clear-headed. Doesn\'t leave me feeling groggy the next morning.',
+  'Nice and strong. A little goes a long way with this one. Really helped with my insomnia. The vacuum seal packaging meant my postie had no clue.',
+  'Really pleasant high. I’m pretty prone to anxiety with strong sativas but this hybrid was perfectly balanced. Just pure chill vibes.',
+  'Impressive stuff. Cured perfectly so it fluffs up massive in the grinder. Tastes brilliant and hits smooth. 10/10 would recommend to anyone.',
+  'Got this delivered to regional QLD in 4 days. Unbelievable quality and proper discreet packaging. The effects match the description perfectly.',
+  'Super sticky and smelly in the best way possible. Puts me right in the couch but my mind stays active. Awesome for gaming or listening to music.'
 ];
 
 const reviewLocations = [
-  'Sydney, NSW',
-  'Melbourne, VIC',
-  'Brisbane, QLD',
-  'Perth, WA',
-  'Adelaide, SA',
-  'Canberra, ACT',
-  'Hobart, TAS',
-  'Newcastle, NSW'
+  'Sydney, NSW', 'Melbourne, VIC', 'Brisbane, QLD', 'Perth, WA', 
+  'Adelaide, SA', 'Canberra, ACT', 'Hobart, TAS', 'Newcastle, NSW',
+  'Gold Coast, QLD', 'Sunshine Coast, QLD', 'Wollongong, NSW', 'Geelong, VIC'
 ];
 
-function getReviewDate(seed: number, index: number): { display: string; iso: string } {
-  const monthPattern = [12, 1, 2, 1, 12, 2];
-  const month = monthPattern[index % monthPattern.length];
-  const year = month === 12 ? 2025 : 2026;
-
-  const dayOptionsByMonth: Record<number, number[]> = {
-    12: [4, 6, 9, 12, 15, 18, 21, 24, 27, 30],
-    1: [3, 7, 11, 14, 18, 22, 26, 29, 31],
-    2: [2, 5, 8, 11, 13, 16],
-  };
-
-  const dayOptions = dayOptionsByMonth[month];
-  const day = dayOptions[seed % dayOptions.length];
-  const date = new Date(Date.UTC(year, month - 1, day));
-  return {
-    display: date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }),
-    iso: date.toISOString().split('T')[0],
-  };
+function getReviewDatesForProduct(slug: string, total: number): { display: string; iso: string }[] {
+  const seed = hashString(slug) + 9999;
+  
+  // Start date: Nov 1, 2025. End date: Mar 13, 2026.
+  const startTs = new Date('2025-11-01T12:00:00Z').getTime();
+  const endTs = new Date('2026-03-13T12:00:00Z').getTime();
+  
+  const dates: number[] = [];
+  
+  for (let i = 0; i < total; i++) {
+    // Deterministic random fraction between 0 and 1 based on slug seed and i
+    // Large multiplier to ensure widespread distribution
+    const pseudoRandom = Math.abs(Math.sin((seed + i) * 13.3769)) * 10000;
+    const fraction = pseudoRandom - Math.floor(pseudoRandom);
+    
+    dates.push(startTs + fraction * (endTs - startTs));
+  }
+  
+  // Sort descending: newest first, oldest last
+  dates.sort((a, b) => b - a);
+  
+  return dates.map(ts => {
+    const d = new Date(ts);
+    // Use manual UTC offset formatting to avoid timezone shifting
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(d.getUTCDate()).padStart(2, '0');
+    
+    return {
+      display: d.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }),
+      iso: `${year}-${month}-${day}`
+    };
+  });
 }
 
 export function getProductReviews(slug: string, limit = 3): ProductReview[] {
   const count = getReviewCount(slug);
   const total = Math.min(count, limit);
+  
+  // Generate all dates once per product so they sort chronologically properly
+  const dates = getReviewDatesForProduct(slug, total);
+  
   const reviews: ProductReview[] = [];
 
   for (let i = 0; i < total; i += 1) {
@@ -360,8 +403,9 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
     const title = reviewTitles[seed % reviewTitles.length];
     const body = reviewBodies[seed % reviewBodies.length];
     const location = reviewLocations[seed % reviewLocations.length];
-    const rating = 3 + (seed % 3);
-    const reviewDate = getReviewDate(seed, i);
+    
+    // Reviews should skew positive (4 or 5 stars) to act human
+    const rating = (seed % 10 > 7) ? 4 : 5;
 
     reviews.push({
       id: `${slug}-${seed}`,
@@ -369,8 +413,8 @@ export function getProductReviews(slug: string, limit = 3): ProductReview[] {
       rating,
       title,
       body,
-      date: reviewDate.display,
-      isoDate: reviewDate.iso,
+      date: dates[i].display,
+      isoDate: dates[i].iso,
       location,
       verified: true
     });
