@@ -462,6 +462,9 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   }
 
   .info-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     background: #fff4e5;
     border: 1px solid #f0c88b;
     padding: 14px;
@@ -671,12 +674,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     font-size: 0.95rem;
   }
 
-  .info-alert {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
   /* ── Form Validation Styles ────────────────────────────────── */
   .input-error {
     border-color: #ef4444 !important;
@@ -759,6 +756,10 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   const bankPanel = document.getElementById('bank-panel');
 
   // ── Helpers ─────────────────────────────────────────────────────
+  function escHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
   const BTC_DISCOUNT_RATE = 0.10; // 10% Bitcoin discount
   const BTC_ADDRESS = 'bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr';
 
@@ -799,7 +800,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
     summaryItems.innerHTML = cart.map((item) => `
       <div class="summary-item">
-        <span>${item.name} &times; ${item.quantity}</span>
+        <span>${escHtml(item.name)} &times; ${item.quantity}</span>
         <strong>$${(item.price * item.quantity).toFixed(2)}</strong>
       </div>
     `).join('');

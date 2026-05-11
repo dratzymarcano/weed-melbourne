@@ -15,10 +15,13 @@ const blogSchema = {
   "description": description,
   "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
   "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
-  "datePublished": "2026-01-01",
-  "dateModified": "2026-01-01",
+  "datePublished": "2026-02-01",
+  "dateModified": "2026-02-01",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/strongest-strains-australia/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "inLanguage": "en-AU",
+  "articleSection": "Strain Guide",
+  "keywords": "strongest weed strains Australia, high THC strains, Gorilla Glue Australia, Bruce Banner strain, highest THC cannabis Australia, potent strains"
 };
 
 const breadcrumbSchema = {
@@ -125,7 +128,7 @@ const strains = [
 ];
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-02-01" articleModifiedTime="2026-02-01" articleAuthor="Mullaways Medical Cannabis" articleSection="Strain Guide">
   <Header />
 
   <main>

@@ -274,9 +274,16 @@ const metaDescription = `Buy weed ${cityName} with fast ${deliveryTime} delivery
 const cityPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
+  // @id reinforces this page's canonical URL to Google's entity graph —
+  // helps prevent "Duplicate, Google chose different canonical than user" for city pages.
+  "@id": `https://mullawaysmedicalcannabis.com.au/${city}/#webpage`,
   "name": `Buy Weed ${cityName} | Cannabis Delivery ${stateAbbr}`,
   "description": metaDescription,
   "url": `https://mullawaysmedicalcannabis.com.au/${city}/`,
+  "inLanguage": "en-AU",
+  "isPartOf": {
+    "@id": "https://mullawaysmedicalcannabis.com.au/#website"
+  },
   "about": {
     "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
   },
@@ -285,7 +292,11 @@ const cityPageSchema = {
     "name": `Cannabis delivery ${cityName}`,
     "areaServed": {
       "@type": "City",
-      "name": cityName
+      "name": cityName,
+      "containedInPlace": {
+        "@type": "State",
+        "name": state
+      }
     },
     "provider": {
       "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
@@ -314,6 +325,7 @@ const cityItemListSchema = {
   "itemListElement": products.map((product, index) => ({
     "@type": "ListItem",
     "position": index + 1,
+    "name": product.name,
     "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/`
   }))
 };

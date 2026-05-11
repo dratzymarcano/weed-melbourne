@@ -5,6 +5,7 @@ import Footer from '../../../components/Footer.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import { allProducts, getWeightVariants, getReviewCount, getReviewRating, getProductReviews, getProductDescriptionHook, getProductLongDescription, getProductFaqItems, getMinPrice, getProductImageAlt } from '../../../data/products';
 import type { Product, ProductReview } from '../../../data/products';
+import { merchantReturnPolicy, shippingDetails as siteShippingDetails } from '../../../lib/schema';
 
 export function getStaticPaths() {
   return allProducts.map((product: Product) => ({
@@ -57,9 +58,14 @@ const productSchema: Record<string, any> = {
     "name": "Mullaways Medical Cannabis"
   },
   "sku": product.slug,
+  "mpn": product.slug,
   "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/`,
   "image": product.image ? `https://mullawaysmedicalcannabis.com.au${product.image}` : "https://mullawaysmedicalcannabis.com.au/og-default.png",
   "category": categoryLabel,
+  // "condition" is required for Google Merchant Center free automatic listings
+  "condition": "https://schema.org/NewCondition",
+  // hasMerchantReturnPolicy and shippingDetails are required for Merchant Center eligibility
+  "hasMerchantReturnPolicy": merchantReturnPolicy,
   "offers": {
     "@type": "AggregateOffer",
     "lowPrice": minPrice,
@@ -67,8 +73,12 @@ const productSchema: Record<string, any> = {
     "priceCurrency": "AUD",
     "availability": "https://schema.org/InStock",
     "offerCount": weightVariants.length,
+    "itemCondition": "https://schema.org/NewCondition",
+    "hasMerchantReturnPolicy": merchantReturnPolicy,
+    "shippingDetails": siteShippingDetails,
     "seller": {
       "@type": "Organization",
+      "@id": "https://mullawaysmedicalcannabis.com.au/#organization",
       "name": "Mullaways Medical Cannabis"
     }
   }

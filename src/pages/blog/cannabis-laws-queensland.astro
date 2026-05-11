@@ -15,10 +15,13 @@ const blogSchema = {
   "description": description,
   "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
   "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
-  "datePublished": "2026-01-01",
-  "dateModified": "2026-01-01",
+  "datePublished": "2026-01-20",
+  "dateModified": "2026-01-20",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-laws-queensland/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "inLanguage": "en-AU",
+  "articleSection": "Legal Guide",
+  "keywords": "cannabis laws Queensland, is weed legal QLD, marijuana laws Queensland, cannabis penalties QLD, medical cannabis Queensland, weed legal Brisbane"
 };
 
 const breadcrumbSchema = {
@@ -32,7 +35,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-20" articleModifiedTime="2026-01-20" articleAuthor="Mullaways Medical Cannabis" articleSection="Legal Guide">
   <Header />
 
   <main>

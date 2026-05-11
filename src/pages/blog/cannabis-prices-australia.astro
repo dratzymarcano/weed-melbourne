@@ -15,10 +15,13 @@ const blogSchema = {
   "description": description,
   "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
   "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
-  "datePublished": "2026-01-10",
-  "dateModified": "2026-01-10",
+  "datePublished": "2026-01-28",
+  "dateModified": "2026-01-28",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-prices-australia/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "inLanguage": "en-AU",
+  "articleSection": "Guide",
+  "keywords": "weed prices Australia, how much does weed cost Australia, cannabis price per gram, ounce weed price Australia, THC gummies price, cannabis cost 2026"
 };
 
 const breadcrumbSchema = {
@@ -32,7 +35,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-28" articleModifiedTime="2026-01-28" articleAuthor="Mullaways Medical Cannabis" articleSection="Guide">
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog/'}, {label: 'Cannabis Prices Australia'}]} />

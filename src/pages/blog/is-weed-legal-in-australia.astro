@@ -18,7 +18,10 @@ const blogSchema = {
   "datePublished": "2026-01-15",
   "dateModified": "2026-01-15",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/is-weed-legal-in-australia/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "inLanguage": "en-AU",
+  "articleSection": "Legal",
+  "keywords": "is weed legal in Australia, cannabis laws Australia, marijuana legal Australia, medical cannabis Australia, recreational cannabis Australia, cannabis decriminalised ACT"
 };
 
 const breadcrumbSchema = {
@@ -32,7 +35,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-15" articleModifiedTime="2026-01-15" articleAuthor="Mullaways Medical Cannabis" articleSection="Legal">
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog/'}, {label: 'Is Weed Legal in Australia?'}]} />

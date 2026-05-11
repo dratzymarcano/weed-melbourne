@@ -209,13 +209,16 @@ const intentLinks = [
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://mullawaysmedicalcannabis.com.au/#website",
   "name": "Mullaways Medical Cannabis",
   "url": "https://mullawaysmedicalcannabis.com.au",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://mullawaysmedicalcannabis.com.au/shop?q={search_term_string}"
+      // Trailing slash required — matches trailingSlash:'always' Astro config.
+      // Without it, /shop?q= creates a URL variant that conflicts with /shop/ canonical.
+      "urlTemplate": "https://mullawaysmedicalcannabis.com.au/shop/?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }
@@ -224,11 +227,14 @@ const webSiteSchema = {
 const itemListSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
+  "name": "Featured Cannabis Products",
+  "description": "Top cannabis products available for delivery across Australia",
   "itemListElement": featuredProducts.map((p, index) => {
     const slug = p.linkSlug ?? p.slug;
     return {
       "@type": "ListItem",
       "position": index + 1,
+      "name": p.name,
       "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${slug}/`
     };
   })
@@ -236,16 +242,33 @@ const itemListSchema = {
 
 const homePageSchema = {
   "@context": "https://schema.org",
-	"@type": "WebPage",
-	"name": "Buy Weed Online Australia | Mullaways",
-	"url": "https://mullawaysmedicalcannabis.com.au/",
-	"about": {
-		"@id": "https://mullawaysmedicalcannabis.com.au/#organization"
-	},
-	"isPartOf": {
-		"@type": "WebSite",
-		"url": "https://mullawaysmedicalcannabis.com.au"
-	}
+  "@type": "WebPage",
+  "@id": "https://mullawaysmedicalcannabis.com.au/#webpage",
+  "name": "Buy Weed Online Australia | Mullaways Medical Cannabis",
+  "url": "https://mullawaysmedicalcannabis.com.au/",
+  "description": "Buy cannabis online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary.",
+  "inLanguage": "en-AU",
+  "about": {
+    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://mullawaysmedicalcannabis.com.au/#website",
+    "url": "https://mullawaysmedicalcannabis.com.au",
+    "name": "Mullaways Medical Cannabis",
+    "inLanguage": "en-AU"
+  },
+  // speakable marks content suitable for voice/AI answer engines (AEO/GEO)
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["h1", ".hero-subtitle", ".section-intro"]
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" }
+    ]
+  }
 };
 ---
 

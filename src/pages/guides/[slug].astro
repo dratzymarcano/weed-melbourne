@@ -33,20 +33,34 @@ const breadcrumbSchema = {
 const pageSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
+  '@id': `${canonicalUrl}#article`,
   headline: guide.h1,
   description: guide.description,
+  inLanguage: 'en-AU',
   datePublished: '2026-03-13',
   dateModified: '2026-03-13',
   author: {
     '@type': 'Organization',
-    name: 'Mullaways Medical Cannabis'
+    name: 'Mullaways Medical Cannabis',
+    url: 'https://mullawaysmedicalcannabis.com.au/'
   },
   publisher: {
     '@type': 'Organization',
     name: 'Mullaways Medical Cannabis',
-    url: 'https://mullawaysmedicalcannabis.com.au/'
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://mullawaysmedicalcannabis.com.au/logo.png',
+      width: 200,
+      height: 60,
+    },
   },
-  mainEntityOfPage: canonicalUrl
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonicalUrl,
+  },
+  isPartOf: {
+    '@id': 'https://mullawaysmedicalcannabis.com.au/#website',
+  },
 };
 
 const faqSchema = {

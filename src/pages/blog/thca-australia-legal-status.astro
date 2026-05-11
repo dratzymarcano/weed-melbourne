@@ -15,10 +15,13 @@ const blogSchema = {
   "description": description,
   "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
   "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
-  "datePublished": "2026-01-01",
-  "dateModified": "2026-01-01",
+  "datePublished": "2026-02-05",
+  "dateModified": "2026-02-05",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/thca-australia-legal-status/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "inLanguage": "en-AU",
+  "articleSection": "Education",
+  "keywords": "THCA Australia, THCA legal status Australia, what is THCA, THCA vs THC, buy THCA Australia, THCA flower Australia"
 };
 
 const breadcrumbSchema = {
@@ -32,7 +35,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-02-05" articleModifiedTime="2026-02-05" articleAuthor="Mullaways Medical Cannabis" articleSection="Education">
   <Header />
 
   <main>

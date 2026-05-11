@@ -1,4 +1,8 @@
+# Retired Paysafecard page — redirects to the relevant bank transfer guide
+# Previously pointed to /checkout/ (noindexed), which created an unresolvable
+# canonical chain in Google Search Console. Now points to an indexable destination.
+/pay-with-paysafecard/   /pay-with-bank-transfer/   301
+
 # SPA client-side routes (rewrite, not redirect)
-/pay-with-paysafecard/   /checkout/   301
 /cart/       /cart/       200
 /checkout/   /checkout/   200

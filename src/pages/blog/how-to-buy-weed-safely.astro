@@ -15,10 +15,13 @@ const blogSchema = {
   "description": description,
   "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
   "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
-  "datePublished": "2026-01-01",
-  "dateModified": "2026-01-01",
+  "datePublished": "2026-01-10",
+  "dateModified": "2026-01-10",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/how-to-buy-weed-safely/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png"
+  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "inLanguage": "en-AU",
+  "articleSection": "Safety Guide",
+  "keywords": "buy weed safely Australia, how to buy cannabis online, avoid cannabis scams, quality cannabis Australia, safe online dispensary Australia"
 };
 
 const breadcrumbSchema = {
@@ -32,7 +35,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-10" articleModifiedTime="2026-01-10" articleAuthor="Mullaways Medical Cannabis" articleSection="Safety Guide">
   <Header />
 
   <main>

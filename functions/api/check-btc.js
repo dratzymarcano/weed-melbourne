@@ -22,7 +22,7 @@ export async function onRequestGet(context) {
 
   const headers = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://mullawaysmedicalcannabis.com.au',
+    'Access-Control-Allow-Origin': '*',
     // Cache for 30 seconds to avoid hammering the API
     'Cache-Control': 'public, max-age=30',
   };
@@ -64,6 +64,8 @@ export async function onRequestGet(context) {
             status: 'detected',
             confirmations: 0,
             txid: latestTx.txid,
+            // tx_time is null for unconfirmed — the client uses this to filter old transactions
+            tx_time: null,
             message: 'Transaction found in mempool, awaiting confirmations',
           }),
           { headers }
@@ -86,7 +88,6 @@ export async function onRequestGet(context) {
 
           if (txBlockHeight) {
             const confirmations = currentHeight - txBlockHeight + 1;
-
             const status = confirmations >= 2 ? 'confirmed' : 'detected';
 
             return new Response(
@@ -94,6 +95,9 @@ export async function onRequestGet(context) {
                 status,
                 confirmations,
                 txid: latestTx.txid,
+                // block_time is a Unix timestamp — used by the client and btc-notify server
+                // to distinguish this order's payment from old transactions to the shared address
+                tx_time: latestTx.status?.block_time || null,
                 message: status === 'confirmed'
                   ? `Payment confirmed with ${confirmations} confirmations`
                   : `Payment detected, ${confirmations} confirmation(s) so far`,
@@ -109,6 +113,7 @@ export async function onRequestGet(context) {
             status: 'detected',
             confirmations: 1,
             txid: latestTx.txid,
+            tx_time: latestTx.status?.block_time || null,
             message: 'Transaction confirmed but unable to determine exact confirmations',
           }),
           { headers }

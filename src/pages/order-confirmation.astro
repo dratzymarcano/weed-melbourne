@@ -45,7 +45,7 @@ import Footer from '../components/Footer.astro';
             <p id="hero-subtitle">Your order reference is <strong id="hero-ref">—</strong></p>
             <div class="hero-email-notice" id="hero-email-notice">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <span>A confirmation email has been sent to <strong id="hero-email">—</strong></span>
+              <span><span id="hero-email-notice-txt">A confirmation email has been sent to </span><strong id="hero-email">—</strong></span>
             </div>
           </div>
         </div>
@@ -1141,6 +1141,10 @@ import Footer from '../components/Footer.astro';
 <script>
   // @ts-nocheck
   (function() {
+    function escHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     const loadingState = document.getElementById('loading-state');
     const noOrderState = document.getElementById('no-order-state');
     const orderState = document.getElementById('order-state');
@@ -1169,6 +1173,12 @@ import Footer from '../components/Footer.astro';
 
     if (heroRef) heroRef.textContent = order.ref;
     if (heroEmail) heroEmail.textContent = order.customer.email;
+
+    // For Bitcoin, emails are deferred until 2 confirmations — update the notice
+    if (order.payment === 'bitcoin') {
+      const noticeTxt = document.getElementById('hero-email-notice-txt');
+      if (noticeTxt) noticeTxt.textContent = 'A confirmation email will be sent to ';
+    }
 
     // Customize hero based on payment
     if (order.payment === 'bank') {
@@ -1215,8 +1225,8 @@ import Footer from '../components/Footer.astro';
         if (timerCountdown) timerCountdown.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         if (timerFill) timerFill.style.width = `${pct}%`;
 
-        if (remaining <= 0 && timerBar) {
-          timerBar.classList.add('expired');
+        if (remaining <= 0) {
+          if (timerBar) timerBar.classList.add('expired');
           if (timerCountdown) timerCountdown.textContent = 'Expired';
           return;
         }
@@ -1234,6 +1244,10 @@ import Footer from '../components/Footer.astro';
       let btcPollingActive = true;
       let currentOrderStatus = order.status || 'pending';
 
+      // Unix timestamp of when this order was placed — used to reject
+      // old transactions to the shared BTC address as payment for this order.
+      const orderUnixTime = Math.floor(new Date(order.date).getTime() / 1000);
+
       async function checkBlockchain() {
         if (!btcAddress || !btcPollingActive) return;
         try {
@@ -1241,7 +1255,11 @@ import Footer from '../components/Footer.astro';
           if (!res.ok) return;
           const data = await res.json();
 
-          if (data.status === 'confirmed' && data.confirmations >= 2) {
+          // Guard: if tx_time is known and predates this order, it's an old transaction
+          // to the shared address — not a payment for this order. Skip it.
+          const txIsNew = !data.tx_time || data.tx_time >= orderUnixTime;
+
+          if (data.status === 'confirmed' && data.confirmations >= 2 && txIsNew) {
             // Payment confirmed!
             if (statusDot) { statusDot.className = 'status-dot confirmed'; }
             if (statusText) statusText.textContent = 'Payment confirmed!';
@@ -1260,20 +1278,17 @@ import Footer from '../components/Footer.astro';
             const stepPayment = document.getElementById('step-payment');
             const stepPaymentTitle = document.getElementById('step-payment-title');
             const stepPaymentDesc = document.getElementById('step-payment-desc');
-            if (stepPayment) {
-              stepPayment.classList.add('completed');
-            }
+            if (stepPayment) stepPayment.classList.add('completed');
             if (stepPaymentTitle) stepPaymentTitle.textContent = 'Payment Confirmed';
             if (stepPaymentDesc) stepPaymentDesc.textContent = `${data.confirmations} blockchain confirmations received.`;
 
-            // Send order emails now that payment is confirmed (2+ confirmations)
             if (!order.emailsSent) {
-              sendBtcOrderEmails(order);
+              sendBtcConfirmedEmails(order);
             }
 
             btcPollingActive = false;
             return;
-          } else if (data.status === 'detected' || (data.confirmations > 0 && data.confirmations < 2)) {
+          } else if (txIsNew && (data.status === 'detected' || (data.confirmations > 0 && data.confirmations < 2))) {
             // Transaction detected, awaiting confirmations
             if (statusDot) { statusDot.className = 'status-dot detected'; }
             if (statusText) statusText.textContent = 'Payment detected - awaiting confirmations...';
@@ -1286,8 +1301,12 @@ import Footer from '../components/Footer.astro';
         }
       }
 
-      // ── Send BTC Order Emails (after 2 confirmations) ────────
-      async function sendBtcOrderEmails(order) {
+      // ── Send BTC emails after confirmed payment ───────────────────────
+      // Admin email is sent SERVER-SIDE via /api/btc-notify which independently
+      // re-verifies the blockchain before sending — so the admin only ever receives
+      // the notification after genuine payment, never at order placement.
+      // Customer email is sent client-side after the server confirms.
+      async function sendBtcConfirmedEmails(order) {
         const itemsList = order.items.map(i =>
           `${i.name} x ${i.quantity} -- $${(i.price * i.quantity).toFixed(2)}`
         ).join('\n');
@@ -1320,23 +1339,35 @@ import Footer from '../components/Footer.astro';
         };
 
         try {
-          const [custRes, adminRes] = await Promise.all([
-            fetch('/api/send-email', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ type: 'order-customer', data: emailData }),
+          // Admin notification: server-side via /api/btc-notify.
+          // The server re-verifies the blockchain and filters by orderDate,
+          // so old transactions on the shared address cannot trigger a false notification.
+          const adminRes = await fetch('/api/btc-notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              address: order.btcAddress,
+              orderRef: order.ref,
+              orderDate: order.date,
+              emailData,
             }),
-            fetch('/api/send-email', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ type: 'order-admin', data: emailData }),
-            }),
-          ]);
+          });
+          const adminResult = await adminRes.json();
+          if (adminResult.sent) {
+            console.log('Admin notification sent via server-side verification');
+          } else {
+            console.warn('Admin notification not sent:', adminResult.message || adminResult.error);
+          }
 
+          // Customer confirmation: sent client-side (no re-verification needed)
+          const custRes = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'order-customer', data: emailData }),
+          });
           if (custRes.ok) console.log('Customer confirmation email sent (BTC verified)');
-          if (adminRes.ok) console.log('Admin notification email sent (BTC verified)');
 
-          // Mark emails as sent
+          // Mark emails as sent regardless of individual outcomes to avoid retries
           order.emailsSent = true;
           localStorage.setItem('lastOrder', JSON.stringify(order));
           const hist = JSON.parse(localStorage.getItem('orderHistory') || '[]');
@@ -1401,7 +1432,7 @@ import Footer from '../components/Footer.astro';
     if (summaryItems) {
       summaryItems.innerHTML = order.items.map(item =>
         `<div class="summary-item">
-          <span>${item.name} × ${item.quantity}</span>
+          <span>${escHtml(item.name)} × ${item.quantity}</span>
           <strong>$${(item.price * item.quantity).toFixed(2)}</strong>
         </div>`
       ).join('');
