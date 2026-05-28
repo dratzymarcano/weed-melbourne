@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "generate-sitemap": "node scripts/generate-sitemap.mjs",
     "astro": "astro"
   },
   "dependencies": {

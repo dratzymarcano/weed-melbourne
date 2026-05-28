@@ -1,5 +1,5 @@
 ---
-import { organizationSchema } from '../lib/schema';
+import { organizationSchema, websiteSchema } from '../lib/schema';
 
 interface Props {
 	title: string;
@@ -32,7 +32,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://mullaway
 if (!canonicalURL.pathname.endsWith('/')) canonicalURL.pathname += '/';
 
 const passedSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
-const schemaArray = [organizationSchema, ...passedSchemas];
+const schemaArray = [organizationSchema, websiteSchema, ...passedSchemas];
 ---
 
 <!doctype html>
@@ -249,8 +249,37 @@ const schemaArray = [organizationSchema, ...passedSchemas];
 			});
 		</script>
 		<script is:inline id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=godYtfo4cqYq"></script>
+
+		<!-- WhatsApp floating chat button -->
+		<div class="whatsapp-float" aria-live="polite">
+		  <a id="whatsapp-btn" class="whatsapp-float-button" href="https://wa.me/61468299228" target="_blank" rel="noopener noreferrer" aria-label="Chat with Mullaways on WhatsApp">
+		    <span class="whatsapp-icon" aria-hidden="true">💬</span>
+		    <span class="whatsapp-text">WhatsApp</span>
+		  </a>
+		</div>
+
+		<script>
+		(function(){
+			const wa = document.getElementById('whatsapp-btn');
+			if (!wa) return;
+			// Make keyboard accessible: open on Enter/Space
+			wa.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					// @ts-ignore - runtime cast to anchor element
+					window.open((wa as HTMLAnchorElement).href, '_blank', 'noopener');
+				}
+			});
+			// simple analytics hook placeholder
+			wa.addEventListener('click', () => {
+				try { // @ts-ignore - dataLayer may be injected by GTM at runtime
+					if (typeof window !== 'undefined' && (window as any).dataLayer) (window as any).dataLayer.push({event: 'whatsapp_click'});
+				} catch (e){}
+			});
+		})();
+		</script>
 	</body>
-</html>
+	</html>
 
 <style is:global>
 	:root {
@@ -1135,5 +1164,58 @@ const schemaArray = [organizationSchema, ...passedSchemas];
 		inset: 0;
 		pointer-events: none;
 		background: radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.06) 0%, transparent 38%), radial-gradient(circle at 82% 10%, rgba(196, 112, 75, 0.18) 0%, transparent 32%);
+
+/* WhatsApp floating button */
+.whatsapp-float {
+	position: fixed;
+	right: 18px;
+	bottom: 20px;
+	z-index: 99999;
+}
+
+.whatsapp-float-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	background: linear-gradient(135deg,#25D366,#128C7E);
+	color: #fff;
+	padding: 12px 14px;
+	border-radius: 9999px;
+	box-shadow: 0 6px 20px rgba(18,140,126,0.25);
+	font-weight: 700;
+	text-decoration: none;
+	position: relative;
+	overflow: visible;
+	transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+.whatsapp-float-button:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 10px 30px rgba(18,140,126,0.32);
+}
+
+.whatsapp-icon { font-size: 18px; line-height: 1; }
+.whatsapp-text { font-size: 0.95rem; }
+
+.whatsapp-float-button::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 9999px;
+	animation: whatsapp-pulse 2.6s infinite;
+	opacity: 0.12;
+	pointer-events: none;
+}
+
+@keyframes whatsapp-pulse {
+	0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); }
+	70% { box-shadow: 0 0 0 10px rgba(37,211,102,0); }
+	100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+
+@media (max-width: 480px) {
+	.whatsapp-text { display: none; }
+	.whatsapp-float { right: 12px; bottom: 14px; }
+}
 	}
 </style>

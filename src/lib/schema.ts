@@ -31,6 +31,7 @@ export const organizationSchema = {
     '@type': 'ContactPoint',
     contactType: 'customer support',
     email: 'hello@mullawaysmedicalcannabis.com.au',
+    telephone: '+61468299228',
     availableLanguage: [{ '@type': 'Language', name: 'English', alternateName: 'en-AU' }],
   },
   areaServed: {
@@ -70,7 +71,20 @@ export const organizationSchema = {
     'https://www.instagram.com/mullawaysmedical',
     'https://www.facebook.com/mullawaysmedical',
     'https://x.com/mullawaysmed',
+    'https://wa.me/61468299228',
   ],
+};
+
+export const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  'url': SITE_URL,
+  'name': 'Mullaways Medical Cannabis',
+  'potentialAction': {
+    '@type': 'SearchAction',
+    'target': `${SITE_URL}/shop/?q={search_term_string}`,
+    'query-input': 'required name=search_term_string'
+  }
 };
 
 // Shared return policy — referenced from every product's hasMerchantReturnPolicy.
