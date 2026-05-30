@@ -1,8 +1,6 @@
-# Retired Paysafecard page — redirects to the relevant bank transfer guide
-# Previously pointed to /checkout/ (noindexed), which created an unresolvable
-# canonical chain in Google Search Console. Now points to an indexable destination.
-/pay-with-paysafecard/   /pay-with-bank-transfer/   301
+# NOTE: GitHub Pages does not honour _redirects. These rules only take effect if
+# the site is hosted on Netlify, Cloudflare Pages, or another platform that
+# supports the Netlify _redirects spec. Keep them ready for a future migration.
 
-# SPA client-side routes (rewrite, not redirect)
-/cart/       /cart/       200
-/checkout/   /checkout/   200
+# Retired Paysafecard page → relevant payment guide.
+/pay-with-paysafecard/   /pay-with-bank-transfer/   301

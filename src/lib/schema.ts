@@ -33,7 +33,24 @@ export const organizationSchema = {
     email: 'hello@mullawaysmedicalcannabis.com.au',
     telephone: '+61468299228',
     availableLanguage: [{ '@type': 'Language', name: 'English', alternateName: 'en-AU' }],
+    hoursAvailable: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+      validFrom: '2024-01-01',
+    },
   },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  ],
+  paymentAccepted: ['Bank Transfer', 'Bitcoin', 'Cryptocurrency'],
+  currenciesAccepted: 'AUD',
   areaServed: {
     '@type': 'Country',
     name: 'Australia',
@@ -78,13 +95,20 @@ export const organizationSchema = {
 export const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  'url': SITE_URL,
-  'name': 'Mullaways Medical Cannabis',
-  'potentialAction': {
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: 'Mullaways Medical Cannabis',
+  inLanguage: 'en-AU',
+  publisher: { '@id': ORGANIZATION_ID },
+  potentialAction: {
     '@type': 'SearchAction',
-    'target': `${SITE_URL}/shop/?q={search_term_string}`,
-    'query-input': 'required name=search_term_string'
-  }
+    target: {
+      '@type': 'EntryPoint',
+      // Trailing slash required — matches trailingSlash:'always' Astro config.
+      urlTemplate: `${SITE_URL}/shop/?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 };
 
 // Shared return policy — referenced from every product's hasMerchantReturnPolicy.

@@ -2362,23 +2362,35 @@ const faqs = [
 </style>
 
 <script>
-  // Load Leaflet CSS
-  const leafletCSS = document.createElement('link');
-  leafletCSS.rel = 'stylesheet';
-  leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-  leafletCSS.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
-  leafletCSS.crossOrigin = '';
-  document.head.appendChild(leafletCSS);
+  // Lazy-load Leaflet only when the user scrolls the ATM map into view (or on
+  // first interaction with the map). Saves ~150 KB on initial page load and
+  // removes a third-party origin from the critical path.
+  let leafletLoaded = false;
 
-  // Load Leaflet JS
-  const leafletJS = document.createElement('script');
-  leafletJS.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  leafletJS.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
-  leafletJS.crossOrigin = '';
-  document.head.appendChild(leafletJS);
+  function loadLeaflet(): Promise<void> {
+    if (leafletLoaded) return Promise.resolve();
+    leafletLoaded = true;
 
-  leafletJS.onload = () => {
+    const leafletCSS = document.createElement('link');
+    leafletCSS.rel = 'stylesheet';
+    leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    leafletCSS.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+    leafletCSS.crossOrigin = '';
+    document.head.appendChild(leafletCSS);
+
+    return new Promise((resolve) => {
+      const leafletJS = document.createElement('script');
+      leafletJS.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      leafletJS.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+      leafletJS.crossOrigin = '';
+      leafletJS.onload = () => resolve();
+      document.head.appendChild(leafletJS);
+    });
+  }
+
+  function initMap() {
     const L = (window as any).L;
+    if (!L) return;
 
     // Bitcoin ATM location data
     const bitcoinATMs = [
@@ -2683,5 +2695,21 @@ const faqs = [
     // Fix map sizing after layout settles
     setTimeout(() => map.invalidateSize(), 200);
     setTimeout(() => map.invalidateSize(), 600);
-  };
+  }
+
+  // Boot: load Leaflet only when the map scrolls into view.
+  const mapEl = document.getElementById('atm-leaflet-map');
+  if (mapEl) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          loadLeaflet().then(initMap);
+        }
+      }, { rootMargin: '200px' });
+      io.observe(mapEl);
+    } else {
+      loadLeaflet().then(initMap);
+    }
+  }
 </script>

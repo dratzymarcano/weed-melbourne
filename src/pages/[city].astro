@@ -17,7 +17,9 @@ export function getStaticPaths() {
         description: 'Buy weed Adelaide - Premium cannabis delivery to Adelaide and throughout South Australia. Discreet shipping from Mullaways Medical Cannabis ensures your order arrives safely.',
         icon: '🍷',
         highlight: 'Buy Weed Adelaide SA',
-        keywords: ['buy weed adelaide', 'buying weed in adelaide', 'where to buy weed adelaide', 'cannabis dispensary adelaide']
+        keywords: ['buy weed adelaide', 'buying weed in adelaide', 'where to buy weed adelaide', 'cannabis dispensary adelaide'],
+        suburbs: ['Adelaide CBD', 'Norwood', 'Glenelg', 'Port Adelaide', 'Mawson Lakes', 'Marion', 'Salisbury', 'Mount Barker'],
+        localNote: 'Adelaide orders ship via tracked express through the SA mainland network. We see strongest demand for THC gummies and balanced hybrid flower in the Adelaide Hills and Norwood. Deliveries to Glenelg, Henley Beach, and the eastern suburbs typically clear within the early end of the published window.'
       }
     },
     {
@@ -30,7 +32,9 @@ export function getStaticPaths() {
         description: 'Buy weed Brisbane - Fast delivery of lab-tested cannabis to Brisbane and all QLD. Serving all Brisbane suburbs and regional Queensland from our Mullaways, NSW dispensary.',
         icon: '☀️',
         highlight: 'Buy Weed Brisbane QLD',
-        keywords: ['buy weed brisbane', 'where to buy weed in brisbane', 'cannabis dispensary brisbane', 'weed delivery brisbane']
+        keywords: ['buy weed brisbane', 'where to buy weed in brisbane', 'cannabis dispensary brisbane', 'weed delivery brisbane'],
+        suburbs: ['Brisbane CBD', 'Fortitude Valley', 'South Bank', 'New Farm', 'Chermside', 'Indooroopilly', 'Carindale', 'Mt Gravatt'],
+        localNote: 'Brisbane deliveries route through the QLD parcel network and clear customs-style hub sorting quickly thanks to the east-coast corridor from NSW. The Inner North and Inner South suburbs see the fastest end-of-cycle dispatch. Edibles and pre-rolls are our top movers across Brisbane Metro.'
       }
     },
     {
@@ -43,7 +47,9 @@ export function getStaticPaths() {
         description: 'Buy weed Canberra - Quick delivery of quality cannabis to Canberra and the ACT. Where to buy weed in Canberra? Mullaways Medical Cannabis delivers discreetly.',
         icon: '🏛️',
         highlight: 'Buy Weed Canberra ACT',
-        keywords: ['buy weed canberra', 'where to buy weed in canberra', 'buying weed in canberra', 'cannabis canberra']
+        keywords: ['buy weed canberra', 'where to buy weed in canberra', 'buying weed in canberra', 'cannabis canberra'],
+        suburbs: ['Civic', 'Belconnen', 'Tuggeranong', 'Gungahlin', 'Woden', 'Queanbeyan'],
+        localNote: 'Canberra ACT orders are tracked the entire way through the inland NSW corridor before final sortation in Mitchell. Demand skews towards micro-dose THC gummies and balanced flower from public-service-heavy postcodes. ACT addresses generally receive the next dispatch cycle once payment clears.'
       }
     },
     {
@@ -56,7 +62,9 @@ export function getStaticPaths() {
         description: 'Buy weed Darwin - Express cannabis shipping to Darwin and the Northern Territory. All orders shipped discreetly with full tracking from Mullaways Medical Cannabis.',
         icon: '🐊',
         highlight: 'Buy Weed Darwin NT',
-        keywords: ['buy weed darwin', 'cannabis delivery darwin', 'weed dispensary darwin']
+        keywords: ['buy weed darwin', 'cannabis delivery darwin', 'weed dispensary darwin'],
+        suburbs: ['Darwin CBD', 'Palmerston', 'Casuarina', 'Nightcliff', 'Parap'],
+        localNote: 'Darwin and the Top End rely on tracked air freight after the NSW dispatch hub, which is why we publish a slightly longer transit window. We prioritise compact, low-volume formats (gummies, cartridges, hash) for NT orders to keep handling clean. Weather events in the wet season can extend the upper bound.'
       }
     },
     {
@@ -69,7 +77,9 @@ export function getStaticPaths() {
         description: 'Buy weed Hobart - Reliable cannabis delivery to Hobart and across Tasmania. Full product range available with discreet Australia-wide shipping.',
         icon: '🏔️',
         highlight: 'Buy Weed Hobart TAS',
-        keywords: ['buy weed hobart', 'cannabis delivery tasmania', 'weed dispensary hobart']
+        keywords: ['buy weed hobart', 'cannabis delivery tasmania', 'weed dispensary hobart'],
+        suburbs: ['Hobart CBD', 'Sandy Bay', 'Glenorchy', 'Kingston', 'Battery Point', 'Bellerive'],
+        localNote: 'Hobart and Tasmanian orders move via Bass Strait freight after east-coast dispatch. We bias TAS shipments toward concentrates, hash, and pre-rolls because they survive longer in-transit windows well. The southern suburbs around Kingston and Sandy Bay usually clear within the published lower bound.'
       }
     },
     {
@@ -82,7 +92,9 @@ export function getStaticPaths() {
         description: 'Buy weed Melbourne - Where to buy weed in Melbourne? Mullaways Medical Cannabis delivers premium cannabis to all Melbourne suburbs and regional Victoria. Melbourne weed with lab-tested quality, discreet delivery.',
         icon: '🌿',
         highlight: 'Buy Weed Melbourne VIC',
-        keywords: ['buy weed melbourne', 'where to buy weed in melbourne', 'buying weed melbourne', 'cannabis melbourne', 'weed dispensary melbourne', 'dispensary melbourne', 'melbourne weed']
+        keywords: ['buy weed melbourne', 'where to buy weed in melbourne', 'buying weed melbourne', 'cannabis melbourne', 'weed dispensary melbourne', 'dispensary melbourne', 'melbourne weed'],
+        suburbs: ['Melbourne CBD', 'Richmond', 'Fitzroy', 'St Kilda', 'Brunswick', 'Footscray', 'South Yarra', 'Box Hill', 'Frankston', 'Geelong'],
+        localNote: 'Melbourne is our highest-volume metro after Sydney. Most VIC orders ship overnight from NSW and clear the Melbourne sorting facility the same day, putting inner-north (Brunswick/Fitzroy) and inner-south (St Kilda/South Yarra) addresses at the front of the cycle. Top sellers in Melbourne: THC gummies, sativa flower, and live-resin carts.'
       }
     },
     {
@@ -95,7 +107,9 @@ export function getStaticPaths() {
         description: 'Buy weed Perth - Express cannabis shipping to Perth and Western Australia. Where to buy weed in Perth? Mullaways Medical Cannabis delivers lab-tested products with priority handling.',
         icon: '🌅',
         highlight: 'Buy Weed Perth WA',
-        keywords: ['buy weed perth', 'where to buy weed perth', 'buy weed online perth', 'cannabis delivery perth']
+        keywords: ['buy weed perth', 'where to buy weed perth', 'buy weed online perth', 'cannabis delivery perth'],
+        suburbs: ['Perth CBD', 'Fremantle', 'Joondalup', 'Cannington', 'Mandurah', 'Subiaco', 'Scarborough'],
+        localNote: 'Perth and WA deliveries are our longest east-to-west transit. We use tracked express the entire way and bias Perth orders toward compact, sealed formats (gummies, hash, cartridges). Fremantle, Joondalup, and Scarborough addresses clear once the WA hub sorts the eastbound courier wave.'
       }
     },
     {
@@ -108,7 +122,9 @@ export function getStaticPaths() {
         description: 'Buy weed Sydney - Fast shipping to Sydney and throughout NSW from our Mullaways, NSW base. Where to buy weed in Sydney? We cover all Sydney suburbs and regional areas with discreet delivery.',
         icon: '🏙️',
         highlight: 'Buy Weed Sydney NSW',
-        keywords: ['buy weed sydney', 'where to buy weed in sydney', 'buying weed sydney', 'cannabis dispensary sydney']
+        keywords: ['buy weed sydney', 'where to buy weed in sydney', 'buying weed sydney', 'cannabis dispensary sydney'],
+        suburbs: ['Sydney CBD', 'Surry Hills', 'Bondi', 'Newtown', 'Parramatta', 'Chatswood', 'Liverpool', 'Penrith', 'Sutherland', 'Hornsby'],
+        localNote: 'Sydney is the closest metro to our Mullaways NSW base, so most Sydney orders dispatch same-day and arrive next-business-day. Inner-west, eastern suburbs, and the Lower North Shore generally see the fastest end-of-day handover. Top sellers in Sydney: premium flower ounces, THC gummies, and live-resin carts.'
       }
     },
     {
@@ -121,7 +137,9 @@ export function getStaticPaths() {
         description: 'Medicinal cannabis Sunshine Coast - Premium cannabis delivery to the Sunshine Coast, QLD. Medical marijuanas Sunshine Coast from Mullaways Medical Cannabis with discreet express shipping.',
         icon: '🏖️',
         highlight: 'Cannabis Sunshine Coast',
-        keywords: ['medicinal cannabis sunshine coast', 'medical marijuanas sunshine coast', 'cannabis sunshine coast', 'weed delivery sunshine coast']
+        keywords: ['medicinal cannabis sunshine coast', 'medical marijuanas sunshine coast', 'cannabis sunshine coast', 'weed delivery sunshine coast'],
+        suburbs: ['Maroochydore', 'Mooloolaba', 'Caloundra', 'Noosa', 'Buderim', 'Nambour'],
+        localNote: 'Sunshine Coast orders move with the broader QLD express network from NSW. Coastal postcodes (Noosa, Mooloolaba, Caloundra) usually clear within the lower transit bound. We see steady demand for THC gummies, balanced hybrids, and pre-rolls across the region.'
       }
     },
     {
@@ -134,7 +152,9 @@ export function getStaticPaths() {
         description: 'Buy weed Gold Coast - Premium cannabis delivery to the Gold Coast and surrounding areas. Lab-tested products with discreet shipping from Mullaways Medical Cannabis.',
         icon: '🏄',
         highlight: 'Buy Weed Gold Coast',
-        keywords: ['buy weed gold coast', 'cannabis delivery gold coast', 'weed dispensary gold coast']
+        keywords: ['buy weed gold coast', 'cannabis delivery gold coast', 'weed dispensary gold coast'],
+        suburbs: ['Surfers Paradise', 'Broadbeach', 'Burleigh Heads', 'Robina', 'Coolangatta', 'Southport', 'Palm Beach', 'Mermaid Beach'],
+        localNote: 'Gold Coast is one of our quickest QLD lanes thanks to the M1 freight corridor from northern NSW. Burleigh, Broadbeach, and Robina addresses regularly clear within the lower transit bound. Demand on the GC skews toward THC gummies, sativa flower, and disposable vapes.'
       }
     },
     {
@@ -147,7 +167,9 @@ export function getStaticPaths() {
         description: 'Buy weed Newcastle - Super fast cannabis delivery to Newcastle, NSW from nearby Mullaways. Lab-tested medical cannabis with express local shipping.',
         icon: '⚓',
         highlight: 'Buy Weed Newcastle NSW',
-        keywords: ['buy weed newcastle', 'cannabis delivery newcastle', 'weed dispensary newcastle nsw']
+        keywords: ['buy weed newcastle', 'cannabis delivery newcastle', 'weed dispensary newcastle nsw'],
+        suburbs: ['Newcastle CBD', 'Hamilton', 'Charlestown', 'Maitland', 'Lake Macquarie', 'Cardiff'],
+        localNote: 'Newcastle is one of our fastest NSW lanes — local courier dispatch from Mullaways often reaches Newcastle within 24 hours. Hamilton, Charlestown, and Lake Macquarie addresses are typically dispatched first in the day\'s cycle. Top sellers in Newcastle: flower ounces, hash, and pre-rolls.'
       }
     },
     {
@@ -160,7 +182,9 @@ export function getStaticPaths() {
         description: 'Buy weed Wollongong - Fast cannabis delivery to Wollongong and the Illawarra region. Premium products from Mullaways Medical Cannabis, NSW.',
         icon: '🌊',
         highlight: 'Buy Weed Wollongong',
-        keywords: ['buy weed wollongong', 'cannabis delivery wollongong', 'weed dispensary wollongong']
+        keywords: ['buy weed wollongong', 'cannabis delivery wollongong', 'weed dispensary wollongong'],
+        suburbs: ['Wollongong CBD', 'North Wollongong', 'Figtree', 'Corrimal', 'Shellharbour', 'Kiama', 'Dapto'],
+        localNote: 'Wollongong and the Illawarra route via the south-coast NSW network and benefit from short transit out of Mullaways. Coastal addresses from Corrimal down to Kiama clear within the lower bound of the published window. Demand here favours flower, hash, and edibles.'
       }
     },
     {
@@ -173,14 +197,20 @@ export function getStaticPaths() {
         description: 'Buy weed Central Coast - Express cannabis delivery to the Central Coast, NSW. Located nearby in Mullaways, we offer the fastest delivery times to Central Coast customers.',
         icon: '🌅',
         highlight: 'Buy Weed Central Coast',
-        keywords: ['buy weed central coast', 'cannabis delivery central coast', 'weed central coast nsw']
+        keywords: ['buy weed central coast', 'cannabis delivery central coast', 'weed central coast nsw'],
+        suburbs: ['Gosford', 'Erina', 'The Entrance', 'Woy Woy', 'Tuggerah', 'Wyong', 'Avoca Beach', 'Terrigal'],
+        localNote: 'Central Coast is one of our shortest delivery lanes — local courier transit means most CC orders are delivered within 24–48 hours of dispatch. Gosford, Erina, and Terrigal addresses usually receive same-week dispatch with weekday cut-off met. Top sellers: pre-rolls, edibles, and balanced hybrids.'
       }
     }
   ];
 }
 
 const { city } = Astro.params;
-const { cityName, state, stateAbbr, deliveryTime, description, icon, highlight, keywords } = Astro.props;
+const { cityName, state, stateAbbr, deliveryTime, description, icon, highlight, keywords, suburbs = [], localNote = '' } = Astro.props as {
+  cityName: string; state: string; stateAbbr: string; deliveryTime: string;
+  description: string; icon: string; highlight: string; keywords: string[];
+  suburbs?: string[]; localNote?: string;
+};
 
 // SVG icon map for flat 2D icons
 const iconSvgMap: Record<string, string> = {
@@ -219,14 +249,24 @@ const products = [
   { name: "THC Gummies 10mg", slug: "premium-thc-gummies-10mg", type: "Edible", thc: "10mg", weight: "20 pack", price: 69, description: "Delicious THC gummies Australia", effects: ["Happy", "Relaxed", "Uplifted"], flavour: "Mixed Fruit" },
 ];
 
+const suburbList = suburbs.length
+  ? suburbs.slice(0, 6).join(', ') + (suburbs.length > 6 ? ` and other ${cityName} addresses` : '')
+  : `metro and regional ${cityName} addresses`;
+
 const cityFaqs = [
   {
     q: `Do you deliver to all ${cityName} suburbs?`,
-    a: `Yes. We deliver to metro and regional addresses linked to ${cityName} and throughout ${state}, subject to courier coverage and signature-required delivery.`
+    a: `Yes — we ship to ${suburbList}, plus surrounding ${state} postcodes subject to courier coverage and signature-required delivery.`
   },
   {
     q: `How long does delivery to ${cityName} usually take?`,
-    a: `Most orders to ${cityName} arrive in ${deliveryTime}. Delivery times can shift slightly during public holidays or heavy courier periods.`
+    a: `Most orders to ${cityName} arrive in ${deliveryTime}. ${localNote ? localNote.split('. ')[0] + '.' : 'Delivery times can shift slightly during public holidays or heavy courier periods.'}`
+  },
+  {
+    q: `Which products are most popular in ${cityName}?`,
+    a: localNote
+      ? `${localNote.split('. ').slice(-1)[0]}`
+      : `${cityName} customers most often order THC gummies, premium flower, and pre-rolls.`
   },
   {
     q: 'Is the packaging discreet?',
@@ -443,6 +483,30 @@ const breadcrumbSchema = {
         </div>
       </div>
     </section>
+
+    <!-- City-specific delivery notes (unique per city - avoids near-duplicate flagging) -->
+    {localNote && (
+      <section class="local-section">
+        <div class="container">
+          <div class="local-grid">
+            <div class="local-copy">
+              <span class="section-badge">{cityName} Specifics</span>
+              <h2>How Cannabis Delivery Works in {cityName}</h2>
+              <p>{localNote}</p>
+            </div>
+            {suburbs.length > 0 && (
+              <aside class="local-suburbs" aria-label={`Suburbs we deliver to in ${cityName}`}>
+                <h3>{cityName} suburbs we deliver to</h3>
+                <ul>
+                  {suburbs.map((s) => (<li>{s}</li>))}
+                </ul>
+                <p class="local-suburbs-foot">Plus surrounding {state} addresses with courier coverage.</p>
+              </aside>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- Products Section -->
     <section class="products-section">
@@ -1515,5 +1579,87 @@ const breadcrumbSchema = {
     .cta-buttons {
       flex-direction: column;
     }
+  }
+
+  /* City-specific local section */
+  .local-section {
+    padding: clamp(48px, 6vw, 88px) 0;
+    background: var(--color-bg-alt, #f6f1ea);
+  }
+
+  .local-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .local-copy h2 {
+    margin: 12px 0 18px;
+  }
+
+  .local-copy p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--color-text-light, #4a4a4a);
+    margin: 0;
+  }
+
+  .local-suburbs {
+    background: #fff;
+    border: 1px solid var(--color-border, rgba(0,0,0,0.06));
+    border-radius: var(--radius-lg, 16px);
+    padding: 24px 26px;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.04));
+  }
+
+  .local-suburbs h3 {
+    font-family: var(--font-display, Georgia), serif;
+    font-size: 1.15rem;
+    margin: 0 0 12px;
+    color: var(--color-text, #1a1a1a);
+  }
+
+  .local-suburbs ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 14px;
+  }
+
+  .local-suburbs li {
+    font-size: 0.9rem;
+    color: var(--color-text-light, #4a4a4a);
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .local-suburbs li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary, #2D5A4A);
+  }
+
+  .local-suburbs-foot {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted, #6a6a6a);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .local-grid { grid-template-columns: 1fr; }
+    .local-suburbs ul { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .local-suburbs ul { grid-template-columns: 1fr; }
   }
 </style>

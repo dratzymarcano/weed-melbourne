@@ -1,3 +1,7 @@
+# NOTE: GitHub Pages ignores this file. It only applies on Netlify, Cloudflare
+# Pages, or hosts that read the Netlify _headers spec. Migrate hosting to enable
+# security headers and the cache-control rules below.
+
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

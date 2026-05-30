@@ -1,0 +1,27 @@
+{
+  "name": "Mullaways Medical Cannabis",
+  "short_name": "Mullaways",
+  "description": "Australia's trusted online cannabis dispensary. Lab-tested products with discreet, tracked delivery Australia-wide.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F1EB",
+  "theme_color": "#2D5A4A",
+  "lang": "en-AU",
+  "dir": "ltr",
+  "categories": ["shopping", "lifestyle", "health"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "200x60",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

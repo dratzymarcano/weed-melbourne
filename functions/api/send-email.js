@@ -139,6 +139,53 @@ function sumRow(label, value, isTotal) {
 }
 
 
+// WhatsApp constants reused across templates
+const WA_NUMBER = '61468299228';
+const WA_DISPLAY = '+61 468 299 228';
+
+// Build a wa.me URL with a prefilled message ready for the customer to send
+function waLink(orderRef, total, paymentMethod) {
+  const msg =
+    `Hi Mullaways, I just placed order ${orderRef}` +
+    (total ? ` (${total})` : '') +
+    (paymentMethod ? ` and I'd like to confirm payment by ${paymentMethod}.` : '.');
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+// BOLD WhatsApp action block used inside emailWrapper bodyContent.
+// Email-client safe: nested table, inline styles, bulletproof CTA via VML for Outlook.
+function waActionBlock({ orderRef, total, paymentMethod }) {
+  const href = waLink(orderRef, total, paymentMethod);
+  return `
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 32px;">
+<tr><td style="background-color:#0B3D2C;background-image:linear-gradient(135deg,#075E54 0%,#128C7E 60%,#25D366 100%);padding:28px 28px 26px;border-radius:14px;">
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+<tr><td>
+<p style="margin:0 0 10px;font-size:11px;font-weight:800;color:#FFE4E4;text-transform:uppercase;letter-spacing:3px;">⚠ Action required</p>
+<h2 style="margin:0 0 10px;font-size:22px;font-weight:700;color:#FFFFFF;line-height:1.3;letter-spacing:-0.3px;">Message us on WhatsApp now to arrange payment</h2>
+<p style="margin:0 0 18px;font-size:14px;color:#E7F8EF;line-height:1.65;">
+Your order has been received, but <strong style="color:#FFFFFF;">your order is not finalised until you confirm payment with us on WhatsApp</strong>. Tap the button below — the message is pre-filled with your order reference.
+</p>
+<!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${href}" style="height:50px;v-text-anchor:middle;width:280px;" arcsize="14%" stroke="f" fillcolor="#25D366">
+<w:anchorlock/>
+<center style="color:#FFFFFF;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;letter-spacing:0.3px;">Open WhatsApp Chat</center>
+</v:roundrect>
+<![endif]-->
+<!--[if !mso]><!-- -->
+<a href="${href}" target="_blank" rel="noopener noreferrer" style="display:inline-block;background-color:#25D366;color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:700;padding:15px 32px;border-radius:8px;letter-spacing:0.3px;box-shadow:0 4px 14px rgba(0,0,0,0.18);">
+&#x1F4AC;&nbsp;&nbsp;Open WhatsApp Chat
+</a>
+<!--<![endif]-->
+<p style="margin:18px 0 0;font-size:12px;color:#C8E9D5;">
+Or save the number: <a href="tel:+${WA_NUMBER}" style="color:#FFFFFF;text-decoration:underline;font-weight:600;">${WA_DISPLAY}</a> — quote order reference <strong style="color:#FFFFFF;font-family:'SF Mono','Courier New',monospace;">${orderRef}</strong>.
+</p>
+</td></tr>
+</table>
+</td></tr>
+</table>`;
+}
+
 // 1. Customer Order Confirmation
 function orderCustomerHTML(data) {
   const {
@@ -180,9 +227,11 @@ ${sectionLabel('Bitcoin Payment')}
 ` : '';
 
   const bodyContent = `
-<p style="margin:0 0 32px;font-size:15px;color:#666666;line-height:1.7;">
-Your order has been received and is being processed. Here are the details.
+<p style="margin:0 0 28px;font-size:15px;color:#666666;line-height:1.7;">
+Your order has been received. <strong style="color:#0B3D2C;">Please contact us on WhatsApp now to finalise payment</strong> — the button below opens a chat pre-filled with your order reference.
 </p>
+
+${waActionBlock({ orderRef: order_ref, total, paymentMethod: payment_method })}
 
 ${sectionLabel('Order Details')}
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
@@ -242,9 +291,9 @@ ${sectionLabel('Delivery Address')}
 `;
 
   return emailWrapper({
-    preheader: `Order ${order_ref} confirmed - ${total} via ${payment_method}`,
+    preheader: `Action required: message us on WhatsApp to finalise order ${order_ref} (${total}).`,
     heroTitle: `Thank you, ${firstName}.`,
-    heroSub: `Order ${order_ref} has been received.`,
+    heroSub: `Order ${order_ref} received — please WhatsApp us to finalise payment.`,
     bodyContent,
   });
 }
@@ -442,7 +491,7 @@ export async function onRequestPost(context) {
         from: fromAddress,
         to: data.to_email,
         replyTo: ADMIN_EMAIL,
-        subject: `Order ${data.order_ref} - We've Received Your Order`,
+        subject: `Action required: WhatsApp us to finalise order ${data.order_ref}`,
         html: orderCustomerHTML(data),
       });
 

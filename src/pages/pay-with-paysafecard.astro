@@ -1,0 +1,29 @@
+---
+// Legacy URL — the Paysafecard payment option has been retired.
+// Search engines that previously indexed this URL are redirected to the
+// canonical replacement (Bank Transfer) and the page is noindex'd.
+// We can't use a 301 on GitHub Pages, so we issue a client-side redirect
+// plus a canonical pointing at the destination — Google consolidates.
+const destination = 'https://mullawaysmedicalcannabis.com.au/pay-with-bank-transfer/';
+---
+<!doctype html>
+<html lang="en-AU">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex, follow" />
+		<link rel="canonical" href={destination} />
+		<meta http-equiv="refresh" content={`0; url=${destination}`} />
+		<title>Redirecting — Pay With Bank Transfer | Mullaways</title>
+		<script is:inline define:vars={{ destination }}>
+			// Immediate JS redirect for browsers that ignore meta refresh.
+			window.location.replace(destination);
+		</script>
+	</head>
+	<body>
+		<p>
+			Paysafecard is no longer supported. Redirecting to
+			<a href={destination}>Bank Transfer payment instructions</a>…
+		</p>
+	</body>
+</html>

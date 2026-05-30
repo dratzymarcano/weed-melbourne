@@ -20,37 +20,13 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !['/cart', '/checkout', '/order-confirmation', '/account'].some((path) =>
+        !['/cart', '/checkout', '/order-confirmation', '/account', '/pay-with-paysafecard'].some((path) =>
           page.includes(path)
         ),
       changefreq: 'weekly',
-      // Per-page priority tiers: homepage highest, then shop/products, then blog/info, then support pages
-      serialize(item) {
-        const url = item.url;
-        // Homepage
-        if (url === 'https://mullawaysmedicalcannabis.com.au/') {
-          return { ...item, priority: 1.0, changefreq: 'daily' };
-        }
-        // Core shop + product pages
-        if (url.includes('/shop/')) {
-          return { ...item, priority: 0.9, changefreq: 'weekly' };
-        }
-        // City landing pages
-        if (url.match(/mullawaysmedicalcannabis\.com\.au\/[a-z-]+\/$/) &&
-            !url.includes('/blog/') && !url.includes('/shop/') && !url.includes('/guide')) {
-          return { ...item, priority: 0.8, changefreq: 'monthly' };
-        }
-        // Blog articles
-        if (url.includes('/blog/')) {
-          return { ...item, priority: 0.7, changefreq: 'monthly' };
-        }
-        // Support / info pages
-        if (['/faq/', '/how-it-works/', '/about-us/', '/contact/', '/locations/'].some(p => url.includes(p))) {
-          return { ...item, priority: 0.6, changefreq: 'monthly' };
-        }
-        // Policy / legal pages — low priority, rarely change
-        return { ...item, priority: 0.3, changefreq: 'yearly' };
-      },
+      // priority/changefreq are ignored by Google; we keep the field for older crawlers
+      // but don't try to differentiate per-page tiers (they were silently dropped by
+      // the integration anyway). lastmod is the signal Google actually uses.
     }),
     singleSitemapIntegration,
   ],
