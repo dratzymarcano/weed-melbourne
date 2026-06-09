@@ -507,6 +507,41 @@ export async function onRequestPost(context) {
 
       return new Response(JSON.stringify({ success: true, id: result.id }), { headers });
 
+    } else if (type === 'newsletter') {
+      // Newsletter signup — forward the address to the team mailbox
+      const { data } = body;
+      if (!data?.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid email address' }),
+          { status: 400, headers }
+        );
+      }
+
+      const sourceUrl = (data.source || '').toString().slice(0, 200);
+      const newsletterHTML = emailWrapper({
+        preheader: `Newsletter signup: ${data.email}`,
+        heroTitle: 'New newsletter signup',
+        heroSub: data.email,
+        bodyContent: `
+${sectionLabel('Subscriber')}
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+${dataRow('Email', `<a href="mailto:${data.email}" style="color:#2D5A4A;text-decoration:none;">${data.email}</a>`)}
+${sourceUrl ? dataRow('Source page', sourceUrl) : ''}
+${dataRow('Submitted', new Date().toISOString())}
+</table>
+`,
+      });
+
+      const result = await sendEmail(apiKey, {
+        from: fromAddress,
+        to: ADMIN_EMAIL,
+        replyTo: data.email,
+        subject: `Newsletter signup: ${data.email}`,
+        html: newsletterHTML,
+      });
+
+      return new Response(JSON.stringify({ success: true, id: result.id }), { headers });
+
     } else if (type === 'contact') {
       // Contact form message
       const { data } = body;

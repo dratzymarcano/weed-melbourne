@@ -1,4 +1,5 @@
 ---
+import { collectionPageSchema } from '../../lib/schema';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -236,7 +237,7 @@ const breadcrumbSchema = {
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/#itemlist",
   "name": "Pre-Rolled Joints Australia",
   "description": description,
   "numberOfItems": products.length,
@@ -247,9 +248,16 @@ const itemListSchema = {
     "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}/`
   }))
 };
+
+const collectionSchema = collectionPageSchema({
+  url: 'https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/',
+  name: 'Pre-Rolls Australia',
+  description,
+  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/#itemlist',
+});
 ---
 
-<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema]}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema, collectionSchema]}>
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">

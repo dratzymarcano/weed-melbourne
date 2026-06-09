@@ -66,25 +66,34 @@ const proofPoints = [
 
 const team = [
   {
-    role: "Patient Care",
-    description: "Our patient care team provides personalised support to help you find the right products for your needs."
+    name: "Ivan M.",
+    role: "Founder & Patient Care Lead",
+    qualifications: "10+ years in customer-experience operations; built Mullaways from a regional NSW base in 2024.",
+    description: "Sets the standard for how we package, dispatch and follow up on every Australian order. Personally answers escalations during business hours.",
   },
   {
-    role: "Quality Assurance",
-    description: "Dedicated specialists ensure every product meets our strict quality and safety standards."
+    name: "Quality Assurance Team",
+    role: "Batch verification & dispatch",
+    qualifications: "Reviews independent lab reports for every batch before items are listed.",
+    description: "Cross-checks COA potency and contaminant results against supplier paperwork and rejects anything outside spec.",
   },
   {
-    role: "Medical Liaison",
-    description: "Working with quality suppliers to ensure premium products that meet the highest standards."
-  }
+    name: "Customer Support",
+    role: "Live chat & order help",
+    qualifications: "Trained on every product category, payment method and shipping lane on the site.",
+    description: "Handles live-chat enquiries, payment confirmation and post-delivery questions Mon–Fri, 9am–6pm AEST.",
+  },
 ];
 
 const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
+  "@id": "https://mullawaysmedicalcannabis.com.au/about-us/#aboutpage",
   "name": "About Mullaways Medical Cannabis",
   "url": "https://mullawaysmedicalcannabis.com.au/about-us/",
   "description": description,
+  "inLanguage": "en-AU",
+  "isPartOf": { "@id": "https://mullawaysmedicalcannabis.com.au/#website" },
   "mainEntity": {
     "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
   }
@@ -287,16 +296,18 @@ const breadcrumbSchema = {
 
         <div class="team-grid">
           {team.map((member, i) => (
-            <div class="team-card" style={`--delay: ${i * 0.1}s`}>
-              <div class="team-icon">
+            <article class="team-card" style={`--delay: ${i * 0.1}s`}>
+              <div class="team-icon" aria-hidden="true">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                   <circle cx="12" cy="7" r="4"/>
                 </svg>
               </div>
-              <h3>{member.role}</h3>
+              <h3>{member.name}</h3>
+              <p class="team-role">{member.role}</p>
+              <p class="team-quals">{member.qualifications}</p>
               <p>{member.description}</p>
-            </div>
+            </article>
           ))}
         </div>
       </div>
@@ -721,7 +732,27 @@ const breadcrumbSchema = {
 
   .team-card h3 {
     font-size: 1.15rem;
-    margin-bottom: var(--space-sm);
+    margin-bottom: 4px;
+  }
+
+  .team-card .team-role {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 12px;
+  }
+
+  .team-card .team-quals {
+    font-size: 0.88rem;
+    color: var(--color-text);
+    background: rgba(45, 90, 74, 0.06);
+    border-left: 3px solid var(--color-primary);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 0 0 var(--space-md);
+    line-height: 1.55;
   }
 
   .team-card p {

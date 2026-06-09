@@ -112,23 +112,32 @@ const breadcrumbSchema = {
   ]
 };
 
+const latestPostDate = posts
+  .map((p) => p.isoDate)
+  .filter(Boolean)
+  .sort()
+  .slice(-1)[0];
+
 const blogSchema = {
   "@context": "https://schema.org",
   "@type": "Blog",
+  "@id": "https://mullawaysmedicalcannabis.com.au/blog/#blog",
   "name": "Mullaways Cannabis Blog",
   "url": "https://mullawaysmedicalcannabis.com.au/blog/",
   "description": description,
-  "publisher": {
-    "@type": "Organization",
-    "name": "Mullaways Medical Cannabis",
-    "url": "https://mullawaysmedicalcannabis.com.au"
-  },
+  "inLanguage": "en-AU",
+  "isPartOf": { "@id": "https://mullawaysmedicalcannabis.com.au/#website" },
+  "publisher": { "@id": "https://mullawaysmedicalcannabis.com.au/#organization" },
+  ...(latestPostDate ? { "dateModified": latestPostDate } : {}),
   "blogPost": posts.map(p => ({
     "@type": "BlogPosting",
     "headline": p.title,
     "url": `https://mullawaysmedicalcannabis.com.au/blog/${p.slug}/`,
     "datePublished": p.isoDate,
-    "description": p.excerpt
+    "description": p.excerpt,
+    "author": { "@id": "https://mullawaysmedicalcannabis.com.au/#organization" },
+    "publisher": { "@id": "https://mullawaysmedicalcannabis.com.au/#organization" },
+    "mainEntityOfPage": `https://mullawaysmedicalcannabis.com.au/blog/${p.slug}/`,
   }))
 };
 ---

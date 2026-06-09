@@ -54,18 +54,66 @@ const legalLinks = [
           <h3>Get 15% Off Your First Order</h3>
           <p>Subscribe for new strain alerts, delivery updates, and Australian cannabis education — straight to your inbox.</p>
         </div>
-        <form class="newsletter-form" action="#" method="POST">
+        <form class="newsletter-form" id="newsletter-form" novalidate>
           <div class="form-group">
-            <input type="email" placeholder="Enter your email" required />
-            <button type="submit">
-              <span>Subscribe</span>
+            <input
+              type="email"
+              name="email"
+              id="newsletter-email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            />
+            <button type="submit" id="newsletter-submit">
+              <span id="newsletter-submit-label">Subscribe</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
-          <p class="form-note">No spam, unsubscribe anytime. By subscribing you agree to our Privacy Policy.</p>
+          <p class="form-note" id="newsletter-note">No spam, unsubscribe anytime. By subscribing you agree to our <a href="/privacy-policy/">Privacy Policy</a>.</p>
         </form>
+
+        <script is:inline>
+          (function () {
+            var form = document.getElementById('newsletter-form');
+            if (!form) return;
+            var input = document.getElementById('newsletter-email');
+            var submit = document.getElementById('newsletter-submit');
+            var label = document.getElementById('newsletter-submit-label');
+            var note = document.getElementById('newsletter-note');
+
+            form.addEventListener('submit', function (e) {
+              e.preventDefault();
+              var email = (input && input.value || '').trim();
+              if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                if (note) note.textContent = 'Please enter a valid email address.';
+                if (input) input.focus();
+                return;
+              }
+              if (submit) submit.disabled = true;
+              if (label) label.textContent = 'Subscribing…';
+
+              fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'newsletter', data: { email: email, source: location.pathname } }),
+              })
+                .then(function (r) { return r.ok ? r.json() : Promise.reject(r); })
+                .then(function () {
+                  if (label) label.textContent = 'Subscribed';
+                  if (note) note.textContent = "Thanks — we'll be in touch.";
+                  form.reset();
+                })
+                .catch(function () {
+                  // Fallback: open the user's email client to send us a sign-up request.
+                  if (label) label.textContent = 'Subscribe';
+                  if (submit) submit.disabled = false;
+                  if (note) note.innerHTML = "We couldn't reach the subscribe service — <a href=\"mailto:hello@mullawaysmedicalcannabis.com.au?subject=Newsletter%20signup&body=" + encodeURIComponent('Please add ' + email + ' to the newsletter.') + "\">email us to sign up instead</a>.";
+                });
+            });
+          })();
+        </script>
       </div>
     </div>
   </div>

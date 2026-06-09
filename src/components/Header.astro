@@ -1336,7 +1336,7 @@ const productImageMap = Object.fromEntries(
 
         cartModalItems.innerHTML = cart.map((item, index) => `
           <div class="cart-modal-item">
-            <div class="cart-modal-item-image">${getImageForItem(item) ? `<img src="${getImageForItem(item)}" alt="${item.name || 'Product'}" loading="lazy" />` : (item.icon || leafIcon)}</div>
+            <div class="cart-modal-item-image">${getImageForItem(item) ? `<img src="${getImageForItem(item)}" alt="${item.name || 'Product'}" width="64" height="64" loading="lazy" decoding="async" />` : (item.icon || leafIcon)}</div>
             <div class="cart-modal-item-details">
               <div class="cart-modal-item-name">${item.name || 'Unknown Product'}</div>
               <div class="cart-modal-item-meta">

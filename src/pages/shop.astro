@@ -1,4 +1,5 @@
 ---
+import { collectionPageSchema } from '../lib/schema';
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -380,7 +381,7 @@ const breadcrumbSchema = {
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/#itemlist",
   "name": "Cannabis Products Australia",
   "description": "Browse our complete range of lab-tested cannabis products available for delivery across Australia.",
   "numberOfItems": categories.length,
@@ -391,9 +392,16 @@ const itemListSchema = {
     "url": `https://mullawaysmedicalcannabis.com.au${cat.href}`
   }))
 };
+
+const collectionSchema = collectionPageSchema({
+  url: 'https://mullawaysmedicalcannabis.com.au/shop/',
+  name: 'Shop',
+  description,
+  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/#itemlist',
+});
 ---
 
-<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema]}>
+<Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema, collectionSchema]}>
   <Header />
 
   <main>
@@ -484,11 +492,21 @@ const itemListSchema = {
 
           <div class="shop-products">
             <div class="product-section" id="products">
-              <h2 class="section-title">Popular Products</h2>
-              <p class="section-desc">Top-selling products across our most popular categories.</p>
-              <div class="products-grid">
+              <h2 class="section-title" id="products-title">Popular Products</h2>
+              <p class="section-desc" id="products-desc">Top-selling products across our most popular categories.</p>
+              <div class="search-summary" id="search-summary" hidden>
+                <p>
+                  <span>Showing results for <strong id="search-query-echo"></strong></span>
+                  <a href="/shop/" class="search-clear">Clear search</a>
+                </p>
+              </div>
+              <div class="products-grid" id="products-grid">
                 {products.map((product) => (
-                  <a href={`/shop/product/${product.slug}/`} class="product-card">
+                  <a
+                    href={`/shop/product/${product.slug}/`}
+                    class="product-card"
+                    data-search={`${product.name} ${product.category} ${product.slug} ${product.thc || ''}`.toLowerCase()}
+                  >
                     <div class="product-badges">
                       <div class={`product-badge ${categoryColors[product.category] || 'default'}`}>{product.category}</div>
                       {product.bestseller && <div class="product-badge badge-bestseller">Best Seller</div>}
@@ -551,6 +569,10 @@ const itemListSchema = {
                   </a>
                 ))}
               </div>
+              <div class="search-empty" id="search-empty" hidden>
+                <p>No products matched <strong id="search-empty-query"></strong>.</p>
+                <p class="muted">Try a shorter keyword, or <a href="/shop/">browse all products</a>.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -596,6 +618,60 @@ const itemListSchema = {
 
   <Footer />
 </Layout>
+
+<script is:inline>
+  // Client-side filter for ?q= queries from the header search box.
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var raw = (params.get('q') || '').trim();
+    if (!raw) return;
+
+    var q = raw.toLowerCase();
+    var grid = document.getElementById('products-grid');
+    var summary = document.getElementById('search-summary');
+    var echo = document.getElementById('search-query-echo');
+    var empty = document.getElementById('search-empty');
+    var emptyQ = document.getElementById('search-empty-query');
+    var title = document.getElementById('products-title');
+    var desc = document.getElementById('products-desc');
+    if (!grid) return;
+
+    var cards = grid.querySelectorAll('[data-search]');
+    var matched = 0;
+    cards.forEach(function (card) {
+      var hay = card.getAttribute('data-search') || '';
+      if (hay.indexOf(q) !== -1) {
+        matched++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (echo) echo.textContent = '"' + raw + '"';
+    if (summary) summary.hidden = false;
+    if (title) title.textContent = 'Search results';
+    if (desc) desc.textContent = matched + (matched === 1 ? ' product' : ' products') + ' matching your query.';
+
+    if (matched === 0 && empty) {
+      if (emptyQ) emptyQ.textContent = '"' + raw + '"';
+      empty.hidden = false;
+      grid.style.display = 'none';
+    }
+
+    // Reflect the query on Zoho visitor info if support is loaded later
+    try {
+      window.$zoho = window.$zoho || {};
+      $zoho.salesiq = $zoho.salesiq || { ready: function () {} };
+      $zoho.salesiq.ready = function () {
+        try {
+          if ($zoho.salesiq.visitor && typeof $zoho.salesiq.visitor.info === 'function') {
+            $zoho.salesiq.visitor.info({ shopSearch: raw, shopSearchMatches: matched });
+          }
+        } catch (_) {}
+      };
+    } catch (_) {}
+  })();
+</script>
 
 <style>
   .page-hero {
@@ -1042,5 +1118,41 @@ const itemListSchema = {
     .products-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* Client-side search results */
+  .search-summary {
+    margin: 0 0 var(--space-lg);
+    padding: 14px 18px;
+    background: rgba(45, 90, 74, 0.08);
+    border: 1px solid rgba(45, 90, 74, 0.15);
+    border-radius: var(--radius-md);
+  }
+  .search-summary p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+  .search-clear {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .search-empty {
+    padding: var(--space-2xl);
+    text-align: center;
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--color-border);
+  }
+  .search-empty p { margin: 0 0 var(--space-sm); }
+  .search-empty .muted { color: var(--color-text-muted); font-size: 0.9rem; }
+  @media (max-width: 600px) {
+    .search-summary p { flex-direction: column; align-items: flex-start; }
   }
 </style>

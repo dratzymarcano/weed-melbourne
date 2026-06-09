@@ -122,6 +122,29 @@ export const merchantReturnPolicy = {
   returnFees: 'https://schema.org/FreeReturn',
 };
 
+// Build a CollectionPage schema for a shop category landing page.
+// Pair with an ItemList of the page's products to give Google a clear
+// category-level entity and unlock product carousel SERPs.
+export function collectionPageSchema(opts: {
+  url: string;
+  name: string;
+  description: string;
+  itemListId?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${opts.url}#collection`,
+    url: opts.url,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: 'en-AU',
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': ORGANIZATION_ID },
+    ...(opts.itemListId ? { mainEntity: { '@id': opts.itemListId } } : {}),
+  };
+}
+
 // Shared shipping details — referenced from every product Offer.
 // Required for Google Merchant Center free product listings eligibility.
 export const shippingDetails = {

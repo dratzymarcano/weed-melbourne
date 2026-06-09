@@ -4,131 +4,399 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 
+const title = "How to Buy Weed Online in Australia (Safely & Legally) | Mullaways";
+const description = "Practical guide to buying cannabis online in Australia. Understand the legal landscape, avoid unregulated sellers, and learn what discreet, lab-tested delivery actually looks like.";
+
+const canonicalUrl = 'https://mullawaysmedicalcannabis.com.au/buy-weed-online-australia/';
+
 const breadcrumbs = [
-  { label: 'Home', url: '/' },
-  { label: 'Educational Guides', url: '/resources/' },
-  { label: 'How to Buy Weed Online in Australia' }
+  { label: 'Home', href: '/' },
+  { label: 'Educational Guides', href: '/resources/' },
+  { label: 'How to Buy Weed Online in Australia' },
+];
+
+const faqs = [
+  {
+    q: 'Is it legal to buy weed online in Australia?',
+    a: 'Medical cannabis is legally accessible in Australia through an authorised prescriber and a registered pharmacy or dispensary. Recreational sale remains restricted in most states. Buying through a regulated channel keeps you compliant and gives you access to lab-tested products.',
+  },
+  {
+    q: 'How does discreet cannabis delivery actually work?',
+    a: 'Tracked parcels are shipped in plain, unmarked packaging — vacuum-sealed and tamper-evident — and require a signature on delivery. Couriers and Australia Post both support this; the difference is the dispatcher’s packaging standard.',
+  },
+  {
+    q: 'Do I need a prescription to order from Mullaways?',
+    a: 'For medical-grade access you should work with an authorised prescriber. Our site is positioned as an information and access facilitator — confirm eligibility with a healthcare professional before placing an order.',
+  },
+  {
+    q: 'What are the biggest red flags when buying weed online?',
+    a: 'No published shipping or return policy, only crypto payment with no alternatives, no batch information or lab reports, and "too cheap to be real" pricing. Reputable dispensaries publish dispatch standards, support contact methods and clear payment instructions.',
+  },
+  {
+    q: 'How do you pay safely for an online cannabis order?',
+    a: 'We support bank transfer and Bitcoin. Bank transfer details are shared via live chat after the order is placed so payment information is never sent over insecure channels. Bitcoin uses a per-order address with on-chain confirmation tracking.',
+  },
 ];
 
 const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is it legal to buy weed online in Australia?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Medical cannabis is legally accessible in Australia via prescriptions. Licensed clinics and dispensaries ensure compliance with the Therapeutic Goods Administration (TGA), providing safe and legal pathways for patients."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does the delivery process work for medical cannabis?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Deliveries are strictly regulated, sent via express courier or Australia Post in completely discreet, odor-proof, and tamper-evident packaging to prioritize patient privacy and safety."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need a prescription to order?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Legitimate cannabis access requires consultation with an authorized prescriber to ensure patient eligibility under current Australian health frameworks."
-      }
-    }
-  ]
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${canonicalUrl}#faq`,
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': `${canonicalUrl}#article`,
+  headline: 'How to Buy Weed Online in Australia: Safely, Legally, and Discreetly',
+  description,
+  url: canonicalUrl,
+  inLanguage: 'en-AU',
+  datePublished: '2026-01-05',
+  dateModified: '2026-06-09',
+  author: {
+    '@type': 'Organization',
+    name: 'Mullaways Medical Cannabis',
+    url: 'https://mullawaysmedicalcannabis.com.au/',
+  },
+  publisher: {
+    '@type': 'Organization',
+    '@id': 'https://mullawaysmedicalcannabis.com.au/#organization',
+  },
+  mainEntityOfPage: canonicalUrl,
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mullawaysmedicalcannabis.com.au/' },
+    { '@type': 'ListItem', position: 2, name: 'Educational Guides', item: 'https://mullawaysmedicalcannabis.com.au/resources/' },
+    { '@type': 'ListItem', position: 3, name: 'How to Buy Weed Online in Australia', item: canonicalUrl },
+  ],
 };
 ---
 
-<Layout 
-	title="How to Buy Weed Online in Australia (Legally & Safely) | Mullaways"
-	description="The ultimate guide to buying medical cannabis safely in Australia. Learn about TGA regulations, delivery methods, and finding trusted, reputable dispensaries."
-    schema={faqSchema}
+<Layout
+  title={title}
+  description={description}
+  schema={[articleSchema, faqSchema, breadcrumbSchema]}
+  ogType="article"
+  articlePublishedTime="2026-01-05"
+  articleModifiedTime="2026-06-09"
+  articleAuthor="Mullaways Medical Cannabis"
+  articleSection="Educational Guides"
 >
-	<Header />
-	
-	<main class="bg-primary/5 pt-24 pb-16 min-h-screen">
-		<div class="container mx-auto px-4 max-w-4xl">
-			<Breadcrumb items={breadcrumbs} />
-			
-			<div class="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-black/5 mt-6 mb-12">
-                <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">Patient Resource & Guide</span>
-				<h1 class="text-3xl md:text-5xl font-bold text-secondary mb-6 leading-tight">
-					How to Buy Weed Online in Australia: The Safe & Legal Guide
-				</h1>
+  <Header />
 
-                <div class="prose prose-lg prose-green max-w-none">
-                    <p class="lead text-xl text-neutral mb-8">
-                        Navigating the Australian cannabis landscape can be confusing. With strict regulations governed by the Therapeutic Goods Administration (TGA), knowing how to securely and legally access premium products is essential for patient health and safety.
-                    </p>
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <Breadcrumb items={breadcrumbs} />
+        <div class="hero-content">
+          <span class="hero-eyebrow">Patient resource &amp; buying guide</span>
+          <h1>How to buy weed online in Australia: safely, legally, and discreetly</h1>
+          <p class="hero-lede">
+            Australia has a strict but workable cannabis access framework. This guide explains how the legal landscape sits today, the red flags to watch for when buying online, and what a properly-run dispensary actually looks like — so you can place an order with confidence.
+          </p>
+        </div>
+      </div>
+    </section>
 
-                    <div class="bg-accent/10 p-6 rounded-xl mb-10 border border-accent/20">
-                        <strong class="text-accent flex items-center gap-2 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            Medical Disclaimer
-                        </strong>
-                        <p class="text-sm m-0">This guide is strictly for educational purposes to assist patients in understanding current Australian access frameworks. Always consult with a registered healthcare professional regarding your medical needs.</p>
-                    </div>
+    <section class="section guide-section">
+      <div class="container container-narrow">
+        <article class="guide-prose">
+          <div class="callout callout-info">
+            <strong>Medical disclaimer.</strong>
+            This guide is for educational purposes only. It does not replace medical advice. Always consult a healthcare professional regarding your eligibility and condition.
+          </div>
 
-                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-4">1. Understanding the Australian Landscape</h2>
-                    <p>
-                        In Australia, the recreational sale of cannabis remains restricted. However, medical cannabis has been legal federally since 2016. Patients suffering from chronic conditions who cannot find relief through conventional treatments may be eligible. Accessing these treatments requires working with authorized clinics and dispensaries to ensure your product is lab-tested, unadulterated, and high-quality.
-                    </p>
+          <h2>1. The Australian cannabis landscape</h2>
+          <p>
+            Recreational sale of cannabis remains restricted across most of Australia. Medical cannabis, however, has been legal at the federal level since 2016, regulated by the Therapeutic Goods Administration (TGA). Patients with chronic conditions that have not responded to conventional treatments may be eligible through an authorised prescriber and a registered dispensary or pharmacy.
+          </p>
+          <p>
+            The practical impact: lab-tested, batch-traceable cannabis is available in Australia today — you just need to access it through a regulated channel. The risk lives at the other extreme, where unregulated sellers fill the gap left by people who didn't know there was a legal route.
+          </p>
 
-                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-4">2. The Dangers of Unregulated Sources</h2>
-                    <p>
-                        When people search for "buy weed online australia", they are often targeted by illicit, unverified vendors. Purchasing from unregulated sources carries significant risks:
-                    </p>
-                    <ul>
-                        <li><strong>Contamination:</strong> Illicit products are not lab-tested and may contain mould, heavy metals, or synthetic pesticides.</li>
-                        <li><strong>Inconsistent Dosage:</strong> Accurate THC and CBD ratios are critical for effective symptom management.</li>
-                        <li><strong>Legal Risk:</strong> Intercepted packages from unlicensed vendors can lead to severe legal consequences.</li>
-                        <li><strong>Financial Fraud:</strong> Many illegitimate sites operate as scams, taking payment without ever shipping products.</li>
-                    </ul>
+          <h2>2. The risks of unregulated sources</h2>
+          <p>
+            When people search for "buy weed online Australia," many of the results lead to illicit operators. The risks compound quickly:
+          </p>
+          <ul>
+            <li><strong>Contamination.</strong> Illicit products are not lab-tested. Mould, residual solvents, heavy metals and synthetic pesticides all turn up regularly in seized batches.</li>
+            <li><strong>Inconsistent dosing.</strong> Without verified THC and CBD ratios, even experienced users can over- or under-dose, which matters most for edibles and concentrates.</li>
+            <li><strong>Legal exposure.</strong> Intercepted parcels from unlicensed vendors can lead to questioning, prosecution, or both, depending on quantity and state.</li>
+            <li><strong>Payment fraud.</strong> Crypto-only checkouts with no support contact, no return policy and no shipping page are common scam markers.</li>
+          </ul>
 
-                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-4">3. How Our Dispensary Prioritizes Safety</h2>
-                    <p>
-                        At Mullaways Medical Cannabis, our operations are designed to provide maximum safety, discretion, and compliance for Australian patients:
-                    </p>
-                    <ul>
-                        <li><strong>Lab-Tested Quality:</strong> All our flower, oils, and concentrates undergo stringent laboratory testing to ensure purity and precise cannabinoid profiles.</li>
-                        <li><strong>Express, Discreet Shipping:</strong> Patient privacy is paramount. Orders are packaged in vacuum-sealed, odor-proof bags and shipped via standard postal channels without external branding. Learn more on our <a href="/shipping-and-delivery/" class="text-primary hover:underline font-medium">Shipping Policy</a> page.</li>
-                        <li><strong>Secure Transactions:</strong> We employ end-to-end encryption for all patient correspondence and order fulfillment details.</li>
-                    </ul>
+          <h2>3. What a properly-run dispensary looks like</h2>
+          <p>
+            Reputable dispensaries publish their operating standards. When you're evaluating a site, look for:
+          </p>
+          <ul>
+            <li>
+              <strong>Lab testing and batch information.</strong>
+              Independent COAs for potency and contaminants, available on request. See our <a href="/shop/">product catalogue</a> for what's currently in stock.
+            </li>
+            <li>
+              <strong>Discreet, tracked delivery.</strong>
+              Plain packaging, signature required, tracking from dispatch to handover. Read our <a href="/shipping-and-delivery/">shipping standards</a> for our dispatch window and packaging detail.
+            </li>
+            <li>
+              <strong>Clear payment options.</strong>
+              Multiple payment methods with explicit instructions. We support
+              <a href="/pay-with-bank-transfer/">bank transfer</a> and
+              <a href="/buy-bitcoin/">Bitcoin</a>. Bank details are shared via live chat after an order is placed, never by email.
+            </li>
+            <li>
+              <strong>Real support.</strong>
+              Direct contact channels and a published refunds and returns policy. See our <a href="/refunds/">refunds &amp; returns page</a> for what happens when an order is late or damaged.
+            </li>
+          </ul>
 
-                    <div class="my-12">
-                        <a href="/shop/" class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-lg inline-flex items-center transition-colors">
-                            View Our Product Catalog
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </div>
+          <div class="callout callout-cta">
+            <h3>Ready to order?</h3>
+            <p>Browse our lab-tested cannabis catalogue — flower, edibles, vapes, concentrates and hash — with discreet Australia-wide delivery.</p>
+            <a href="/shop/" class="btn btn-primary btn-large">
+              Browse the catalogue
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
 
-                    <h2 class="text-2xl font-bold text-secondary mt-10 mb-6 border-b pb-2">Frequently Asked Questions</h2>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <h3 class="font-bold text-lg text-secondary">Is it legal to buy weed online in Australia?</h3>
-                            <p class="text-neutral mt-2">Medical cannabis is legally accessible in Australia via prescriptions. Licensed clinics and dispensaries ensure compliance with the Therapeutic Goods Administration (TGA), providing safe and legal pathways for patients.</p>
-                        </div>
-                        
-                        <div>
-                            <h3 class="font-bold text-lg text-secondary">How does the delivery process work for medical cannabis?</h3>
-                            <p class="text-neutral mt-2">Deliveries are strictly regulated, sent via express courier or Australia Post in completely discreet, odor-proof, and tamper-evident packaging to prioritize patient privacy and safety.</p>
-                        </div>
-                        
-                        <div>
-                            <h3 class="font-bold text-lg text-secondary">Do I need a prescription to order?</h3>
-                            <p class="text-neutral mt-2">Legitimate cannabis access requires consultation with an authorized prescriber to ensure patient eligibility under current Australian health frameworks. Always consult a professional regarding your eligibility.</p>
-                        </div>
-                    </div>
-                </div>
-			</div>
-		</div>
-	</main>
-	
-	<Footer />
+          <h2>4. Step-by-step: placing an order with Mullaways</h2>
+          <ol class="numbered-steps">
+            <li>
+              <strong>Browse the catalogue.</strong>
+              Filter by category — <a href="/shop/flower/">flower</a>,
+              <a href="/shop/thc-gummies/">THC gummies</a>,
+              <a href="/shop/edibles/">edibles</a>,
+              <a href="/shop/vapes/">vapes</a>,
+              <a href="/shop/concentrates/">concentrates</a>,
+              <a href="/shop/pre-rolls/">pre-rolls</a>,
+              or <a href="/shop/hash/">hash</a> — and add items to your cart.
+            </li>
+            <li>
+              <strong>Checkout with your delivery details.</strong>
+              We capture the minimum information needed to ship the parcel: name, address, and contact email.
+            </li>
+            <li>
+              <strong>Choose a payment method.</strong>
+              Bank transfer or Bitcoin. After placing the order, the live chat widget will let you receive the bank details (we never email these) or the Bitcoin address with confirmation tracking.
+            </li>
+            <li>
+              <strong>Confirm and we dispatch.</strong>
+              Once payment lands, we dispatch within 24–48 business hours in plain, tracked packaging. Transit varies by state — see our <a href="/shipping-and-delivery/">shipping page</a> for current windows.
+            </li>
+          </ol>
+
+          <h2>5. Frequently asked questions</h2>
+          <div class="faq-list">
+            {faqs.map((f) => (
+              <details class="faq-item">
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
 </Layout>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+    overflow: hidden;
+    color: var(--color-white);
+  }
+  .page-hero .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .page-hero > .container {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-content {
+    max-width: 760px;
+    margin: var(--space-lg) 0 0;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+  }
+  .page-hero h1 {
+    color: var(--color-white);
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    line-height: 1.18;
+    margin-bottom: var(--space-md);
+  }
+  .hero-lede {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .guide-section {
+    background: var(--color-white);
+  }
+
+  .guide-prose {
+    font-size: 1.02rem;
+    line-height: 1.78;
+    color: var(--color-text);
+  }
+  .guide-prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    margin: var(--space-3xl) 0 var(--space-md);
+    color: var(--color-text);
+  }
+  .guide-prose h2:first-of-type {
+    margin-top: 0;
+  }
+  .guide-prose p {
+    color: var(--color-text-light);
+    margin: 0 0 var(--space-md);
+  }
+  .guide-prose ul,
+  .guide-prose ol {
+    margin: 0 0 var(--space-lg);
+    padding-left: 1.4em;
+    list-style: disc;
+  }
+  .guide-prose ol { list-style: decimal; }
+  .guide-prose li {
+    color: var(--color-text-light);
+    margin-bottom: var(--space-sm);
+  }
+  .guide-prose strong { color: var(--color-text); }
+  .guide-prose a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+  .guide-prose a:hover {
+    color: var(--color-accent);
+  }
+
+  .callout {
+    border-radius: var(--radius-md);
+    padding: var(--space-lg) var(--space-xl);
+    margin: var(--space-lg) 0 var(--space-2xl);
+  }
+  .callout-info {
+    background: rgba(74, 139, 156, 0.08);
+    border-left: 4px solid var(--color-ocean);
+    color: var(--color-text);
+  }
+  .callout-info strong { color: var(--color-ocean); }
+  .callout-cta {
+    background: linear-gradient(135deg, rgba(45, 90, 74, 0.07) 0%, rgba(196, 112, 75, 0.05) 100%);
+    border: 1px solid var(--color-border);
+    text-align: center;
+    margin: var(--space-2xl) 0;
+  }
+  .callout-cta h3 {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+  }
+  .callout-cta p {
+    margin: 0 auto var(--space-lg);
+    max-width: 460px;
+  }
+
+  .numbered-steps {
+    list-style: none;
+    padding: 0;
+    counter-reset: step;
+  }
+  .numbered-steps li {
+    counter-increment: step;
+    padding-left: 56px;
+    position: relative;
+    margin-bottom: var(--space-lg);
+  }
+  .numbered-steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-family: var(--font-display);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+  .faq-item {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0;
+  }
+  .faq-item summary {
+    cursor: pointer;
+    padding: var(--space-md) var(--space-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    font-weight: 300;
+    transition: transform var(--transition-fast);
+  }
+  .faq-item[open] summary::after {
+    content: '×';
+    transform: rotate(0deg);
+  }
+  .faq-item p {
+    margin: 0;
+    padding: 0 var(--space-lg) var(--space-lg);
+    color: var(--color-text-light);
+  }
+</style>

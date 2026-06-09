@@ -98,6 +98,10 @@ const schemaArray = [organizationSchema, websiteSchema, ...passedSchemas];
 			<link rel="preload" as="image" href="/images/homepage/hero-bg.webp" fetchpriority="high" />
 		)}
 
+		<!-- Live chat origin (Zoho SalesIQ loads on every page; pre-warm DNS + TLS) -->
+		<link rel="dns-prefetch" href="https://salesiq.zohopublic.com">
+		<link rel="preconnect" href="https://salesiq.zohopublic.com" crossorigin>
+
 		<!-- Fonts - Optimized Loading -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
