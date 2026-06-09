@@ -88,7 +88,6 @@ export const organizationSchema = {
     'https://www.instagram.com/mullawaysmedical',
     'https://www.facebook.com/mullawaysmedical',
     'https://x.com/mullawaysmed',
-    'https://wa.me/61468299228',
   ],
 };
 

@@ -51,7 +51,7 @@ import Footer from '../components/Footer.astro';
         </div>
       </section>
 
-      <!-- BOLD: WhatsApp payment-confirmation alert -->
+      <!-- BOLD: Live Chat payment-confirmation alert -->
       <section class="wa-alert-section" aria-labelledby="wa-alert-title">
         <div class="container">
           <div class="wa-alert">
@@ -61,12 +61,12 @@ import Footer from '../components/Footer.astro';
             </span>
 
             <h2 id="wa-alert-title" class="wa-alert-title">
-              Message us on WhatsApp now to arrange payment
+              Open Live Chat now to get bank details and finalise payment
             </h2>
 
             <p class="wa-alert-sub">
-              Your order has been received but <strong>your order is not finalised until you contact us on WhatsApp</strong>.
-              Send us your order reference and we'll send you payment instructions and confirm dispatch.
+              Your order has been received but <strong>your order is not finalised until you message us on Live Chat to receive the bank transfer details</strong>.
+              Bank account information is shared only via Live Chat — quote the order reference below and we'll send you the bank details and confirm dispatch as soon as payment lands.
             </p>
 
             <div class="wa-alert-ref" aria-live="polite">
@@ -74,26 +74,22 @@ import Footer from '../components/Footer.astro';
               <strong id="wa-alert-ref-value">—</strong>
             </div>
 
-            <a
+            <button
+              type="button"
               id="wa-alert-cta"
               class="wa-alert-cta"
-              href="https://wa.me/61468299228"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               <svg class="wa-alert-cta-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M20.52 3.48a11.94 11.94 0 10-16.9 16.9L2 22l1.62-2.65A11.94 11.94 0 0020.52 3.48z" fill="#fff"/>
-                <path d="M17.1 14.1c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.14-.2.3-.77.97-.95 1.17-.17.2-.34.22-.63.07-.3-.15-1.27-.47-2.42-1.48-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.18.2-.3.3-.5.1-.2 0-.37-.02-.52-.02-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.58c-.2 0-.52.07-.8.37-.27.3-1.03 1.01-1.03 2.46s1.05 2.86 1.2 3.06c.15.2 2.07 3.16 5.02 4.43 3.95 1.62 3.95 1.08 4.67 1.02.53-.05 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.57-.35z" fill="#25D366"/>
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <span>Open WhatsApp Chat</span>
+              <span>Open Live Chat</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
-            </a>
+            </button>
 
             <p class="wa-alert-foot">
-              <span>or save the number:</span>
-              <a href="tel:+61468299228" class="wa-alert-phone">+61 468 299 228</a>
+              <span>Look for the chat bubble in the bottom-right corner of any page.</span>
             </p>
           </div>
         </div>
@@ -355,11 +351,11 @@ import Footer from '../components/Footer.astro';
               <!-- Support Card -->
               <div class="support-card">
                 <h4>Need Help?</h4>
-                <p>Our support team is available Mon–Fri, 9am–6pm AEST. For order confirmation and payment help, contact us on WhatsApp.</p>
-                <a href="https://wa.me/61468299228" target="_blank" rel="noopener noreferrer" class="support-link">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-8.7 15.4L2 22l4.7-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.2-1.2l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 1 1 12 20Zm2.1-10.4c-.1-1.1-1-1.7-2-1.8-.8-.1-1.6.2-2.2.8-.5.5-.8 1.3-.8 2.1 0 .4.1.7.3 1l.1.4c.1.2.1.3 0 .5l-.6 2.3c-.1.4 0 .8.3 1.1.2.2.5.3.8.3.1 0 .3 0 .4-.1l2.3-.6c.2 0 .4 0 .5.1l.4.1c.3.1.6.3 1 .3.8 0 1.6-.3 2.1-.8.6-.6.9-1.4.8-2.2 0-1.1-.6-1.9-1.7-2Z"/></svg>
-                  WhatsApp Support
-                </a>
+                <p>Our support team is available Mon–Fri, 9am–6pm AEST. Bank transfer details are shared via Live Chat — open the chat bubble in the bottom-right corner to message us.</p>
+                <button type="button" class="support-link" id="support-open-chat">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  Open Live Chat
+                </button>
               </div>
             </aside>
           </div>
@@ -1422,21 +1418,55 @@ import Footer from '../components/Footer.astro';
     if (heroRef) heroRef.textContent = order.ref;
     if (heroEmail) heroEmail.textContent = order.customer.email;
 
-    // Bold WhatsApp alert — prefill ref + a clean WhatsApp message
+    // Helper: open Zoho SalesIQ chat with optional prefilled message + visitor info
+    function openZohoChat(prefill?: string, info?: Record<string, any>) {
+      try {
+        const z = (window as any).$zoho;
+        if (!z || !z.salesiq) {
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          return;
+        }
+        try {
+          if (info && z.salesiq.visitor && typeof z.salesiq.visitor.info === 'function') {
+            z.salesiq.visitor.info(info);
+          }
+          if (prefill && z.salesiq.visitor && typeof z.salesiq.visitor.question === 'function') {
+            z.salesiq.visitor.question(prefill);
+          }
+        } catch (_) {}
+        if (z.salesiq.floatwindow && typeof z.salesiq.floatwindow.visible === 'function') {
+          z.salesiq.floatwindow.visible('show');
+        } else if (z.salesiq.chat && typeof z.salesiq.chat.start === 'function') {
+          z.salesiq.chat.start();
+        } else if (z.salesiq.floatbutton && typeof z.salesiq.floatbutton.visible === 'function') {
+          z.salesiq.floatbutton.visible('show');
+        }
+      } catch (_) {}
+    }
+
+    // Bold Live Chat alert — prefill ref + open Zoho SalesIQ chat window
     const waAlertRef = document.getElementById('wa-alert-ref-value');
     const waAlertCta = document.getElementById('wa-alert-cta');
+    const supportOpenChat = document.getElementById('support-open-chat');
     if (waAlertRef) waAlertRef.textContent = order.ref;
+    if (supportOpenChat) {
+      supportOpenChat.addEventListener('click', () => openZohoChat(
+        `Hi Mullaways, I need help with order ${order.ref}.`,
+        { orderRef: order.ref }
+      ));
+    }
     if (waAlertCta) {
       const totalStr = typeof order.total === 'number' ? `$${order.total.toFixed(2)} AUD` : '';
       const payLabel = order.payment === 'bitcoin' ? 'Bitcoin' : (order.payment === 'bank' ? 'Bank Transfer' : 'my order');
-      const waMsg =
+      const prefillMsg =
         `Hi Mullaways, I just placed order ${order.ref}` +
         (totalStr ? ` (${totalStr})` : '') +
-        ` and I'd like to confirm payment by ${payLabel}.`;
-      waAlertCta.setAttribute(
-        'href',
-        `https://wa.me/61468299228?text=${encodeURIComponent(waMsg)}`
-      );
+        ` and I'd like the bank details to finalise payment by ${payLabel}.`;
+      waAlertCta.addEventListener('click', () => openZohoChat(prefillMsg, {
+        orderRef: order.ref,
+        total: totalStr,
+        payment: payLabel,
+      }));
     }
 
     // For Bitcoin, emails are deferred until 2 confirmations — update the notice

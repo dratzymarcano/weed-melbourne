@@ -139,46 +139,42 @@ function sumRow(label, value, isTotal) {
 }
 
 
-// WhatsApp constants reused across templates
-const WA_NUMBER = '61468299228';
-const WA_DISPLAY = '+61 468 299 228';
-
-// Build a wa.me URL with a prefilled message ready for the customer to send
-function waLink(orderRef, total, paymentMethod) {
-  const msg =
-    `Hi Mullaways, I just placed order ${orderRef}` +
-    (total ? ` (${total})` : '') +
-    (paymentMethod ? ` and I'd like to confirm payment by ${paymentMethod}.` : '.');
-  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+// Live Chat (Zoho SalesIQ) constants reused across templates
+const SITE_URL = 'https://mullawaysmedicalcannabis.com.au';
+// Customers can't open the chat directly from an email — point them at the
+// order confirmation page (where the in-page CTA opens the Zoho chat widget).
+function liveChatLink(orderRef) {
+  const target = `${SITE_URL}/order-confirmation/?ref=${encodeURIComponent(orderRef || '')}`;
+  return target;
 }
 
-// BOLD WhatsApp action block used inside emailWrapper bodyContent.
+// BOLD Live Chat action block used inside emailWrapper bodyContent.
 // Email-client safe: nested table, inline styles, bulletproof CTA via VML for Outlook.
-function waActionBlock({ orderRef, total, paymentMethod }) {
-  const href = waLink(orderRef, total, paymentMethod);
+function liveChatActionBlock({ orderRef, total, paymentMethod }) {
+  const href = liveChatLink(orderRef);
   return `
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 32px;">
-<tr><td style="background-color:#0B3D2C;background-image:linear-gradient(135deg,#075E54 0%,#128C7E 60%,#25D366 100%);padding:28px 28px 26px;border-radius:14px;">
+<tr><td style="background-color:#0B3D2C;background-image:linear-gradient(135deg,#1A3D32 0%,#2D5A4A 60%,#3D7A64 100%);padding:28px 28px 26px;border-radius:14px;">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
 <tr><td>
 <p style="margin:0 0 10px;font-size:11px;font-weight:800;color:#FFE4E4;text-transform:uppercase;letter-spacing:3px;">⚠ Action required</p>
-<h2 style="margin:0 0 10px;font-size:22px;font-weight:700;color:#FFFFFF;line-height:1.3;letter-spacing:-0.3px;">Message us on WhatsApp now to arrange payment</h2>
+<h2 style="margin:0 0 10px;font-size:22px;font-weight:700;color:#FFFFFF;line-height:1.3;letter-spacing:-0.3px;">Open Live Chat to get bank details and finalise payment</h2>
 <p style="margin:0 0 18px;font-size:14px;color:#E7F8EF;line-height:1.65;">
-Your order has been received, but <strong style="color:#FFFFFF;">your order is not finalised until you confirm payment with us on WhatsApp</strong>. Tap the button below — the message is pre-filled with your order reference.
+Your order has been received, but <strong style="color:#FFFFFF;">your order is not finalised until you message us on Live Chat to receive the bank transfer details</strong>. For your security we only share bank account information via Live Chat — never by email. Tap the button below, then click the chat bubble in the bottom-right corner of the page.
 </p>
 <!--[if mso]>
-<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${href}" style="height:50px;v-text-anchor:middle;width:280px;" arcsize="14%" stroke="f" fillcolor="#25D366">
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${href}" style="height:50px;v-text-anchor:middle;width:280px;" arcsize="14%" stroke="f" fillcolor="#2D5A4A">
 <w:anchorlock/>
-<center style="color:#FFFFFF;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;letter-spacing:0.3px;">Open WhatsApp Chat</center>
+<center style="color:#FFFFFF;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;letter-spacing:0.3px;">Open Live Chat &amp; Get Bank Details</center>
 </v:roundrect>
 <![endif]-->
 <!--[if !mso]><!-- -->
-<a href="${href}" target="_blank" rel="noopener noreferrer" style="display:inline-block;background-color:#25D366;color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:700;padding:15px 32px;border-radius:8px;letter-spacing:0.3px;box-shadow:0 4px 14px rgba(0,0,0,0.18);">
-&#x1F4AC;&nbsp;&nbsp;Open WhatsApp Chat
+<a href="${href}" target="_blank" rel="noopener noreferrer" style="display:inline-block;background-color:#2D5A4A;color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:700;padding:15px 32px;border-radius:8px;letter-spacing:0.3px;box-shadow:0 4px 14px rgba(0,0,0,0.18);">
+&#x1F4AC;&nbsp;&nbsp;Open Live Chat &amp; Get Bank Details
 </a>
 <!--<![endif]-->
 <p style="margin:18px 0 0;font-size:12px;color:#C8E9D5;">
-Or save the number: <a href="tel:+${WA_NUMBER}" style="color:#FFFFFF;text-decoration:underline;font-weight:600;">${WA_DISPLAY}</a> — quote order reference <strong style="color:#FFFFFF;font-family:'SF Mono','Courier New',monospace;">${orderRef}</strong>.
+Quote order reference <strong style="color:#FFFFFF;font-family:'SF Mono','Courier New',monospace;">${orderRef}</strong> when you start the chat${paymentMethod ? ` and let us know you'd like to pay by <strong style="color:#FFFFFF;">${paymentMethod}</strong>` : ''}${total ? ` (total ${total})` : ''}.
 </p>
 </td></tr>
 </table>
@@ -228,10 +224,10 @@ ${sectionLabel('Bitcoin Payment')}
 
   const bodyContent = `
 <p style="margin:0 0 28px;font-size:15px;color:#666666;line-height:1.7;">
-Your order has been received. <strong style="color:#0B3D2C;">Please contact us on WhatsApp now to finalise payment</strong> — the button below opens a chat pre-filled with your order reference.
+Your order has been received. <strong style="color:#0B3D2C;">Please open Live Chat on our site to get the bank transfer details and finalise payment</strong> — for your security we never share bank information by email.
 </p>
 
-${waActionBlock({ orderRef: order_ref, total, paymentMethod: payment_method })}
+${liveChatActionBlock({ orderRef: order_ref, total, paymentMethod: payment_method })}
 
 ${sectionLabel('Order Details')}
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
@@ -291,9 +287,9 @@ ${sectionLabel('Delivery Address')}
 `;
 
   return emailWrapper({
-    preheader: `Action required: message us on WhatsApp to finalise order ${order_ref} (${total}).`,
+    preheader: `Action required: open Live Chat on our site to get bank details and finalise order ${order_ref} (${total}).`,
     heroTitle: `Thank you, ${firstName}.`,
-    heroSub: `Order ${order_ref} received — please WhatsApp us to finalise payment.`,
+    heroSub: `Order ${order_ref} received — please open Live Chat to get the bank details.`,
     bodyContent,
   });
 }
@@ -491,7 +487,7 @@ export async function onRequestPost(context) {
         from: fromAddress,
         to: data.to_email,
         replyTo: ADMIN_EMAIL,
-        subject: `Action required: WhatsApp us to finalise order ${data.order_ref}`,
+        subject: `Action required: open Live Chat to finalise order ${data.order_ref}`,
         html: orderCustomerHTML(data),
       });
 
