@@ -135,7 +135,7 @@ const blogSchema = {
     "url": `https://mullawaysmedicalcannabis.com.au/blog/${p.slug}/`,
     "datePublished": p.isoDate,
     "description": p.excerpt,
-    "author": { "@id": "https://mullawaysmedicalcannabis.com.au/#organization" },
+    "author": { "@type": "Person", "name": "Mullaways Medical Editorial Team", "url": "https://mullawaysmedicalcannabis.com.au#author", "jobTitle": "Medical Cannabis Editorial Team", "worksFor": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" } },
     "publisher": { "@id": "https://mullawaysmedicalcannabis.com.au/#organization" },
     "mainEntityOfPage": `https://mullawaysmedicalcannabis.com.au/blog/${p.slug}/`,
   }))

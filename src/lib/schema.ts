@@ -1,5 +1,6 @@
 export const SITE_URL = 'https://mullawaysmedicalcannabis.com.au';
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const MEDICAL_ORG_ID = `${SITE_URL}/#medical-organization`;
 
 export const organizationSchema = {
   '@context': 'https://schema.org',
@@ -120,6 +121,56 @@ export const merchantReturnPolicy = {
   merchantReturnDays: 14,
   returnMethod: 'https://schema.org/ReturnByMail',
   returnFees: 'https://schema.org/FreeReturn',
+};
+
+// MedicalOrganization schema — required for YMYL medical cannabis sites per E-E-A-T guidelines.
+// Signals to Google and AI systems that this is a verified healthcare provider, not a generic store.
+// Add to Layout.astro schemaArray alongside organizationSchema and websiteSchema.
+export const medicalOrganizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalOrganization',
+  '@id': MEDICAL_ORG_ID,
+  name: 'Mullaways Medical Cannabis',
+  alternateName: 'Mullaways',
+  url: SITE_URL,
+  description:
+    'Australian medical cannabis dispensary and educational resource. TGA-authorised prescription service, serving patients Australia-wide with lab-tested cannabis products.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Mullaways',
+    addressRegion: 'NSW',
+    addressCountry: 'AU',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: 'hello@mullawaysmedicalcannabis.com.au',
+    telephone: '+614****9228',
+    availableLanguage: [{ '@type': 'Language', name: 'English', alternateName: 'en-AU' }],
+    hoursAvailable: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Australia',
+    identifier: 'AU',
+  },
+  medicalSpecialty: [
+    'https://schema.org/GeneralMedicine',
+    'https://schema.org/PainMedicine',
+    'https://schema.org/Neurology',
+  ],
+  availableService: [
+    { '@type': 'MedicalService', name: 'Medical Cannabis Consultations' },
+    { '@type': 'MedicalService', name: 'TGA Special Access Scheme' },
+    { '@type': 'MedicalService', name: 'Cannabis Prescription Management' },
+  ],
+  // Links to the parent Organization for entity clarity
+  parentOrganization: { '@id': ORGANIZATION_ID },
 };
 
 // Build a CollectionPage schema for a shop category landing page.

@@ -13,8 +13,32 @@ const blogSchema = {
   "@type": "BlogPosting",
   "headline": title,
   "description": description,
-  "author": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "url": "https://mullawaysmedicalcannabis.com.au" },
-  "publisher": { "@type": "Organization", "name": "Mullaways Medical Cannabis", "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" } },
+  "author": {
+    "@type": "Person",
+    "name": "Mullaways Medical Editorial Team",
+    "url": "https://mullawaysmedicalcannabis.com.au#author",
+    "jobTitle": "Medical Cannabis Editorial Team",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Mullaways Medical Cannabis",
+      "url": "https://mullawaysmedicalcannabis.com.au"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mullaways Medical Cannabis",
+    "url": "https://mullawaysmedicalcannabis.com.au",
+    "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" }
+  },
+  "editor": {
+    "@type": "Person",
+    "name": "Mullaways Medical Editorial Team",
+    "jobTitle": "Medical Cannabis Editorial Team",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Mullaways Medical Cannabis"
+    }
+  },
   "datePublished": "2026-01-22",
   "dateModified": "2026-01-22",
   "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/edibles-vs-smoking/",
