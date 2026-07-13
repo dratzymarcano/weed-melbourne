@@ -57,9 +57,48 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 3, "name": "Is Weed Legal in Australia?", "item": "https://mullawaysmedicalcannabis.com.au/blog/is-weed-legal-in-australia/" }
   ]
 };
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is weed legal in Australia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recreational cannabis remains illegal in most of Australia. Only the ACT (Australian Capital Territory) has decriminalised small amounts for personal use. Medical cannabis is legal Australia-wide with a valid TGA prescription."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which Australian states have legal cannabis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No state has fully legalised recreational cannabis. The ACT has decriminalised possession of up to 50 grams with on-the-spot fines instead of criminal charges. All other states and territories treat cannabis as illegal for recreational use, though some have diversion programs for first-time offenders."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get medical cannabis in Australia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You need a valid prescription from a registered Australian doctor. The TGA (Therapeutic Goods Administration) approves medical cannabis applications through a Special Access Scheme or Authorised Prescriber pathway. Your doctor must determine that conventional treatments have failed and that medical cannabis is clinically appropriate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the penalties for cannabis possession in Australia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Penalties vary by state and amount. In most states, small personal amounts result in fines of $100–$500 or diversion programs. Larger amounts can result in criminal charges with fines or imprisonment. In Queensland and NSW, possession of cannabis for personal use is a criminal offence with penalties up to 2 years."
+      }
+    }
+  ]
+};
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-15" articleModifiedTime="2026-01-15" articleAuthor="Mullaways Medical Cannabis" articleSection="Legal">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema, faqSchema]} ogType="article" articlePublishedTime="2026-01-15" articleModifiedTime="2026-01-15" articleAuthor="Mullaways Medical Editorial Team" articleSection="Legal">
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog/'}, {label: 'Is Weed Legal in Australia?'}]} />
