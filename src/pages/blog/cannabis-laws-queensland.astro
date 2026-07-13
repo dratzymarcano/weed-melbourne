@@ -57,9 +57,48 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 3, "name": "Cannabis Laws Queensland", "item": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-laws-queensland/" }
   ]
 };
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is weed legal in Queensland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recreational cannabis is illegal in Queensland. However, medical cannabis is legal with a valid prescription obtained through proper TGA-approved channels."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I get caught with weed in QLD?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For small amounts (under 50g) with no prior offences, you may be offered diversion to an education program. Otherwise, you could face fines or imprisonment. Larger amounts can result in serious criminal charges with penalties up to 15-25 years."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I grow my own cannabis in Queensland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike the ACT, there is no allowance for home cultivation in Queensland. Growing even one plant is a criminal offence with penalties up to 20 years imprisonment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I drive if I'm a medical cannabis patient?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "While you can legally possess and use prescribed cannabis, you cannot drive with any detectable THC in your system. There's currently no exemption for medical patients in Queensland's drug driving laws."
+      }
+    }
+  ]
+};
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-20" articleModifiedTime="2026-01-20" articleAuthor="Mullaways Medical Cannabis" articleSection="Legal Guide">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema, faqSchema]} ogType="article" articlePublishedTime="2026-01-20" articleModifiedTime="2026-01-20" articleAuthor="Mullaways Medical Editorial Team" articleSection="Legal Guide">
   <Header />
 
   <main>
