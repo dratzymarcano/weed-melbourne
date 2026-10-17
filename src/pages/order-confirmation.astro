@@ -1473,10 +1473,45 @@ import Footer from '../components/Footer.astro';
       }));
     }
 
-    // For Bitcoin, emails are deferred until 2 confirmations — update the notice
-    if (order.payment === 'bitcoin') {
-      const noticeTxt = document.getElementById('hero-email-notice-txt');
-      if (noticeTxt) noticeTxt.textContent = 'A confirmation email will be sent to ';
+    // Confirmation email notice text
+    const noticeTxt = document.getElementById('hero-email-notice-txt');
+    if (noticeTxt) {
+      noticeTxt.textContent = 'A confirmation email has been sent to ';
+    }
+
+    // Safety net: If emails were not sent at checkout, trigger dispatch from confirmation page
+    if (!order.emailsSent && order.customer && order.customer.email) {
+      const itemsList = (order.items || []).map(i => `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`).join('\n');
+      const discountParts = [];
+      if (order.promoDiscount && order.promoDiscount > 0) discountParts.push(`-$${order.promoDiscount.toFixed(2)} (Promo: ${order.promoCode || 'Applied'})`);
+      if (order.discount && order.discount > 0) discountParts.push(`-$${order.discount.toFixed(2)} (Bitcoin 10% discount)`);
+      const discountText = discountParts.length > 0 ? discountParts.join(' + ') : '$0.00';
+      const fallbackPayload = {
+        to_email: order.customer.email,
+        to_name: `${order.customer.firstName || ''} ${order.customer.lastName || ''}`.trim() || 'Customer',
+        order_ref: order.ref,
+        order_date: new Date(order.date).toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+        items_list: itemsList,
+        subtotal: `$${(order.subtotal || 0).toFixed(2)}`,
+        discount: discountText,
+        shipping: order.shipping === 0 ? 'FREE (Standard delivery over $150)' : `$${(order.shipping || 0).toFixed(2)}`,
+        total: `$${(order.total || 0).toFixed(2)}`,
+        payment_method: order.payment === 'bitcoin' ? 'Bitcoin' : 'Bank Transfer',
+        payment_status: order.payment === 'bitcoin' ? 'Awaiting Bitcoin payment' : 'Awaiting bank transfer',
+        payment_next_step: order.payment === 'bitcoin' ? 'Send Bitcoin' : 'Live Chat',
+        shipping_address: `${order.customer.address || ''}, ${order.customer.city || ''}, ${order.customer.state || ''} ${order.customer.postcode || ''}`,
+        delivery_method: order.shippingMethod === 'express' ? 'Express (1–2 business days)' : 'Standard (2–5 business days)',
+        customer_email: order.customer.email,
+        customer_phone: order.customer.phone || '',
+        btc_address: order.btcAddress || '',
+      };
+      Promise.allSettled([
+        fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ type: 'order-customer', data: fallbackPayload }) }),
+        fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ type: 'order-admin', data: fallbackPayload }) }),
+      ]).then(() => {
+        order.emailsSent = true;
+        localStorage.setItem('lastOrder', JSON.stringify(order));
+      }).catch(err => console.warn('Order confirmation email retry warning:', err));
     }
 
     // Customize hero based on payment

@@ -1820,6 +1820,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       const res = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
         body: JSON.stringify({ type: 'order-customer', data }),
       });
       return { success: res.ok };
@@ -1834,6 +1835,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       const res = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
         body: JSON.stringify({ type: 'order-admin', data }),
       });
       return { success: res.ok };
@@ -1903,12 +1905,18 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       orderHistory.unshift(order);
       localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
 
-      // Outbound emails
-      if (order.payment !== 'bitcoin') {
-        Promise.all([sendCustomerEmail(order), sendAdminEmail(order)]).then(([cRes, aRes]) => {
-          order.emailsSent = cRes.success && aRes.success;
-          localStorage.setItem('lastOrder', JSON.stringify(order));
-        });
+      // Outbound emails for both Customer and Admin on ALL orders (Bitcoin & Bank Transfer)
+      try {
+        const [cRes, aRes] = await Promise.allSettled([
+          sendCustomerEmail(order),
+          sendAdminEmail(order)
+        ]);
+        const custOk = cRes.status === 'fulfilled' && cRes.value && cRes.value.success;
+        const adminOk = aRes.status === 'fulfilled' && aRes.value && aRes.value.success;
+        order.emailsSent = Boolean(custOk && adminOk);
+        localStorage.setItem('lastOrder', JSON.stringify(order));
+      } catch (emailErr) {
+        console.warn('Email dispatch warning:', emailErr);
       }
 
       // Clear cart
@@ -1916,7 +1924,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       localStorage.removeItem('appliedPromo');
       window.dispatchEvent(new CustomEvent('cartUpdated'));
 
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await new Promise(resolve => setTimeout(resolve, 300));
       window.location.href = `/order-confirmation/?ref=${order.ref}`;
 
     } catch (err) {

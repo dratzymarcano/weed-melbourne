@@ -548,11 +548,16 @@ export async function onRequestPost(context) {
         );
       }
 
+      const isBtc = data.payment_method === 'Bitcoin';
+      const custSubject = isBtc
+        ? `Order Confirmed: ${data.order_ref} — Complete Bitcoin Payment`
+        : `Order Confirmed: ${data.order_ref} — Open Live Chat to finalise payment`;
+
       const result = await sendEmail(apiKey, {
         from: fromAddress,
         to: data.to_email,
         replyTo: ADMIN_EMAIL,
-        subject: `Order Confirmed: ${data.order_ref} — Open Live Chat to finalise payment`,
+        subject: custSubject,
         html: orderCustomerHTML(data),
       });
 
