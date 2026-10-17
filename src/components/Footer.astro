@@ -13,6 +13,8 @@ const locations = [
   { href: "/newcastle/", label: "Newcastle" },
   { href: "/wollongong/", label: "Wollongong" },
   { href: "/central-coast/", label: "Central Coast" },
+  { href: "/geelong/", label: "Geelong" },
+  { href: "/cairns/", label: "Cairns" },
 ];
 
 const shopLinks = [
@@ -28,6 +30,7 @@ const shopLinks = [
 const supportLinks = [
   { href: "/contact/", label: "Contact Us" },
   { href: "/how-it-works/", label: "How It Works" },
+  { href: "/blog/", label: "Blog & Guides" },
   { href: "/buy-weed-online-australia/", label: "Safety Guide" },
   { href: "/shipping-and-delivery/", label: "Shipping & Delivery" },
   { href: "/refunds/", label: "Returns & Refunds" },
@@ -109,7 +112,7 @@ const legalLinks = [
                   // Fallback: open the user's email client to send us a sign-up request.
                   if (label) label.textContent = 'Subscribe';
                   if (submit) submit.disabled = false;
-                  if (note) note.innerHTML = "We couldn't reach the subscribe service — <a href=\"mailto:hello@mullawaysmedicalcannabis.com.au?subject=Newsletter%20signup&body=" + encodeURIComponent('Please add ' + email + ' to the newsletter.') + "\">email us to sign up instead</a>.";
+                  if (note) note.innerHTML = "We couldn't reach the subscribe service — <a href=\"mailto:hello@mullawaysmedicalcannabis.store?subject=Newsletter%20signup&body=" + encodeURIComponent('Please add ' + email + ' to the newsletter.') + "\">email us to sign up instead</a>.";
                 });
             });
           })();
@@ -217,7 +220,7 @@ const legalLinks = [
         <div class="footer-col">
           <h4 class="footer-heading">Get In Touch</h4>
           <div class="contact-cards">
-            <a href="/contact/" class="contact-card">
+            <a href="mailto:hello@mullawaysmedicalcannabis.store" class="contact-card">
               <div class="contact-card-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -225,8 +228,33 @@ const legalLinks = [
                 </svg>
               </div>
               <div class="contact-card-text">
-                <span class="contact-label">Email Us</span>
-                <span class="contact-value">Go to Contact Page</span>
+                <span class="contact-label">Order & Support Email</span>
+                <span class="contact-value">hello@mullawaysmedicalcannabis.store</span>
+              </div>
+            </a>
+            <button type="button" class="contact-card contact-card-btn" data-open-livechat aria-label="Open Live Chat">
+              <div class="contact-card-icon chat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <div class="contact-card-text">
+                <span class="contact-label">Live Chat (Instant)</span>
+                <span class="contact-value">Chat with our team</span>
+              </div>
+            </button>
+            <a href="/contact/" class="contact-card">
+              <div class="contact-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+              </div>
+              <div class="contact-card-text">
+                <span class="contact-label">Web Form</span>
+                <span class="contact-value">Submit a Message</span>
               </div>
             </a>
           </div>
@@ -296,14 +324,14 @@ const legalLinks = [
 
   .newsletter-badge {
     display: inline-block;
-    background: rgba(139, 168, 136, 0.2);
-    color: var(--color-sage);
-    padding: 6px 12px;
+    background: rgba(196, 112, 75, 0.2);
+    color: var(--color-terracotta-light);
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     margin-bottom: var(--space-sm);
   }
 
@@ -333,7 +361,7 @@ const legalLinks = [
   }
 
   .newsletter-form .form-group:focus-within {
-    border-color: var(--color-sage);
+    border-color: var(--color-primary-light);
     background: rgba(255, 255, 255, 0.08);
   }
 
@@ -358,21 +386,21 @@ const legalLinks = [
     display: flex;
     align-items: center;
     gap: var(--space-xs);
-    background: var(--color-sage);
-    color: #1a1a1a;
+    background: var(--color-primary);
+    color: #ffffff;
     border: none;
     padding: 14px 24px;
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .newsletter-form button:hover {
-    background: #9dbc9a;
+    background: var(--color-primary-light);
     transform: translateX(2px);
-    box-shadow: 0 4px 14px rgba(139, 168, 136, 0.35);
+    box-shadow: 0 4px 14px rgba(31, 77, 60, 0.4);
   }
 
   .form-note {
@@ -558,12 +586,26 @@ const legalLinks = [
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
     transition: all var(--transition-fast);
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
   }
 
   .contact-card:hover {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(139, 168, 136, 0.3);
     transform: translateY(-2px);
+  }
+
+  .contact-card-btn {
+    border: 1px solid rgba(139, 168, 136, 0.2);
+    background: rgba(139, 168, 136, 0.06);
+  }
+
+  .contact-card-btn:hover {
+    background: rgba(139, 168, 136, 0.15);
+    border-color: var(--color-sage);
   }
 
   .contact-card-icon {

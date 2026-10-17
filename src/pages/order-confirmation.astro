@@ -22,7 +22,7 @@ import Footer from '../components/Footer.astro';
         <div class="empty-icon">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
         </div>
-        <h1>No Order Found</h1>
+        <h2 class="h1">No Order Found</h2>
         <p>It looks like you haven't placed an order yet, or the order details have expired.</p>
         <a href="/shop/" class="btn btn-primary">Browse Products</a>
       </div>
@@ -150,7 +150,7 @@ import Footer from '../components/Footer.astro';
                         <label>Bitcoin Address</label>
                         <div class="copyable-field">
                           <code id="btc-address">—</code>
-                          <button class="copy-btn" id="btc-copy-address" title="Copy address">
+                          <button class="copy-btn" id="btc-copy-address" title="Copy address" aria-label="Copy Bitcoin address">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                           </button>
                         </div>
@@ -203,7 +203,7 @@ import Footer from '../components/Footer.astro';
                       <label>Amount to Transfer</label>
                       <div class="copyable-field amount-field">
                         <code id="bank-amount">$0.00 AUD</code>
-                        <button class="copy-btn" data-copy-id="bank-amount" title="Copy Amount">
+                        <button class="copy-btn" data-copy-id="bank-amount" title="Copy Amount" aria-label="Copy Amount">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                         </button>
                       </div>
@@ -212,7 +212,7 @@ import Footer from '../components/Footer.astro';
                       <label>Payment Reference (use this as description)</label>
                       <div class="copyable-field">
                         <code id="bank-ref">—</code>
-                        <button class="copy-btn" data-copy-id="bank-ref" title="Copy Reference">
+                        <button class="copy-btn" data-copy-id="bank-ref" title="Copy Reference" aria-label="Copy Reference">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                         </button>
                       </div>
@@ -316,6 +316,10 @@ import Footer from '../components/Footer.astro';
                 <div class="summary-row">
                   <span>Subtotal</span>
                   <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row" id="summary-promo-row" style="display: none;">
+                  <span style="color:#059669;font-weight:600;" id="summary-promo-label">Promo Discount</span>
+                  <span id="summary-promo" style="color:#059669;font-weight:600;">-$0.00</span>
                 </div>
                 <div class="summary-row" id="summary-discount-row" style="display: none;">
                   <span style="color:#059669;font-weight:600;">Bitcoin Discount (10%)</span>
@@ -1735,6 +1739,16 @@ import Footer from '../components/Footer.astro';
 
     document.getElementById('summary-subtotal').textContent = `$${order.subtotal.toFixed(2)}`;
     
+    // Show Promo discount if applicable
+    const promoRow = document.getElementById('summary-promo-row');
+    const promoLabel = document.getElementById('summary-promo-label');
+    const promoEl = document.getElementById('summary-promo');
+    if (order.promoDiscount && order.promoDiscount > 0 && promoRow && promoEl) {
+      promoRow.style.display = 'flex';
+      if (promoLabel) promoLabel.textContent = `Promo Discount (${order.promoCode || 'Applied'})`;
+      promoEl.textContent = `-$${order.promoDiscount.toFixed(2)}`;
+    }
+
     // Show Bitcoin discount if applicable
     const discountRow = document.getElementById('summary-discount-row');
     const discountEl = document.getElementById('summary-discount');
@@ -1743,7 +1757,10 @@ import Footer from '../components/Footer.astro';
       discountEl.textContent = `-$${order.discount.toFixed(2)}`;
     }
 
-    document.getElementById('summary-shipping').textContent = `$${order.shipping.toFixed(2)}`;
+    const shippingEl = document.getElementById('summary-shipping');
+    if (shippingEl) {
+      shippingEl.textContent = order.shipping === 0 ? 'FREE' : `$${order.shipping.toFixed(2)}`;
+    }
     document.getElementById('summary-total').textContent = `$${order.total.toFixed(2)}`;
 
     const paymentLabels = { bitcoin: 'Bitcoin', bank: 'Bank Transfer' };
@@ -1986,7 +2003,7 @@ import Footer from '../components/Footer.astro';
         doc.text('MULLAWAYS MEDICAL CANNABIS', mx, ph - 18);
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(...gray);
-        doc.text('hello@mullawaysmedicalcannabis.com.au', mx, ph - 13);
+        doc.text('hello@mullawaysmedicalcannabis.store', mx, ph - 13);
 
         // Bottom accent
         doc.setFillColor(...green);

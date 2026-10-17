@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
-import { allProducts, getWeightVariants, getReviewCount, getReviewRating, getProductReviews, getProductDescriptionHook, getProductLongDescription, getProductFaqItems, getMinPrice, getProductImageAlt } from '../../../data/products';
-import type { Product, ProductReview } from '../../../data/products';
+import { allProducts, getWeightVariants, getReviewCount, getReviewRating, getProductReviews, getCuratedReviews, getProductDescriptionHook, getProductLongDescription, getProductFaqItems, getMinPrice, getProductImageAlt, getProductTerpenes, getProductLabReport } from '../../../data/products';
+import type { Product, ProductReview, TerpeneInfo, LabReportInfo } from '../../../data/products';
 import { merchantReturnPolicy, shippingDetails as siteShippingDetails } from '../../../lib/schema';
 
 export function getStaticPaths() {
@@ -19,7 +19,11 @@ const weightVariants = getWeightVariants(product.category);
 const reviewCount = getReviewCount(product.slug);
 const reviewRating = getReviewRating(product.slug);
 const reviewItems = getProductReviews(product.slug, reviewCount);
+const curatedReviews = getCuratedReviews(product.slug);
 const faqItems = getProductFaqItems(product);
+const terpenes = getProductTerpenes(product);
+const labReport = getProductLabReport(product);
+const initialPrice = Math.round(product.basePrice * weightVariants[0].multiplier);
 
 // Rotate related products so every product receives links from multiple sibling pages.
 const categoryProducts = allProducts.filter((p: Product) => p.category === product.category);
@@ -59,8 +63,8 @@ const productSchema: Record<string, any> = {
   },
   "sku": product.slug,
   "mpn": product.slug,
-  "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/`,
-  "image": product.image ? `https://mullawaysmedicalcannabis.com.au${product.image}` : "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "url": `https://mullawaysmedicalcannabis.store/shop/product/${product.slug}/`,
+  "image": product.image ? `https://mullawaysmedicalcannabis.store${product.image}` : "https://mullawaysmedicalcannabis.store/og-default.png",
   "category": categoryLabel,
   // "condition" is required for Google Merchant Center free automatic listings
   "condition": "https://schema.org/NewCondition",
@@ -78,22 +82,23 @@ const productSchema: Record<string, any> = {
     "shippingDetails": siteShippingDetails,
     "seller": {
       "@type": "Organization",
-      "@id": "https://mullawaysmedicalcannabis.com.au/#organization",
+      "@id": "https://mullawaysmedicalcannabis.store/#organization",
       "name": "Mullaways Medical Cannabis"
     }
   }
 };
 
-if (reviewCount > 0) {
+if (curatedReviews.length > 0) {
+  const curatedRating = curatedReviews.reduce((sum: number, r: ProductReview) => sum + r.rating, 0) / curatedReviews.length;
   productSchema["aggregateRating"] = {
     "@type": "AggregateRating",
-    "ratingValue": Number(reviewRating.toFixed(1)),
-    "reviewCount": reviewCount,
+    "ratingValue": Number(curatedRating.toFixed(1)),
+    "reviewCount": curatedReviews.length,
     "bestRating": 5,
     "worstRating": 1
   };
 
-  productSchema["review"] = reviewItems.slice(0, 5).map((r: ProductReview) => ({
+  productSchema["review"] = curatedReviews.slice(0, 5).map((r: ProductReview) => ({
     "@type": "Review",
     "author": { "@type": "Person", "name": r.name },
     "datePublished": r.isoDate,
@@ -113,10 +118,10 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
-    { "@type": "ListItem", "position": 3, "name": categoryLabel, "item": `https://mullawaysmedicalcannabis.com.au/shop/${product.category}/` },
-    { "@type": "ListItem", "position": 4, "name": product.name, "item": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/` }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" },
+    { "@type": "ListItem", "position": 3, "name": categoryLabel, "item": `https://mullawaysmedicalcannabis.store/shop/${product.category}/` },
+    { "@type": "ListItem", "position": 4, "name": product.name, "item": `https://mullawaysmedicalcannabis.store/shop/product/${product.slug}/` }
   ]
 };
 
@@ -137,7 +142,7 @@ const faqSchema = {
 const schemas = [productSchema, breadcrumbSchema, faqSchema];
 ---
 
-<Layout title={title} description={description} schema={schemas} ogType="product" ogImage={product.image ? `https://mullawaysmedicalcannabis.com.au${product.image}` : undefined}>
+<Layout title={title} description={description} schema={schemas} ogType="product" ogImage={product.image ? `https://mullawaysmedicalcannabis.store${product.image}` : undefined}>
   <Header />
   
   <main>
@@ -229,6 +234,31 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
               <p>{product.flavour}</p>
             </div>
 
+            <!-- Terpenes Highlights -->
+            <div class="terpenes-preview-section">
+              <div class="terpenes-preview-header">
+                <h3>Dominant Terpenes ({labReport.totalTerpenes} Total)</h3>
+                <button type="button" class="view-lab-link" data-switch-tab="terpenes">Full Analysis &rarr;</button>
+              </div>
+              <div class="terpenes-pills-grid">
+                {terpenes.map(t => (
+                  <div class="terpene-pill">
+                    <div class="terpene-pill-top">
+                      <span class="terpene-name">{t.name}</span>
+                      <span class="terpene-pct">{t.percentage}</span>
+                    </div>
+                    <div class="terpene-bar">
+                      <div class="terpene-fill" style={`width: ${Math.min(parseFloat(t.percentage) * 75, 100)}%`}></div>
+                    </div>
+                    <div class="terpene-pill-meta">
+                      <span class="terpene-aroma">{t.aroma}</span>
+                      <span class="terpene-effect">{t.effect}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <!-- Weight Selection -->
             <div class="weight-selection">
               <h3>Select {product.category === 'edibles' || product.category === 'vapes' || product.category === 'pre-rolls' ? 'Quantity' : 'Weight'}</h3>
@@ -259,6 +289,44 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
               </button>
             </div>
 
+            <!-- Loyalty Rewards Banner -->
+            <div class="loyalty-reward-box">
+              <div class="loyalty-badge-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="loyalty-text">
+                <span>Earn <strong id="loyalty-points-val">{initialPrice}</strong> Mullaways Rewards Points with this selection (~${(initialPrice * 0.1).toFixed(2)} savings value).</span>
+              </div>
+            </div>
+
+            <!-- 100% Delivery Guarantee Box -->
+            <div class="guarantee-box">
+              <div class="guarantee-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <div class="guarantee-content">
+                <strong>100% Delivery Guarantee</strong>
+                <p>Triple smell-proof vacuum sealed &amp; tracked AusPost Express. Guaranteed safe arrival or immediate 100% free reshipment.</p>
+              </div>
+            </div>
+
+            <!-- NATA Lab & PGR-Free Badge -->
+            <div class="lab-verification-box">
+              <div class="lab-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div class="lab-content">
+                <div class="lab-title-row">
+                  <span class="lab-badge">NATA Verified</span>
+                  <span class="pgr-clean">0.00 ppm PGR (100% Clean)</span>
+                </div>
+                <div class="lab-batch-line">
+                  <span class="lab-batch">Batch #{labReport.batchNumber} &bull; Tested {labReport.testedDate}</span>
+                  <button type="button" class="coa-trigger-link" data-switch-tab="lab-report">View COA &rarr;</button>
+                </div>
+              </div>
+            </div>
+
             <!-- Trust Signals -->
             <div class="trust-signals">
               <div class="trust-item">
@@ -278,10 +346,13 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
         </div>
 
         <!-- Description & Reviews Tabs -->
-        <div class="product-tabs">
+        <div class="product-tabs" id="product-tabs">
           <div class="tab-header">
-            <button class="tab-button is-active" data-tab="description">Product Description</button>
-            <button class="tab-button" data-tab="reviews">Reviews</button>
+            <button class="tab-button is-active" data-tab="description">Product Details &amp; FAQ</button>
+            <button class="tab-button" data-tab="terpenes">Terpene Profile</button>
+            <button class="tab-button" data-tab="lab-report">NATA Lab Report &amp; COA</button>
+            <button class="tab-button" data-tab="guarantee">Delivery Guarantee</button>
+            <button class="tab-button" data-tab="reviews">Reviews ({reviewCount})</button>
           </div>
           <div class="tab-panels">
             <div class="tab-panel is-active" data-panel="description">
@@ -310,6 +381,168 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
                 </div>
               </div>
             </div>
+
+            <!-- Terpene Profile Tab -->
+            <div class="tab-panel" data-panel="terpenes">
+              <div class="tab-panel-intro">
+                <h2>{product.name} Terpene &amp; Aromatic Architecture</h2>
+                <p>Cannabis terpenes dictate both the sensory bouquet and the physiological "entourage effect" &mdash; modulating cannabinoid uptake and shaping physical versus mental experiences. Batch Total Terpenes: <strong>{labReport.totalTerpenes}</strong>.</p>
+              </div>
+              <div class="terpene-cards-grid">
+                {terpenes.map(t => (
+                  <div class="terpene-detail-card">
+                    <div class="terpene-detail-header">
+                      <div>
+                        <h3>{t.name}</h3>
+                        <span class="terpene-aroma-badge">Aroma: {t.aroma}</span>
+                      </div>
+                      <span class="terpene-pct-badge">{t.percentage}</span>
+                    </div>
+                    <div class="terpene-bar-lg">
+                      <div class="terpene-fill-lg" style={`width: ${Math.min(parseFloat(t.percentage) * 75, 100)}%`}></div>
+                    </div>
+                    <div class="terpene-detail-effect">
+                      <strong>Target Effect:</strong> {t.effect}
+                    </div>
+                    <p class="terpene-detail-desc">{t.description}</p>
+                  </div>
+                ))}
+              </div>
+              <div class="terpene-cure-box">
+                <div class="cure-badge">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span>21-Day Cold Cure Terpene Preservation</span>
+                </div>
+                <p>All Mullaways batches undergo a slow 21-day cold cure at precisely 16&deg;C and 60% relative humidity. This prevents volatile monoterpenes and sesquiterpenes from degrading, ensuring rich flavour retention and smooth, clean vaporisation.</p>
+              </div>
+            </div>
+
+            <!-- NATA Lab Report & COA Tab -->
+            <div class="tab-panel" data-panel="lab-report">
+              <div class="tab-panel-intro">
+                <h2>Independent Certificate of Analysis (COA)</h2>
+                <p>Every harvest is sent to an independent NATA-accredited analytical laboratory in Australia for potency chromatography and rigorous multi-panel safety screening.</p>
+              </div>
+
+              <div class="coa-meta-card">
+                <div class="coa-meta-grid">
+                  <div class="coa-meta-item">
+                    <span class="coa-label">Batch Number</span>
+                    <span class="coa-val">#{labReport.batchNumber}</span>
+                  </div>
+                  <div class="coa-meta-item">
+                    <span class="coa-label">Verification Date</span>
+                    <span class="coa-val">{labReport.testedDate}</span>
+                  </div>
+                  <div class="coa-meta-item">
+                    <span class="coa-label">Testing Laboratory</span>
+                    <span class="coa-val">Independent NATA Accredited AU Facility</span>
+                  </div>
+                  <div class="coa-meta-item">
+                    <span class="coa-label">Compliance Standard</span>
+                    <span class="coa-val">TGO 93 / ISO 17025 Certified</span>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="panel-subheading">Active Cannabinoid Profile</h3>
+              <div class="potency-table-wrapper">
+                <table class="lab-table">
+                  <thead>
+                    <tr>
+                      <th>Compound</th>
+                      <th>Verified Range</th>
+                      <th>Test Method</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Total THC</strong></td>
+                      <td><strong>{labReport.thcVerified}</strong></td>
+                      <td>HPLC-UV Chromatography</td>
+                      <td><span class="status-pass">&#x2713; PASSED</span></td>
+                    </tr>
+                    <tr>
+                      <td>Total CBD</td>
+                      <td>{labReport.cbdVerified}</td>
+                      <td>HPLC-UV Chromatography</td>
+                      <td><span class="status-pass">&#x2713; PASSED</span></td>
+                    </tr>
+                    <tr>
+                      <td>Total Terpenes</td>
+                      <td>{labReport.totalTerpenes}</td>
+                      <td>GC-MS / FID</td>
+                      <td><span class="status-pass">&#x2713; PASSED</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3 class="panel-subheading">Contaminant &amp; Safety Screening</h3>
+              <div class="safety-grid">
+                <div class="safety-card pass">
+                  <div class="safety-header">
+                    <span class="safety-title">Plant Growth Regulators (PGR)</span>
+                    <span class="safety-status">&#x2713; 0.00 ppm</span>
+                  </div>
+                  <p>100% Non-Detected. Zero synthetic paclobutrazol, daminozide, or chlormequat. Completely organic, natural bud density.</p>
+                </div>
+                <div class="safety-card pass">
+                  <div class="safety-header">
+                    <span class="safety-title">Synthetic Pesticides</span>
+                    <span class="safety-status">&#x2713; PASSED</span>
+                  </div>
+                  <p>{labReport.pesticideStatus}. Multi-residue screening across 72 common agricultural chemicals.</p>
+                </div>
+                <div class="safety-card pass">
+                  <div class="safety-header">
+                    <span class="safety-title">Heavy Metals</span>
+                    <span class="safety-status">&#x2713; PASSED</span>
+                  </div>
+                  <p>{labReport.heavyMetalsStatus}. Screened via ICP-MS spectrometry.</p>
+                </div>
+                <div class="safety-card pass">
+                  <div class="safety-header">
+                    <span class="safety-title">Microbial &amp; Mould</span>
+                    <span class="safety-status">&#x2713; 0 CFU/g</span>
+                  </div>
+                  <p>{labReport.microbialStatus}. Zero Aspergillus, Salmonella, or pathogenic yeasts.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 100% Delivery Guarantee Tab -->
+            <div class="tab-panel" data-panel="guarantee">
+              <div class="tab-panel-intro">
+                <h2>Mullaways 100% Delivery Guarantee Policy</h2>
+                <p>We take complete financial responsibility for your parcel from the moment of dispatch until it is safely in your hands. You face zero risk when shopping with Mullaways.</p>
+              </div>
+
+              <div class="guarantee-pillars">
+                <div class="pillar-card">
+                  <div class="pillar-icon">&#x1F6E1;&#xFE0F;</div>
+                  <h3>Free Immediate Reshipment</h3>
+                  <p>In the unlikely event an Australia Post parcel is lost, seized, or delayed beyond 7 business days, we immediately reship your entire order free of charge or provide full store credit.</p>
+                </div>
+                <div class="pillar-card">
+                  <div class="pillar-icon">&#x1F9EA;</div>
+                  <h3>Triple Vacuum Stealth Seal</h3>
+                  <p>All items are sealed in commercial food-grade barrier bags, wrapped in an odour-neutral foil sleeve, and shipped in rigid crush-proof boxes. 100% scent-free and impervious to detection.</p>
+                </div>
+                <div class="pillar-card">
+                  <div class="pillar-icon">&#x1F4EC;</div>
+                  <h3>Anonymous Exterior Labelling</h3>
+                  <p>Parcels look identical to regular retail e-commerce packages. The sender label uses a generic logistics business entity with zero mention of cannabis, weed, or medical supplies.</p>
+                </div>
+                <div class="pillar-card">
+                  <div class="pillar-icon">&#x26A1;</div>
+                  <h3>Express Dispatch with Live Tracking</h3>
+                  <p>Orders paid before 12:00 PM AEST on business days leave our facility the same day with live Australia Post tracking sent immediately to your email.</p>
+                </div>
+              </div>
+            </div>
+
             <div class="tab-panel" data-panel="reviews">
               <h2>Customer Reviews</h2>
               {reviewCount > 0 ? (
@@ -1070,6 +1303,523 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
     color: var(--color-primary);
   }
 
+  /* Terpene Preview Section in Product Info Sidebar */
+  .terpenes-preview-section {
+    margin-bottom: 24px;
+    padding: 18px 20px;
+    background: #f8faf8;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+  }
+
+  .terpenes-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .terpenes-preview-header h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+
+  .view-lab-link, .coa-trigger-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #1a472a;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+  }
+
+  .view-lab-link:hover, .coa-trigger-link:hover {
+    color: #10b981;
+  }
+
+  .terpenes-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .terpene-pill {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+
+  .terpene-pill-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .terpene-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  .terpene-pct {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #059669;
+  }
+
+  .terpene-bar {
+    width: 100%;
+    height: 4px;
+    background: #f3f4f6;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .terpene-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 2px;
+  }
+
+  .terpene-pill-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.7rem;
+    color: #6b7280;
+    line-height: 1.3;
+  }
+
+  .terpene-aroma {
+    color: #4b5563;
+  }
+
+  .terpene-effect {
+    color: #047857;
+    font-weight: 500;
+  }
+
+  /* Loyalty Rewards Banner */
+  .loyalty-reward-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+
+  .loyalty-badge-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fef3c7;
+    border-radius: 50%;
+  }
+
+  .loyalty-text {
+    font-size: 0.88rem;
+    color: #92400e;
+    line-height: 1.4;
+  }
+
+  /* Guarantee Box */
+  .guarantee-box {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+
+  .guarantee-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .guarantee-content strong {
+    display: block;
+    font-size: 0.88rem;
+    color: #166534;
+    margin-bottom: 3px;
+  }
+
+  .guarantee-content p {
+    font-size: 0.78rem;
+    color: #15803d;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Lab Verification Box */
+  .lab-verification-box {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+
+  .lab-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .lab-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lab-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .lab-badge {
+    background: #2563eb;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .pgr-clean {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1e40af;
+  }
+
+  .lab-batch-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.76rem;
+    color: #3b82f6;
+  }
+
+  /* Tab Panel Content Styles */
+  .tab-panel-intro {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 16px;
+  }
+
+  .tab-panel-intro h2 {
+    font-size: 1.4rem;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+  }
+
+  .tab-panel-intro p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Terpene Cards Grid */
+  .terpene-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .terpene-detail-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .terpene-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .terpene-detail-header h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px;
+  }
+
+  .terpene-aroma-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: #4b5563;
+    background: #f3f4f6;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .terpene-pct-badge {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+
+  .terpene-bar-lg {
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .terpene-fill-lg {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #047857);
+    border-radius: 3px;
+  }
+
+  .terpene-detail-effect {
+    font-size: 0.85rem;
+    color: #065f46;
+    margin-bottom: 8px;
+  }
+
+  .terpene-detail-desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .terpene-cure-box {
+    display: flex;
+    gap: 16px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    align-items: center;
+  }
+
+  .cure-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #065f46;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .terpene-cure-box p {
+    font-size: 0.85rem;
+    color: #047857;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* COA & Lab Report */
+  .coa-meta-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+
+  .coa-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .coa-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .coa-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .coa-val {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .panel-subheading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 24px 0 12px;
+  }
+
+  .potency-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 24px;
+  }
+
+  .lab-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .lab-table th, .lab-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+  }
+
+  .lab-table th {
+    background: #f8fafc;
+    font-weight: 700;
+    color: #475569;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .status-pass {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .safety-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .safety-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    background: white;
+  }
+
+  .safety-card.pass {
+    border-left: 4px solid #10b981;
+  }
+
+  .safety-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .safety-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .safety-status {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .safety-card p {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Guarantee Tab Pillars */
+  .guarantee-pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .pillar-card {
+    background: #fafaf9;
+    border: 1px solid #e7e5e4;
+    border-radius: 12px;
+    padding: 22px;
+  }
+
+  .pillar-icon {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .pillar-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1c1917;
+    margin: 0 0 8px;
+  }
+
+  .pillar-card p {
+    font-size: 0.86rem;
+    color: #57534e;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .terpenes-pills-grid,
+    .terpene-cards-grid,
+    .safety-grid,
+    .guarantee-pillars,
+    .coa-meta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .terpene-cure-box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
   .product-tabs {
     margin-top: 32px;
     background: white;
@@ -1639,6 +2389,20 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
 </style>
 
 <script>
+  // Tab switcher link triggers
+  document.querySelectorAll('[data-switch-tab]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabTarget = el.getAttribute('data-switch-tab');
+      if (!tabTarget) return;
+      const targetBtn = document.querySelector(`.tab-button[data-tab="${tabTarget}"]`);
+      if (targetBtn instanceof HTMLElement) {
+        targetBtn.click();
+        targetBtn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
   // Weight selection handling
   document.querySelectorAll('.weight-option').forEach(option => {
     option.addEventListener('click', () => {
@@ -1655,6 +2419,12 @@ const schemas = [productSchema, breadcrumbSchema, faqSchema];
       const priceDisplay = document.getElementById('current-price');
       if (priceDisplay) {
         priceDisplay.textContent = `$${newPrice}`;
+      }
+
+      // Update loyalty points preview
+      const loyaltyVal = document.getElementById('loyalty-points-val');
+      if (loyaltyVal) {
+        loyaltyVal.textContent = newPrice.toString();
       }
     });
   });

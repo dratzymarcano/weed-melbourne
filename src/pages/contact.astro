@@ -8,17 +8,17 @@ const pageSchema = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
   "name": "Contact Mullaways Medical Cannabis",
-  "url": "https://mullawaysmedicalcannabis.com.au/contact/",
+  "url": "https://mullawaysmedicalcannabis.store/contact/",
   "description": "Contact Mullaways Medical Cannabis by email using our contact form.",
   "mainEntity": {
     "@type": "Organization",
     "name": "Mullaways Medical Cannabis",
-    "email": "hello@mullawaysmedicalcannabis.com.au"
+    "email": "hello@mullawaysmedicalcannabis.store"
   }
 };
 ---
 
-<Layout title="Contact Us | Mullaways Medical Cannabis" description="Get in touch with Mullaways Medical Cannabis. Email support for order help, delivery, payment and product questions, plus live chat for bank-transfer instructions. Support Mon–Fri 9am–6pm AEST, Australia-wide." schema={pageSchema}>
+<Layout title="Contact Us | Mullaways Medical Cannabis" description="Contact Mullaways Medical Cannabis. Fast customer support for order tracking, payment and product questions Mon–Fri 9am–6pm AEST Australia-wide." schema={pageSchema}>
   <Header />
   <main>
     <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
@@ -30,7 +30,7 @@ const pageSchema = {
       <div class="container">
         <div class="hero-content">
           <h1>Contact Us</h1>
-          <p>Send us a message and we’ll reply by email. Live chat is coming soon.</p>
+          <p>Send us a message below or connect with our team on Live Chat for fast, discreet support.</p>
         </div>
       </div>
     </section>
@@ -113,22 +113,40 @@ const pageSchema = {
         </div>
 
         <aside class="info-card">
-          <h3>Support & Reviews</h3>
-          <p>All support is handled via email. You can also use this form to submit a product review for verification and publication.</p>
-          <a href="#contact-form" class="support-email">Use the contact form</a>
+          <h3>Support & Enquiries</h3>
+          <p>Have a question about an order, delivery times, or product options? Contact our team directly via email or live chat.</p>
+
+          <div class="direct-contact-box">
+            <div class="direct-contact-item">
+              <span class="direct-contact-label">Direct Order & Contact Email</span>
+              <a href="mailto:hello@mullawaysmedicalcannabis.store" class="support-email-link">
+                hello@mullawaysmedicalcannabis.store
+              </a>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm btn-chat" data-open-livechat>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Start Live Chat Now
+            </button>
+          </div>
 
           <div class="support-meta">
             <div class="meta-item">
+              <strong>Support Hours</strong>
+              <span>Monday – Friday, 9:00 AM – 6:00 PM AEST</span>
+            </div>
+            <div class="meta-item">
               <strong>Response Time</strong>
-              <span>Usually within 24 hours</span>
+              <span>Usually within 1–2 hours during support hours</span>
             </div>
             <div class="meta-item">
               <strong>Order Help</strong>
-              <span>Include your order reference for faster support</span>
+              <span>Please quote your order reference (e.g. MW-XXXX) for instant lookup</span>
             </div>
             <div class="meta-item">
               <strong>Review Submissions</strong>
-              <span>Share the product name, your rating, and what stood out so verified submissions can be added on top of the existing published product reviews.</span>
+              <span>Share your product name, rating, and feedback so our verified team can publish your customer review.</span>
             </div>
           </div>
         </aside>
@@ -300,9 +318,50 @@ const pageSchema = {
     color: #b91c1c;
   }
 
-  .support-email {
-    display: inline-block;
-    margin: var(--space-md) 0 var(--space-lg);
+  .direct-contact-box {
+    margin: var(--space-md) 0 var(--space-xl);
+    padding: var(--space-md);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .direct-contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .direct-contact-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+  }
+
+  .support-email-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+    word-break: break-all;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .support-email-link:hover {
+    color: var(--color-primary);
+  }
+
+  .btn-chat {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     font-weight: 600;
   }
 
@@ -442,7 +501,7 @@ const pageSchema = {
       `Rating: ${payload.rating || 'N/A'}\n\n` +
       `${payload.message}`
     );
-    window.location.href = `mailto:hello@mullawaysmedicalcannabis.com.au?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:hello@mullawaysmedicalcannabis.store?subject=${subject}&body=${body}`;
   }
 
   form?.addEventListener('submit', async (event) => {
@@ -460,7 +519,7 @@ const pageSchema = {
       rating: getVal('rating'),
       subject: getVal('subject'),
       message: getVal('message'),
-      to_email: 'hello@mullawaysmedicalcannabis.com.au',
+      to_email: 'hello@mullawaysmedicalcannabis.store',
     };
 
     if (!(submitBtn instanceof HTMLButtonElement)) return;

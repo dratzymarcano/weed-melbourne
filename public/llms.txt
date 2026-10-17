@@ -16,37 +16,40 @@ research crawlers to the canonical resources for this website.
 - Audience: Adults 18+
 - Languages: English (en-AU)
 - Currency: AUD
-- Canonical URL: https://mullawaysmedicalcannabis.com.au/
-- Contact: hello@mullawaysmedicalcannabis.com.au
-- Live Chat: available on every page of the site (bottom-right corner)
+- Canonical URL: https://mullawaysmedicalcannabis.store/
+- Contact: hello@mullawaysmedicalcannabis.store
+- Support: Email support (hello@mullawaysmedicalcannabis.store) & Live Chat (via Zoho SalesIQ)
+- Business Hours: Mon–Fri 9am–6pm AEST
 
 ## What we sell
 
-- Cannabis flower (Indica, Sativa, Hybrid)
-- THC gummies and edibles (10 mg, 25 mg, 50 mg, micro-dose)
-- Cannabis concentrates (shatter, wax, rosin, live resin, kief, diamonds)
-- Vapes and cartridges (510-thread, disposables, batteries)
-- Pre-rolls and blunts
-- Hash (Lebanese, Moroccan, Afghan, Pakistani, pressed coins, bubble hash)
+- Cannabis flower (Indica, Sativa, Hybrid strains: Gorilla Glue #4, Blue Dream, Death Bubba, OG Kush, Wedding Cake, Gelato; ounces, quarter-pounds)
+- THC gummies and cannabis edibles (10mg, 25mg, 50mg Ultra Strength, CBN Sleep Gummies, THC:CBD 1:1, micro-dose 2.5mg, infused chocolates)
+- Cannabis concentrates (shatter, wax, live rosin, live resin, kief, diamonds; 70-95% THC)
+- THC vapes and cartridges (510-thread carts, disposable vape pens, live resin cartridges, batteries)
+- Pre-rolls and blunts (single joints, 5-packs, 10-packs, infused pre-rolls)
+- Hash (Moroccan gold, Afghan black, Lebanese red, Nepalese temple balls, full-melt bubble hash)
 
 ## Delivery
 
-- Tracked Australia-wide delivery (NSW, VIC, QLD, WA, SA, ACT, TAS, NT)
-- Plain, discreet packaging
+- Tracked express delivery across all Australian states and territories (NSW, VIC, QLD, WA, SA, ACT, TAS, NT)
+- Metro delivery (Sydney, Melbourne, Brisbane, Canberra): 2–3 business days
+- Regional & Interstate delivery (Adelaide, Perth, Hobart, Darwin): 3–5 business days
+- Packaging: 100% smell-proof, double vacuum-sealed barrier pouches in plain, unmarked postal boxes or satchels
 - Dispatch window: 24–48 hours business days
-- Standard transit: 2–5 business days
 
 ## Payment
 
-- Bank transfer (with manual order confirmation)
-- Bitcoin (BTC) and select cryptocurrencies
+- Direct Australian Bank Transfer (including instant PayID and Osko)
+- Bitcoin (BTC) & select cryptocurrencies with automated on-chain verification and 10% checkout discount
 
 ## Discovery files (machine-readable)
 
-- Sitemap: https://mullawaysmedicalcannabis.com.au/sitemap.xml
-- Robots: https://mullawaysmedicalcannabis.com.au/robots.txt
-- llms.txt: https://mullawaysmedicalcannabis.com.au/llms.txt
-- Web manifest: https://mullawaysmedicalcannabis.com.au/site.webmanifest
+- Sitemap: https://mullawaysmedicalcannabis.store/sitemap.xml
+- Robots: https://mullawaysmedicalcannabis.store/robots.txt
+- llms.txt: https://mullawaysmedicalcannabis.store/llms.txt
+- llms-full.txt: https://mullawaysmedicalcannabis.store/llms-full.txt
+- Web manifest: https://mullawaysmedicalcannabis.store/site.webmanifest
 
 ## Core pages
 
@@ -72,7 +75,9 @@ research crawlers to the canonical resources for this website.
 ### Editorial / Legal context
 - /blog/is-weed-legal-in-australia/ — State-by-state legal overview
 - /blog/cannabis-laws-queensland/ — QLD-specific cannabis laws
-- /blog/cannabis-prices-australia/ — Pricing benchmarks
+- /blog/cannabis-prices-australia/ — 2026 pricing benchmarks & weights
+- /blog/how-to-identify-pgr-weed-australia/ — PGR weed identification vs clean medical cannabis
+- /blog/best-dry-herb-vaporizers-australia/ — Dry herb vaporizers & THC vape guide Australia 2026
 - /blog/strongest-strains-australia/ — High-THC strain comparisons
 - /blog/edibles-vs-smoking/ — Edible vs inhalation guidance
 - /blog/thca-australia-legal-status/ — THCA legal status
@@ -122,5 +127,5 @@ medical use. Mullaways does not provide medical advice.
 ## Contact for AI / dataset operators
 
 For corrections, takedowns, structured-data requests, or partnership
-inquiries from AI/dataset operators, email hello@mullawaysmedicalcannabis.com.au
+inquiries from AI/dataset operators, email hello@mullawaysmedicalcannabis.store
 with subject line "AI/LLM enquiry".

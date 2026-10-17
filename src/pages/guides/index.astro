@@ -1,0 +1,408 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { seoGuides } from '../../data/seo-guides';
+
+const canonicalUrl = 'https://mullawaysmedicalcannabis.store/guides/';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mullawaysmedicalcannabis.store/' },
+    { '@type': 'ListItem', position: 2, name: 'Cannabis Guides', item: canonicalUrl }
+  ]
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: 'Cannabis Guides & Buyer Education Australia | Mullaways Medical Cannabis',
+  description: 'Comprehensive Australian cannabis guides covering product selection, dosing, discreet shipping, and legal considerations across major Australian regions.',
+  isPartOf: {
+    '@id': 'https://mullawaysmedicalcannabis.store/#website'
+  },
+  hasPart: seoGuides.map((guide) => ({
+    '@type': 'Article',
+    name: guide.h1,
+    description: guide.description,
+    url: `https://mullawaysmedicalcannabis.store/guides/${guide.slug}/`
+  }))
+};
+---
+
+<Layout
+  title="Cannabis Guides & Buyer Education Australia | Mullaways"
+  description="Comprehensive Australian cannabis guides covering product selection, dosing, discreet shipping, and legal considerations across major cities."
+  schema={[breadcrumbSchema, collectionSchema]}
+>
+  <Header />
+
+  <main>
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Guides' }]} />
+
+    <section class="guides-hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+      <div class="container hero-content">
+        <span class="section-label section-label-light">Buyer Education &amp; Research</span>
+        <h1>Australian Cannabis Guides</h1>
+        <p>
+          Practical, evidence-backed guides covering dosing expectations, product selection, discreet Australia-wide delivery, and state-specific considerations.
+        </p>
+      </div>
+    </section>
+
+    <section class="section guides-grid-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-label">All Published Guides</span>
+          <h2>Explore In-Depth Cannabis Guides</h2>
+          <p class="section-subtitle">
+            Everything you need to make informed, confident choices about medical and therapeutic cannabis products in Australia.
+          </p>
+        </div>
+
+        <div class="guides-grid">
+          {seoGuides.map((guide) => (
+            <article class="guide-card">
+              <div class="guide-card-header">
+                <span class="guide-tag">{guide.heroLabel}</span>
+                <span class="guide-read-time">5 min read</span>
+              </div>
+              <h3>
+                <a href={`/guides/${guide.slug}/`}>{guide.h1}</a>
+              </h3>
+              <p class="guide-summary">{guide.description}</p>
+              
+              <div class="guide-card-stats">
+                {guide.stats.map((stat) => (
+                  <div class="card-stat">
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div class="guide-card-footer">
+                <a href={`/guides/${guide.slug}/`} class="guide-link">
+                  Read full guide
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section guides-cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <div class="cta-content">
+            <span class="section-label section-label-light">Ready to browse?</span>
+            <h2>Find the Right Product for Your Needs</h2>
+            <p>
+              Browse our laboratory-tested cannabis flowers, THC gummies, vape cartridges, and concentrates with discreet express shipping across Australia.
+            </p>
+            <div class="cta-buttons">
+              <a href="/shop/" class="btn btn-primary btn-large">Browse Medical Shop</a>
+              <a href="/resources/" class="btn btn-outline-white btn-large">Official TGA Resources</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .guides-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-eucalyptus) 100%);
+    padding: var(--space-3xl) 0;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .hero-shape-1 {
+    width: 380px;
+    height: 380px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .hero-shape-2 {
+    width: 280px;
+    height: 280px;
+    bottom: -80px;
+    left: -80px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-label-light {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .section-label-light::before {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .guides-hero h1 {
+    color: #fff;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: 2.5rem;
+    font-weight: 800;
+  }
+
+  .guides-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .guides-grid-section {
+    padding: var(--space-3xl) 0;
+    background: var(--color-bg);
+  }
+
+  .section-header {
+    max-width: 680px;
+    margin: 0 auto var(--space-2xl);
+  }
+
+  .section-header h2 {
+    margin: var(--space-xs) 0 var(--space-sm);
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .guide-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .guide-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+    border-color: var(--color-primary);
+  }
+
+  .guide-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .guide-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(45, 90, 74, 0.08);
+    color: var(--color-primary);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .guide-read-time {
+    font-size: 0.78rem;
+    color: #888;
+  }
+
+  .guide-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+    line-height: 1.35;
+  }
+
+  .guide-card h3 a {
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .guide-card h3 a:hover {
+    color: var(--color-primary);
+  }
+
+  .guide-summary {
+    color: #555;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0 0 20px;
+    flex: 1;
+  }
+
+  .guide-card-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: #f8faf9;
+    border: 1px solid #edf2f0;
+    border-radius: 10px;
+    padding: 10px 8px;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .card-stat strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-stat span {
+    display: block;
+    font-size: 0.68rem;
+    color: #666;
+    margin-top: 2px;
+    line-height: 1.2;
+  }
+
+  .guide-card-footer {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 14px;
+    margin-top: auto;
+  }
+
+  .guide-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .guide-link:hover {
+    gap: 10px;
+    color: var(--color-primary-dark);
+  }
+
+  .guides-cta-section {
+    padding: 0 0 var(--space-3xl);
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--color-eucalyptus-dark) 0%, var(--color-primary) 100%);
+    border-radius: 20px;
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    color: #fff;
+  }
+
+  .cta-content {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .cta-box h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin: var(--space-xs) 0 var(--space-sm);
+  }
+
+  .cta-box p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-outline-white {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-outline-white:hover {
+    background: #fff;
+    color: var(--color-primary-dark);
+    border-color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .guides-hero h1 {
+      font-size: 2rem;
+    }
+    .guides-grid {
+      grid-template-columns: 1fr;
+    }
+    .section-header h2 {
+      font-size: 1.6rem;
+    }
+    .cta-box {
+      padding: var(--space-xl) var(--space-md);
+    }
+    .cta-box h2 {
+      font-size: 1.6rem;
+    }
+  }
+</style>

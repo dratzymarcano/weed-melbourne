@@ -6,7 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
-const title = "Buy Hash Online Australia | Premium Hashish";
+const title = "Buy Hash Online Australia | Afghan & Bubble | Mullaways";
 const description = "Buy hash online in Australia. Moroccan, Afghan, Lebanese hashish and modern bubble hash. Lab-tested, premium quality with discreet delivery nationwide.";
 
 const products = [
@@ -207,15 +207,15 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
-    { "@type": "ListItem", "position": 3, "name": "Hash", "item": "https://mullawaysmedicalcannabis.com.au/shop/hash/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" },
+    { "@type": "ListItem", "position": 3, "name": "Hash", "item": "https://mullawaysmedicalcannabis.store/shop/hash/" }
   ]
 };
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/hash/#itemlist",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.store/shop/hash/#itemlist",
   "name": "Premium Hashish Australia",
   "description": description,
   "numberOfItems": products.length,
@@ -223,19 +223,23 @@ const itemListSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": p.name,
-    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/shop/product/${p.slug}/`
   }))
 };
 
 const collectionSchema = collectionPageSchema({
-  url: 'https://mullawaysmedicalcannabis.com.au/shop/hash/',
+  url: 'https://mullawaysmedicalcannabis.store/shop/hash/',
   name: 'Hash Australia',
   description,
-  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/hash/#itemlist',
+  itemListId: 'https://mullawaysmedicalcannabis.store/shop/hash/#itemlist',
 });
 ---
 
 <Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema, collectionSchema]}>
+  <Header />
+
+  <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop/'}, {label: 'Hash'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">
@@ -244,9 +248,9 @@ const collectionSchema = collectionPageSchema({
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="section-label section-label-light">Buy Hash Online Australia</span>
-          <h1>Real Hashish for Old-School Smokers</h1>
-          <p>Remember when hash meant something? Traditional Moroccan gold, proper Afghan black, temple balls, and bubble hash — the way it's meant to be. If you're tired of all the new-school extracts and just want that classic hash experience, you're in the right place.</p>
+          <span class="section-label section-label-light">Traditional & Bubble Hash Australia</span>
+          <h1>Buy Hash Online Australia — Moroccan, Afghan & Bubble Hashish</h1>
+          <p>Looking to buy real hash online in Australia? We stock traditional Moroccan gold, proper Afghan black, Nepalese temple balls, and full-melt bubble hash. Lab-tested potency, authentic aromatics, and discreet tracked delivery Australia-wide.</p>
         </div>
       </div>
     </section>

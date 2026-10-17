@@ -1,5 +1,5 @@
-Contact: mailto:hello@mullawaysmedicalcannabis.com.au
+Contact: mailto:hello@mullawaysmedicalcannabis.store
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://mullawaysmedicalcannabis.com.au/.well-known/security.txt
-Policy: https://mullawaysmedicalcannabis.com.au/privacy-policy/
+Canonical: https://mullawaysmedicalcannabis.store/.well-known/security.txt
+Policy: https://mullawaysmedicalcannabis.store/privacy-policy/

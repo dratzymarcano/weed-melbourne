@@ -137,6 +137,26 @@ const locations = [
     icon: "compass",
     featured: false,
     keywords: "buy weed darwin, cannabis darwin"
+  },
+  {
+    city: "Geelong",
+    state: "Victoria",
+    slug: "geelong",
+    description: "Buy weed Geelong - Express delivery to Geelong, Bellarine Peninsula, and Surf Coast.",
+    deliveryTime: "2-3 days",
+    icon: "waves",
+    featured: false,
+    keywords: "buy weed geelong, cannabis geelong"
+  },
+  {
+    city: "Cairns",
+    state: "Queensland",
+    slug: "cairns",
+    description: "Buy weed Cairns - Tracked express delivery to Cairns and Far North Queensland.",
+    deliveryTime: "3-5 days",
+    icon: "sun",
+    featured: false,
+    keywords: "buy weed cairns, cannabis cairns"
   }
 ];
 
@@ -164,8 +184,8 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://mullawaysmedicalcannabis.com.au/locations/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://mullawaysmedicalcannabis.store/locations/" }
   ]
 };
 
@@ -179,7 +199,7 @@ const locationsSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": `Cannabis Delivery ${loc.city}`,
-    "url": `https://mullawaysmedicalcannabis.com.au/${loc.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/${loc.slug}/`
   }))
 };
 ---

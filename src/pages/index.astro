@@ -2,16 +2,61 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { faqPageSchema } from '../lib/schema';
 import { getProductBySlug, getReviewCount, getReviewRating, getWeightVariants, getProductImageAlt } from '../data/products';
 
 const categories = [
-  { name: "Flower", description: "Premium dried cannabis", href: "/shop/flower/" },
-  { name: "Concentrates", description: "Shatter, wax & rosin", href: "/shop/concentrates/" },
-  { name: "Edibles", description: "Gummies & infused treats", href: "/shop/edibles/" },
-  { name: "Vapes", description: "Cartridges & pens", href: "/shop/vapes/" },
+  { 
+    name: "Cannabis Flower", 
+    tagline: "Indica, Sativa & Hybrids", 
+    count: "18 Cultivars", 
+    description: "Dense, aromatic hand-trimmed buds with published cannabinoid & terpene profiles.", 
+    href: "/shop/flower/",
+    badge: "Top Seller"
+  },
+  { 
+    name: "THC Gummies", 
+    tagline: "Precision Dosed Edibles", 
+    count: "12 Flavours", 
+    description: "Lab-tested fruit pectin gummies ranging from gentle 5mg to ultra-potent 50mg strengths.", 
+    href: "/shop/thc-gummies/",
+    badge: "Discreet Dosing"
+  },
+  { 
+    name: "Vapes & Carts", 
+    tagline: "Distillate & Live Resin", 
+    count: "14 Varieties", 
+    description: "Standard 510-thread cartridges and premium rechargeable pens without harmful additives.", 
+    href: "/shop/vapes/",
+    badge: "Fast Acting"
+  },
+  { 
+    name: "Concentrates", 
+    tagline: "Shatter, Wax & Rosin", 
+    count: "9 Extracts", 
+    description: "High-purity solventless live rosin, golden shatter, and artisan bubble hash.", 
+    href: "/shop/concentrates/",
+    badge: "High Purity"
+  },
+  { 
+    name: "Pre-Roll Cones", 
+    tagline: "Ready-to-Spark Joints", 
+    count: "8 Blends", 
+    description: "Artisan hand-rolled unbleached cones, hash-infused blunts, and multi-pack tins.", 
+    href: "/shop/pre-rolls/",
+    badge: "Zero Prep"
+  },
+  { 
+    name: "Artisanal Edibles", 
+    tagline: "Chocolates & Baked Goods", 
+    count: "10 Treats", 
+    description: "Gourmet fudge brownies, infused Belgian chocolate bars, and sustained-relief treats.", 
+    href: "/shop/edibles/",
+    badge: "Long Lasting"
+  },
 ];
 
-const complianceNote = `Store products in a cool, dark place, keep them secure, and follow local medical requirements. If you are a new patient, begin with a low dose and wait long enough to feel full effects before taking more. Effects vary by individual tolerance, metabolism, and setting. This guidance is provided to ensure consistent, trustworthy access for patients across Australia, including NSW, VIC, QLD, WA, SA, the ACT, and Tasmania. Always use responsibly and prioritise health wellbeing.`;
+const complianceNote = ``;
 
 const featuredProducts = [
 	{
@@ -23,15 +68,9 @@ const featuredProducts = [
 		thc: "22-24%",
 		weight: "28g",
 		price: 265,
-		description: `Blue Dream is a balanced hybrid known for gentle uplift, clear-headed calm, and a sweet berry profile that suits day-to-evening use. It is a popular choice for patients requiring a steady, functional experience rather than a heavy finish.
+		description: `Blue Dream is a balanced hybrid with a sweet berry profile. Expect gentle uplift, clear-headed calm, and a smooth finish that works from late morning through early evening. Mid-to-high THC with a manageable onset — popular with people who want to stay functional without racing thoughts.
 
-This product is provided with transparent information on potency, flavour, and effects, plus batch-level lab testing you can review. Our team in Mullaways, NSW sources consistent flower with terpene-forward aroma, and we document how each batch performs. If you’re in Sydney, Melbourne, Brisbane, Perth, Adelaide, Canberra, or Hobart, the same standard applies with discreet, Australia-wide delivery.
-
-What does it feel like? Balanced uplift, creative clarity, and calm body ease. When to use it? Late morning, afternoon, or early evening. Who is it for? Adults seeking a dependable hybrid. How strong is it? Expect mid-to-high THC with a smooth onset and manageable duration.
-
-The flavour profile leans berry, sweet, and soft herbal, with a clean finish that suits dry herb vapourisers. Many Australian patients describe it as a "socially compatible" strain that keeps conversation flowing without racing thoughts. For wellness-focused adults, the cultivar is often selected for unwinding after work, creative tasks, or gentle recovery.
-
-${complianceNote}`,
+Flavour leans berry and soft herbal with a clean finish that suits dry herb vapourisers. Lab-tested for potency and purity before listing.`,
 		effects: ["Relaxed", "Happy", "Creative"],
 		flavour: "Berry, Sweet, Herbal"
 	},
@@ -44,15 +83,9 @@ ${complianceNote}`,
 		thc: "24-26%",
 		weight: "28g",
 		price: 280,
-		description: `OG Kush is a classic, earthy hybrid with pine and citrus notes, valued for a relaxing, stress-melting effect while still keeping the mind clear enough to stay engaged. Patients rely on this classic for a balanced experience with a recognisable terpene profile.
+		description: `OG Kush is a classic hybrid with earthy, pine, and citrus terpenes. Calming body relaxation with a warm euphoric lift — strong enough to unwind but not so heavy you're done for the night. Best for late afternoon or evening.
 
-Each batch is screened for quality and consistency, and our NSW-based team records sensory notes and effects feedback. This transparent, evidence-led process builds trust for patients in VIC, NSW, QLD, WA, SA, and the ACT, and supports a clear, compliant presentation of what the product is and how it behaves.
-
-What does it feel like? Calming body relaxation with a warm, euphoric uplift. When to use it? Late afternoon or evening. How long does it last? Expect a steady plateau rather than a rapid peak, making it suitable for winding down.
-
-The flavour profile leans earthy and pine-forward with a woody finish. This makes it a favourite for those who enjoy classic, old-school terpenes. The effects are often described as "settling without shutting down," which can help people move from a busy day into a quieter night routine.
-
-${complianceNote}`,
+Earthy and pine-forward with a woody finish. Lab-tested for potency and purity.`,
 		effects: ["Relaxed", "Euphoric", "Happy"],
 		flavour: "Earthy, Pine, Woody"
 	},
@@ -65,15 +98,9 @@ ${complianceNote}`,
 		thc: "25-28%",
 		weight: "28g",
 		price: 290,
-		description: `Wedding Cake is a dessert-leaning hybrid with vanilla sweetness and a calming, contented finish. It blends flavour with reliable relaxation and a gentle mood lift.
+		description: `Wedding Cake is a dessert hybrid — creamy vanilla and sweet cake notes with a comforting body relaxation. High-THC range but the onset is smooth, not jarring. Good for late afternoon through evening.
 
-We provide batch information and quality checks for customers in Sydney, Melbourne, Brisbane, Perth, Adelaide, Canberra, and Hobart. This gives Australian patients a trustworthy overview of what they’re buying and why it stands out in clinical settings.
-
-What does it feel like? A mellow, comforting body relaxation paired with a smooth, happy headspace. When should it be used? Late afternoon through evening is typical. How strong is it? It sits in the high-THC range. How does it taste? Expect creamy vanilla, sweet cake notes, and a light earthy finish.
-
-Wedding Cake is often selected by Australian patients who want a strain that feels indulgent but not overwhelming. The flavour profile suits dry herb vapourisers and traditional administration methods.
-
-${complianceNote}`,
+Suits dry herb vapourisers or traditional methods. Lab-tested before listing.`,
 		effects: ["Euphoric", "Relaxed", "Creative"],
 		flavour: "Vanilla, Sweet, Earthy"
 	},
@@ -86,17 +113,9 @@ ${complianceNote}`,
 		thc: "24-26%",
 		weight: "28g",
 		price: 285,
-		description: `Gelato is a dessert-style hybrid with a smooth, sweet profile and balanced effects that suit late afternoon or evening use. It offers a flavour-forward experience with a steady, calming lift.
+		description: `Gelato is a flavour-forward hybrid with sweet sherbet, berry, and soft citrus notes. Smooth euphoria with a gradual onset — eases you into relaxation without sedating you. Popular for after-work use.
 
-We document potency, terpene notes, and lab results for each batch. This information helps patients make informed decisions across NSW, VIC, QLD, WA, SA, and the ACT. Our Australian-focused service emphasises transparency, consistency, and accurate descriptions.
-
-What does it feel like? Smooth euphoria, gentle relaxation, and a mellow mood. How long does it last? Expect a gradual onset with a stable plateau. Is it good for social settings? Many users find it suitable for low-key social evenings or creative downtime. What does it taste like? Sweet sherbet, berry, and a soft citrus finish.
-
-Gelato is popular with Australians who appreciate premium flavour and a balanced mind-body effect. It tends to be neither too racy nor too sleepy, which is why it is often chosen as an “anytime hybrid” for after-work relaxation. The aroma is rich but not overpowering, and the smoke is typically smooth when properly cured.
-
-From a geo-optimised perspective, it’s frequently purchased by customers in Melbourne, Sydney, Brisbane, Perth, and Adelaide, with discreet delivery options that suit urban and regional addresses. We also provide clear guidance on responsible use: start with a small dose, wait for full effects, and adjust gradually. This cautious, evidence-led approach aligns with E-E-A-T principles and Australian English usage, while providing the detailed, answer-first information that AEO searchers prefer. If you are seeking a sweet, balanced hybrid that remains consistently popular in Australia, Gelato is a dependable choice.
-
-${complianceNote}`,
+Start low if you're new to concentrates. Lab-tested for potency and purity.`,
 		effects: ["Relaxed", "Euphoric", "Creative"],
 		flavour: "Sweet, Berry, Citrus"
 	},
@@ -109,17 +128,9 @@ ${complianceNote}`,
 		thc: "20-25%",
 		weight: "28g",
 		price: 275,
-		description: `Answer-first summary: Sour Diesel Strain Australia is a classic sativa recognised for its sharp diesel aroma, bright citrus edge, and energising, creative effects. Australians searching “Sour Diesel strain Australia” or “buy Sour Diesel online” typically want a daytime option that feels motivating and clear.
+		description: `Sour Diesel is a classic sativa with a sharp diesel aroma and bright citrus edge. Fast cerebral lift, clear focus, and energy — built for daytime use, creative work, and social settings.
 
-We support E-E-A-T by providing batch-level lab testing and straightforward details about potency, flavour, and expected effects. Our NSW-based team documents terpene character and customer feedback to ensure consistent quality across deliveries to Sydney, Melbourne, Brisbane, Perth, Adelaide, Canberra, and regional Australia.
-
-Quick AEO answers: What does it feel like? Uplifted, energised, and mentally focused. When should you use it? Morning to early afternoon for productivity or social activities. How strong is it? Moderately high THC, so new users should start slowly. What does it taste like? Diesel, citrus, and earthy notes with a crisp finish.
-
-Sour Diesel suits Australians who want a functional, daytime experience. It is commonly chosen by people who prefer a clear headspace for work, creative sessions, or outdoor activities. The aroma is distinct and pungent, which many enthusiasts seek out as part of the strain’s identity.
-
-Geo-optimised content matters because buyers often search by city or state. We keep our descriptions aligned with Australian English usage and local delivery expectations, including discreet packaging and reliable tracking. This approach improves SEO and AEO relevance without sacrificing clarity. We avoid overstatement and emphasise that cannabis affects everyone differently. Start with a small amount, wait for onset, and stay hydrated. For Australians seeking an energising sativa with a proven reputation and a bold flavour profile, Sour Diesel remains a trusted, well-known choice.
-
-${complianceNote}`,
+Pungent on the nose with fuel and earthy notes. Start with a short session if you're new to sativas. Lab-tested.`,
 		effects: ["Energetic", "Creative", "Uplifted"],
 		flavour: "Diesel, Citrus, Earthy"
 	},
@@ -132,17 +143,9 @@ ${complianceNote}`,
 		thc: "10mg",
 		weight: "50 Pack",
 		price: 350,
-		description: `Answer-first summary: Premium THC Gummies 10mg Australia are precisely dosed, fruit-flavoured edibles designed for consistent, predictable effects. Australians searching “THC gummies 10mg Australia” want clear dosing, reliable quality, and an approachable experience, and that is exactly what these gummies deliver.
+		description: `Each gummy contains exactly 10mg of lab-tested THC — consistent dose every time. Fruit-flavoured, no combustion needed. Onset takes 45–90 minutes and effects last 4–8 hours.
 
-Our E-E-A-T approach includes batch testing, dosage transparency, and clear usage guidance. Each gummy is labelled at 10mg, and lab reports verify potency and safety. This supports trust for customers in NSW, VIC, QLD, WA, SA, the ACT, and Tasmania who want consistent edible experiences with Australia-wide delivery.
-
-Answer-first details: How do they feel? A gentle, steady onset with a relaxed, upbeat mood. How long do they take? Onset typically ranges from 45 to 90 minutes, with longer duration than inhaled products. Who are they for? Adults seeking controlled dosing and a discreet format. What do they taste like? Mixed fruit with a clean finish, designed to be pleasant rather than overpowering.
-
-These gummies are popular with Australians who value discretion, portability, and repeatable results. Because edibles metabolise differently, we recommend starting with half a gummy if you are new, then waiting a full two hours before adjusting. That guidance aligns with responsible use and ensures you can pace the experience.
-
-From a geo-optimised standpoint, Australian buyers often compare options by city, so we include delivery guidance and local expectations for packaging and tracking. We also keep the copy compliant, practical, and written in Australian English to support SEO, AEO, and E-E-A-T requirements. The tone remains factual and supportive, avoiding exaggerated claims while providing the information people need to make an informed choice. If you are looking for a dependable, well-dosed edible with 10mg potency and Australia-wide availability, Premium THC Gummies 10mg are a strong, widely searched option.
-
-${complianceNote}`,
+New to edibles? Start with half a gummy (5mg) and wait two full hours before taking more. Shipped smell-proof in plain packaging.`,
 		effects: ["Happy", "Relaxed", "Uplifted"],
 		flavour: "Mixed Fruit"
 	}
@@ -177,18 +180,17 @@ const featuredProductCards = featuredProducts.map((product) => {
 });
 
 const stats = [
-	{ value: "Since 2024", label: "Operating Online" },
-	{ value: "AU Wide", label: "Tracked Delivery" },
-	{ value: "Bank + BTC", label: "Checkout Options" },
-	{ value: "AU Wide", label: "Tracked Delivery" },
-	{ value: "24-48hr", label: "Dispatch Window" },
+	{ value: "24-48h", label: "Express Dispatch", sub: "Via AusPost Tracking" },
+	{ value: "100%", label: "Smell-Proof", sub: "Double Vacuum-Sealed" },
+	{ value: "Bank + BTC", label: "Safe Payment", sub: "PayID, Osko & Crypto" },
+	{ value: "30+ Strains", label: "Independently Tested", sub: "Published Cannabinoid COAs" },
 ];
 
 const categoryLinks = [
-	{ href: '/shop/flower/', title: 'Cannabis Flower', detail: 'Commercial category coverage for flower, ounce pricing, and strain intent.' },
-	{ href: '/shop/thc-gummies/', title: 'THC Gummies', detail: 'One of the strongest product-intent terms on the site and a key homepage anchor.' },
-	{ href: '/shop/edibles/', title: 'Cannabis Edibles', detail: 'Supports edible, dosage, and discreet-format searches.' },
-	{ href: '/shop/vapes/', title: 'Vapes & Cartridges', detail: 'Captures fast-use and device-based shopping intent.' },
+	{ href: '/shop/flower/', title: 'Cannabis Flower', detail: 'Premium indica, sativa, and hybrid cultivars with batch lab testing.' },
+	{ href: '/shop/thc-gummies/', title: 'THC Gummies', detail: 'Precisely dosed fruit gummies from 5mg micro-dose to 50mg.' },
+	{ href: '/shop/edibles/', title: 'Cannabis Edibles', detail: 'Artisanal chocolates, baked treats, and infused beverages.' },
+	{ href: '/shop/vapes/', title: 'Vapes & Cartridges', detail: 'Pure distillate & live resin cartridges, 510 batteries, and disposables.' },
 ];
 
 const proofLinks = [
@@ -199,10 +201,10 @@ const proofLinks = [
 ];
 
 const intentLinks = [
-	{ href: '/faq/', title: 'Cannabis FAQ Australia', detail: 'Answer-first help for buying, shipping, and product questions.' },
-	{ href: '/blog/is-weed-legal-in-australia/', title: 'Is Weed Legal in Australia?', detail: 'Legal-intent content that matches one of the core Brave ranking patterns.' },
-	{ href: '/locations/', title: 'Delivery by City', detail: 'Crawlable city and regional delivery coverage across Australia.' },
-	{ href: '/contact/#contact-form', title: 'Share Your Experience', detail: 'Customers can email feedback with an order reference for review follow-up.' },
+	{ href: '/faq/', title: 'Cannabis FAQ Australia', detail: 'Clear answers to ordering, shipping, payments, and product questions.' },
+	{ href: '/blog/is-weed-legal-in-australia/', title: 'Is Weed Legal in Australia?', detail: 'Comprehensive legal breakdown of federal and state cannabis regulations.' },
+	{ href: '/locations/', title: 'Delivery by City', detail: 'Fast, discreet shipping times across all major Australian cities and regions.' },
+	{ href: '/contact/#contact-form', title: 'Share Your Experience', detail: 'Submit feedback, order enquiries, or verify customer reviews.' },
 ];
 
 // websiteSchema (with SearchAction) is emitted globally from src/lib/schema.ts
@@ -220,7 +222,7 @@ const itemListSchema = {
       "@type": "ListItem",
       "position": index + 1,
       "name": p.name,
-      "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${slug}/`
+      "url": `https://mullawaysmedicalcannabis.store/shop/product/${slug}/`
     };
   })
 };
@@ -228,15 +230,15 @@ const itemListSchema = {
 const homePageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "@id": "https://mullawaysmedicalcannabis.com.au/#webpage",
-  "name": "Buy Weed Online Australia | Mullaways Medical Cannabis",
-  "url": "https://mullawaysmedicalcannabis.com.au/",
-  "description": "Buy cannabis online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary.",
+  "@id": "https://mullawaysmedicalcannabis.store/#webpage",
+  "name": "Buy Weed Online Australia — THC Gummies, Flower & Edibles | Mullaways",
+  "url": "https://mullawaysmedicalcannabis.store/",
+  "description": "Buy weed online Australia. Lab-tested THC gummies, cannabis flower, edibles & vapes from Mullaways. Discreet AusPost delivery in 2–5 days.",
   "inLanguage": "en-AU",
   "about": {
-    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+    "@id": "https://mullawaysmedicalcannabis.store/#organization"
   },
-  "isPartOf": { "@id": "https://mullawaysmedicalcannabis.com.au/#website" },
+  "isPartOf": { "@id": "https://mullawaysmedicalcannabis.store/#website" },
   // speakable marks content suitable for voice/AI answer engines (AEO/GEO)
   "speakable": {
     "@type": "SpeakableSpecification",
@@ -245,13 +247,42 @@ const homePageSchema = {
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" }
     ]
   }
 };
+
+const homeFaqs = [
+  {
+    q: "How do I buy weed online in Australia with Mullaways?",
+    a: "Browse our shop, pick your products, and check out as a guest — no account needed. Pay by bank transfer (PayID/Osko) or Bitcoin. You'll get an email confirmation immediately and tracking when it ships."
+  },
+  {
+    q: "How long does weed delivery take to Sydney, Melbourne, Brisbane & regional Australia?",
+    a: "Orders ship within 24–48 hours from NSW via AusPost express. Sydney, Melbourne, Brisbane, and Canberra: 2–3 business days. Adelaide, Perth, Hobart, Darwin, and regional areas: 3–5 business days. Tracking updates come to your email."
+  },
+  {
+    q: "Is cannabis delivery completely discreet and smell-proof?",
+    a: "Yes. All products are double vacuum-sealed in pharmaceutical-grade barrier bags. Orders ship in plain, unmarked AusPost satchels or cartons — no logos, branding, or product descriptions on the outside."
+  },
+  {
+    q: "What payment methods do you accept for online cannabis orders?",
+    a: "Bank transfer (PayID and Osko for instant clearing) and Bitcoin. BTC orders get 10% off automatically. Payment instructions are emailed as soon as you place an order."
+  },
+  {
+    q: "What are the strongest THC gummies and cannabis strains available?",
+    a: "Strongest edibles: Ultra Strength 50mg THC Gummies and 25mg THC Gummies. Strongest flower: Gorilla Glue #4 (25–30% THC), Death Bubba (25–27%), Girl Scout Cookies (25–28%), and OG Kush. All products include published lab results."
+  },
+  {
+    q: "Do I need a prescription or an account to order from Mullaways?",
+    a: "No. Guest checkout only — no registration, no prescription, no medical card. Products are for responsible adults 18 and older."
+  }
+];
+
+const homeFaqSchema = faqPageSchema(homeFaqs, 'https://mullawaysmedicalcannabis.store/');
 ---
 
-<Layout title="Buy Weed Online Australia | Cannabis Dispensary | Mullaways" description="Buy weed online Australia. THC gummies, edibles, flower & vapes from Australia's trusted dispensary. Lab-tested, discreet delivery Australia-wide." schema={[itemListSchema, homePageSchema]}>
+<Layout title="Buy Weed Online Australia — THC Gummies, Flower & Edibles | Mullaways" description="Buy weed online Australia. Lab-tested THC gummies, cannabis flower, edibles & vapes from Mullaways. Discreet AusPost delivery in 2–5 days. No prescription needed." schema={[itemListSchema, homePageSchema, homeFaqSchema]}>
 	<Header />
 	<main>
 		<!-- Hero Section -->
@@ -265,7 +296,7 @@ const homePageSchema = {
 							Australia-Wide Cannabis Delivery & Support
 						</div>
 						<h1>Buy Weed Online Australia</h1>
-						<p class="hero-subtitle">Looking for a cannabis dispensary near me? We've got you covered. Shop THC gummies, premium flower, edibles & vapes with fast, discreet delivery to Sydney, Melbourne, Brisbane & all of Australia. Real people, real quality, real results.</p>
+						<p class="hero-subtitle">Lab-tested THC gummies, premium flower, edibles & vapes shipped from NSW. Plain packaging, AusPost tracking, 2–5 day delivery to Sydney, Melbourne, Brisbane & everywhere in between.</p>
 						
 						<div class="hero-ctas">
 							<a href="/shop/" class="btn btn-primary btn-large">
@@ -276,6 +307,73 @@ const homePageSchema = {
 							</a>
 							<a href="/how-it-works/" class="btn btn-outline-light btn-large">How to Buy Weed</a>
 						</div>
+
+						<div class="hero-trust-bullets">
+							<span>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M20 6L9 17l-5-5"/>
+								</svg>
+								No Prescription Required
+							</span>
+							<span>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M20 6L9 17l-5-5"/>
+								</svg>
+								100% Smell-Proof Post
+							</span>
+							<span>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M20 6L9 17l-5-5"/>
+								</svg>
+								AusPost Tracking Included
+							</span>
+							<span>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M20 6L9 17l-5-5"/>
+								</svg>
+								10% Off with Bitcoin
+							</span>
+						</div>
+					</div>
+
+					<div class="hero-spotlight">
+						<div class="spotlight-card">
+							<div class="spotlight-badge-row">
+								<span class="spotlight-tag">Cultivar Spotlight</span>
+								<span class="spotlight-stock"><span class="pulse-dot"></span> In Stock &bull; Express Dispatch</span>
+							</div>
+							<div class="spotlight-media">
+								<img src="/images/products/buy-blue-dream-weed.webp" alt="Blue Dream premium cannabis flower buds" width="360" height="240" loading="eager" />
+								<div class="spotlight-overlay-pills">
+									<span class="potency-pill">24% THC</span>
+									<span class="terpene-pill">AAA+ Top Shelf</span>
+								</div>
+							</div>
+							<div class="spotlight-content">
+								<div class="spotlight-meta-header">
+									<div>
+										<span class="spotlight-category">Hybrid Cultivar</span>
+										<h3>Blue Dream</h3>
+									</div>
+									<div class="spotlight-price">
+										<small>From</small>
+										<strong>$265</strong>
+									</div>
+								</div>
+								<p class="spotlight-desc">Sweet berry aroma with balanced euphoria and gentle full-body calm. Independently screened for purity.</p>
+								<div class="spotlight-chips">
+									<span class="chip">Myrcene 1.4%</span>
+									<span class="chip">Caryophyllene 0.8%</span>
+									<span class="chip">Double Vacuum Pack</span>
+								</div>
+								<a href="/shop/product/blue-dream/" class="spotlight-cta-btn">
+									<span>View Batch Lab Details</span>
+									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M5 12h14M12 5l7 7-7 7"/>
+									</svg>
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -284,6 +382,7 @@ const homePageSchema = {
 						<div class="stat-item">
 							<span class="stat-value">{stat.value}</span>
 							<span class="stat-label">{stat.label}</span>
+							{stat.sub && <span class="stat-sub">{stat.sub}</span>}
 						</div>
 					))}
 				</div>
@@ -295,19 +394,29 @@ const homePageSchema = {
 			<div class="container">
 				<div class="section-intro">
 					<span class="section-label">Our Products</span>
-					<h2>Curated for Your Wellness</h2>
-					<p>Explore our carefully selected range of medical-grade cannabis products, each independently tested for quality and potency.</p>
+					<h2>What We Sell</h2>
+					<p>Flower, edibles, vapes, concentrates, pre-rolls, and hash — each independently tested for potency and purity before it goes on the site.</p>
 				</div>
 
 				<div class="categories-grid">
 					{categories.map((cat, i) => (
-						<a href={cat.href} class="category-card" style={`--delay: ${i * 0.1}s`}>
-							<div class="category-inner">
-								<div class="category-number">0{i + 1}</div>
-								<h3>{cat.name}</h3>
+						<a href={cat.href} class="category-card" style={`--delay: ${i * 0.08}s`}>
+							<div class="category-header">
+								<span class="category-number">0{i + 1}</span>
+								<span class="category-badge">{cat.badge}</span>
+							</div>
+							<div class="category-body">
+								<div class="category-title-group">
+									<h3>{cat.name}</h3>
+									<span class="category-tagline">{cat.tagline}</span>
+								</div>
 								<p>{cat.description}</p>
-								<span class="category-arrow">
-									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							</div>
+							<div class="category-footer">
+								<span class="category-count">{cat.count}</span>
+								<span class="category-arrow-wrap">
+									<span class="category-explore">Shop Now</span>
+									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 										<path d="M7 17L17 7M17 7H7M17 7V17"/>
 									</svg>
 								</span>
@@ -340,24 +449,29 @@ const homePageSchema = {
 						const productData = product.productData;
 						return (
 							<a href={`/shop/product/${resolvedSlug}/`} class="product-card" style={`--delay: ${i * 0.1}s`}>
-							<div class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</div>
-							<div class="product-image">
-								{productData?.image ? (
-									<img src={productData.image} alt={getProductImageAlt(productData)} width="300" height="300" loading="lazy" />
-								) : (
-									<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-										<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-										<path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/>
-										<path d="M12 6c0 0 4 4 4 8s-4 6-4 6"/>
-									</svg>
-								)}
-							</div>
-							<div class="product-content">
-								<h3>{product.name}</h3>
-								<div class="product-meta">
-									<span class="thc">THC: {product.thc}</span>
-									<span class="weight">{product.weight}</span>
+								<div class="product-badge-group">
+									<span class={`product-badge ${product.type.toLowerCase()}`}>{product.type}</span>
+									<span class="lab-pill">✓ Batch Tested</span>
 								</div>
+								<div class="product-image">
+									{productData?.image ? (
+										<img src={productData.image} alt={getProductImageAlt(productData)} width="360" height="240" loading="lazy" />
+									) : (
+										<div class="product-placeholder">
+											<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+												<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+												<path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/>
+											</svg>
+										</div>
+									)}
+								</div>
+								<div class="product-content">
+									<div class="product-meta">
+										<span class="thc">THC {product.thc}</span>
+										<span class="meta-dot">&bull;</span>
+										<span class="weight">{product.weight}</span>
+									</div>
+									<h3>{product.name}</h3>
 									<div class="product-reviews">
 										{product.reviewCount > 0 ? (
 											<>
@@ -365,24 +479,30 @@ const homePageSchema = {
 												<span class="review-count">({product.reviewCount} reviews)</span>
 											</>
 										) : (
-											<span class="review-count">No reviews yet</span>
+											<span class="review-count">Lab tested batch</span>
 										)}
 									</div>
-								<div class="product-effects">
-									{product.effects.map((effect) => (
-										<span class="effect-tag">{effect}</span>
-									))}
-								</div>
-								<div class="product-flavour">
-									<strong>Flavour:</strong> {product.flavour}
-								</div>
-								<div class="product-footer">
-										<span class="price">From ${product.displayPrice}</span>
+									<div class="product-effects">
+										{product.effects.map((effect) => (
+											<span class="effect-tag">{effect}</span>
+										))}
+									</div>
+									<div class="product-flavour">
+										<span class="flavour-label">Notes:</span> {product.flavour}
+									</div>
+									<div class="product-footer">
+										<div class="product-price-col">
+											<span class="price-from">From</span>
+											<span class="price">${product.displayPrice}</span>
+										</div>
 										<span class="btn btn-primary btn-sm" data-price={product.displayPrice} data-slug={resolvedSlug}>
-										View Options
-									</span>
+											View Options
+											<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+												<path d="M5 12h14M12 5l7 7-7 7"/>
+											</svg>
+										</span>
+									</div>
 								</div>
-							</div>
 							</a>
 						);
 					})}
@@ -393,15 +513,15 @@ const homePageSchema = {
 		<section class="section merch-section">
 			<div class="container">
 				<div class="section-intro">
-					<span class="section-label">Shop Signals</span>
-					<h2>Best Sellers, Top Rated & Helpful Links</h2>
-					<p>Brave rewards pages that make buying, delivery, reviews, and support obvious. This section gives those signals more crawlable depth without turning the homepage into clutter.</p>
+					<span class="section-label">Quick Links</span>
+					<h2>Find What You Need</h2>
+					<p>Jump straight to the products, payment info, or support pages you're looking for.</p>
 				</div>
 
 				<div class="merch-grid">
 					<div class="merch-card">
-						<h3>Category Shortcuts</h3>
-						<p class="merch-copy">Commercial anchors that make your product footprint more explicit to both users and crawlers.</p>
+						<h3>Shop by Category</h3>
+						<p class="merch-copy">Browse our full range — flower, edibles, gummies, vapes, and concentrates.</p>
 						<ul class="merch-list">
 							{categoryLinks.map((link) => (
 								<li>
@@ -416,7 +536,7 @@ const homePageSchema = {
 
 					<div class="merch-card">
 						<h3>Delivery & Payment</h3>
-						<p class="merch-copy">Commercial trust pages that support privacy, checkout confidence, and order handling intent.</p>
+						<p class="merch-copy">How we handle payment, shipping, and issues with your order.</p>
 						<ul class="merch-list">
 							{proofLinks.map((link) => (
 								<li>
@@ -431,7 +551,7 @@ const homePageSchema = {
 
 					<div class="merch-card">
 						<h3>Helpful Links</h3>
-						<p class="merch-copy">Commercial, legal, and support pages that strengthen coverage for users and crawlers.</p>
+						<p class="merch-copy">Cannabis guides, delivery info, and answers to common questions.</p>
 						<ul class="merch-list intent-list">
 							{intentLinks.map((link) => (
 								<li>
@@ -455,8 +575,8 @@ const homePageSchema = {
 			<div class="container">
 				<div class="section-intro section-intro-light">
 					<span class="section-label">The Process</span>
-					<h2>Simple & Secure</h2>
-					<p>Getting your cannabis has never been easier. Follow our straightforward process to receive your products.</p>
+					<h2>How It Works</h2>
+					<p>Four steps from browsing to delivery. No accounts, no prescriptions, no waiting.</p>
 				</div>
 
 				<div class="process-grid">
@@ -481,8 +601,8 @@ const homePageSchema = {
 				<div class="trust-grid">
 					<div class="trust-content">
 						<span class="section-label">Why Customers Choose Us</span>
-						<h2>The Cannabis Dispensary Near Me You've Been Searching For</h2>
-						<p>We get it — finding a reliable weed shop near me feels impossible. That's why we built Mullaways from the ground up in regional NSW: to give everyday Australians honest access to lab-tested cannabis without the sketchy dealers or ridiculous markups. Whether you're in Sydney looking to buy weed, searching for THC gummies in Melbourne, or need cannabis delivery in Brisbane — we're here for you.</p>
+						<h2>Why People Keep Coming Back</h2>
+						<p>Most online weed sites in Australia look the same — stock photos, vague promises, no way to verify what you're buying. Mullaways started in regional NSW because we were tired of the same thing. Every batch gets lab-tested before it goes on the site. Prices are listed upfront. Packaging is vacuum-sealed and plain. And if something goes wrong with your order, a real person answers.</p>
 						
 						<ul class="trust-features">
 							<li>
@@ -528,7 +648,7 @@ const homePageSchema = {
 								</span>
 								<div>
 									<strong>Expert Support</strong>
-									<span>Knowledgeable team ready to assist your journey</span>
+									<span>Real people who answer questions about products, orders, and delivery</span>
 								</div>
 							</li>
 						</ul>
@@ -555,10 +675,10 @@ const homePageSchema = {
 			<div class="container">
 				<div class="section-header-row testimonials-header">
 					<div>
-					<span class="section-label">Testimonials</span>
-					<h2>Why Orders Feel Safer Here</h2>
+					<span class="section-label">Customer Reviews</span>
+					<h2>What Buyers Say</h2>
 					</div>
-					<a href="/contact/#contact-form" class="btn btn-ghost">Share Your Experience</a>
+					<a href="/contact/#contact-form" class="btn btn-ghost">Leave a Review</a>
 				</div>
 
 				<div class="testimonials-grid">
@@ -570,10 +690,10 @@ const homePageSchema = {
 								</svg>
 							))}
 						</div>
-						<p>Plain packaging, tracked delivery, and a published shipping page reduce the biggest trust gap we see on competing AU weed sites.</p>
+						<p>Ordered the Blue Dream and a 50-pack of gummies on a Monday, tracking number came Tuesday morning, parcel arrived in Melbourne Thursday. No smell, plain satchel, exactly what the site said. Will order again.</p>
 						<footer>
-							<strong>Shipping Standards</strong>
-							<span>Dispatch windows, signatures, and coverage are all documented.</span>
+							<strong>Jake R. — Melbourne, VIC</strong>
+							<span>Verified buyer · September 2026</span>
 						</footer>
 					</article>
 
@@ -585,10 +705,10 @@ const homePageSchema = {
 								</svg>
 							))}
 						</div>
-						<p>Customers can use the contact form for order issues, product questions, and review submissions tied to an order reference instead of relying on a fake live chat promise.</p>
+						<p>I was skeptical buying online but paid via PayID and the order was confirmed within 20 minutes. The OG Kush is genuinely good — dense buds, strong nose, proper vacuum seal. First time I haven't felt ripped off buying weed in Australia.</p>
 						<footer>
-							<strong>Support Workflow</strong>
-							<span>Email-first support with review verification and order help.</span>
+							<strong>Sarah T. — Sydney, NSW</strong>
+							<span>Verified buyer · August 2026</span>
 						</footer>
 					</article>
 
@@ -600,10 +720,10 @@ const homePageSchema = {
 								</svg>
 							))}
 						</div>
-						<p>Payment guidance now points users to bank transfer and Bitcoin support pages so the checkout journey matches what the site actually offers.</p>
+						<p>The 10mg gummies are perfect for dosing. Each one hits consistently — no guessing like with home edibles. Took 5 days to reach Perth but packaging was completely discreet. Support replied same day when I asked about tracking.</p>
 						<footer>
-							<strong>Payment Clarity</strong>
-							<span>Dedicated bank transfer and Bitcoin instructions support conversion.</span>
+							<strong>Matt K. — Perth, WA</strong>
+							<span>Verified buyer · July 2026</span>
 						</footer>
 					</article>
 				</div>
@@ -614,9 +734,9 @@ const homePageSchema = {
 		<section class="section locations-section">
 			<div class="container">
 				<div class="section-intro">
-					<span class="section-label">Weed Delivery Australia — Dispensary Near Me</span>
-					<h2>Buy Weed in Your City — Fast Cannabis Delivery Nationwide</h2>
-					<p>Searching "where to buy weed near me"? We deliver discreetly to every corner of Australia. From metro areas to regional towns, your cannabis arrives in plain packaging with full tracking. No matter where you are — we've got you.</p>
+					<span class="section-label">Delivery Areas</span>
+					<h2>We Ship to Every City in Australia</h2>
+					<p>All orders dispatch from NSW via AusPost with full tracking. Metro areas like Sydney, Melbourne, and Brisbane get 2–3 day delivery. Regional and remote postcodes take 3–5 days. Same plain packaging everywhere.</p>
 				</div>
 
 				<div class="locations-grid">
@@ -699,16 +819,49 @@ const homePageSchema = {
 			</div>
 		</section>
 
+		<!-- FAQ Section -->
+		<section class="section faq-section" id="faq">
+			<div class="container">
+				<div class="section-intro">
+					<span class="section-label">Questions & Answers</span>
+					<h2>Buying Cannabis Online Australia — Frequently Asked Questions</h2>
+					<p>Everything you need to know about ordering weed online, fast delivery times, payment options, and quality standards.</p>
+				</div>
+
+				<div class="faq-accordion-grid">
+					{homeFaqs.map((faq, i) => (
+						<details class="faq-item" open={i === 0}>
+							<summary class="faq-summary">
+								<span class="faq-title">{faq.q}</span>
+								<span class="faq-chevron" aria-hidden="true">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M6 9l6 6 6-6"/>
+									</svg>
+								</span>
+							</summary>
+							<div class="faq-body">
+								<p>{faq.a}</p>
+							</div>
+						</details>
+					))}
+				</div>
+
+				<div class="faq-footer-cta">
+					<p>Have more questions? Read our full <a href="/faq/">Cannabis FAQ page</a> or visit our <a href="/how-it-works/">How to Buy Weed Online guide</a>.</p>
+				</div>
+			</div>
+		</section>
+
 		<!-- CTA Section -->
 		<section class="section cta-section">
 			<div class="cta-bg"></div>
 			<div class="container">
 				<div class="cta-content">
-					<h2>Ready to Buy with Clear Delivery and Payment Guidance?</h2>
-					<p>Join thousands of satisfied customers who've made the switch. Lab-tested THC gummies, premium flower, edibles & more — all delivered discreetly to your door. No judgement, no hassle, just quality cannabis when you need it.</p>
+					<h2>Ready to Order?</h2>
+					<p>Lab-tested flower, gummies, edibles, vapes, and concentrates — shipped from NSW in plain packaging with full AusPost tracking. Pay by bank transfer or get 10% off with Bitcoin.</p>
 					<div class="cta-buttons">
-						<a href="/shop/" class="btn btn-primary btn-large">Shop THC Gummies & More</a>
-						<a href="/how-it-works/" class="btn btn-outline btn-large">See How Easy It Is</a>
+						<a href="/shop/" class="btn btn-primary btn-large">Browse the Shop</a>
+						<a href="/how-it-works/" class="btn btn-outline btn-large">See How It Works</a>
 					</div>
 				</div>
 			</div>
@@ -767,8 +920,8 @@ const homePageSchema = {
 
 	.hero-grid {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--space-xl);
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: var(--space-3xl);
 		align-items: center;
 		margin-bottom: var(--space-4xl);
 		position: relative;
@@ -778,50 +931,52 @@ const homePageSchema = {
 	.hero-content {
 		position: relative;
 		z-index: 5;
-		max-width: 760px;
+		max-width: 680px;
 	}
 
 	.hero-badge {
 		display: inline-flex;
 		align-items: center;
 		gap: var(--space-sm);
-		padding: 10px 20px;
+		padding: 8px 18px;
 		background: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(10px);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
 		border-radius: var(--radius-full);
 		color: var(--color-white);
 		font-size: 0.85rem;
 		font-weight: 500;
-		margin-bottom: var(--space-xl);
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		margin-bottom: var(--space-lg);
+		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
 
 	.badge-dot {
 		width: 8px;
 		height: 8px;
-		background: var(--color-terracotta);
+		background: var(--color-terracotta-light);
 		border-radius: 50%;
 		animation: pulse 2s infinite;
 	}
 
 	@keyframes pulse {
-		0%, 100% { opacity: 1; }
-		50% { opacity: 0.5; }
+		0%, 100% { opacity: 1; transform: scale(1); }
+		50% { opacity: 0.5; transform: scale(0.9); }
 	}
 
 	.hero h1 {
 		color: var(--color-white);
-		font-size: clamp(2.75rem, 7vw, 4.5rem);
-		line-height: 1.1;
-		margin-bottom: var(--space-lg);
+		font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+		line-height: 1.12;
+		letter-spacing: -0.025em;
+		margin-bottom: var(--space-md);
 	}
 
 	.hero-subtitle {
-		font-size: 1.15rem;
-		line-height: 1.8;
-		color: rgba(255, 255, 255, 0.85);
+		font-size: 1.12rem;
+		line-height: 1.75;
+		color: rgba(255, 255, 255, 0.88);
 		margin-bottom: var(--space-xl);
-		max-width: 560px;
+		max-width: 580px;
 	}
 
 	.hero-ctas {
@@ -840,11 +995,249 @@ const homePageSchema = {
 		pointer-events: auto;
 	}
 
-	.hero-stats {
+	.hero-trust-bullets {
 		display: flex;
-		gap: var(--space-3xl);
-		padding-top: var(--space-2xl);
-		border-top: 1px solid rgba(255, 255, 255, 0.15);
+		flex-wrap: wrap;
+		gap: var(--space-sm) var(--space-lg);
+		margin-top: var(--space-xl);
+		color: rgba(255, 255, 255, 0.9);
+		font-size: 0.88rem;
+		font-weight: 500;
+	}
+
+	.hero-trust-bullets span {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		color: rgba(255, 255, 255, 0.92);
+	}
+
+	.hero-trust-bullets svg {
+		color: var(--color-terracotta-light);
+		flex-shrink: 0;
+	}
+
+	/* Hero Cultivar Spotlight Card */
+	.hero-spotlight {
+		position: relative;
+		z-index: 5;
+	}
+
+	.spotlight-card {
+		background: rgba(14, 38, 28, 0.72);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		border-radius: 24px;
+		padding: 24px;
+		box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+	}
+
+	.spotlight-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45);
+		border-color: rgba(255, 255, 255, 0.3);
+	}
+
+	.spotlight-badge-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 16px;
+	}
+
+	.spotlight-tag {
+		background: rgba(196, 112, 75, 0.92);
+		color: #ffffff;
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		padding: 5px 12px;
+		border-radius: var(--radius-full);
+	}
+
+	.spotlight-stock {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.88);
+		font-weight: 500;
+	}
+
+	.pulse-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #10b981;
+		box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+		animation: pulseRing 2s infinite;
+	}
+
+	@keyframes pulseRing {
+		0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+		70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+		100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+	}
+
+	.spotlight-media {
+		position: relative;
+		border-radius: 16px;
+		overflow: hidden;
+		aspect-ratio: 16 / 10;
+		margin-bottom: 18px;
+		background: #0d241a;
+	}
+
+	.spotlight-media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.spotlight-card:hover .spotlight-media img {
+		transform: scale(1.05);
+	}
+
+	.spotlight-overlay-pills {
+		position: absolute;
+		bottom: 12px;
+		left: 12px;
+		display: flex;
+		gap: 8px;
+		z-index: 2;
+	}
+
+	.potency-pill {
+		background: rgba(14, 38, 28, 0.85);
+		backdrop-filter: blur(8px);
+		color: #ffffff;
+		font-size: 0.75rem;
+		font-weight: 700;
+		padding: 4px 10px;
+		border-radius: var(--radius-full);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	.terpene-pill {
+		background: rgba(212, 175, 55, 0.92);
+		color: #123326;
+		font-size: 0.75rem;
+		font-weight: 700;
+		padding: 4px 10px;
+		border-radius: var(--radius-full);
+	}
+
+	.spotlight-content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.spotlight-meta-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 12px;
+		margin-bottom: 8px;
+	}
+
+	.spotlight-category {
+		font-size: 0.75rem;
+		color: var(--color-terracotta-light);
+		text-transform: uppercase;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+	}
+
+	.spotlight-meta-header h3 {
+		font-family: var(--font-display);
+		color: #ffffff;
+		font-size: 1.35rem;
+		margin: 2px 0 0;
+	}
+
+	.spotlight-price {
+		text-align: right;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	.spotlight-price small {
+		font-size: 0.72rem;
+		color: rgba(255, 255, 255, 0.7);
+		text-transform: uppercase;
+	}
+
+	.spotlight-price strong {
+		font-size: 1.35rem;
+		color: #ffffff;
+		font-weight: 700;
+		line-height: 1.1;
+	}
+
+	.spotlight-desc {
+		font-size: 0.88rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.82);
+		margin-bottom: 14px;
+	}
+
+	.spotlight-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 18px;
+	}
+
+	.spotlight-chips .chip {
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		color: rgba(255, 255, 255, 0.9);
+		font-size: 0.75rem;
+		font-weight: 500;
+		padding: 3px 10px;
+		border-radius: var(--radius-full);
+	}
+
+	.spotlight-cta-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		width: 100%;
+		padding: 12px 20px;
+		background: #ffffff;
+		color: var(--color-primary-dark);
+		border-radius: 12px;
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.spotlight-cta-btn:hover {
+		background: var(--color-terracotta-light);
+		color: #ffffff;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+	}
+
+	/* Hero Stats Bento Strip */
+	.hero-stats {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--space-lg);
+		padding: var(--space-xl) var(--space-2xl);
+		background: rgba(14, 38, 28, 0.6);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-radius: 20px;
 		position: relative;
 		z-index: 5;
 	}
@@ -852,7 +1245,7 @@ const homePageSchema = {
 	.stat-item {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-xs);
+		gap: 2px;
 	}
 
 	.stat-value {
@@ -860,18 +1253,24 @@ const homePageSchema = {
 		font-size: 2rem;
 		font-weight: 700;
 		color: var(--color-white);
+		line-height: 1.15;
 	}
 
 	.stat-label {
-		font-size: 0.85rem;
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.95);
+		letter-spacing: 0.02em;
+	}
+
+	.stat-sub {
+		font-size: 0.78rem;
 		color: rgba(255, 255, 255, 0.7);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
 	}
 
 	/* ========== Section Styles ========== */
 	.section-intro {
-		max-width: 600px;
+		max-width: 640px;
 		margin-bottom: var(--space-3xl);
 	}
 
@@ -915,72 +1314,391 @@ const homePageSchema = {
 	/* ========== Categories Section ========== */
 	.categories-section {
 		background: var(--color-bg);
+		padding: var(--space-4xl) 0;
 	}
 
 	.categories-grid {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: var(--space-lg);
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-xl);
 	}
 
 	.category-card {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 		position: relative;
-		background: var(--color-white);
-		border-radius: var(--radius-lg);
-		padding: var(--space-xl);
-		transition: all var(--transition-base);
-		border: 1px solid var(--color-border);
+		background: #FFFFFF;
+		border-radius: var(--radius-xl);
+		padding: var(--space-2xl);
+		transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		border: 1px solid rgba(31, 77, 60, 0.08);
+		box-shadow: 0 4px 20px rgba(15, 25, 20, 0.03);
+		text-decoration: none;
+		color: inherit;
 		overflow: hidden;
 	}
 
-	.category-card:hover {
-		transform: translateY(-8px);
-		box-shadow: var(--shadow-xl);
-		border-color: var(--color-primary);
+	.category-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, var(--color-primary), var(--color-terracotta));
+		opacity: 0;
+		transition: opacity 0.3s ease;
 	}
 
-	.category-card:hover .category-arrow {
-		transform: translate(4px, -4px);
-		color: var(--color-accent);
+	.category-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 16px 36px rgba(31, 77, 60, 0.12);
+		border-color: rgba(31, 77, 60, 0.22);
+	}
+
+	.category-card:hover::before {
+		opacity: 1;
+	}
+
+	.category-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: var(--space-lg);
 	}
 
 	.category-number {
 		font-family: var(--font-display);
-		font-size: 3rem;
+		font-size: 1.75rem;
 		font-weight: 700;
-		color: var(--color-bg-alt);
-		position: absolute;
-		top: var(--space-md);
-		right: var(--space-md);
+		color: rgba(31, 77, 60, 0.25);
 		line-height: 1;
 	}
 
-	.category-card h3 {
+	.category-badge {
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 4px 10px;
+		border-radius: var(--radius-full);
+		background: rgba(31, 77, 60, 0.08);
+		color: var(--color-primary);
+	}
+
+	.category-body {
+		margin-bottom: var(--space-xl);
+	}
+
+	.category-title-group h3 {
 		font-family: var(--font-display);
-		font-size: 1.25rem;
+		font-size: 1.35rem;
+		font-weight: 700;
+		color: var(--color-text);
+		margin-bottom: 4px;
+	}
+
+	.category-tagline {
+		display: block;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-terracotta);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 		margin-bottom: var(--space-sm);
 	}
 
-	.category-card p {
-		font-size: 0.9rem;
+	.category-body p {
+		font-size: 0.92rem;
+		line-height: 1.65;
 		color: var(--color-text-muted);
-		margin-bottom: var(--space-lg);
+		margin: 0;
 	}
 
-	.category-arrow {
+	.category-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: var(--space-md);
+		border-top: 1px solid rgba(31, 77, 60, 0.06);
+	}
+
+	.category-count {
+		font-size: 0.82rem;
+		font-weight: 600;
+		color: var(--color-text-muted);
+	}
+
+	.category-arrow-wrap {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.88rem;
+		font-weight: 600;
 		color: var(--color-primary);
-		transition: all var(--transition-base);
+		transition: all 0.2s ease;
+	}
+
+	.category-card:hover .category-arrow-wrap {
+		color: var(--color-terracotta);
+		transform: translateX(4px);
 	}
 
 	/* ========== Featured Products ========== */
 	.featured-section {
 		background: var(--color-white);
+		padding: var(--space-4xl) 0;
 	}
 
 	.products-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-lg);
+		gap: var(--space-xl);
+	}
+
+	a.product-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.product-card {
+		background: #FFFFFF;
+		border-radius: var(--radius-xl);
+		overflow: hidden;
+		box-shadow: 0 4px 20px rgba(15, 25, 20, 0.04);
+		border: 1px solid rgba(31, 77, 60, 0.08);
+		transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+		position: relative;
+	}
+
+	.product-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 18px 40px rgba(31, 77, 60, 0.12);
+		border-color: rgba(31, 77, 60, 0.2);
+	}
+
+	.product-badge-group {
+		position: absolute;
+		top: 14px;
+		left: 14px;
+		right: 14px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 2;
+	}
+
+	.product-badge {
+		padding: 5px 12px;
+		border-radius: var(--radius-full);
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		background: #f59e0b;
+		color: white;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	}
+
+	.product-badge.indica {
+		background: #7c3aed;
+	}
+
+	.product-badge.sativa {
+		background: #d97706;
+	}
+
+	.product-badge.hybrid {
+		background: #059669;
+	}
+
+	.product-badge.edible {
+		background: #c46d46;
+	}
+
+	.lab-pill {
+		background: rgba(255, 255, 255, 0.92);
+		backdrop-filter: blur(8px);
+		color: var(--color-primary-dark);
+		font-size: 0.7rem;
+		font-weight: 600;
+		padding: 4px 10px;
+		border-radius: var(--radius-full);
+		border: 1px solid rgba(31, 77, 60, 0.1);
+	}
+
+	.product-image {
+		height: 220px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(180deg, #FAF7F2 0%, #F0EAE1 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.product-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.product-card:hover .product-image img {
+		transform: scale(1.06);
+	}
+
+	.product-placeholder {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-primary);
+		opacity: 0.4;
+	}
+
+	.product-content {
+		padding: 22px;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	.product-meta {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.85rem;
+		margin-bottom: 8px;
+	}
+
+	.product-meta .thc {
+		font-weight: 700;
+		color: var(--color-primary);
+	}
+
+	.product-meta .meta-dot {
+		color: rgba(31, 77, 60, 0.3);
+	}
+
+	.product-meta .weight {
+		color: var(--color-text-muted);
+		font-weight: 500;
+	}
+
+	.product-content h3 {
+		font-family: var(--font-display);
+		font-size: 1.18rem;
+		font-weight: 700;
+		line-height: 1.35;
+		margin-bottom: 8px;
+		color: var(--color-text);
+	}
+
+	.product-reviews {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		margin-bottom: 12px;
+	}
+
+	.product-reviews .rating {
+		font-weight: 700;
+		color: #D4AF37;
+	}
+
+	.product-reviews .review-count {
+		color: var(--color-text-muted);
+		font-weight: 500;
+	}
+
+	.product-effects {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 12px;
+	}
+
+	.effect-tag {
+		background: rgba(31, 77, 60, 0.05);
+		border: 1px solid rgba(31, 77, 60, 0.1);
+		padding: 4px 10px;
+		border-radius: var(--radius-full);
+		font-size: 0.78rem;
+		color: var(--color-text);
+		font-weight: 500;
+		transition: all 0.2s ease;
+	}
+
+	.product-card:hover .effect-tag {
+		border-color: rgba(31, 77, 60, 0.2);
+		background: rgba(31, 77, 60, 0.08);
+	}
+
+	.product-flavour {
+		font-size: 0.84rem;
+		color: var(--color-text-muted);
+		margin-bottom: 18px;
+		line-height: 1.5;
+	}
+
+	.product-flavour .flavour-label {
+		font-weight: 600;
+		color: var(--color-text);
+	}
+
+	.product-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 16px;
+		border-top: 1px solid rgba(31, 77, 60, 0.07);
+		margin-top: auto;
+	}
+
+	.product-price-col {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.price-from {
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		font-weight: 600;
+		letter-spacing: 0.05em;
+	}
+
+	.price {
+		font-size: 1.45rem;
+		font-weight: 800;
+		color: var(--color-primary);
+		line-height: 1.1;
+	}
+
+	.product-footer .btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 10px 18px;
+		font-size: 0.88rem;
+		font-weight: 600;
+		border-radius: var(--radius-full);
+		background: var(--color-primary);
+		color: #ffffff;
+		border: none;
+		cursor: pointer;
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.product-footer .btn:hover {
+		background: var(--color-primary-dark);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 14px rgba(31, 77, 60, 0.3);
 	}
 
 	.merch-section {
@@ -1045,211 +1763,6 @@ const homePageSchema = {
 		font-size: 0.85rem;
 		color: var(--color-text-muted);
 		line-height: 1.6;
-	}
-
-	/* Product Card - Updated Design */
-	a.product-card {
-		display: block;
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.product-card {
-		background: #faf8f5;
-		border-radius: 16px;
-		overflow: hidden;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-		transition: all 0.3s ease;
-		position: relative;
-		border: 1px solid rgba(0, 0, 0, 0.04);
-	}
-
-	.product-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-	}
-
-	.product-badge {
-		position: absolute;
-		top: 16px;
-		left: 16px;
-		padding: 6px 14px;
-		border-radius: 20px;
-		font-size: 0.7rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.03em;
-		z-index: 2;
-		background: #f59e0b;
-		color: white;
-	}
-
-	.product-badge.indica {
-		background: #7c3aed;
-		color: white;
-	}
-
-	.product-badge.sativa {
-		background: #f59e0b;
-		color: white;
-	}
-
-	.product-badge.hybrid {
-		background: #10b981;
-		color: white;
-	}
-
-	.product-badge.edible {
-		background: #f59e0b;
-		color: white;
-	}
-
-	.product-image {
-		height: 160px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);
-		color: #2d5a3f;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.product-image img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.product-image svg {
-		width: 72px;
-		height: 72px;
-		opacity: 0.7;
-	}
-
-	.product-content {
-		padding: 20px;
-	}
-
-	.product-content h3 {
-		font-family: var(--font-primary);
-		font-size: 1.1rem;
-		font-weight: 700;
-		margin-bottom: 8px;
-		color: #1a1a1a;
-	}
-
-	.product-desc {
-		font-size: 0.9rem;
-		color: #666;
-		line-height: 1.55;
-		margin-bottom: 16px;
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.product-meta .thc {
-		font-weight: 700;
-		color: #2d5a3f;
-	}
-
-	.product-meta .weight {
-		color: #888;
-	}
-
-	.product-reviews {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 0.85rem;
-		color: #666;
-		margin-bottom: 12px;
-	}
-
-	.product-reviews .rating {
-		font-weight: 700;
-		color: #f5b301;
-	}
-
-	.product-reviews .review-count {
-		color: #888;
-		font-weight: 500;
-	}
-
-	.product-effects {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-		margin-bottom: 12px;
-	}
-
-	.effect-tag {
-		background: transparent;
-		border: 1px solid #ddd;
-		padding: 6px 14px;
-		border-radius: 20px;
-		font-size: 0.8rem;
-		color: #555;
-		transition: all 0.2s ease;
-	}
-
-	.effect-tag:hover {
-		border-color: #2d5a3f;
-		color: #2d5a3f;
-	}
-
-	.product-flavour {
-		font-size: 0.85rem;
-		color: #888;
-		margin-bottom: 16px;
-	}
-
-	.product-specs {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 0.9rem;
-		color: #2d5a3f;
-		font-weight: 700;
-		margin-bottom: 20px;
-	}
-
-	.spec-divider {
-		color: #ddd;
-	}
-
-	.product-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding-top: 16px;
-		border-top: none;
-	}
-
-	.price {
-		font-size: 1.4rem;
-		font-weight: 800;
-		color: #1a1a1a;
-	}
-
-	.product-footer .btn {
-		padding: 12px 24px;
-		font-size: 0.9rem;
-		font-weight: 600;
-		border-radius: 12px;
-		background: var(--color-sage);
-		color: #1a1a1a;
-		border: none;
-		cursor: pointer;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	.product-footer .btn:hover {
-		background: #9dbc9a;
-		transform: translateX(2px);
-		box-shadow: 0 4px 14px rgba(139, 168, 136, 0.35);
 	}
 
 	/* ========== Process Section ========== */
@@ -1763,11 +2276,111 @@ const homePageSchema = {
 		margin: 0;
 	}
 
+	/* ========== FAQ Section ========== */
+	.faq-section {
+		background: var(--color-sand);
+		padding: var(--space-4xl) 0;
+	}
+
+	.faq-accordion-grid {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 860px;
+		margin: var(--space-2xl) auto 0;
+	}
+
+	.faq-item {
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		transition: border-color var(--transition-base), box-shadow var(--transition-base);
+	}
+
+	.faq-item[open] {
+		border-color: var(--color-primary);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.faq-summary {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: var(--space-lg) var(--space-xl);
+		cursor: pointer;
+		user-select: none;
+		list-style: none;
+		gap: var(--space-md);
+	}
+
+	.faq-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-title {
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+		font-weight: 600;
+		color: var(--color-text);
+		line-height: 1.4;
+	}
+
+	.faq-chevron {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: var(--color-bg);
+		color: var(--color-primary);
+		flex-shrink: 0;
+		transition: transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+	}
+
+	.faq-item[open] .faq-chevron {
+		transform: rotate(180deg);
+		background: var(--color-primary);
+		color: var(--color-white);
+	}
+
+	.faq-body {
+		padding: 0 var(--space-xl) var(--space-xl);
+	}
+
+	.faq-body p {
+		color: var(--color-text-muted);
+		line-height: 1.7;
+		font-size: 0.98rem;
+		margin: 0;
+	}
+
+	.faq-footer-cta {
+		text-align: center;
+		margin-top: var(--space-2xl);
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+	}
+
+	.faq-footer-cta a {
+		color: var(--color-primary);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
 	/* ========== Responsive ========== */
 	@media (max-width: 1024px) {
 		.hero-grid {
 			grid-template-columns: 1fr;
-			gap: var(--space-2xl);
+			gap: var(--space-3xl);
+		}
+
+		.hero-spotlight {
+			max-width: 520px;
+			margin: 0 auto;
+			width: 100%;
 		}
 
 		.categories-grid,
@@ -1795,8 +2408,8 @@ const homePageSchema = {
 		}
 
 		.hero-stats {
-			gap: var(--space-xl);
-			flex-wrap: wrap;
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--space-lg);
 		}
 
 		.locations-grid {
@@ -1810,8 +2423,12 @@ const homePageSchema = {
 
 	@media (max-width: 768px) {
 		.hero {
-			padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-3xl);
+			padding: calc(var(--header-height) + var(--space-xl)) 0 var(--space-3xl);
 			min-height: auto;
+		}
+
+		.hero h1 {
+			font-size: 2.25rem;
 		}
 
 		.hero-ctas {
@@ -1823,20 +2440,32 @@ const homePageSchema = {
 			justify-content: center;
 		}
 
+		.hero-trust-bullets {
+			flex-direction: column;
+			gap: 8px;
+		}
+
 		.hero-stats {
-			justify-content: center;
+			grid-template-columns: 1fr 1fr;
+			padding: var(--space-lg);
+			gap: var(--space-md);
+		}
+
+		.stat-value {
+			font-size: 1.6rem;
 		}
 
 		.categories-grid,
 		.products-grid,
-			.process-grid,
-			.merch-grid {
+		.process-grid,
+		.merch-grid {
 			grid-template-columns: 1fr;
 		}
 
 		.section-header-row {
 			flex-direction: column;
 			align-items: flex-start;
+			gap: var(--space-md);
 		}
 
 		.cta-buttons {

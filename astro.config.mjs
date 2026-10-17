@@ -15,7 +15,7 @@ const singleSitemapIntegration = {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://mullawaysmedicalcannabis.com.au',
+  site: 'https://mullawaysmedicalcannabis.store',
   trailingSlash: 'always',
   integrations: [
     sitemap({

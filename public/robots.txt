@@ -1,5 +1,5 @@
 # Robots.txt for Mullaways Medical Cannabis
-# https://mullawaysmedicalcannabis.com.au
+# https://mullawaysmedicalcannabis.store
 
 User-agent: *
 Allow: /
@@ -8,7 +8,7 @@ Allow: /
 Disallow: /shop/*?
 Disallow: /*?q=
 
-Sitemap: https://mullawaysmedicalcannabis.com.au/sitemap.xml
+Sitemap: https://mullawaysmedicalcannabis.store/sitemap.xml
 
 # ─── TRADITIONAL SEARCH ─────────────────────────────────────────────────────
 User-agent: Googlebot
@@ -82,3 +82,5 @@ Disallow: /
 
 User-agent: meta-externalagent
 Disallow: /
+
+Sitemap: https://mullawaysmedicalcannabis.store/sitemap.xml

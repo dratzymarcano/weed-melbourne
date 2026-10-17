@@ -6,7 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
-const title = "Pre-Rolled Joints Australia | THC Pre-Rolls Online";
+const title = "Buy Pre-Rolled Joints Australia | Weed Pre-Rolls | Mullaways";
 const description = "Buy pre-rolled joints online in Australia. Ready-to-smoke THC joints, blunts and infused pre-rolls. Lab-tested, perfectly rolled, delivered discreetly.";
 
 const products = [
@@ -229,15 +229,15 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
-    { "@type": "ListItem", "position": 3, "name": "Pre-Rolls", "item": "https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" },
+    { "@type": "ListItem", "position": 3, "name": "Pre-Rolls", "item": "https://mullawaysmedicalcannabis.store/shop/pre-rolls/" }
   ]
 };
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/#itemlist",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.store/shop/pre-rolls/#itemlist",
   "name": "Pre-Rolled Joints Australia",
   "description": description,
   "numberOfItems": products.length,
@@ -245,19 +245,23 @@ const itemListSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": p.name,
-    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/shop/product/${p.slug}/`
   }))
 };
 
 const collectionSchema = collectionPageSchema({
-  url: 'https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/',
+  url: 'https://mullawaysmedicalcannabis.store/shop/pre-rolls/',
   name: 'Pre-Rolls Australia',
   description,
-  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/pre-rolls/#itemlist',
+  itemListId: 'https://mullawaysmedicalcannabis.store/shop/pre-rolls/#itemlist',
 });
 ---
 
 <Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema, collectionSchema]}>
+  <Header />
+
+  <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop/'}, {label: 'Pre-Rolls'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">
@@ -266,9 +270,9 @@ const collectionSchema = collectionPageSchema({
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="section-label section-label-light">Buy Pre-Rolled Joints Australia</span>
-          <h1>Ready-to-Smoke, No Fuss Required</h1>
-          <p>Can't roll to save your life? Don't have time? We get it. Our pre-rolls are hand-rolled, properly packed, and ready to light. Singles for solo sessions, packs for the weekend, infused for when you need that extra kick. No rolling skills required.</p>
+          <span class="section-label section-label-light">Pre-Rolled Joints Australia — Singles, Packs & Blunts</span>
+          <h1>Buy Pre-Rolled Joints Australia — Ready-to-Smoke Weed Joints</h1>
+          <p>Looking to buy pre-rolled joints online in Australia? Our joints and blunts are hand-rolled with premium lab-tested flower and infused extracts. Clean burning, even burn, and discreet Australia-wide delivery straight to your door.</p>
         </div>
       </div>
     </section>

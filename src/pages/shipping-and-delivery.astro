@@ -34,8 +34,8 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shipping & Delivery", "item": "https://mullawaysmedicalcannabis.com.au/shipping-and-delivery/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shipping & Delivery", "item": "https://mullawaysmedicalcannabis.store/shipping-and-delivery/" }
   ]
 };
 
@@ -43,10 +43,10 @@ const shippingPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": title,
-  "url": "https://mullawaysmedicalcannabis.com.au/shipping-and-delivery/",
+  "url": "https://mullawaysmedicalcannabis.store/shipping-and-delivery/",
   "description": description,
   "about": {
-    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+    "@id": "https://mullawaysmedicalcannabis.store/#organization"
   }
 };
 
@@ -305,6 +305,7 @@ const faqSchema = {
           <aside class="table-of-contents">
             <h3>Contents</h3>
             <nav>
+              <a href="#guarantee">100% Delivery Guarantee</a>
               <a href="#discreet">Discreet Packaging</a>
               <a href="#tracking">Order Tracking</a>
               <a href="#dispatch">Dispatch Times</a>
@@ -316,6 +317,30 @@ const faqSchema = {
           </aside>
 
           <article class="policy-content">
+            <section id="guarantee" class="policy-section">
+              <h2>100% Guaranteed Delivery &amp; Free Reshipment Policy</h2>
+              <p>
+                At Mullaways Medical Cannabis, we take 100% financial and operational responsibility for your package until it is safely delivered into your hands. Customers face zero risk when ordering through our online dispensary.
+              </p>
+              <div class="guarantee-features-grid">
+                <div class="guarantee-feature-card">
+                  <div class="g-icon">&#x1F6E1;&#xFE0F;</div>
+                  <h4>Guaranteed Safe Arrival</h4>
+                  <p>If an Australia Post tracking number stalls for more than 7 business days, is marked lost, or is damaged in transit, we dispatch an immediate 100% free reshipment or offer full store credit with zero hassle.</p>
+                </div>
+                <div class="guarantee-feature-card">
+                  <div class="g-icon">&#x1F510;</div>
+                  <h4>Triple-Sealed Odour Lock</h4>
+                  <p>All cannabis products are vacuum-sealed in heavy-duty food-grade plastic barrier bags, wrapped in an odour-neutral foil sleeve, and packaged inside rigid cardboard mailers to ensure 100% scent-free transit.</p>
+                </div>
+                <div class="guarantee-feature-card">
+                  <div class="g-icon">&#x1F4AC;</div>
+                  <h4>Real-Time Live Chat Support</h4>
+                  <p>No waiting days for email responses. If you have any shipping inquiry or tracking question, our support team is available live 7 days a week via on-site Live Chat.</p>
+                </div>
+              </div>
+            </section>
+
             <section id="discreet" class="policy-section">
               <h2>Discreet Packaging</h2>
               <p>
@@ -840,6 +865,39 @@ const faqSchema = {
 
   .policy-section a:hover {
     text-decoration: underline;
+  }
+
+  .guarantee-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .guarantee-feature-card {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .guarantee-feature-card .g-icon {
+    font-size: 1.8rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .guarantee-feature-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #166534;
+    margin-bottom: var(--space-xs);
+  }
+
+  .guarantee-feature-card p {
+    color: #15803d;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin: 0;
   }
 
   .feature-grid {

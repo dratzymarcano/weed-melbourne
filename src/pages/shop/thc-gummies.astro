@@ -6,7 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
-const title = "THC Gummies Australia | Buy Weed Gummies Online";
+const title = "Buy THC Gummies Australia | Weed Edibles Online | Mullaways";
 const description = "Buy THC gummies and weed gummies in Australia. Strongest cannabis gummies for pain and sleep. Lab-tested, discreet shipping. Hemp gummies available.";
 
 const products = [
@@ -215,15 +215,15 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
-    { "@type": "ListItem", "position": 3, "name": "THC Gummies", "item": "https://mullawaysmedicalcannabis.com.au/shop/thc-gummies/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" },
+    { "@type": "ListItem", "position": 3, "name": "THC Gummies", "item": "https://mullawaysmedicalcannabis.store/shop/thc-gummies/" }
   ]
 };
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/thc-gummies/#itemlist",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.store/shop/thc-gummies/#itemlist",
   "name": "THC Gummies Australia",
   "description": description,
   "numberOfItems": products.length,
@@ -231,19 +231,23 @@ const itemListSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": p.name,
-    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/shop/product/${p.slug}/`
   }))
 };
 
 const collectionSchema = collectionPageSchema({
-  url: 'https://mullawaysmedicalcannabis.com.au/shop/thc-gummies/',
+  url: 'https://mullawaysmedicalcannabis.store/shop/thc-gummies/',
   name: 'THC Gummies Australia',
   description,
-  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/thc-gummies/#itemlist',
+  itemListId: 'https://mullawaysmedicalcannabis.store/shop/thc-gummies/#itemlist',
 });
 ---
 
 <Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema, collectionSchema]}>
+  <Header />
+
+  <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop/'}, {label: 'THC Gummies'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">
@@ -252,9 +256,9 @@ const collectionSchema = collectionPageSchema({
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="section-label section-label-light">Australia's Best-Selling Edibles</span>
-          <h1>THC Gummies Australia — Cannabis Edibles That Actually Work</h1>
-          <p>Sick of dodgy edibles that either do nothing or knock you flat? We've got you covered. Our THC gummies are lab-tested for exact potency so you know exactly what you're getting. Whether you want a chill night in, help with sleep, or something stronger — there's a gummy for that. From 5mg beginner doses to our legendary 50mg "proceed with caution" options.</p>
+          <span class="section-label section-label-light">Australia's Best-Selling THC Gummies</span>
+          <h1>Buy THC Gummies Australia — 10mg, 25mg & 50mg Cannabis Edibles</h1>
+          <p>Looking to buy THC gummies online in Australia? Our cannabis gummies and edibles are independently lab-tested for exact cannabinoid potency. Explore low-dose beginner gummies, targeted sleep gummies with CBN, and ultra-strength 50mg options delivered discreetly nationwide.</p>
         </div>
       </div>
     </section>

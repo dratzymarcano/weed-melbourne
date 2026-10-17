@@ -53,9 +53,14 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 <span>Subtotal</span>
                 <span id="cart-subtotal">$0.00</span>
               </div>
+
+              <div class="summary-row" id="cart-discount-row" style="display: none;">
+                <span style="color:#059669;font-weight:600;" id="cart-discount-label">Promo Discount</span>
+                <span id="cart-discount" style="color:#059669;font-weight:600;">-$0.00</span>
+              </div>
               
               <div class="summary-row">
-                <span>Shipping</span>
+                <span>Estimated Shipping</span>
                 <span id="cart-shipping">Calculated at checkout</span>
               </div>
               
@@ -66,12 +71,18 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 <span id="cart-total">$0.00</span>
               </div>
 
+              <div class="cart-loyalty-callout" id="cart-loyalty-callout">
+                <span class="loyalty-icon">⭐</span>
+                <span>You will earn <strong id="cart-loyalty-pts">0</strong> Mullaways Loyalty Points on this order</span>
+              </div>
+
               <div class="promo-section">
                 <label for="promo-code">Promo Code</label>
                 <div class="promo-input">
-                  <input type="text" id="promo-code" placeholder="Enter code">
-                  <button type="button" class="btn btn-outline btn-sm">Apply</button>
+                  <input type="text" id="promo-code" placeholder="e.g. WELCOME15" style="text-transform: uppercase;">
+                  <button type="button" class="btn btn-outline btn-sm" id="apply-promo-btn">Apply</button>
                 </div>
+                <div id="promo-message" style="display: none; margin-top: 8px; font-size: 0.85rem; line-height: 1.4;"></div>
               </div>
               
               <a href="/checkout/" class="btn btn-primary btn-large btn-full" id="checkout-btn">
@@ -88,6 +99,17 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 </svg>
                 Secure checkout with encrypted payment
               </p>
+            </div>
+
+            <!-- 100% Delivery Guarantee Card -->
+            <div class="cart-guarantee-box">
+              <div class="cart-guarantee-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <div class="cart-guarantee-text">
+                <strong>100% Guaranteed Safe Delivery</strong>
+                <p>Triple smell-proof vacuum sealed &amp; tracked Australia Post Express. Guaranteed safe arrival or immediate 100% free reshipment.</p>
+              </div>
             </div>
 
             <div class="trust-badges">
@@ -409,8 +431,53 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     margin-bottom: 0;
   }
 
-  /* Checkout Options */
+  .cart-loyalty-callout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: 0.85rem;
+    color: #92400e;
+    line-height: 1.4;
+  }
 
+  .cart-loyalty-callout .loyalty-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cart-guarantee-box {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+  }
+
+  .cart-guarantee-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .cart-guarantee-text strong {
+    display: block;
+    font-size: 0.88rem;
+    color: #166534;
+    margin-bottom: 2px;
+  }
+
+  .cart-guarantee-text p {
+    font-size: 0.78rem;
+    color: #15803d;
+    line-height: 1.4;
+    margin: 0;
+  }
 
   /* Trust Badges */
   .trust-badges {
@@ -643,12 +710,148 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         cartSummary.style.display = 'block';
         const subtotal = cart.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
         const subtotalEl = document.getElementById('cart-subtotal');
+        const shippingEl = document.getElementById('cart-shipping');
+        const discountRow = document.getElementById('cart-discount-row');
+        const discountLabel = document.getElementById('cart-discount-label');
+        const discountEl = document.getElementById('cart-discount');
         const totalEl = document.getElementById('cart-total');
+
         if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-        if (totalEl) totalEl.textContent = `$${subtotal.toFixed(2)}`;
+
+        // Dynamic Shipping calculation display
+        if (shippingEl) {
+          if (subtotal >= 150) {
+            shippingEl.innerHTML = '<strong style="color:#059669;">FREE</strong> (Orders over $150)';
+          } else {
+            const diff = (150 - subtotal).toFixed(2);
+            shippingEl.textContent = `$9.95 (Add $${diff} for FREE standard delivery)`;
+          }
+        }
+
+        // Promo Discount
+        let appliedPromo: { code: string; rate: number; label: string } | null = null;
+        try {
+          const storedPromo = localStorage.getItem('appliedPromo');
+          if (storedPromo) appliedPromo = JSON.parse(storedPromo);
+        } catch {
+          appliedPromo = null;
+        }
+
+        let promoDiscount = 0;
+        if (appliedPromo && appliedPromo.rate > 0) {
+          promoDiscount = Math.round(subtotal * appliedPromo.rate * 100) / 100;
+          if (discountRow && discountLabel && discountEl) {
+            discountRow.style.display = 'flex';
+            discountLabel.textContent = `Promo (${appliedPromo.code}) -${Math.round(appliedPromo.rate * 100)}%`;
+            discountEl.textContent = `-$${promoDiscount.toFixed(2)}`;
+          }
+        } else if (discountRow) {
+          discountRow.style.display = 'none';
+        }
+
+        const grandTotal = Math.max(0, subtotal - promoDiscount);
+        if (totalEl) totalEl.textContent = `$${grandTotal.toFixed(2)}`;
+
+        const loyaltyEl = document.getElementById('cart-loyalty-pts');
+        if (loyaltyEl) loyaltyEl.textContent = Math.round(grandTotal).toString();
+
+        // Render Promo input state
+        renderPromoStatus(appliedPromo);
       }
     }
   }
+
+  const VALID_PROMOS: Record<string, { rate: number; label: string }> = {
+    'WELCOME15': { rate: 0.15, label: '15% Off First Order' },
+    'FIRST15': { rate: 0.15, label: '15% Off First Order' },
+    'MULLAWAYS15': { rate: 0.15, label: '15% Off First Order' },
+    'SAVE10': { rate: 0.10, label: '10% Off' },
+  };
+
+  function renderPromoStatus(appliedPromo: { code: string; rate: number; label: string } | null) {
+    const promoInput = document.getElementById('promo-code') as HTMLInputElement | null;
+    const promoMsg = document.getElementById('promo-message');
+    const applyBtn = document.getElementById('apply-promo-btn');
+
+    if (!promoMsg) return;
+
+    if (appliedPromo) {
+      if (promoInput) {
+        promoInput.value = appliedPromo.code;
+        promoInput.disabled = true;
+      }
+      if (applyBtn) {
+        applyBtn.textContent = 'Remove';
+        applyBtn.classList.remove('btn-outline');
+        applyBtn.classList.add('btn-ghost');
+      }
+      promoMsg.style.display = 'block';
+      promoMsg.style.color = '#059669';
+      promoMsg.innerHTML = `✓ Code <strong>${appliedPromo.code}</strong> applied (${Math.round(appliedPromo.rate * 100)}% off).`;
+    } else {
+      if (promoInput) {
+        promoInput.disabled = false;
+      }
+      if (applyBtn) {
+        applyBtn.textContent = 'Apply';
+        applyBtn.classList.remove('btn-ghost');
+        applyBtn.classList.add('btn-outline');
+      }
+    }
+  }
+
+  function handlePromoApply() {
+    const promoInput = document.getElementById('promo-code') as HTMLInputElement | null;
+    const promoMsg = document.getElementById('promo-message');
+    const storedPromo = localStorage.getItem('appliedPromo');
+
+    if (storedPromo) {
+      // User clicked Remove
+      localStorage.removeItem('appliedPromo');
+      if (promoInput) promoInput.value = '';
+      if (promoMsg) {
+        promoMsg.style.display = 'none';
+        promoMsg.textContent = '';
+      }
+      renderCart();
+      return;
+    }
+
+    if (!promoInput || !promoMsg) return;
+    const code = promoInput.value.trim().toUpperCase();
+
+    if (!code) {
+      promoMsg.style.display = 'block';
+      promoMsg.style.color = '#dc2626';
+      promoMsg.textContent = 'Please enter a promo code.';
+      return;
+    }
+
+    if (VALID_PROMOS[code]) {
+      const promoInfo = VALID_PROMOS[code];
+      localStorage.setItem('appliedPromo', JSON.stringify({
+        code,
+        rate: promoInfo.rate,
+        label: promoInfo.label
+      }));
+      promoMsg.style.display = 'block';
+      promoMsg.style.color = '#059669';
+      promoMsg.innerHTML = `✓ Code <strong>${code}</strong> applied (${Math.round(promoInfo.rate * 100)}% off).`;
+      renderCart();
+    } else {
+      promoMsg.style.display = 'block';
+      promoMsg.style.color = '#dc2626';
+      promoMsg.innerHTML = 'Invalid code. Use <strong>WELCOME15</strong> for 15% off your order.';
+    }
+  }
+
+  document.getElementById('apply-promo-btn')?.addEventListener('click', handlePromoApply);
+  document.getElementById('promo-code')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handlePromoApply();
+    }
+  });
 
   function updateQuantity(index: number, delta: number) {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -674,6 +877,4 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   // Listen for updates
   window.addEventListener('storage', renderCart);
   window.addEventListener('cartUpdated', renderCart);
-
-
 </script>

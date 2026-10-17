@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
-<Layout title="Secure Checkout | Mullaways Medical Cannabis" description="Complete your cannabis order securely. Pay with Bitcoin or bank transfer. Discreet Australia-wide delivery with express shipping." noindex={true}>
+<Layout title="Secure Checkout | Mullaways Medical Cannabis" description="Complete your medical cannabis order securely. 3-step progressive checkout. Discreet Australia-wide delivery with tracked express shipping." noindex={true}>
   <Header />
 
   <main>
@@ -19,6 +19,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     </div>
 
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Cart', href: '/cart/'}, {label: 'Checkout'}]} />
+    
     <section class="page-hero">
       <div class="hero-bg">
         <div class="hero-shape hero-shape-1"></div>
@@ -26,9 +27,9 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="section-label section-label-light">Checkout</span>
+          <span class="section-label section-label-light">Discreet &amp; Encrypted</span>
           <h1>Secure Checkout</h1>
-          <p>Choose delivery and payment, then place your order.</p>
+          <p>Follow our simple 3-step checkout to finalise your order and arrange fast delivery.</p>
         </div>
       </div>
     </section>
@@ -36,160 +37,428 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     <section class="section checkout-section">
       <div class="container">
         <div class="checkout-layout" id="checkout-layout">
-          <div class="checkout-form" id="checkout-form">
-            <div class="card">
-              <h2>Delivery Details</h2>
-              <form class="form-grid" id="checkout-details">
-                <div class="form-group">
-                  <label for="firstName">First Name</label>
-                  <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
-                </div>
-                <div class="form-group">
-                  <label for="lastName">Last Name</label>
-                  <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email Address</label>
-                  <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                  <label for="phone">Phone Number</label>
-                  <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-                </div>
-                <div class="form-group full">
-                  <label for="address">Street Address</label>
-                  <input type="text" id="address" name="address" placeholder="Street address" required>
-                </div>
-                <div class="form-group">
-                  <label for="city">City</label>
-                  <input type="text" id="city" name="city" placeholder="City" required>
-                </div>
-                <div class="form-group">
-                  <label for="state">State</label>
-                  <input type="text" id="state" name="state" placeholder="State" required>
-                </div>
-                <div class="form-group">
-                  <label for="postcode">Postcode</label>
-                  <input type="text" id="postcode" name="postcode" placeholder="Postcode" required>
-                </div>
-              </form>
+          
+          <!-- Progressive Stepper & Left Column -->
+          <div class="checkout-main-col">
+            
+            <!-- 3-Step Indicator Bar -->
+            <div class="checkout-stepper" id="checkout-stepper" role="navigation" aria-label="Checkout Progress">
+              
+              <button type="button" class="step-indicator active" id="step-nav-1" data-step-target="1" aria-current="step">
+                <span class="step-bubble">
+                  <span class="step-num">1</span>
+                  <svg class="step-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span class="step-meta">
+                  <span class="step-small-title">Step 1</span>
+                  <span class="step-label">Customer Info</span>
+                </span>
+              </button>
+
+              <div class="step-connector" id="connector-1"></div>
+
+              <button type="button" class="step-indicator" id="step-nav-2" data-step-target="2">
+                <span class="step-bubble">
+                  <span class="step-num">2</span>
+                  <svg class="step-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span class="step-meta">
+                  <span class="step-small-title">Step 2</span>
+                  <span class="step-label">Shipping / Delivery</span>
+                </span>
+              </button>
+
+              <div class="step-connector" id="connector-2"></div>
+
+              <button type="button" class="step-indicator" id="step-nav-3" data-step-target="3">
+                <span class="step-bubble">
+                  <span class="step-num">3</span>
+                  <svg class="step-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span class="step-meta">
+                  <span class="step-small-title">Step 3</span>
+                  <span class="step-label">Payment</span>
+                </span>
+              </button>
+
             </div>
 
-            <div class="card">
-              <h2>Delivery Method</h2>
-              <div class="option-list" id="delivery-options">
-                <label class="option-card">
-                  <input type="radio" name="delivery" value="standard" data-fee="9.95" checked>
+            <!-- ── STEP 1: Customer Information ── -->
+            <div class="step-pane active" id="step-pane-1">
+              <div class="card checkout-card">
+                <div class="card-header-row">
                   <div>
-                    <span class="option-title">Standard Delivery</span>
-                    <span class="option-meta">2–5 business days · $9.95</span>
+                    <span class="card-step-tag">Step 1 of 3</span>
+                    <h2>Customer &amp; Delivery Information</h2>
+                    <p class="card-step-desc">Enter your contact info and recipient address. Packed in plain, 100% smell-proof satchels with zero cannabis branding.</p>
                   </div>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="delivery" value="express" data-fee="19.95">
-                  <div>
-                    <span class="option-title">Express Delivery</span>
-                    <span class="option-meta">1–2 business days · $19.95</span>
+                </div>
+
+                <form class="form-grid" id="checkout-details" novalidate>
+                  <div class="form-group">
+                    <label for="firstName">First Name <span class="required-star">*</span></label>
+                    <input type="text" id="firstName" name="firstName" placeholder="First name" autocomplete="given-name" required>
                   </div>
-                </label>
+                  <div class="form-group">
+                    <label for="lastName">Last Name <span class="required-star">*</span></label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Last name" autocomplete="family-name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email Address <span class="required-star">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                    <span class="field-hint">Order confirmation &amp; tracking number will be sent here</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number <span class="required-star">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="0400 000 000" autocomplete="tel" required>
+                    <span class="field-hint">For Australia Post delivery SMS alerts only</span>
+                  </div>
+                  <div class="form-group full">
+                    <label for="address">Street Address <span class="required-star">*</span></label>
+                    <input type="text" id="address" name="address" placeholder="Unit, street number and street name" autocomplete="street-address" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City / Suburb <span class="required-star">*</span></label>
+                    <input type="text" id="city" name="city" placeholder="City or Suburb" autocomplete="address-level2" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="state">State / Territory <span class="required-star">*</span></label>
+                    <select id="state" name="state" required class="select-input">
+                      <option value="">Select state...</option>
+                      <option value="NSW">New South Wales (NSW)</option>
+                      <option value="VIC">Victoria (VIC)</option>
+                      <option value="QLD">Queensland (QLD)</option>
+                      <option value="WA">Western Australia (WA)</option>
+                      <option value="SA">South Australia (SA)</option>
+                      <option value="ACT">Australian Capital Territory (ACT)</option>
+                      <option value="TAS">Tasmania (TAS)</option>
+                      <option value="NT">Northern Territory (NT)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="postcode">Postcode <span class="required-star">*</span></label>
+                    <input type="text" id="postcode" name="postcode" placeholder="4-digit postcode (e.g. 3000)" maxlength="4" autocomplete="postal-code" required>
+                  </div>
+                </form>
+
+                <div class="step-nav-footer">
+                  <div class="step-security-callout">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <span>Confidential Australian delivery with strict privacy</span>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-large" id="step1-next-btn">
+                    <span>Continue to Shipping</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div class="card">
-              <h2>Payment Method</h2>
-              <div class="option-list" id="payment-options">
-                <label class="option-card">
-                  <input type="radio" name="payment" value="bitcoin" checked>
+            <!-- ── STEP 2: Shipping / Delivery ── -->
+            <div class="step-pane" id="step-pane-2">
+              <div class="card checkout-card">
+                <div class="card-header-row">
                   <div>
-                    <span class="option-title">
-                      <svg width="18" height="18" viewBox="0 0 64 64" style="vertical-align:-3px;margin-right:4px;"><circle cx="32" cy="32" r="32" fill="#F7931A"/><path d="M46.1 27.4c.6-4.2-2.6-6.5-7-8l1.4-5.7-3.5-.9-1.4 5.5c-.9-.2-1.9-.4-2.8-.7l1.4-5.5-3.5-.9-1.4 5.7c-.8-.2-1.5-.3-2.2-.5l0 0-4.8-1.2-.9 3.7s2.6.6 2.5.6c1.4.4 1.7 1.3 1.6 2l-1.6 6.6c.1 0 .2 0 .3.1l-.3-.1-2.3 9.2c-.2.4-.6 1.1-1.6.8 0 0-2.5-.6-2.5-.6l-1.7 4 4.5 1.1c.8.2 1.7.4 2.5.6l-1.5 5.8 3.5.9 1.4-5.7c1 .3 1.9.5 2.8.7l-1.4 5.7 3.5.9 1.5-5.8c5.8 1.1 10.2.7 12-4.6 1.5-4.3-.1-6.7-3.2-8.3 2.2-.5 3.9-2 4.4-5.1zm-7.8 10.9c-1.1 4.3-8.2 2-10.5 1.4l1.9-7.5c2.3.6 9.7 1.7 8.6 6.1zm1-11c-1 3.9-6.9 1.9-8.8 1.4l1.7-6.8c1.9.5 8.2 1.4 7.1 5.4z" fill="#FFF"/></svg>
-                      Bitcoin
-                      <span class="btc-discount-badge">10% OFF</span>
-                    </span>
-                    <span class="option-meta">Instant confirmation · Private &amp; secure · <strong style="color:#059669;">Save 10% when you pay with Bitcoin</strong></span>
-                    <a href="/buy-bitcoin/" class="payment-info-link">Learn how to pay with Bitcoin &rarr;</a>
+                    <span class="card-step-tag">Step 2 of 3</span>
+                    <h2>Shipping &amp; Delivery Method</h2>
+                    <p class="card-step-desc">Select your preferred Australia Post delivery speed. Every package includes full online tracking.</p>
                   </div>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="payment" value="bank">
-                  <div>
-                    <span class="option-title">
-                      <svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;"><circle cx="12" cy="12" r="12" fill="#2D5A4A"/><path d="M12 4.5L5 8.5V9.5H19V8.5L12 4.5Z" fill="#fff"/><rect x="6.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="9.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="12.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="15.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="5" y="16" width="14" height="1.5" rx="0.3" fill="#fff"/></svg>
-                      Bank Transfer
-                    </span>
-                    <span class="option-meta">PayID (instant) or BSB transfer · Zero fees</span>
-                    <a href="/pay-with-bank-transfer/" class="payment-info-link">Learn how to pay with bank transfer &rarr;</a>
-                  </div>
-                </label>
-              </div>
+                </div>
 
-              <div class="payment-panel" id="bank-panel" style="display: none;">
-                <div class="panel-header">
-                  <h3>Pay with Bank Transfer / PayID</h3>
-                  <p>Our bank details and PayID will be sent to your email after you place your order.</p>
-                </div>
-                <div class="bank-info-notice">
-                  <div class="notice-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10h8M8 14h5"/><path d="M4 8h16"/></svg>
+                <!-- Step 1 Summary Recall Box -->
+                <div class="summary-recall-box">
+                  <div class="recall-item">
+                    <div class="recall-label">Ship To:</div>
+                    <div class="recall-value" id="recall-customer-address">—</div>
                   </div>
-                  <div>
-                    <strong>How it works:</strong>
-                    <ol style="margin:8px 0 0;padding-left:18px;font-size:0.9rem;color:#444;line-height:1.7;">
-                      <li>Click <strong>"Place Order"</strong> below</li>
-                      <li>You'll receive an email with our <strong>bank account details</strong> (BSB &amp; account number) and <strong>PayID</strong></li>
-                      <li>Transfer the exact order amount using your banking app</li>
-                      <li>Your order will be processed once payment is confirmed</li>
-                    </ol>
+                  <div class="recall-item">
+                    <div class="recall-label">Contact:</div>
+                    <div class="recall-value" id="recall-customer-contact">—</div>
                   </div>
+                  <button type="button" class="recall-edit-btn" id="edit-step-1-btn" aria-label="Edit customer information">
+                    <span>Edit</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 20h9"></path>
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                  </button>
                 </div>
-                <div class="info-alert" style="margin-top:14px;">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                  <span>PayID transfers are <strong>instant 24/7</strong> — even on weekends. Standard BSB transfers take 1-2 hours during business days.</span>
-                </div>
-                <a href="/pay-with-bank-transfer/" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;color:var(--color-primary);font-size:0.85rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;">Learn more about bank transfer payments &rarr;</a>
-              </div>
 
+                <!-- Delivery Options -->
+                <div class="option-list" id="delivery-options">
+                  <label class="option-card" for="delivery-standard">
+                    <input type="radio" id="delivery-standard" name="delivery" value="standard" data-fee="9.95" checked>
+                    <div class="option-content">
+                      <div class="option-top-line">
+                        <span class="option-title">Standard Tracked Delivery</span>
+                        <span class="option-price-tag" id="standard-price-tag">$9.95</span>
+                      </div>
+                      <span class="option-meta" id="standard-delivery-meta">2–5 business days &middot; Free on orders of $150 or more</span>
+                    </div>
+                  </label>
+
+                  <label class="option-card" for="delivery-express">
+                    <input type="radio" id="delivery-express" name="delivery" value="express" data-fee="19.95">
+                    <div class="option-content">
+                      <div class="option-top-line">
+                        <span class="option-title">Express Post Priority</span>
+                        <span class="option-price-tag">$19.95</span>
+                      </div>
+                      <span class="option-meta">1–2 business days &middot; Priority warehouse packing &amp; fast transit</span>
+                    </div>
+                  </label>
+                </div>
+
+                <!-- Discreet Guarantee Callout -->
+                <div class="stealth-packaging-banner">
+                  <div class="stealth-icon">&#x1F4E6;</div>
+                  <div class="stealth-text">
+                    <strong>100% Odour-Proof Guarantee:</strong> All orders are vacuum-sealed inside thick multi-layer Mylar barrier bags and shipped in unmarked Australian Post padded satchels with generic return addressing.
+                  </div>
+                </div>
+
+                <div class="step-nav-footer">
+                  <button type="button" class="btn btn-outline" id="step2-prev-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="19" y1="12" x2="5" y2="12"></line>
+                      <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Details</span>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-large" id="step2-next-btn">
+                    <span>Continue to Payment</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
+
+            <!-- ── STEP 3: Payment Method ── -->
+            <div class="step-pane" id="step-pane-3">
+              <div class="card checkout-card">
+                <div class="card-header-row">
+                  <div>
+                    <span class="card-step-tag">Step 3 of 3</span>
+                    <h2>Choose Payment Method</h2>
+                    <p class="card-step-desc">Pick your preferred payment option. Pay with Bitcoin for an immediate 10% discount, or pay via Bank Transfer / PayID.</p>
+                  </div>
+                </div>
+
+                <!-- Recall Summary (Customer & Shipping) -->
+                <div class="summary-recall-box">
+                  <div class="recall-item">
+                    <div class="recall-label">Recipient:</div>
+                    <div class="recall-value" id="recall-step3-customer">—</div>
+                  </div>
+                  <div class="recall-item">
+                    <div class="recall-label">Delivery:</div>
+                    <div class="recall-value" id="recall-step3-shipping">—</div>
+                  </div>
+                  <button type="button" class="recall-edit-btn" id="edit-step-2-btn" aria-label="Change delivery method">
+                    <span>Edit</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 20h9"></path>
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Payment Option Cards -->
+                <div class="option-list" id="payment-options">
+                  <label class="option-card" for="payment-bitcoin">
+                    <input type="radio" id="payment-bitcoin" name="payment" value="bitcoin" checked>
+                    <div class="option-content">
+                      <div class="option-top-line">
+                        <span class="option-title">
+                          <svg width="20" height="20" viewBox="0 0 64 64" style="vertical-align:-4px;margin-right:6px;"><circle cx="32" cy="32" r="32" fill="#F7931A"/><path d="M46.1 27.4c.6-4.2-2.6-6.5-7-8l1.4-5.7-3.5-.9-1.4 5.5c-.9-.2-1.9-.4-2.8-.7l1.4-5.5-3.5-.9-1.4 5.7c-.8-.2-1.5-.3-2.2-.5l0 0-4.8-1.2-.9 3.7s2.6.6 2.5.6c1.4.4 1.7 1.3 1.6 2l-1.6 6.6c.1 0 .2 0 .3.1l-.3-.1-2.3 9.2c-.2.4-.6 1.1-1.6.8 0 0-2.5-.6-2.5-.6l-1.7 4 4.5 1.1c.8.2 1.7.4 2.5.6l-1.5 5.8 3.5.9 1.4-5.7c1 .3 1.9.5 2.8.7l-1.4 5.7 3.5.9 1.5-5.8c5.8 1.1 10.2.7 12-4.6 1.5-4.3-.1-6.7-3.2-8.3 2.2-.5 3.9-2 4.4-5.1zm-7.8 10.9c-1.1 4.3-8.2 2-10.5 1.4l1.9-7.5c2.3.6 9.7 1.7 8.6 6.1zm1-11c-1 3.9-6.9 1.9-8.8 1.4l1.7-6.8c1.9.5 8.2 1.4 7.1 5.4z" fill="#FFF"/></svg>
+                          Bitcoin (BTC)
+                          <span class="btc-discount-badge">10% OFF</span>
+                        </span>
+                        <span class="option-badge-popular">Instant &amp; Private</span>
+                      </div>
+                      <span class="option-meta">Automatic 10% discount on order total &middot; Private blockchain verification &middot; Zero bank records</span>
+                    </div>
+                  </label>
+
+                  <label class="option-card" for="payment-bank">
+                    <input type="radio" id="payment-bank" name="payment" value="bank">
+                    <div class="option-content">
+                      <div class="option-top-line">
+                        <span class="option-title">
+                          <svg width="20" height="20" viewBox="0 0 24 24" style="vertical-align:-4px;margin-right:6px;"><circle cx="12" cy="12" r="12" fill="#1F4D3C"/><path d="M12 4.5L5 8.5V9.5H19V8.5L12 4.5Z" fill="#fff"/><rect x="6.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="9.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="12.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="15.5" y="10.5" width="2" height="5" rx="0.3" fill="#fff"/><rect x="5" y="16" width="14" height="1.5" rx="0.3" fill="#fff"/></svg>
+                          Bank Transfer / PayID
+                        </span>
+                        <span class="option-badge-fee">Zero Fees</span>
+                      </div>
+                      <span class="option-meta">PayID (Instant 24/7) or standard BSB transfer &middot; Account details provided securely via Live Chat</span>
+                    </div>
+                  </label>
+                </div>
+
+                <!-- Bitcoin Instruction Panel -->
+                <div class="payment-panel" id="bitcoin-panel">
+                  <div class="panel-header">
+                    <h3>Pay with Bitcoin &amp; Save 10%</h3>
+                    <p>After clicking "Place Order", your unique order reference and QR wallet code will appear with the discounted total.</p>
+                  </div>
+                  <div class="btc-info-box">
+                    <div class="btc-info-item">
+                      <span class="btc-info-dot"></span>
+                      <span><strong>10% Discount:</strong> Deducted automatically from your order total.</span>
+                    </div>
+                    <div class="btc-info-item">
+                      <span class="btc-info-dot"></span>
+                      <span><strong>Discreet:</strong> Your transaction exists only on the blockchain &mdash; no credit card statement traces.</span>
+                    </div>
+                    <div class="btc-info-item">
+                      <span class="btc-info-dot"></span>
+                      <span><strong>New to crypto?</strong> CoinSpot, CoinJar and Swyftx support instant Australian PayID deposits. <a href="/buy-bitcoin/" target="_blank">View our Beginner Guide &rarr;</a></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bank Transfer / PayID Panel -->
+                <div class="payment-panel" id="bank-panel" style="display: none;">
+                  <div class="panel-header">
+                    <h3>Pay via Bank Transfer or PayID</h3>
+                    <p>For your financial safety and anti-interception protection, our bank account and PayID details are provided via 1-on-1 Live Chat.</p>
+                  </div>
+                  <div class="bank-info-notice">
+                    <div class="notice-icon">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="notice-content">
+                      <strong>How it works:</strong>
+                      <ol class="bank-steps-list">
+                        <li>Click <strong>"Place Order"</strong> below to confirm your items.</li>
+                        <li>On the confirmation page, click <strong>"Open Live Chat"</strong> (bottom-right chat bubble).</li>
+                        <li>Our team instantly replies with our current PayID and account details.</li>
+                        <li>Send the exact amount from your Australian banking app. Your order is dispatched the same day!</li>
+                      </ol>
+                    </div>
+                  </div>
+                  <div class="info-alert">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <span><strong>Instant 24/7 Payments:</strong> PayID transfers clear instantly between all major Australian banks, including CommBank, NAB, ANZ, Westpac, and ING.</span>
+                  </div>
+                </div>
+
+                <div class="step-nav-footer">
+                  <button type="button" class="btn btn-outline" id="step3-prev-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="19" y1="12" x2="5" y2="12"></line>
+                      <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Shipping</span>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-large btn-final" id="place-order-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span id="place-order-label">Place Order &mdash; $0.00</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
 
+          <!-- ── Right Column: Order Summary ── -->
           <aside class="checkout-summary" id="checkout-summary">
             <div class="summary-card">
-              <h3>Order Summary</h3>
+              <div class="summary-card-header">
+                <h3>Order Summary</h3>
+                <span class="summary-item-badge" id="summary-count-badge">0 items</span>
+              </div>
+
+              <!-- Cart items preview -->
               <div id="summary-items" class="summary-items"></div>
-              <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="summary-subtotal">$0.00</span>
+
+              <!-- Promo Code in Checkout -->
+              <div class="checkout-promo-box">
+                <div class="promo-input-row">
+                  <input type="text" id="checkout-promo-code" placeholder="PROMO CODE (e.g. WELCOME15)" autocomplete="off">
+                  <button type="button" class="btn btn-outline btn-sm" id="checkout-promo-btn">Apply</button>
+                </div>
+                <div id="checkout-promo-msg" style="display: none;"></div>
               </div>
-              <div class="summary-row">
-                <span>Delivery</span>
-                <span id="summary-shipping">$0.00</span>
+
+              <!-- Pricing breakdown -->
+              <div class="summary-pricing">
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping</span>
+                  <span id="summary-shipping">$0.00</span>
+                </div>
+                <div class="summary-row summary-discount" id="summary-promo-row" style="display: none;">
+                  <span style="color:#059669;font-weight:600;" id="summary-promo-label">Promo Discount</span>
+                  <span id="summary-promo" style="color:#059669;font-weight:600;">-$0.00</span>
+                </div>
+                <div class="summary-row summary-discount" id="summary-discount-row" style="display: none;">
+                  <span style="color:#059669;font-weight:600;">Bitcoin Discount (10%)</span>
+                  <span id="summary-discount" style="color:#059669;font-weight:600;">-$0.00</span>
+                </div>
+                
+                <div class="summary-divider"></div>
+                
+                <div class="summary-row summary-total">
+                  <span>Grand Total (AUD)</span>
+                  <span id="summary-total">$0.00</span>
+                </div>
               </div>
-              <div class="summary-row summary-discount" id="summary-discount-row" style="display: none;">
-                <span style="color:#059669;font-weight:600;">Bitcoin Discount (10%)</span>
-                <span id="summary-discount" style="color:#059669;font-weight:600;">-$0.00</span>
+
+              <!-- Trust Assurances -->
+              <div class="summary-trust-perks">
+                <div class="trust-perk">
+                  <span class="trust-perk-icon">&#x1F6E1;&#xFE0F;</span>
+                  <span><strong>100% Delivery Guarantee:</strong> Arrives safely or immediate free reshipment</span>
+                </div>
+                <div class="trust-perk loyalty-perk">
+                  <span class="trust-perk-icon">&#x2B50;</span>
+                  <span>Earn <strong id="checkout-loyalty-pts">0</strong> Mullaways Loyalty Points on this order</span>
+                </div>
+                <div class="trust-perk">
+                  <span class="trust-perk-icon">&#x1F512;</span>
+                  <span>End-to-end encrypted checkout</span>
+                </div>
+                <div class="trust-perk">
+                  <span class="trust-perk-icon">&#x1F4E6;</span>
+                  <span>Discreet odour-proof Australian satchel</span>
+                </div>
+                <div class="trust-perk">
+                  <span class="trust-perk-icon">&#x1F4AC;</span>
+                  <span>Live Chat assistance available</span>
+                </div>
               </div>
-              <div class="summary-divider"></div>
-              <div class="summary-row summary-total">
-                <span>Total</span>
-                <span id="summary-total">$0.00</span>
-              </div>
-              <button class="btn btn-primary btn-large btn-full" id="place-order-btn">Place Order</button>
-              <p class="secure-note">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <path d="M7 11V7a5 5 0 0110 0v4"/>
-                </svg>
-                Secure checkout with encrypted payment
-              </p>
+
             </div>
           </aside>
         </div>
 
+        <!-- Cart Empty State -->
         <div class="empty-state" id="checkout-empty" style="display: none;">
           <div class="empty-icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
           <h2>Your cart is empty</h2>
-          <p>Add products to your cart before checking out.</p>
-          <a href="/shop/" class="btn btn-primary">Browse Products</a>
+          <p>Add medical cannabis products, gummies or vapes to your cart before proceeding to checkout.</p>
+          <a href="/shop/" class="btn btn-primary btn-large">Browse Dispensary Catalog</a>
         </div>
       </div>
     </section>
@@ -239,7 +508,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
   }
 
   .section-label-light {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .section-label-light::before {
@@ -248,10 +517,13 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
   .page-hero h1 {
     color: white;
+    margin: 8px 0;
   }
 
   .page-hero p {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-size: 1.05rem;
   }
 
   /* ── Bitcoin Discount Promo Bar ───────────────────────── */
@@ -283,7 +555,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     text-decoration: underline;
     text-underline-offset: 3px;
     font-size: 0.85rem;
-    white-space: normal;
     transition: color 0.2s;
   }
 
@@ -291,33 +562,198 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     color: #F7931A;
   }
 
+  /* ── Checkout Layout ──────────────────────────────────── */
   .checkout-section {
-    padding: var(--space-3xl) 0 var(--space-4xl);
-    background: #fff;
+    padding: var(--space-2xl) 0 var(--space-4xl);
+    background: var(--color-bg);
   }
 
   .checkout-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-    gap: 32px;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+    gap: 36px;
     align-items: start;
   }
 
-  .card {
-    background: #fff;
+  .checkout-main-col {
+    min-width: 0;
+  }
+
+  /* ── 3-Step Stepper Header ────────────────────────────── */
+  .checkout-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFFFF;
     border: 1px solid var(--color-border);
     border-radius: 16px;
-    padding: clamp(18px, 3vw, 24px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+    padding: 16px 20px;
     margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
   }
 
-  .card h2 {
-    margin: 0 0 16px;
-    font-size: 1.4rem;
-    color: #1a1a1a;
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 10px;
+    cursor: default;
+    text-align: left;
+    transition: all 0.2s ease;
+    outline: none;
   }
 
+  .step-indicator.clickable {
+    cursor: pointer;
+  }
+
+  .step-indicator.clickable:hover {
+    background: rgba(31, 77, 60, 0.05);
+  }
+
+  .step-bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #E5E7EB;
+    color: #6B7280;
+    font-weight: 700;
+    font-size: 0.88rem;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+  }
+
+  .step-check-icon {
+    display: none;
+  }
+
+  .step-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-small-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9CA3AF;
+  }
+
+  .step-label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #4B5563;
+  }
+
+  /* Active Step */
+  .step-indicator.active .step-bubble {
+    background: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(31, 77, 60, 0.15);
+  }
+
+  .step-indicator.active .step-small-title {
+    color: var(--color-accent);
+  }
+
+  .step-indicator.active .step-label {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  /* Completed Step */
+  .step-indicator.completed .step-bubble {
+    background: #059669;
+    color: #FFFFFF;
+  }
+
+  .step-indicator.completed .step-num {
+    display: none;
+  }
+
+  .step-indicator.completed .step-check-icon {
+    display: block;
+  }
+
+  .step-indicator.completed .step-label {
+    color: #111827;
+  }
+
+  /* Connector Lines */
+  .step-connector {
+    flex: 1;
+    height: 2px;
+    background: #E5E7EB;
+    margin: 0 10px;
+    transition: background 0.25s ease;
+  }
+
+  .step-connector.completed {
+    background: #059669;
+  }
+
+  /* ── Step Panes ───────────────────────────────────────── */
+  .step-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .step-pane.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Checkout Cards ───────────────────────────────────── */
+  .checkout-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: clamp(20px, 3.5vw, 32px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+
+  .card-header-row {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #F3F4F6;
+    padding-bottom: 18px;
+  }
+
+  .card-step-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 6px;
+  }
+
+  .checkout-card h2 {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+    color: #111827;
+    font-weight: 700;
+  }
+
+  .card-step-desc {
+    margin: 0;
+    color: #6B7280;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  /* ── Form Inputs ──────────────────────────────────────── */
   .form-grid {
     display: grid;
     gap: 16px;
@@ -334,212 +770,504 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     grid-column: 1 / -1;
   }
 
-  label {
-    font-weight: 600;
-    color: #1a1a1a;
+  .required-star {
+    color: #DC2626;
   }
 
-  input {
+  label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  input,
+  select.select-input {
     padding: 12px 14px;
     border-radius: 10px;
-    border: 1px solid #d8d8d8;
+    border: 1px solid #D1D5DB;
     font-size: 0.95rem;
     min-height: 48px;
+    background: #FFFFFF;
+    color: #111827;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
+  input:focus,
+  select.select-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(31, 77, 60, 0.12);
+  }
+
+  .field-hint {
+    font-size: 0.76rem;
+    color: #6B7280;
+  }
+
+  /* ── Recall Box (Shows Completed Info) ────────────────── */
+  .summary-recall-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .recall-item {
+    display: flex;
+    gap: 8px;
+    font-size: 0.88rem;
+  }
+
+  .recall-label {
+    font-weight: 700;
+    color: #6B7280;
+  }
+
+  .recall-value {
+    color: #111827;
+    font-weight: 500;
+  }
+
+  .recall-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+
+  .recall-edit-btn:hover {
+    background: rgba(31, 77, 60, 0.08);
+  }
+
+  /* ── Option Cards ─────────────────────────────────────── */
   .option-list {
     display: grid;
-    gap: 12px;
+    gap: 14px;
   }
 
   .option-card {
     display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 14px 16px;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 14px;
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: #FFFFFF;
+    transition: all 0.2s ease;
   }
 
   .option-card:hover {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  .option-card:has(input:checked) {
     border-color: var(--color-primary);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+    background: #FAFDFB;
+    box-shadow: 0 0 0 1px var(--color-primary);
   }
 
   .option-card input {
-    margin: 0;
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .option-content {
+    flex: 1;
+  }
+
+  .option-top-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   .option-title {
-    display: block;
-    font-weight: 600;
-    color: #1a1a1a;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .option-price-tag {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-primary);
   }
 
   .option-meta {
-    display: block;
     font-size: 0.85rem;
-    color: #666;
+    color: #6B7280;
+    line-height: 1.45;
   }
 
+  .btc-discount-badge {
+    background: linear-gradient(135deg, #059669, #10B981);
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .option-badge-popular {
+    background: #FEF3C7;
+    color: #92400E;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .option-badge-fee {
+    background: #E5E7EB;
+    color: #374151;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  /* ── Stealth Banner ───────────────────────────────────── */
+  .stealth-packaging-banner {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    font-size: 0.88rem;
+    color: #14532D;
+    line-height: 1.5;
+  }
+
+  .stealth-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  /* ── Payment Info Panels ──────────────────────────────── */
   .payment-panel {
-    margin-top: 18px;
-    padding: 18px;
+    margin-top: 20px;
+    padding: 20px;
     border-radius: 14px;
-    background: #f9faf8;
-    border: 1px solid var(--color-border);
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
   }
 
   .panel-header h3 {
     margin: 0 0 6px;
+    font-size: 1.15rem;
+    color: #111827;
   }
 
   .panel-header p {
     margin: 0 0 16px;
-    color: #666;
+    color: #6B7280;
+    font-size: 0.88rem;
+    line-height: 1.5;
   }
 
-  .qr-layout {
+  .btc-info-box {
     display: flex;
-    gap: 16px;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #374151;
   }
 
-  .qr-image {
-    width: 180px;
-    height: 180px;
+  .btc-info-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .btc-info-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #F7931A;
+    flex-shrink: 0;
+  }
+
+  .btc-info-item a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .bank-info-notice {
+    display: flex;
+    gap: 14px;
+    padding: 16px;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
     border-radius: 12px;
-    border: 1px solid #e2e2e2;
-    background: #fff;
+    color: #1E3A8A;
+    margin-bottom: 14px;
   }
 
-  .qr-details {
-    flex: 1;
-    min-width: 180px;
+  .notice-icon {
+    color: #2563EB;
+    flex-shrink: 0;
+    margin-top: 2px;
   }
 
-  .qr-field span {
-    display: block;
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 6px;
-  }
-
-  .qr-field code {
-    display: block;
-    font-size: 0.9rem;
-    background: #fff;
-    border: 1px solid #e2e2e2;
-    padding: 10px 12px;
-    border-radius: 10px;
-    word-break: break-all;
-  }
-
-  .helper {
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: #666;
-  }
-
-  .bank-details {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .bank-details span {
-    display: block;
-    font-size: 0.85rem;
-    color: #666;
-  }
-
-  .bank-details strong {
-    color: #1a1a1a;
+  .bank-steps-list {
+    margin: 8px 0 0;
+    padding-left: 20px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #1E3A8A;
   }
 
   .info-alert {
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    background: #fff4e5;
-    border: 1px solid #f0c88b;
-    padding: 14px;
-    border-radius: 12px;
-    color: #5c3d06;
-    font-size: 0.9rem;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #FEF3C7;
+    border: 1px solid #FDE68A;
+    border-radius: 10px;
+    color: #92400E;
+    font-size: 0.84rem;
+    line-height: 1.45;
   }
 
+  /* ── Step Nav Footer ──────────────────────────────────── */
+  .step-nav-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #F3F4F6;
+    flex-wrap: wrap;
+  }
+
+  .step-security-callout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: #6B7280;
+  }
+
+  .btn-final {
+    min-width: 240px;
+  }
+
+  /* ── Summary Sidebar ──────────────────────────────────── */
   .checkout-summary {
     position: sticky;
-    top: 110px;
+    top: 96px;
   }
 
   .summary-card {
-    background: #fff;
+    background: #FFFFFF;
     border: 1px solid var(--color-border);
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+
+  .summary-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #F3F4F6;
+  }
+
+  .summary-card-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #111827;
+  }
+
+  .summary-item-badge {
+    background: #F3F4F6;
+    color: #4B5563;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
   }
 
   .summary-items {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 20px;
+    max-height: 240px;
+    overflow-y: auto;
+    margin-bottom: 16px;
   }
 
   .summary-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
+    padding: 8px 0;
+    font-size: 0.88rem;
+    color: #374151;
+    border-bottom: 1px solid #F9FAFB;
+  }
+
+  .summary-item strong {
+    color: #111827;
+  }
+
+  /* Promo Box */
+  .checkout-promo-box {
+    margin: 14px 0 16px;
+    padding-top: 14px;
+    border-top: 1px dashed #E5E7EB;
+  }
+
+  .promo-input-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .promo-input-row input {
+    flex: 1;
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+  }
+
+  .promo-input-row button {
+    min-height: 40px;
+    padding: 8px 16px;
+  }
+
+  #checkout-promo-msg {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  /* Pricing */
+  .summary-pricing {
+    border-top: 1px solid #F3F4F6;
+    padding-top: 14px;
   }
 
   .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
-    color: #555;
+    padding: 5px 0;
+    font-size: 0.92rem;
+    color: #4B5563;
   }
 
   .summary-divider {
     height: 1px;
-    background: #eee;
-    margin: 16px 0;
+    background: #E5E7EB;
+    margin: 12px 0;
   }
 
   .summary-total {
-    font-weight: 700;
-    color: #1a1a1a;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #111827;
   }
 
-  .secure-note {
+  .summary-total span:last-child {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+  }
+
+  /* Trust perks */
+  .summary-trust-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #F3F4F6;
+  }
+
+  .trust-perk {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: 14px;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #4B5563;
   }
 
+  .trust-perk-icon {
+    font-size: 16px;
+  }
+
+  /* ── Form Errors ──────────────────────────────────────── */
+  .input-error {
+    border-color: #EF4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+  }
+
+  .form-error {
+    display: block;
+    color: #DC2626;
+    font-size: 0.78rem;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* Empty Cart State */
   .empty-state {
     text-align: center;
-    padding: 48px;
-    border: 1px dashed #ddd;
-    border-radius: 16px;
-    margin-top: 24px;
+    padding: 60px 20px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .empty-icon {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 48px;
+    color: var(--color-primary);
+    margin-bottom: 16px;
   }
 
+  .empty-state h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: #111827;
+  }
+
+  .empty-state p {
+    color: #6B7280;
+    margin-bottom: 24px;
+  }
+
+  /* ── Mobile Responsive ────────────────────────────────── */
   @media (max-width: 960px) {
     .checkout-layout {
       grid-template-columns: 1fr;
@@ -549,233 +1277,180 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       position: static;
     }
 
-    .form-grid {
-      grid-template-columns: 1fr;
+    .checkout-stepper {
+      padding: 12px 14px;
     }
 
-    .bank-details {
-      grid-template-columns: 1fr;
-    }
-
-    .qr-layout {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .qr-details {
-      width: 100%;
-    }
-
-    .checkout-section {
-      padding: var(--space-2xl) 0 var(--space-3xl);
+    .step-label {
+      font-size: 0.82rem;
     }
   }
 
   @media (max-width: 640px) {
-    .checkout-layout {
-      gap: 20px;
+    .form-grid {
+      grid-template-columns: 1fr;
     }
 
-    .summary-item,
-    .summary-row {
-      align-items: flex-start;
-      gap: 12px;
+    .step-small-title {
+      display: none;
     }
 
-    .option-card {
-      align-items: flex-start;
+    .step-label {
+      font-size: 0.76rem;
     }
 
-    .option-card input {
-      margin-top: 2px;
+    .step-indicator {
+      padding: 4px;
+      gap: 6px;
     }
 
-    .bank-info-notice {
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .page-hero h1 {
-      font-size: 1.75rem;
+    .step-bubble {
+      width: 28px;
+      height: 28px;
+      font-size: 0.8rem;
     }
 
-    .card {
-      padding: 16px;
+    .step-connector {
+      margin: 0 4px;
     }
 
-    .card h2 {
-      font-size: 1.2rem;
+    .step-nav-footer {
+      flex-direction: column-reverse;
+      align-items: stretch;
     }
 
-    .qr-image {
-      width: 150px;
-      height: 150px;
+    .step-nav-footer button {
+      width: 100%;
     }
 
-    .option-card {
-      padding: 12px;
+    .step-security-callout {
+      justify-content: center;
     }
-
-    .summary-card {
-      padding: 16px;
-    }
-
-    .empty-state {
-      padding: 24px 16px;
-    }
-  }
-
-  .payment-info-link {
-    display: inline-block;
-    margin-top: 4px;
-    font-size: 0.78rem;
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-weight: 600;
-    transition: color 0.2s;
-  }
-
-  .payment-info-link:hover {
-    color: var(--color-primary-dark);
-  }
-
-  .psc-input-group {
-    margin-bottom: 8px;
-  }
-
-  .psc-input-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-  }
-
-  .bank-info-notice {
-    display: flex;
-    gap: 14px;
-    padding: 16px;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-radius: 12px;
-    color: #14532d;
-  }
-
-  .bank-info-notice .notice-icon {
-    flex-shrink: 0;
-    color: #16a34a;
-    margin-top: 2px;
-  }
-
-  .bank-info-notice strong {
-    font-size: 0.95rem;
-  }
-
-  /* ── Form Validation Styles ────────────────────────────────── */
-  .input-error {
-    border-color: #ef4444 !important;
-    box-shadow: 0 0 0 3px rgba(239,68,68,0.12) !important;
-  }
-
-  .form-error {
-    display: block;
-    color: #dc2626;
-    font-size: 0.78rem;
-    margin-top: 4px;
-    font-weight: 500;
-    line-height: 1.3;
-  }
-
-  #place-order-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  #place-order-btn svg.spinner {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-
-  .btc-discount-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #059669, #10b981);
-    color: #fff;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-left: 8px;
-    letter-spacing: 0.04em;
-    vertical-align: middle;
-    text-transform: uppercase;
   }
 </style>
 
 <script>
   // @ts-nocheck
 
-  // ══════════════════════════════════════════════════════════════════
-  // ── Email Setup (Resend via Cloudflare Pages Function) ───────────
-  // ══════════════════════════════════════════════════════════════════
-  //
-  // Emails are sent server-side through /api/send-email
-  // (Cloudflare Pages Function using the Resend API).
-  //
-  // To enable:
-  //   1. Sign up at https://resend.com (free: 3,000 emails/month)
-  //   2. Create an API key
-  //   3. In Cloudflare Pages → Settings → Environment variables, add:
-  //        RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  //   4. (Optional) Verify your domain on Resend for custom "from" address.
-  //      Set FROM_EMAIL env var, e.g.:
-  //        FROM_EMAIL = Mullaways Medical Cannabis <noreply@mullawaysmedicalcannabis.com.au>
-  //
-  // No client-side keys are needed — everything goes through the function.
-  //
-  // ══════════════════════════════════════════════════════════════════
-
   const cart = JSON.parse(localStorage.getItem('cart') || '[]')
     .filter((item) => item && item.name);
 
+  // Layout & DOM Elements
   const checkoutLayout = document.getElementById('checkout-layout');
   const checkoutEmpty = document.getElementById('checkout-empty');
   const summaryItems = document.getElementById('summary-items');
   const summarySubtotal = document.getElementById('summary-subtotal');
   const summaryShipping = document.getElementById('summary-shipping');
   const summaryTotal = document.getElementById('summary-total');
+  const summaryCountBadge = document.getElementById('summary-count-badge');
+  const summaryPromoRow = document.getElementById('summary-promo-row');
+  const summaryPromoLabel = document.getElementById('summary-promo-label');
+  const summaryPromo = document.getElementById('summary-promo');
   const summaryDiscountRow = document.getElementById('summary-discount-row');
   const summaryDiscount = document.getElementById('summary-discount');
-  const placeOrderBtn = document.getElementById('place-order-btn');
-  const checkoutForm = document.getElementById('checkout-details');
+  const standardDeliveryMeta = document.getElementById('standard-delivery-meta');
+  const standardPriceTag = document.getElementById('standard-price-tag');
+  
+  // Promo Box
+  const checkoutPromoCode = document.getElementById('checkout-promo-code');
+  const checkoutPromoBtn = document.getElementById('checkout-promo-btn');
+  const checkoutPromoMsg = document.getElementById('checkout-promo-msg');
 
+  // Navigation & Step Elements
+  let currentStep = 1;
+  const stepPanes = {
+    1: document.getElementById('step-pane-1'),
+    2: document.getElementById('step-pane-2'),
+    3: document.getElementById('step-pane-3'),
+  };
+  const stepNavs = {
+    1: document.getElementById('step-nav-1'),
+    2: document.getElementById('step-nav-2'),
+    3: document.getElementById('step-nav-3'),
+  };
+  const connectors = {
+    1: document.getElementById('connector-1'),
+    2: document.getElementById('connector-2'),
+  };
+
+  const step1NextBtn = document.getElementById('step1-next-btn');
+  const step2PrevBtn = document.getElementById('step2-prev-btn');
+  const step2NextBtn = document.getElementById('step2-next-btn');
+  const step3PrevBtn = document.getElementById('step3-prev-btn');
+  const placeOrderBtn = document.getElementById('place-order-btn');
+  const placeOrderLabel = document.getElementById('place-order-label');
+
+  const editStep1Btn = document.getElementById('edit-step-1-btn');
+  const editStep2Btn = document.getElementById('edit-step-2-btn');
+
+  // Recall boxes
+  const recallCustomerAddress = document.getElementById('recall-customer-address');
+  const recallCustomerContact = document.getElementById('recall-customer-contact');
+  const recallStep3Customer = document.getElementById('recall-step3-customer');
+  const recallStep3Shipping = document.getElementById('recall-step3-shipping');
+
+  // Panels
+  const bitcoinPanel = document.getElementById('bitcoin-panel');
   const bankPanel = document.getElementById('bank-panel');
 
-  // ── Helpers ─────────────────────────────────────────────────────
+  const BTC_DISCOUNT_RATE = 0.10;
+  const BTC_ADDRESS = 'bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr';
+
+  const VALID_PROMOS = {
+    'WELCOME15': { rate: 0.15, label: '15% Off First Order' },
+    'FIRST15': { rate: 0.15, label: '15% Off First Order' },
+    'MULLAWAYS15': { rate: 0.15, label: '15% Off First Order' },
+    'SAVE10': { rate: 0.10, label: '10% Off' },
+  };
+
   function escHtml(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  const BTC_DISCOUNT_RATE = 0.10; // 10% Bitcoin discount
-  const BTC_ADDRESS = 'bc1qev9qvwxennyypmth024jndwlqqh7ft9mzjnapr';
+  function getFormValue(id) {
+    const el = document.getElementById(id);
+    if (!el) return '';
+    if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) {
+      return el.value.trim();
+    }
+    return '';
+  }
+
+  function getAppliedPromo() {
+    try {
+      const stored = localStorage.getItem('appliedPromo');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  }
 
   function getSelectedPayment() {
     const el = document.querySelector('input[name="payment"]:checked');
     return el instanceof HTMLInputElement ? el.value : 'bitcoin';
   }
 
-  function getBtcDiscount(subtotal) {
-    return getSelectedPayment() === 'bitcoin' ? Math.round(subtotal * BTC_DISCOUNT_RATE * 100) / 100 : 0;
+  function getSelectedDelivery() {
+    const el = document.querySelector('input[name="delivery"]:checked');
+    return el instanceof HTMLInputElement ? el.value : 'standard';
   }
 
-  function getShippingFee() {
-    const selected = document.querySelector('input[name="delivery"]:checked');
-    if (!(selected instanceof HTMLInputElement)) return 0;
-    return Number(selected.dataset.fee || '0');
+  function getShippingFee(subtotal) {
+    const method = getSelectedDelivery();
+    if (method === 'standard') {
+      return subtotal >= 150 ? 0 : 9.95;
+    }
+    return 19.95; // Express
+  }
+
+  function getPromoDiscount(subtotal) {
+    const promo = getAppliedPromo();
+    if (!promo || !promo.rate) return 0;
+    return Math.round(subtotal * promo.rate * 100) / 100;
+  }
+
+  function getBtcDiscount(baseAmount) {
+    return getSelectedPayment() === 'bitcoin' ? Math.round(baseAmount * BTC_DISCOUNT_RATE * 100) / 100 : 0;
   }
 
   function generateOrderRef() {
@@ -784,19 +1459,32 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     return `MW-${timestamp.slice(-4)}${random}`;
   }
 
-  function getFormValue(id) {
-    const el = document.getElementById(id);
-    return el instanceof HTMLInputElement ? el.value.trim() : '';
-  }
-
   // ── Render Summary ────────────────────────────────────────────
   function renderSummary() {
     if (!summaryItems || !summarySubtotal || !summaryShipping || !summaryTotal) return;
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = getShippingFee();
-    const discount = getBtcDiscount(subtotal);
-    const total = subtotal + shipping - discount;
+    const shipping = getShippingFee(subtotal);
+    const promoDiscount = getPromoDiscount(subtotal);
+    const promo = getAppliedPromo();
+    const btcDiscount = getBtcDiscount(Math.max(0, subtotal - promoDiscount));
+    const total = Math.max(0, subtotal - promoDiscount + shipping - btcDiscount);
+
+    if (summaryCountBadge) {
+      const totalQty = cart.reduce((sum, i) => sum + i.quantity, 0);
+      summaryCountBadge.textContent = `${totalQty} item${totalQty !== 1 ? 's' : ''}`;
+    }
+
+    if (standardDeliveryMeta && standardPriceTag) {
+      if (subtotal >= 150) {
+        standardPriceTag.innerHTML = '<span style="color:#059669;">FREE</span>';
+        standardDeliveryMeta.innerHTML = '2–5 business days &middot; <strong style="color:#059669;">Free Shipping applied</strong>';
+      } else {
+        const remaining = (150 - subtotal).toFixed(2);
+        standardPriceTag.textContent = '$9.95';
+        standardDeliveryMeta.textContent = `2–5 business days · Add $${remaining} for FREE delivery`;
+      }
+    }
 
     summaryItems.innerHTML = cart.map((item) => `
       <div class="summary-item">
@@ -806,46 +1494,129 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     `).join('');
 
     summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
-    summaryShipping.textContent = `$${shipping.toFixed(2)}`;
 
-    // Show/hide Bitcoin discount row
+    if (shipping === 0) {
+      summaryShipping.innerHTML = '<strong style="color:#059669;">FREE</strong>';
+    } else {
+      summaryShipping.textContent = `$${shipping.toFixed(2)}`;
+    }
+
+    if (summaryPromoRow && summaryPromo) {
+      if (promoDiscount > 0 && promo) {
+        summaryPromoRow.style.display = 'flex';
+        if (summaryPromoLabel) summaryPromoLabel.textContent = `Promo (${promo.code}) -${Math.round(promo.rate * 100)}%`;
+        summaryPromo.textContent = `-$${promoDiscount.toFixed(2)}`;
+      } else {
+        summaryPromoRow.style.display = 'none';
+      }
+    }
+
     if (summaryDiscountRow && summaryDiscount) {
-      if (discount > 0) {
+      if (btcDiscount > 0) {
         summaryDiscountRow.style.display = 'flex';
-        summaryDiscount.textContent = `-$${discount.toFixed(2)}`;
+        summaryDiscount.textContent = `-$${btcDiscount.toFixed(2)}`;
       } else {
         summaryDiscountRow.style.display = 'none';
       }
     }
 
     summaryTotal.textContent = `$${total.toFixed(2)}`;
+    const checkoutLoyaltyEl = document.getElementById('checkout-loyalty-pts');
+    if (checkoutLoyaltyEl) {
+      checkoutLoyaltyEl.textContent = Math.round(total).toString();
+    }
+    if (placeOrderLabel) {
+      placeOrderLabel.textContent = `Place Order &mdash; $${total.toFixed(2)}`;
+    }
+
+    renderCheckoutPromoUI(promo);
+    updateRecallSummaries();
   }
 
-  // ── Toggle Payment Panels ─────────────────────────────────────
-  function togglePaymentPanels() {
-    const selectedPayment = getSelectedPayment();
+  function updateRecallSummaries() {
+    const name = `${getFormValue('firstName')} ${getFormValue('lastName')}`.trim();
+    const address = `${getFormValue('address')}, ${getFormValue('city')}, ${getFormValue('state')} ${getFormValue('postcode')}`.trim();
+    const contact = `${getFormValue('email')} &middot; ${getFormValue('phone')}`.trim();
+    const method = getSelectedDelivery() === 'express' ? 'Express Post ($19.95)' : 'Standard Delivery (2–5 days)';
 
-    if (bankPanel) bankPanel.style.display = selectedPayment === 'bank' ? 'block' : 'none';
-
-    // Re-render summary to update Bitcoin discount
-    renderSummary();
+    if (recallCustomerAddress) recallCustomerAddress.textContent = address || '—';
+    if (recallCustomerContact) recallCustomerContact.innerHTML = contact || '—';
+    if (recallStep3Customer) recallStep3Customer.textContent = `${name ? name + ' — ' : ''}${address}`;
+    if (recallStep3Shipping) recallStep3Shipping.textContent = method;
   }
 
-  // ── Validate Form ─────────────────────────────────────────────
-  function validateForm() {
+  // ── Step Navigation ───────────────────────────────────────────
+  let completedStep1 = false;
+  let completedStep2 = false;
+
+  function goToStep(targetStep) {
+    if (targetStep === currentStep) return;
+
+    // Validate before moving forward
+    if (targetStep > currentStep) {
+      if (currentStep === 1 && !validateStep1()) return;
+      if (currentStep === 2 && !validateStep2()) return;
+    }
+
+    if (currentStep === 1) completedStep1 = true;
+    if (currentStep === 2) completedStep2 = true;
+
+    // Switch panes
+    Object.keys(stepPanes).forEach((step) => {
+      const num = Number(step);
+      if (num === targetStep) {
+        stepPanes[num]?.classList.add('active');
+      } else {
+        stepPanes[num]?.classList.remove('active');
+      }
+    });
+
+    // Update stepper classes
+    for (let i = 1; i <= 3; i++) {
+      const btn = stepNavs[i];
+      if (!btn) continue;
+      btn.classList.remove('active');
+
+      if (i < targetStep) {
+        btn.classList.add('completed');
+        btn.classList.add('clickable');
+      } else if (i === targetStep) {
+        btn.classList.add('active');
+        btn.classList.remove('completed');
+      } else {
+        btn.classList.remove('completed');
+        if ((i === 2 && completedStep1) || (i === 3 && completedStep2)) {
+          btn.classList.add('clickable');
+        } else {
+          btn.classList.remove('clickable');
+        }
+      }
+    }
+
+    // Update connectors
+    if (connectors[1]) connectors[1].classList.toggle('completed', targetStep >= 2);
+    if (connectors[2]) connectors[2].classList.toggle('completed', targetStep >= 3);
+
+    currentStep = targetStep;
+    updateRecallSummaries();
+
+    // Scroll to top of checkout smoothly
+    checkoutLayout?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function validateStep1() {
     const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'postcode'];
     let firstError = null;
     let isValid = true;
 
-    // Clear previous errors
-    document.querySelectorAll('.form-error').forEach(el => el.remove());
-    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    document.querySelectorAll('#checkout-details .form-error').forEach(el => el.remove());
+    document.querySelectorAll('#checkout-details .input-error').forEach(el => el.classList.remove('input-error'));
 
     for (const fieldId of requiredFields) {
       const el = document.getElementById(fieldId);
-      if (!(el instanceof HTMLInputElement)) continue;
+      if (!el) continue;
 
-      const value = el.value.trim();
+      const value = (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) ? el.value.trim() : '';
       let error = '';
 
       if (!value) {
@@ -855,7 +1626,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       } else if (fieldId === 'phone' && !/^[\d\s\+\-\(\)]{8,15}$/.test(value)) {
         error = 'Please enter a valid phone number';
       } else if (fieldId === 'postcode' && !/^\d{4}$/.test(value)) {
-        error = 'Please enter a valid 4-digit postcode';
+        error = 'Please enter a valid 4-digit Australian postcode';
       }
 
       if (error) {
@@ -877,7 +1648,121 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     return isValid;
   }
 
-  // ── Build email data from order ────────────────────────────────
+  function validateStep2() {
+    return true; // Delivery option has standard selected by default
+  }
+
+  // Stepper Header Click Events
+  Object.keys(stepNavs).forEach((step) => {
+    const num = Number(step);
+    stepNavs[num]?.addEventListener('click', () => {
+      if (num < currentStep || (num === 2 && completedStep1) || (num === 3 && completedStep2)) {
+        goToStep(num);
+      }
+    });
+  });
+
+  step1NextBtn?.addEventListener('click', () => {
+    if (validateStep1()) {
+      completedStep1 = true;
+      goToStep(2);
+    }
+  });
+
+  step2PrevBtn?.addEventListener('click', () => goToStep(1));
+  step2NextBtn?.addEventListener('click', () => {
+    completedStep2 = true;
+    goToStep(3);
+  });
+
+  step3PrevBtn?.addEventListener('click', () => goToStep(2));
+  editStep1Btn?.addEventListener('click', () => goToStep(1));
+  editStep2Btn?.addEventListener('click', () => goToStep(2));
+
+  // ── Payment Panels ────────────────────────────────────────────
+  function togglePaymentPanels() {
+    const method = getSelectedPayment();
+    if (bitcoinPanel) bitcoinPanel.style.display = method === 'bitcoin' ? 'block' : 'none';
+    if (bankPanel) bankPanel.style.display = method === 'bank' ? 'block' : 'none';
+    renderSummary();
+  }
+
+  document.querySelectorAll('input[name="payment"]').forEach((input) => {
+    input.addEventListener('change', togglePaymentPanels);
+  });
+
+  document.querySelectorAll('input[name="delivery"]').forEach((input) => {
+    input.addEventListener('change', renderSummary);
+  });
+
+  // ── Promo Code Handling ───────────────────────────────────────
+  function renderCheckoutPromoUI(promo) {
+    if (!checkoutPromoMsg) return;
+    if (promo) {
+      if (checkoutPromoCode) {
+        checkoutPromoCode.value = promo.code;
+        checkoutPromoCode.disabled = true;
+      }
+      if (checkoutPromoBtn) {
+        checkoutPromoBtn.textContent = 'Remove';
+        checkoutPromoBtn.classList.remove('btn-outline');
+        checkoutPromoBtn.classList.add('btn-ghost');
+      }
+      checkoutPromoMsg.style.display = 'block';
+      checkoutPromoMsg.style.color = '#059669';
+      checkoutPromoMsg.innerHTML = `✓ Code <strong>${promo.code}</strong> applied (${Math.round(promo.rate * 100)}% off)`;
+    } else {
+      if (checkoutPromoCode) checkoutPromoCode.disabled = false;
+      if (checkoutPromoBtn) {
+        checkoutPromoBtn.textContent = 'Apply';
+        checkoutPromoBtn.classList.remove('btn-ghost');
+        checkoutPromoBtn.classList.add('btn-outline');
+      }
+    }
+  }
+
+  function handleCheckoutPromo() {
+    const promo = getAppliedPromo();
+    if (promo) {
+      localStorage.removeItem('appliedPromo');
+      if (checkoutPromoCode) checkoutPromoCode.value = '';
+      if (checkoutPromoMsg) {
+        checkoutPromoMsg.style.display = 'none';
+        checkoutPromoMsg.textContent = '';
+      }
+      renderSummary();
+      return;
+    }
+
+    if (!checkoutPromoCode || !checkoutPromoMsg) return;
+    const code = checkoutPromoCode.value.trim().toUpperCase();
+    if (!code) {
+      checkoutPromoMsg.style.display = 'block';
+      checkoutPromoMsg.style.color = '#DC2626';
+      checkoutPromoMsg.textContent = 'Please enter a promo code.';
+      return;
+    }
+
+    if (VALID_PROMOS[code]) {
+      const info = VALID_PROMOS[code];
+      localStorage.setItem('appliedPromo', JSON.stringify({ code, rate: info.rate, label: info.label }));
+      renderSummary();
+    } else {
+      checkoutPromoMsg.style.display = 'block';
+      checkoutPromoMsg.style.color = '#DC2626';
+      checkoutPromoMsg.innerHTML = 'Invalid code. Use <strong>WELCOME15</strong> for 15% off.';
+    }
+  }
+
+  checkoutPromoBtn?.addEventListener('click', handleCheckoutPromo);
+  checkoutPromoCode?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleCheckoutPromo();
+    }
+  });
+
+  // ── Place Order Final Submission ──────────────────────────────
   function buildTemplateParams(order) {
     const itemsList = order.items.map(i =>
       `${i.name} × ${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`
@@ -888,11 +1773,21 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 
     if (order.payment === 'bitcoin') {
       paymentStatus = 'Awaiting Bitcoin payment';
-      paymentNextStep = 'Please send the exact amount shown on the order page to the Bitcoin address provided. Your order will be processed once the payment is confirmed on the blockchain.';
+      paymentNextStep = 'Please send the exact amount shown on the order confirmation page to the Bitcoin address provided. Your order will be dispatched once verified on the blockchain.';
     } else if (order.payment === 'bank') {
       paymentStatus = 'Awaiting bank transfer';
-      paymentNextStep = 'We will reply to this email with our bank/PayID details shortly. Once you receive them, please transfer the exact amount and include your order reference in the description.';
+      paymentNextStep = 'Please open Live Chat on our website to receive our PayID or bank transfer details. For your security we share banking details exclusively via Live Chat.';
     }
+
+    const discountParts = [];
+    if (order.promoDiscount && order.promoDiscount > 0) {
+      discountParts.push(`-$${order.promoDiscount.toFixed(2)} (Promo: ${order.promoCode || 'Applied'})`);
+    }
+    if (order.discount && order.discount > 0) {
+      discountParts.push(`-$${order.discount.toFixed(2)} (Bitcoin 10% discount)`);
+    }
+    const discountText = discountParts.length > 0 ? discountParts.join(' + ') : '$0.00';
+    const shippingText = order.shipping === 0 ? 'FREE (Standard delivery over $150)' : `$${order.shipping.toFixed(2)}`;
 
     return {
       to_email: order.customer.email,
@@ -903,28 +1798,22 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       }),
       items_list: itemsList,
       subtotal: `$${order.subtotal.toFixed(2)}`,
-      discount: order.discount > 0
-        ? `-$${order.discount.toFixed(2)} (Bitcoin 10% discount)`
-        : '$0.00',
-      shipping: `$${order.shipping.toFixed(2)}`,
+      discount: discountText,
+      shipping: shippingText,
       total: `$${order.total.toFixed(2)}`,
-      payment_method: order.payment === 'bitcoin' ? 'Bitcoin'
-        : order.payment === 'bank' ? 'Bank Transfer'
-        : 'Payment pending review',
+      payment_method: order.payment === 'bitcoin' ? 'Bitcoin' : 'Bank Transfer',
       payment_status: paymentStatus,
       payment_next_step: paymentNextStep,
       shipping_address: `${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.postcode}`,
       delivery_method: order.shippingMethod === 'express'
         ? 'Express (1–2 business days)'
-        : 'Standard (2–5 business days)',
+        : (order.shipping === 0 ? 'Standard (2–5 business days, Free shipping)' : 'Standard (2–5 business days)'),
       customer_email: order.customer.email,
       customer_phone: order.customer.phone,
       btc_address: order.btcAddress || '',
-      psc_pin: '',
     };
   }
 
-  // ── Send Customer Confirmation Email ─────────────────────────
   async function sendCustomerEmail(order) {
     try {
       const data = buildTemplateParams(order);
@@ -933,17 +1822,12 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'order-customer', data }),
       });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || 'Failed');
-      console.log('✓ Customer confirmation email sent to', order.customer.email);
-      return { success: true };
-    } catch (err) {
-      console.error('Customer email failed:', err);
-      return { success: false, reason: 'send_failed', error: err };
+      return { success: res.ok };
+    } catch {
+      return { success: false };
     }
   }
 
-  // ── Send Admin Notification Email ────────────────────────────
   async function sendAdminEmail(order) {
     try {
       const data = buildTemplateParams(order);
@@ -952,42 +1836,27 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'order-admin', data }),
       });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || 'Failed');
-      console.log('✓ Admin notification email sent for order', order.ref);
-      return { success: true };
-    } catch (err) {
-      console.error('Admin notification email failed:', err);
-      return { success: false, reason: 'send_failed', error: err };
+      return { success: res.ok };
+    } catch {
+      return { success: false };
     }
   }
 
-  // ── Send All Order Emails ────────────────────────────────────
-  async function sendOrderEmails(order) {
-    // Send both emails in parallel
-    const [customerResult, adminResult] = await Promise.all([
-      sendCustomerEmail(order),
-      sendAdminEmail(order),
-    ]);
-
-    return { customer: customerResult, admin: adminResult };
-  }
-
-  // ── Place Order ───────────────────────────────────────────────
   async function placeOrder() {
-    // Validate form
-    if (!validateForm()) return;
+    if (!validateStep1()) {
+      goToStep(1);
+      return;
+    }
 
-    // Gather data
     const selectedPayment = getSelectedPayment();
-
-    const selectedDeliveryEl = document.querySelector('input[name="delivery"]:checked');
-    const shippingMethod = selectedDeliveryEl instanceof HTMLInputElement ? selectedDeliveryEl.value : 'standard';
-    const shippingFee = getShippingFee();
+    const shippingMethod = getSelectedDelivery();
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const discount = getBtcDiscount(subtotal);
-    const total = subtotal + shippingFee - discount;
+    const shippingFee = getShippingFee(subtotal);
+    const promo = getAppliedPromo();
+    const promoDiscount = getPromoDiscount(subtotal);
+    const discount = getBtcDiscount(Math.max(0, subtotal - promoDiscount));
+    const total = Math.max(0, subtotal - promoDiscount + shippingFee - discount);
 
     const order = {
       ref: generateOrderRef(),
@@ -996,6 +1865,8 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       subtotal,
       shipping: shippingFee,
       shippingMethod,
+      promoCode: promo ? promo.code : '',
+      promoDiscount,
       discount,
       total,
       payment: selectedPayment,
@@ -1014,7 +1885,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
       }
     };
 
-    // Disable button and show loading
     if (placeOrderBtn) {
       placeOrderBtn.disabled = true;
       placeOrderBtn.innerHTML = `
@@ -1023,55 +1893,30 @@ import Breadcrumb from '../components/Breadcrumb.astro';
             <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite"/>
           </circle>
         </svg>
-        Processing Order...
+        Securing Order...
       `;
     }
 
     try {
-      // Save order to localStorage
       localStorage.setItem('lastOrder', JSON.stringify(order));
-
-      // Save to order history
       const orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
       orderHistory.unshift(order);
       localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
 
-      // Send confirmation emails
-      // For Bitcoin orders, emails are deferred until 2 blockchain confirmations
-      // (handled on the order-confirmation page after verification)
+      // Outbound emails
       if (order.payment !== 'bitcoin') {
-        sendOrderEmails(order).then(result => {
-          if (result.customer.success) {
-            console.log('✓ Customer confirmation email sent to', order.customer.email);
-          } else {
-            console.log('Customer email not sent:', result.customer.reason);
-          }
-          if (result.admin.success) {
-            console.log('✓ Admin notification email sent for order', order.ref);
-          } else {
-            console.log('Admin email not sent:', result.admin.reason);
-          }
-          // Mark emails as sent
-          order.emailsSent = true;
+        Promise.all([sendCustomerEmail(order), sendAdminEmail(order)]).then(([cRes, aRes]) => {
+          order.emailsSent = cRes.success && aRes.success;
           localStorage.setItem('lastOrder', JSON.stringify(order));
-          const h = JSON.parse(localStorage.getItem('orderHistory') || '[]');
-          const hi = h.findIndex(o => o.ref === order.ref);
-          if (hi !== -1) { h[hi].emailsSent = true; localStorage.setItem('orderHistory', JSON.stringify(h)); }
         });
-      } else {
-        console.log('Bitcoin order — emails will be sent after 2 blockchain confirmations');
       }
 
-      // Clear the cart
+      // Clear cart
       localStorage.removeItem('cart');
-
-      // Dispatch cart update event for header badge
+      localStorage.removeItem('appliedPromo');
       window.dispatchEvent(new CustomEvent('cartUpdated'));
 
-      // Small delay for UX — let user see "Processing..."
-      await new Promise(resolve => setTimeout(resolve, 800));
-
-      // Redirect to confirmation page
+      await new Promise(resolve => setTimeout(resolve, 700));
       window.location.href = `/order-confirmation/?ref=${order.ref}`;
 
     } catch (err) {
@@ -1080,46 +1925,26 @@ import Breadcrumb from '../components/Breadcrumb.astro';
         placeOrderBtn.disabled = false;
         placeOrderBtn.textContent = 'Place Order';
       }
-      // Show inline error instead of alert
-      let errorBanner = document.getElementById('order-error-banner');
-      if (!errorBanner) {
-        errorBanner = document.createElement('div');
-        errorBanner.id = 'order-error-banner';
-        errorBanner.style.cssText = 'background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:14px 18px;border-radius:12px;margin-top:14px;font-size:0.9rem;display:flex;align-items:center;gap:8px;';
-        errorBanner.innerHTML = '<strong>Something went wrong.</strong> Please check your details and try again.';
-        placeOrderBtn.parentElement?.appendChild(errorBanner);
-      }
     }
   }
 
-  // ── Init ──────────────────────────────────────────────────────
+  placeOrderBtn?.addEventListener('click', placeOrder);
 
+  // Clear errors on input
+  document.querySelectorAll('#checkout-details input, #checkout-details select').forEach((input) => {
+    input.addEventListener('input', () => {
+      input.classList.remove('input-error');
+      const error = input.parentElement?.querySelector('.form-error');
+      if (error) error.remove();
+      updateRecallSummaries();
+    });
+  });
+
+  // Init
   if (cart.length === 0) {
     if (checkoutLayout) checkoutLayout.style.display = 'none';
     if (checkoutEmpty) checkoutEmpty.style.display = 'block';
   } else {
     renderSummary();
   }
-
-  // Delivery change
-  document.querySelectorAll('input[name="delivery"]').forEach((input) => {
-    input.addEventListener('change', renderSummary);
-  });
-
-  // Payment change
-  document.querySelectorAll('input[name="payment"]').forEach((input) => {
-    input.addEventListener('change', togglePaymentPanels);
-  });
-
-  // Place Order button
-  placeOrderBtn?.addEventListener('click', placeOrder);
-
-  // Clear errors on input
-  document.querySelectorAll('#checkout-details input').forEach((input) => {
-    input.addEventListener('input', () => {
-      input.classList.remove('input-error');
-      const error = input.parentElement?.querySelector('.form-error');
-      if (error) error.remove();
-    });
-  });
 </script>

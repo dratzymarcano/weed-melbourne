@@ -201,6 +201,36 @@ export function getStaticPaths() {
         suburbs: ['Gosford', 'Erina', 'The Entrance', 'Woy Woy', 'Tuggerah', 'Wyong', 'Avoca Beach', 'Terrigal'],
         localNote: 'Central Coast is one of our shortest delivery lanes — local courier transit means most CC orders are delivered within 24–48 hours of dispatch. Gosford, Erina, and Terrigal addresses usually receive same-week dispatch with weekday cut-off met. Top sellers: pre-rolls, edibles, and balanced hybrids.'
       }
+    },
+    {
+      params: { city: 'geelong' },
+      props: { 
+        cityName: 'Geelong', 
+        state: 'Victoria',
+        stateAbbr: 'VIC',
+        deliveryTime: '2-3 business days',
+        description: 'Buy weed Geelong - Express medical cannabis delivery to Geelong, the Bellarine Peninsula, and the Surf Coast. Discreet smell-proof postal delivery from Mullaways.',
+        icon: '🌊',
+        highlight: 'Buy Weed Geelong VIC',
+        keywords: ['buy weed geelong', 'cannabis delivery geelong', 'weed dispensary geelong', 'weed delivery bellarmine'],
+        suburbs: ['Geelong CBD', 'Belmont', 'Geelong West', 'Newtown', 'Corio', 'Waurn Ponds', 'Ocean Grove', 'Torquay'],
+        localNote: 'Geelong and Bellarine orders route quickly through the Melbourne VIC sorting hub before direct regional dispatch. Express parcel delivery typically arrives in 2 to 3 business days with full online tracking and odor-proof vacuum packaging.'
+      }
+    },
+    {
+      params: { city: 'cairns' },
+      props: { 
+        cityName: 'Cairns', 
+        state: 'Queensland',
+        stateAbbr: 'QLD',
+        deliveryTime: '3-5 business days',
+        description: 'Buy weed Cairns - Tracked cannabis delivery to Cairns and Far North Queensland. Lab-tested buds, THC gummies, and concentrates shipped discreetly from Mullaways.',
+        icon: '☀️',
+        highlight: 'Buy Weed Cairns QLD',
+        keywords: ['buy weed cairns', 'cannabis delivery cairns', 'weed dispensary cairns qld', 'far north queensland weed'],
+        suburbs: ['Cairns CBD', 'Palm Cove', 'Smithfield', 'Edmonton', 'Trinity Beach', 'Redlynch', 'Gordonvale'],
+        localNote: 'Cairns and Far North Queensland parcels are dispatched via air express from NSW. To withstand tropical climate transit, all orders use thick multi-layer heat-sealed Mylar packaging that guarantees absolute freshness and zero terpene aroma escape.'
+      }
     }
   ];
 }
@@ -280,16 +310,16 @@ const cityFaqs = [
 
 const trustLinks = [
   { href: '/shipping-and-delivery/', title: 'Shipping & Delivery', detail: `Full dispatch standards and packaging details for ${cityName} orders.` },
-  { href: '/faq/', title: 'Cannabis FAQ Australia', detail: 'Answer-first support for ordering, delivery, and general buying questions.' },
-  { href: '/pay-with-bank-transfer/', title: 'Bank Transfer Guide', detail: 'Clear checkout guidance for customers using bank transfer.' },
-  { href: '/contact/#contact-form', title: 'Email Support', detail: 'Ask questions or submit feedback with your order reference.' },
+  { href: '/faq/', title: 'Cannabis FAQ Australia', detail: 'Helpful answers for ordering, delivery times, and product selection.' },
+  { href: '/pay-with-bank-transfer/', title: 'Bank Transfer Guide', detail: 'Simple, secure checkout guidance for customers paying via bank transfer.' },
+  { href: '/contact/#contact-form', title: 'Email Support', detail: 'Reach our team directly for order support or feedback.' },
 ];
 
 const intentLinks = [
-  { href: '/shop/flower/', title: 'Cannabis Flower', detail: 'Popular flower strains with clear THC, flavour, and effect summaries.' },
-  { href: '/shop/edibles/', title: 'THC Gummies & Edibles', detail: 'Discreet edible options with dosage-led format intent.' },
-  { href: '/blog/is-weed-legal-in-australia/', title: 'Legal Guide', detail: 'Context for legality, access, and high-intent informational searches.' },
-  { href: '/locations/', title: 'More Delivery Areas', detail: 'Internal links to other city and regional delivery pages across Australia.' },
+  { href: '/shop/flower/', title: 'Cannabis Flower', detail: 'Popular medical flower strains with transparent THC and terpene profiles.' },
+  { href: '/shop/edibles/', title: 'THC Gummies & Edibles', detail: 'Precise dosing and discreet edible formats for reliable relief.' },
+  { href: '/blog/is-weed-legal-in-australia/', title: 'Legal Guide', detail: 'Understand Australian laws and medical cannabis patient access.' },
+  { href: '/locations/', title: 'More Delivery Areas', detail: 'Delivery information for other major Australian cities and regional hubs.' },
 ];
 
 const benefits = [
@@ -316,16 +346,16 @@ const cityPageSchema = {
   "@type": "WebPage",
   // @id reinforces this page's canonical URL to Google's entity graph —
   // helps prevent "Duplicate, Google chose different canonical than user" for city pages.
-  "@id": `https://mullawaysmedicalcannabis.com.au/${city}/#webpage`,
+  "@id": `https://mullawaysmedicalcannabis.store/${city}/#webpage`,
   "name": `Buy Weed ${cityName} | Cannabis Delivery ${stateAbbr}`,
   "description": metaDescription,
-  "url": `https://mullawaysmedicalcannabis.com.au/${city}/`,
+  "url": `https://mullawaysmedicalcannabis.store/${city}/`,
   "inLanguage": "en-AU",
   "isPartOf": {
-    "@id": "https://mullawaysmedicalcannabis.com.au/#website"
+    "@id": "https://mullawaysmedicalcannabis.store/#website"
   },
   "about": {
-    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+    "@id": "https://mullawaysmedicalcannabis.store/#organization"
   },
   "mainEntity": {
     "@type": "Service",
@@ -339,7 +369,7 @@ const cityPageSchema = {
       }
     },
     "provider": {
-      "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+      "@id": "https://mullawaysmedicalcannabis.store/#organization"
     }
   },
   "keywords": keywords.join(', ')
@@ -366,7 +396,7 @@ const cityItemListSchema = {
     "@type": "ListItem",
     "position": index + 1,
     "name": product.name,
-    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${product.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/shop/product/${product.slug}/`
   }))
 };
 
@@ -374,9 +404,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://mullawaysmedicalcannabis.com.au/locations/" },
-    { "@type": "ListItem", "position": 3, "name": `${cityName}`, "item": `https://mullawaysmedicalcannabis.com.au/${city}/` }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://mullawaysmedicalcannabis.store/locations/" },
+    { "@type": "ListItem", "position": 3, "name": `${cityName}`, "item": `https://mullawaysmedicalcannabis.store/${city}/` }
   ]
 };
 ---

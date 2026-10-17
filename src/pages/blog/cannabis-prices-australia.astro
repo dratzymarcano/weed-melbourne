@@ -4,9 +4,10 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
+import { faqPageSchema } from '../../lib/schema';
 
-const title = "How Much Does Weed Cost in Australia? 2026 Prices";
-const description = "Complete guide to Australian weed prices in 2026. How much does a gram cost? Compare cannabis prices by state, strain, and product type.";
+const title = "How Much Does Weed Cost in Australia? 2026 Prices & Weights Guide";
+const description = "Complete guide to Australian weed prices in 2026. How much is a stick, 50 bag, Q, and ounce? Compare cannabis prices by state, weights, and medical dispensary costs.";
 
 const blogSchema = {
   "@context": "https://schema.org",
@@ -16,19 +17,19 @@ const blogSchema = {
   "author": {
     "@type": "Person",
     "name": "Mullaways Medical Editorial Team",
-    "url": "https://mullawaysmedicalcannabis.com.au#author",
+    "url": "https://mullawaysmedicalcannabis.store#author",
     "jobTitle": "Medical Cannabis Editorial Team",
     "worksFor": {
       "@type": "Organization",
       "name": "Mullaways Medical Cannabis",
-      "url": "https://mullawaysmedicalcannabis.com.au"
+      "url": "https://mullawaysmedicalcannabis.store"
     }
   },
   "publisher": {
     "@type": "Organization",
     "name": "Mullaways Medical Cannabis",
-    "url": "https://mullawaysmedicalcannabis.com.au",
-    "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.com.au/logo.png" }
+    "url": "https://mullawaysmedicalcannabis.store",
+    "logo": { "@type": "ImageObject", "url": "https://mullawaysmedicalcannabis.store/logo.png" }
   },
   "editor": {
     "@type": "Person",
@@ -40,26 +41,51 @@ const blogSchema = {
     }
   },
   "datePublished": "2026-01-28",
-  "dateModified": "2026-01-28",
-  "mainEntityOfPage": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-prices-australia/",
-  "image": "https://mullawaysmedicalcannabis.com.au/og-default.png",
+  "dateModified": "2026-09-20",
+  "mainEntityOfPage": "https://mullawaysmedicalcannabis.store/blog/cannabis-prices-australia/",
+  "image": "https://mullawaysmedicalcannabis.store/og-default.png",
   "inLanguage": "en-AU",
   "articleSection": "Guide",
-  "keywords": "weed prices Australia, how much does weed cost Australia, cannabis price per gram, ounce weed price Australia, THC gummies price, cannabis cost 2026"
+  "keywords": "weed prices Australia, how much does weed cost Australia, cannabis price per gram, ounce weed price Australia, 50 bag weed Australia, stick of weed, Q of weed price, cannabis cost 2026"
 };
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mullawaysmedicalcannabis.com.au/blog/" },
-    { "@type": "ListItem", "position": 3, "name": "Cannabis Prices Australia", "item": "https://mullawaysmedicalcannabis.com.au/blog/cannabis-prices-australia/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mullawaysmedicalcannabis.store/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Cannabis Prices Australia", "item": "https://mullawaysmedicalcannabis.store/blog/cannabis-prices-australia/" }
   ]
 };
+
+const pricingFaqs = [
+  {
+    q: "How much is a 50 bag of weed in Australia?",
+    a: "In Australia, a '50 bag' costs $50 AUD and typically weighs between 2.8 and 3.5 grams of indoor hydro cannabis. In regional or remote areas, a 50 bag may occasionally weigh around 2.5 to 3 grams depending on local supply."
+  },
+  {
+    q: "How much is a stick of weed in Australia?",
+    a: "A 'stick' of weed is traditional Australian street slang referring to a small foil packet containing approximately 1.0 to 1.5 grams of cannabis flower, usually sold for $20 to $25 AUD."
+  },
+  {
+    q: "How much does an ounce of weed cost in Australia?",
+    a: "In 2026, an ounce of weed (28 grams) in Australia costs between $250 and $380 AUD for standard to top-shelf indoor flower. Street outdoor bush weed can sell for $180–$240/oz, while exotic imported or dispensary-grade craft cultivars can reach $350–$420/oz."
+  },
+  {
+    q: "What is a 'Q' of weed in Australia?",
+    a: "A 'Q' stands for a quarter of an ounce, which equals exactly 7 grams of dried cannabis flower. In Australia, a Q typically costs between $80 and $110 AUD."
+  },
+  {
+    q: "Is medical cannabis cheaper than street weed in Australia?",
+    a: "Yes, medical cannabis in Australia has dropped significantly in price. Concession and generic scripts now start at $6.50 to $10 per gram ($99 to $140 per 10g-15g tub), making compliant, lab-tested medical cannabis comparable to or cheaper than illicit street weed without the risk of PGR contamination."
+  }
+];
+
+const priceFaqSchema = faqPageSchema(pricingFaqs, "https://mullawaysmedicalcannabis.store/blog/cannabis-prices-australia/");
 ---
 
-<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema]} ogType="article" articlePublishedTime="2026-01-28" articleModifiedTime="2026-01-28" articleAuthor="Mullaways Medical Cannabis" articleSection="Guide">
+<Layout title={title} description={description} schema={[blogSchema, breadcrumbSchema, priceFaqSchema]} ogType="article" articlePublishedTime="2026-01-28" articleModifiedTime="2026-09-20" articleAuthor="Mullaways Medical Cannabis" articleSection="Guide">
   <Header />
   <main>
     <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Blog', href: '/blog/'}, {label: 'Cannabis Prices Australia'}]} />
@@ -340,9 +366,69 @@ const breadcrumbSchema = {
               </div>
             </div>
 
-            <div class="warning-box">
-              <h4><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Important Reminder</h4>
-              <p>This guide is for informational purposes only. Cannabis remains illegal for recreational use in most of Australia. Always comply with local laws and consider legal medical access options.</p>
+          <section id="slang-weights">
+            <h2>Australian Weed Weights & Street Slang Breakdown</h2>
+            <p>If you have spent time in the Australian cannabis community, you have likely encountered terms like "stick", "fifty bag", "Q", or "ounce". Below is the exact weight and price breakdown used across Australia:</p>
+
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th>Slang Term</th>
+                  <th>Exact Weight</th>
+                  <th>Typical 2026 Price</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Stick / Foil</strong></td>
+                  <td>1.0g – 1.5g</td>
+                  <td>$20 – $25 AUD</td>
+                  <td>Traditional street foil packet; single session amount</td>
+                </tr>
+                <tr>
+                  <td><strong>50 Bag / Fiddy</strong></td>
+                  <td>2.8g – 3.5g</td>
+                  <td>$50 AUD</td>
+                  <td>Most common quick-purchase size for hydro in capital cities</td>
+                </tr>
+                <tr>
+                  <td><strong>Q (Quarter)</strong></td>
+                  <td>7.0 grams</td>
+                  <td>$80 – $110 AUD</td>
+                  <td>Standard weekly reserve; 1/4 of an ounce</td>
+                </tr>
+                <tr>
+                  <td><strong>Half (Half Ounce)</strong></td>
+                  <td>14.0 grams</td>
+                  <td>$150 – $200 AUD</td>
+                  <td>Substantial discount per gram compared to smaller buys</td>
+                </tr>
+                <tr>
+                  <td><strong>Ounce / Oz</strong></td>
+                  <td>28.35 grams</td>
+                  <td>$250 – $380 AUD</td>
+                  <td>Full sandwich bag; best value tier for individual consumers</td>
+                </tr>
+                <tr>
+                  <td><strong>QP (Quarter Pound)</strong></td>
+                  <td>113.4 grams</td>
+                  <td>$800 – $1,200 AUD</td>
+                  <td>Commercial bulk tier; equivalent to 4 full ounces</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section id="faqs">
+            <h2>Frequently Asked Questions About Australian Weed Prices</h2>
+            <div class="faq-list">
+              {pricingFaqs.map((faq) => (
+                <div class="faq-item" style="margin-bottom: 1.5rem; padding: 1.25rem; background: var(--color-surface, #f8fafc); border-radius: 8px; border-left: 4px solid var(--color-primary, #2D5A4A);">
+                  <h3 style="margin-top: 0; font-size: 1.15rem; color: var(--color-text, #1e293b);">{faq.q}</h3>
+                  <p style="margin-bottom: 0; line-height: 1.6; color: var(--color-text-muted, #475569);">{faq.a}</p>
+                </div>
+              ))}
             </div>
           </section>
 

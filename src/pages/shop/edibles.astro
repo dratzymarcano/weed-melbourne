@@ -6,7 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
-const title = "Cannabis Edibles Australia | Buy THC & CBD Gummies";
+const title = "Buy Cannabis Edibles Australia | THC Gummies | Mullaways";
 const description = "Buy cannabis edibles in Australia. THC gummies, CBD gummies, hemp gummies and chocolates. Lab-tested edibles with discreet delivery Australia-wide.";
 
 const products = [
@@ -202,15 +202,15 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
-    { "@type": "ListItem", "position": 3, "name": "Edibles", "item": "https://mullawaysmedicalcannabis.com.au/shop/edibles/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" },
+    { "@type": "ListItem", "position": 3, "name": "Edibles", "item": "https://mullawaysmedicalcannabis.store/shop/edibles/" }
   ]
 };
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/edibles/#itemlist",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.store/shop/edibles/#itemlist",
   "name": "Cannabis Edibles Australia",
   "description": description,
   "numberOfItems": products.length,
@@ -218,15 +218,15 @@ const itemListSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": p.name,
-    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/shop/product/${p.slug}/`
   }))
 };
 
 const collectionSchema = collectionPageSchema({
-  url: 'https://mullawaysmedicalcannabis.com.au/shop/edibles/',
+  url: 'https://mullawaysmedicalcannabis.store/shop/edibles/',
   name: 'Cannabis Edibles Australia',
   description,
-  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/edibles/#itemlist',
+  itemListId: 'https://mullawaysmedicalcannabis.store/shop/edibles/#itemlist',
 });
 ---
 
@@ -243,9 +243,9 @@ const collectionSchema = collectionPageSchema({
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="section-label section-label-light">CBD Gummies Australia — THC Edibles Near Me</span>
-          <h1>Cannabis Edibles That Actually Deliver</h1>
-          <p>Looking for CBD gummies Australia or hemp gummies that actually work? Done with homemade edibles that either do nothing or put you on the floor for 8 hours? Our lab-tested THC gummies, chocolates, and treats give you exactly what you expect — every single time. Precise dosing, actual quality, and discreet edibles delivery Australia-wide.</p>
+          <span class="section-label section-label-light">Cannabis Edibles Australia — THC Gummies & Chocolates</span>
+          <h1>Buy Cannabis Edibles Australia — THC Gummies & Infused Treats</h1>
+          <p>Looking to buy cannabis edibles online in Australia? Our lab-tested THC gummies, chocolates, and treats give you predictable, precise dosing every time. Potent full-spectrum effects, delicious flavours, and discreet Australia-wide delivery.</p>
         </div>
       </div>
     </section>

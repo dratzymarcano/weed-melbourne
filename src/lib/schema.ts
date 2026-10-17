@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://mullawaysmedicalcannabis.com.au';
+export const SITE_URL = 'https://mullawaysmedicalcannabis.store';
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 export const MEDICAL_ORG_ID = `${SITE_URL}/#medical-organization`;
 
@@ -21,7 +21,7 @@ export const organizationSchema = {
   description:
     'Australian online cannabis dispensary and educational resource focused on discreet delivery, clear product information, and customer support nationwide. Based in Mullaways, NSW — serving Sydney, Melbourne, Brisbane, Perth, Adelaide, Canberra and regional Australia.',
   foundingDate: '2024',
-  email: 'hello@mullawaysmedicalcannabis.com.au',
+  email: 'hello@mullawaysmedicalcannabis.store',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Mullaways',
@@ -31,7 +31,7 @@ export const organizationSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
-    email: 'hello@mullawaysmedicalcannabis.com.au',
+    email: 'hello@mullawaysmedicalcannabis.store',
     telephone: '+61468299228',
     availableLanguage: [{ '@type': 'Language', name: 'English', alternateName: 'en-AU' }],
     hoursAvailable: {
@@ -193,6 +193,25 @@ export function collectionPageSchema(opts: {
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: { '@id': ORGANIZATION_ID },
     ...(opts.itemListId ? { mainEntity: { '@id': opts.itemListId } } : {}),
+  };
+}
+
+// Build a FAQPage schema for FAQ accordions.
+// Formats questions and answers for Google Rich Results and AI Answer Engines.
+export function faqPageSchema(faqs: Array<{ q: string; a: string }>, pageUrl?: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    ...(pageUrl ? { '@id': `${pageUrl}#faq` } : {}),
+    inLanguage: 'en-AU',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
   };
 }
 

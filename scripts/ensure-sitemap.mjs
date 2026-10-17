@@ -2,7 +2,7 @@ import { copyFileSync, existsSync, rmSync, readFileSync, writeFileSync, statSync
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const SITE_ORIGIN = 'https://mullawaysmedicalcannabis.com.au';
+const SITE_ORIGIN = 'https://mullawaysmedicalcannabis.store';
 
 // Walk dist/ to find each generated index.html, then derive the URL it
 // represents so we can attach a real <lastmod> (file mtime) to its sitemap entry.

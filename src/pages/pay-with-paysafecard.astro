@@ -4,7 +4,7 @@
 // canonical replacement (Bank Transfer) and the page is noindex'd.
 // We can't use a 301 on GitHub Pages, so we issue a client-side redirect
 // plus a canonical pointing at the destination — Google consolidates.
-const destination = 'https://mullawaysmedicalcannabis.com.au/pay-with-bank-transfer/';
+const destination = 'https://mullawaysmedicalcannabis.store/pay-with-bank-transfer/';
 ---
 <!doctype html>
 <html lang="en-AU">
@@ -12,6 +12,7 @@ const destination = 'https://mullawaysmedicalcannabis.com.au/pay-with-bank-trans
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="robots" content="noindex, follow" />
+		<meta name="description" content="Paysafecard is no longer supported. Redirecting to Bank Transfer payment instructions for Mullaways Medical Cannabis." />
 		<link rel="canonical" href={destination} />
 		<meta http-equiv="refresh" content={`0; url=${destination}`} />
 		<title>Redirecting — Pay With Bank Transfer | Mullaways</title>
@@ -21,9 +22,12 @@ const destination = 'https://mullawaysmedicalcannabis.com.au/pay-with-bank-trans
 		</script>
 	</head>
 	<body>
-		<p>
-			Paysafecard is no longer supported. Redirecting to
-			<a href={destination}>Bank Transfer payment instructions</a>…
-		</p>
+		<main>
+			<h1>Redirecting to Bank Transfer Payment Instructions</h1>
+			<p>
+				Paysafecard is no longer supported. Redirecting to
+				<a href={destination}>Bank Transfer payment instructions</a>…
+			</p>
+		</main>
 	</body>
 </html>

@@ -6,7 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProductBySlug, getReviewCount, getReviewRating, getMinPrice, getProductImageAlt } from '../../data/products';
 
-const title = "THC Concentrates Australia | Wax, Shatter & Dabs";
+const title = "THC Concentrates Australia | Shatter & Wax | Mullaways";
 const description = "Buy THC concentrates in Australia. Wax, shatter, live resin and rosin. Lab-tested extracts for dabbing. Clean, potent concentrates delivered discreetly.";
 
 const products = [
@@ -243,15 +243,15 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" },
-    { "@type": "ListItem", "position": 3, "name": "Concentrates", "item": "https://mullawaysmedicalcannabis.com.au/shop/concentrates/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" },
+    { "@type": "ListItem", "position": 3, "name": "Concentrates", "item": "https://mullawaysmedicalcannabis.store/shop/concentrates/" }
   ]
 };
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/concentrates/#itemlist",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.store/shop/concentrates/#itemlist",
   "name": "THC Concentrates Australia",
   "description": description,
   "numberOfItems": products.length,
@@ -259,19 +259,23 @@ const itemListSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": p.name,
-    "url": `https://mullawaysmedicalcannabis.com.au/shop/product/${p.slug}/`
+    "url": `https://mullawaysmedicalcannabis.store/shop/product/${p.slug}/`
   }))
 };
 
 const collectionSchema = collectionPageSchema({
-  url: 'https://mullawaysmedicalcannabis.com.au/shop/concentrates/',
+  url: 'https://mullawaysmedicalcannabis.store/shop/concentrates/',
   name: 'Cannabis Concentrates Australia',
   description,
-  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/concentrates/#itemlist',
+  itemListId: 'https://mullawaysmedicalcannabis.store/shop/concentrates/#itemlist',
 });
 ---
 
 <Layout title={title} description={description} schema={[breadcrumbSchema, itemListSchema, collectionSchema]}>
+  <Header />
+
+  <main>
+    <Breadcrumb items={[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop/'}, {label: 'Concentrates'}]} />
     <!-- Hero Section -->
     <section class="page-hero">
       <div class="hero-bg">
@@ -280,9 +284,9 @@ const collectionSchema = collectionPageSchema({
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="section-label section-label-light">Buy THC Concentrates Australia</span>
-          <h1>Concentrates for People Who Know What They Want</h1>
-          <p>Flower tolerance through the roof? We've got you. Our concentrates are lab-tested for potency and purity — no mystery solvents, no cut product. Shatter, wax, live resin, rosin, and diamonds from 70-95% THC. If you know, you know.</p>
+          <span class="section-label section-label-light">Cannabis Concentrates Australia — Dabs, Wax & Rosin</span>
+          <h1>Buy Cannabis Concentrates Australia — Shatter, Wax & Live Rosin</h1>
+          <p>Looking to buy cannabis concentrates online in Australia? Our dabs, shatter, wax, live resin, rosin, and diamonds are lab-tested for potency and solvent-free purity from 70% to 95% THC. Clean, high-terpene extracts delivered discreetly Australia-wide.</p>
         </div>
       </div>
     </section>

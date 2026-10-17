@@ -374,14 +374,14 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.com.au/shop/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://mullawaysmedicalcannabis.store/shop/" }
   ]
 };
 
 const itemListSchema = {
   "@context": "https://schema.org",
-  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.com.au/shop/#itemlist",
+  "@type": "ItemList", "@id": "https://mullawaysmedicalcannabis.store/shop/#itemlist",
   "name": "Cannabis Products Australia",
   "description": "Browse our complete range of lab-tested cannabis products available for delivery across Australia.",
   "numberOfItems": categories.length,
@@ -389,15 +389,15 @@ const itemListSchema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": cat.name,
-    "url": `https://mullawaysmedicalcannabis.com.au${cat.href}`
+    "url": `https://mullawaysmedicalcannabis.store${cat.href}`
   }))
 };
 
 const collectionSchema = collectionPageSchema({
-  url: 'https://mullawaysmedicalcannabis.com.au/shop/',
+  url: 'https://mullawaysmedicalcannabis.store/shop/',
   name: 'Shop',
   description,
-  itemListId: 'https://mullawaysmedicalcannabis.com.au/shop/#itemlist',
+  itemListId: 'https://mullawaysmedicalcannabis.store/shop/#itemlist',
 });
 ---
 

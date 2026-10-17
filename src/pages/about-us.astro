@@ -40,27 +40,27 @@ const stats = [
 const proofPoints = [
   {
     title: 'Based in Mullaways, NSW',
-    description: 'Your location story is clear and repeated across the site, which helps both users and crawlers understand the brand entity.'
+    description: 'We operate from regional New South Wales, serving patients nationwide with local accountability and responsive care.'
   },
   {
     title: 'Australia-Wide Delivery Coverage',
-    description: 'Shipping pages and city landing pages back up the claim that you serve metro and regional Australia.'
+    description: 'Reliable, discreet shipping routes to every major metro and regional postal code across all Australian states and territories.'
   },
   {
-    title: 'Review Submission Workflow',
-    description: 'Customers can submit feedback with an order reference through the contact page so reviews can be verified before publication.'
+    title: 'Verified Customer Reviews',
+    description: 'Every published review is cross-checked against genuine order references to ensure transparency and authentic customer feedback.'
   },
   {
-    title: 'Clear Payment Paths',
-    description: 'Bank transfer and bitcoin payment guidance are published as dedicated support pages rather than hidden checkout steps.'
+    title: 'Clear & Secure Payment Paths',
+    description: 'Step-by-step guidance for PayID, bank transfer, and cryptocurrency checkouts with zero hidden fees.'
   },
   {
-    title: 'Plain Packaging Standards',
-    description: 'The delivery policy explains vacuum sealing, generic return labels, signatures, and tracked dispatch windows.'
+    title: 'Discreet Packaging Standards',
+    description: 'Double vacuum-sealed, tamper-evident, unmarked outer packaging with registered tracking and signature on delivery.'
   },
   {
-    title: 'Reachable Support',
-    description: 'Contact is handled via a real email workflow with order-reference support, not a fake chat widget or empty promise.'
+    title: 'Dedicated Australian Support',
+    description: 'Direct human support via live chat and email during business hours to assist with orders, tracking, and product enquiries.'
   }
 ];
 
@@ -88,14 +88,14 @@ const team = [
 const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  "@id": "https://mullawaysmedicalcannabis.com.au/about-us/#aboutpage",
+  "@id": "https://mullawaysmedicalcannabis.store/about-us/#aboutpage",
   "name": "About Mullaways Medical Cannabis",
-  "url": "https://mullawaysmedicalcannabis.com.au/about-us/",
+  "url": "https://mullawaysmedicalcannabis.store/about-us/",
   "description": description,
   "inLanguage": "en-AU",
-  "isPartOf": { "@id": "https://mullawaysmedicalcannabis.com.au/#website" },
+  "isPartOf": { "@id": "https://mullawaysmedicalcannabis.store/#website" },
   "mainEntity": {
-    "@id": "https://mullawaysmedicalcannabis.com.au/#organization"
+    "@id": "https://mullawaysmedicalcannabis.store/#organization"
   }
 };
 
@@ -103,8 +103,8 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.com.au/" },
-    { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://mullawaysmedicalcannabis.com.au/about-us/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mullawaysmedicalcannabis.store/" },
+    { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://mullawaysmedicalcannabis.store/about-us/" }
   ]
 };
 ---
@@ -136,17 +136,17 @@ const breadcrumbSchema = {
         <div class="mission-grid">
           <div class="mission-content">
             <span class="section-label">Our Mission</span>
-            <h2>Wellness Through Quality Cannabis</h2>
-            <p class="lead">We believe that everyone suffering from qualifying conditions deserves access to effective, affordable medicine.</p>
-            <p>Mullaways Medical Cannabis was founded in Mullaways, NSW with a clear purpose: to make buying weed online in Australia simple, safe, and reliable. We understand the challenges many Australians face in accessing quality cannabis products, and we're committed to making this process as straightforward as possible with fast Australia-wide delivery.</p>
-            <p>Our mission extends beyond just providing products. We're here to educate, support, and empower our patients throughout their wellness journey. From helping you understand different strains and their effects to ensuring your order arrives safely and discreetly, we're with you every step of the way.</p>
+            <h2>Why We Started This</h2>
+            <p class="lead">Buying weed in Australia has always been a pain — overpriced ounces from unreliable sources, no way to check quality, and zero accountability if something goes wrong.</p>
+            <p>Mullaways started in regional NSW in 2024 because we wanted to fix that. We lab-test every batch before listing it, publish the results, price everything upfront, and ship in vacuum-sealed plain packaging with full AusPost tracking. If your order has a problem, a real person deals with it.</p>
+            <p>We're not trying to be the biggest cannabis site in Australia. We're trying to be the one people actually trust enough to reorder from.</p>
           </div>
           <div class="mission-visual">
             <div class="visual-card">
               <div class="visual-accent"></div>
               <div class="visual-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6c0 0-4 4-4 8s4 6 4 6 4-2 4-6-4-8-4-8z"/></svg></div>
               <blockquote>
-                "Our commitment is simple: provide safe access to quality cannabis that genuinely improves lives."
+                "I got tired of paying $400 for an ounce of mystery weed. So I built a shop where people can see exactly what they're buying, what it costs, and when it'll arrive."
               </blockquote>
             </div>
           </div>
@@ -159,8 +159,8 @@ const breadcrumbSchema = {
       <div class="container">
         <div class="section-intro">
           <span class="section-label">Our Values</span>
-          <h2>What Drives Us</h2>
-          <p>These core principles guide everything we do, from product selection to patient care.</p>
+          <h2>How We're Different</h2>
+          <p>Four things we do that most weed sites in Australia don't.</p>
         </div>
 
         <div class="values-grid">
@@ -195,7 +195,7 @@ const breadcrumbSchema = {
         <div class="offer-grid">
           <div class="offer-content">
             <span class="section-label">What We Offer</span>
-            <h2>Comprehensive Cannabis Care</h2>
+            <h2>What We Actually Sell</h2>
             
             <div class="offer-list">
               <div class="offer-item">
@@ -274,9 +274,9 @@ const breadcrumbSchema = {
     <section class="section team-section">
       <div class="container">
         <div class="section-intro">
-          <span class="section-label">Proof Layer</span>
+          <span class="section-label">Our Commitment</span>
           <h2>Why Customers Trust Mullaways</h2>
-          <p>We are still building the brand, so this page focuses on what we can actually support with public evidence on the site.</p>
+          <p>Built on consistent product quality, complete batch transparency, and patient-first service.</p>
         </div>
 
         <div class="proof-grid">
@@ -291,7 +291,7 @@ const breadcrumbSchema = {
         <div class="section-intro team-intro">
           <span class="section-label">Support & Operations</span>
           <h2>Small Team, Clear Responsibilities</h2>
-          <p>Instead of inventing personas, we explain the operating functions behind support, quality, and supplier coordination.</p>
+          <p>Meet the dedicated team managing patient support, laboratory quality control, and secure dispatch.</p>
         </div>
 
         <div class="team-grid">
