@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test:orders": "node scripts/test-order-flow.mjs",
     "generate-sitemap": "node scripts/generate-sitemap.mjs",
     "astro": "astro"
   },
