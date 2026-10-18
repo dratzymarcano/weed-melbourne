@@ -225,7 +225,7 @@ function buildTemplateParams(order) {
     paymentNextStep = 'Please send the exact amount shown on the order confirmation page to the Bitcoin address provided. Your order will be dispatched once verified on the blockchain.';
   } else if (order.payment === 'bank') {
     paymentStatus = 'Awaiting bank transfer';
-    paymentNextStep = 'Please open Live Chat on our website to receive our PayID or bank transfer details. For your security we share banking details exclusively via Live Chat.';
+    paymentNextStep = 'Please contact us on WhatsApp (+61 420 133 074) or Live Chat to receive PayID and bank transfer details.';
   }
 
   const discountParts = [];
@@ -375,13 +375,14 @@ await runAsyncTest('Test Order 1 (Bitcoin): Send Customer & Admin Emails via Clo
   assert.ok(custEmail.html.includes('Bitcoin Payment Details'));
   assert.ok(custEmail.html.includes(BTC_ADDRESS));
   assert.ok(custEmail.html.includes('10% Crypto Discount Applied'));
-  assert.ok(custEmail.html.includes('1. Order Placed'));
+  assert.ok(custEmail.html.includes('1. Order Logged'));
   assert.ok(custEmail.html.includes('2. Payment'));
   assert.ok(custEmail.html.includes('3. Tracked Dispatch'));
   assert.ok(custEmail.html.includes(OFFICIAL_DOMAIN));
   assert.ok(custEmail.html.includes(OFFICIAL_EMAIL));
   assert.ok(!custEmail.html.includes('undefined'));
   assert.ok(!custEmail.html.includes('[object Object]'));
+  assert.ok(!/[🌿🔒📦⚡💬⚠️✅]/.test(custEmail.html), 'Email contains emoji icons');
 
   // Verify Admin Email
   assert.equal(adminEmail.to[0], OFFICIAL_EMAIL);
@@ -462,15 +463,19 @@ await runAsyncTest('Test Order 2 (Bank Transfer): Customer & Admin Emails with L
   assert.equal(interceptedEmails.length, 2);
   const [custEmail, adminEmail] = interceptedEmails;
 
-  // Verify Bank Customer Email contains Live Chat CTA & order link
+  // Verify Bank Customer Email contains WhatsApp & Live Chat CTAs, phone number, and order link
   assert.equal(custEmail.to[0], 'sarah.oconnor@example.com');
-  assert.ok(custEmail.html.includes('Open Live Chat to Receive Bank Details'));
-  assert.ok(custEmail.html.includes('we never transmit bank transfer or PayID account numbers over unencrypted email'));
+  assert.ok(custEmail.html.includes('Contact us to receive Bank Details'));
+  assert.ok(custEmail.html.includes('+61 420 133 074'));
+  assert.ok(custEmail.html.includes('wa.me/61420133074'));
+  assert.ok(custEmail.html.includes('Chat on WhatsApp'));
+  assert.ok(custEmail.html.includes('Open Website Live Chat'));
   assert.ok(custEmail.html.includes(`order-confirmation/?ref=${testOrder2.ref}`));
   assert.ok(custEmail.html.includes('Granddaddy Purple 14g'));
   assert.ok(custEmail.html.includes('FREE (Standard delivery over $150)'));
   assert.ok(custEmail.html.includes('$190.00'));
   assert.ok(!custEmail.html.includes(BTC_ADDRESS)); // No BTC QR for bank orders
+  assert.ok(!/[🌿🔒📦⚡💬⚠️✅]/.test(custEmail.html), 'Bank email contains emoji icons');
 });
 
 // ── Test Zoho Live Chat Pre-fill Logic ───────────────────────────────────────
@@ -551,11 +556,20 @@ runTest('Checkout HTML page (dist/checkout/index.html) contains 3-step progressi
 
 runTest('Order Confirmation HTML page (dist/order-confirmation/index.html) contains Live Chat Alert & BTC UI', () => {
   const confirmHtml = fs.readFileSync(path.join(ROOT_DIR, 'dist/order-confirmation/index.html'), 'utf8');
-  assert.ok(confirmHtml.includes('wa-alert'), 'Missing Live Chat alert container');
-  assert.ok(confirmHtml.includes('Open Live Chat now to get bank details'), 'Missing Live Chat alert title');
+  assert.ok(confirmHtml.includes('bank-contact-alert'), 'Missing Bank Transfer contact alert container');
+  assert.ok(confirmHtml.includes('receive bank details'), 'Missing bank details alert title');
+  assert.ok(confirmHtml.includes('+61 420 133 074'), 'Missing WhatsApp phone number in confirmation page');
+  assert.ok(confirmHtml.includes('wa.me/61420133074'), 'Missing WhatsApp wa.me link in confirmation page');
   assert.ok(confirmHtml.includes('btc-timer-bar'), 'Missing Bitcoin payment timer bar');
   assert.ok(confirmHtml.includes('download-order-btn'), 'Missing PDF download button');
   assert.ok(confirmHtml.includes(OFFICIAL_EMAIL), 'Missing official contact email');
+});
+
+runTest('Layout & Footer contains Floating WhatsApp button and Footer contact card', () => {
+  const homeHtml = fs.readFileSync(path.join(ROOT_DIR, 'dist/index.html'), 'utf8');
+  assert.ok(homeHtml.includes('floating-whatsapp-btn'), 'Missing floating WhatsApp button');
+  assert.ok(homeHtml.includes('https://wa.me/61420133074'), 'Missing wa.me link');
+  assert.ok(homeHtml.includes('+61 420 133 074'), 'Missing WhatsApp number in footer');
 });
 
 // Restore fetch

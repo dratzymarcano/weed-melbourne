@@ -149,7 +149,7 @@ export async function onRequestPost(context) {
         from: `${BRAND} <hello@mullawaysmedicalcannabis.store>`,
         to: [ADMIN_EMAIL],
         reply_to: emailData.customer_email || ADMIN_EMAIL,
-        subject: `✅ Bitcoin Paid — Order ${orderRef} — ${emailData.total || ''}`,
+        subject: `Bitcoin Payment Verified: Order ${orderRef} — ${emailData.total || ''}`,
         html: buildAdminEmail({ emailData, confirmations, txid, orderRef }),
       }),
     });
@@ -234,24 +234,24 @@ function buildAdminEmail({ emailData: rawData, confirmations, txid: rawTxid, ord
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
-<body style="margin:0;padding:0;background-color:#F4F6F4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
-<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#F4F6F4;">
+<body style="margin:0;padding:0;background-color:#F8F9FA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:#111827;">
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#F8F9FA;">
 <tr><td align="center" style="padding:40px 16px;">
-<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;background-color:#FFFFFF;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(18,51,38,0.06);border:1px solid #E5E7EB;">
+<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;background-color:#FFFFFF;border-radius:8px;border:1px solid #E5E7EB;overflow:hidden;">
 
 <!-- Top Accent Line -->
-<tr><td style="height:4px;background:linear-gradient(90deg,#F59E0B 0%,#10B981 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td style="height:3px;background-color:#1F4D3C;font-size:0;line-height:0;">&nbsp;</td></tr>
 
 <!-- Header -->
-<tr><td style="padding:24px 36px 20px;border-bottom:1px solid #F3F4F6;background-color:#FAFAF8;">
+<tr><td style="padding:24px 36px 20px;border-bottom:1px solid #E5E7EB;">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td>
-  <span style="font-size:16px;font-weight:700;color:#1F4D3C;display:block;">${BRAND}</span>
-  <span style="font-size:11px;font-weight:600;color:#527A66;text-transform:uppercase;letter-spacing:1.5px;">Blockchain Payment Notification</span>
+  <span style="font-size:14px;font-weight:700;color:#111827;display:block;letter-spacing:0.8px;">${BRAND}</span>
+  <span style="font-size:10px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:1px;">Blockchain Settlement</span>
 </td>
 <td align="right">
-  <span style="display:inline-block;padding:5px 12px;background-color:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">&#x2705; Verified Paid</span>
+  <span style="display:inline-block;padding:4px 10px;background-color:#ECFDF5;color:#065F46;font-size:11px;font-weight:700;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px;">Verified Paid</span>
 </td>
 </tr>
 </table>
@@ -259,63 +259,61 @@ function buildAdminEmail({ emailData: rawData, confirmations, txid: rawTxid, ord
 
 <!-- Hero Banner -->
 <tr><td style="padding:32px 36px 24px;">
-<h1 style="margin:0 0 8px;font-size:26px;font-weight:700;color:#111827;">Bitcoin Payment Confirmed</h1>
-<p style="margin:0;font-size:15px;color:#4B5563;">Order <strong style="font-family:'SF Mono',Consolas,monospace;color:#111827;">${orderRef}</strong> &mdash; 2+ blockchain confirmations verified by node</p>
+<h1 style="margin:0 0 6px;font-size:22px;font-weight:700;color:#111827;">Bitcoin Payment Confirmed</h1>
+<p style="margin:0;font-size:14px;color:#4B5563;">Order <strong style="font-family:'SF Mono',Consolas,monospace;color:#111827;">${orderRef}</strong> &mdash; 2+ blockchain confirmations verified by node</p>
 </td></tr>
 
-<tr><td style="padding:0 36px;"><div style="height:1px;background-color:#F3F4F6;"></div></td></tr>
+<tr><td style="padding:0 36px;"><div style="height:1px;background-color:#E5E7EB;"></div></td></tr>
 
 <!-- Body -->
 <tr><td style="padding:28px 36px 36px;">
 
 <!-- Blockchain Verification Badge -->
-<div style="background-color:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:16px 20px;margin-bottom:28px;">
-  <p style="margin:0 0 4px;font-size:14px;font-weight:700;color:#15803D;">&#x2705; ${confirmations} Blockchain Confirmation${confirmations !== 1 ? 's' : ''} Received</p>
-  ${txid ? `<p style="margin:0;font-size:11px;color:#4B5563;font-family:'SF Mono',Consolas,monospace;word-break:break-all;">TXID: ${txid}</p>` : ''}
+<div style="background-color:#F9FAFB;border:1px solid #E5E7EB;border-radius:6px;padding:14px 18px;margin-bottom:24px;">
+  <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#15803D;">${confirmations} Blockchain Confirmation${confirmations !== 1 ? 's' : ''} Received</p>
+  ${txid ? `<p style="margin:0;font-size:11px;color:#6B7280;font-family:'SF Mono',Consolas,monospace;word-break:break-all;">TXID: ${txid}</p>` : ''}
 </div>
 
 <!-- Customer & Delivery -->
-<p style="margin:0 0 10px;font-size:11px;font-weight:700;color:#527A66;text-transform:uppercase;letter-spacing:1.5px;">Customer &amp; Shipping</p>
-<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:24px;">
-<tr><td style="padding:6px 0;font-size:13px;color:#6B7280;width:120px;">Name</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#111827;">${d.to_name || '—'}</td></tr>
-<tr><td style="padding:6px 0;font-size:13px;color:#6B7280;">Email</td><td style="padding:6px 0;font-size:14px;"><a href="mailto:${d.customer_email}" style="color:#1F4D3C;text-decoration:underline;">${d.customer_email || '—'}</a></td></tr>
-<tr><td style="padding:6px 0;font-size:13px;color:#6B7280;">Phone</td><td style="padding:6px 0;font-size:14px;color:#1F2937;">${d.customer_phone || 'N/A'}</td></tr>
-<tr><td style="padding:6px 0;font-size:13px;color:#6B7280;">Address</td><td style="padding:6px 0;font-size:14px;color:#1F2937;font-weight:600;">${d.shipping_address || '—'}</td></tr>
-<tr><td style="padding:6px 0;font-size:13px;color:#6B7280;">Method</td><td style="padding:6px 0;font-size:14px;color:#1F2937;">${d.delivery_method || 'Standard Delivery'}</td></tr>
+<p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#527A66;text-transform:uppercase;letter-spacing:1.5px;">Customer &amp; Shipping</p>
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+<tr><td style="padding:5px 0;font-size:13px;color:#6B7280;width:120px;">Name</td><td style="padding:5px 0;font-size:13px;font-weight:600;color:#111827;">${d.to_name || '—'}</td></tr>
+<tr><td style="padding:5px 0;font-size:13px;color:#6B7280;">Email</td><td style="padding:5px 0;font-size:13px;"><a href="mailto:${d.customer_email}" style="color:#1F4D3C;text-decoration:underline;">${d.customer_email || '—'}</a></td></tr>
+<tr><td style="padding:5px 0;font-size:13px;color:#6B7280;">Phone</td><td style="padding:5px 0;font-size:13px;color:#1F2937;">${d.customer_phone || 'N/A'}</td></tr>
+<tr><td style="padding:5px 0;font-size:13px;color:#6B7280;">Address</td><td style="padding:5px 0;font-size:13px;color:#1F2937;font-weight:600;">${d.shipping_address || '—'}</td></tr>
+<tr><td style="padding:5px 0;font-size:13px;color:#6B7280;">Tier</td><td style="padding:5px 0;font-size:13px;color:#1F2937;">${d.delivery_method || 'Standard Delivery'}</td></tr>
 </table>
 
-<div style="height:1px;background-color:#F3F4F6;margin:24px 0;"></div>
+<div style="height:1px;background-color:#E5E7EB;margin:20px 0;"></div>
 
 <!-- Items -->
-<p style="margin:0 0 10px;font-size:11px;font-weight:700;color:#527A66;text-transform:uppercase;letter-spacing:1.5px;">Items to Pack</p>
-<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+<p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#527A66;text-transform:uppercase;letter-spacing:1.5px;">Items to Pack</p>
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:16px;">
 ${itemRows}
 </table>
 
 <!-- Totals -->
-<div style="padding:16px 20px;background-color:#F9FAFB;border-radius:10px;border:1px solid #E5E7EB;">
+<div style="padding:14px 16px;background-color:#F9FAFB;border-radius:6px;border:1px solid #E5E7EB;">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-<tr><td style="padding:4px 0;font-size:14px;color:#6B7280;">Subtotal</td><td style="text-align:right;font-size:14px;color:#1F2937;">${d.subtotal || ''}</td></tr>
+<tr><td style="padding:4px 0;font-size:13px;color:#6B7280;">Subtotal</td><td style="text-align:right;font-size:13px;color:#1F2937;">${d.subtotal || ''}</td></tr>
 ${discountRow}
-<tr><td style="padding:4px 0;font-size:14px;color:#6B7280;">Shipping</td><td style="text-align:right;font-size:14px;color:#1F2937;">${d.shipping || ''}</td></tr>
+<tr><td style="padding:4px 0;font-size:13px;color:#6B7280;">Shipping</td><td style="text-align:right;font-size:13px;color:#1F2937;">${d.shipping || ''}</td></tr>
 <tr><td colspan="2" style="padding:6px 0;"><div style="height:1px;background-color:#E5E7EB;"></div></td></tr>
-<tr><td style="padding:6px 0 2px;font-size:17px;font-weight:700;color:#111827;">Total Paid</td><td style="text-align:right;padding:6px 0 2px;font-size:18px;font-weight:700;color:#10B981;">${d.total || ''}</td></tr>
+<tr><td style="padding:6px 0 2px;font-size:15px;font-weight:700;color:#111827;">Total Paid</td><td style="text-align:right;padding:6px 0 2px;font-size:16px;font-weight:700;color:#10B981;">${d.total || ''}</td></tr>
 </table>
 </div>
 
 </td></tr>
 
 <!-- Footer -->
-<tr><td style="padding:20px 36px;background-color:#FAFAF8;border-top:1px solid #F3F4F6;">
+<tr><td style="padding:18px 36px;background-color:#FFFFFF;border-top:1px solid #E5E7EB;">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-<td><span style="font-size:12px;color:#6B7280;">${BRAND} automated fulfillment alert</span></td>
-<td align="right"><a href="mailto:${ADMIN_EMAIL}" style="font-size:12px;color:#1F4D3C;text-decoration:none;">${ADMIN_EMAIL}</a></td>
+<td><span style="font-size:11px;color:#6B7280;">${BRAND} automated fulfillment alert</span></td>
+<td align="right"><a href="mailto:${ADMIN_EMAIL}" style="font-size:11px;color:#1F4D3C;text-decoration:none;">${ADMIN_EMAIL}</a></td>
 </tr>
 </table>
 </td></tr>
-
-<tr><td style="height:3px;background-color:#1F4D3C;font-size:0;line-height:0;">&nbsp;</td></tr>
 
 </table>
 </td></tr>
