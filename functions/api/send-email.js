@@ -554,7 +554,7 @@ export async function onRequestPost(context) {
   }
 
   const { type } = body;
-  const fromAddress = `${BRAND} <hello@mullawaysmedicalcannabis.store>`;
+  const fromAddress = env.RESEND_FROM || `${BRAND} <hello@mullawaysmedicalcannabis.store>`;
 
   try {
     if (type === 'order-customer') {

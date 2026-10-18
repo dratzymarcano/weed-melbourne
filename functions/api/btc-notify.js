@@ -146,7 +146,7 @@ export async function onRequestPost(context) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: `${BRAND} <hello@mullawaysmedicalcannabis.store>`,
+        from: env.RESEND_FROM || `${BRAND} <hello@mullawaysmedicalcannabis.store>`,
         to: [ADMIN_EMAIL],
         reply_to: emailData.customer_email || ADMIN_EMAIL,
         subject: `Bitcoin Payment Verified: Order ${orderRef} — ${emailData.total || ''}`,
