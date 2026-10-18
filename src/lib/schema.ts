@@ -32,7 +32,7 @@ export const organizationSchema = {
     '@type': 'ContactPoint',
     contactType: 'customer support',
     email: 'hello@mullawaysmedicalcannabis.store',
-    telephone: '+61468299228',
+    telephone: '+61420133074',
     availableLanguage: [{ '@type': 'Language', name: 'English', alternateName: 'en-AU' }],
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',
@@ -144,8 +144,8 @@ export const medicalOrganizationSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
-    email: 'hello@mullawaysmedicalcannabis.com.au',
-    telephone: '+614****9228',
+    email: 'hello@mullawaysmedicalcannabis.store',
+    telephone: '+61420133074',
     availableLanguage: [{ '@type': 'Language', name: 'English', alternateName: 'en-AU' }],
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',

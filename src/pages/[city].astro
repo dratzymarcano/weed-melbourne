@@ -424,7 +424,6 @@ const breadcrumbSchema = {
       </div>
       <div class="container">
         <div class="hero-content">
-          <span class="hero-badge"><span class="badge-icon" set:html={getIconSvg(icon)}></span> {highlight}</span>
           <h1>Buy Weed {cityName} <span class="text-gradient">| Cannabis Delivery {stateAbbr}</span></h1>
           <p>{description}</p>
           <div class="hero-meta">
@@ -478,7 +477,6 @@ const breadcrumbSchema = {
     <section class="benefits-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge">Why Choose Us</span>
           <h2>Why Order From Mullaways Medical Cannabis</h2>
           <p>Trusted by customers across {state}</p>
         </div>
@@ -499,9 +497,8 @@ const breadcrumbSchema = {
     <section class="proof-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge">Trust & Support</span>
-          <h2>Proof Signals for {cityName} Orders</h2>
-          <p>These pages support the delivery, payment, and support claims made on this location page.</p>
+          <h2>Order Guarantees & Support</h2>
+          <p>Everything you need to know about discreet packaging, express dispatch, and responsive support.</p>
         </div>
         <div class="proof-grid">
           {trustLinks.map((link) => (
@@ -520,7 +517,6 @@ const breadcrumbSchema = {
         <div class="container">
           <div class="local-grid">
             <div class="local-copy">
-              <span class="section-badge">{cityName} Specifics</span>
               <h2>How Cannabis Delivery Works in {cityName}</h2>
               <p>{localNote}</p>
             </div>
@@ -542,7 +538,6 @@ const breadcrumbSchema = {
     <section class="products-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge">Popular in {cityName}</span>
           <h2>Featured Products</h2>
           <p>Top choices for our {cityName} customers</p>
         </div>
@@ -613,7 +608,6 @@ const breadcrumbSchema = {
     <section class="steps-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge">Simple Process</span>
           <h2>How to Order to {cityName}</h2>
           <p>Get your cannabis delivered in 4 easy steps</p>
         </div>
@@ -676,7 +670,6 @@ const breadcrumbSchema = {
     <section class="faq-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge">Questions?</span>
           <h2>Frequently Asked About {cityName} Delivery</h2>
         </div>
         <div class="faq-grid">
@@ -696,9 +689,8 @@ const breadcrumbSchema = {
     <section class="intent-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge">Related Paths</span>
           <h2>More Ways to Explore Before You Order</h2>
-          <p>Commercial and informational internal links help this page connect with the rest of the site’s coverage.</p>
+          <p>Explore our full range of products, guides, and shipping information before placing your order.</p>
         </div>
         <div class="intent-grid">
           {intentLinks.map((link) => (

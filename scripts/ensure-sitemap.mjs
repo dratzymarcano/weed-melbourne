@@ -118,6 +118,12 @@ export function normalizeSitemap(distDir) {
 
   writeFileSync(finalPath, xml);
 
+  const publicPath = join(process.cwd(), 'public', 'sitemap.xml');
+  if (existsSync(join(process.cwd(), 'public'))) {
+    writeFileSync(publicPath, xml);
+    console.log('[sitemap] Synced updated sitemap.xml to public/sitemap.xml');
+  }
+
   // 4. Clean up the integration's leftover files.
   ['sitemap-0.xml', 'sitemap-index.xml']
     .filter((file) => file !== source)
