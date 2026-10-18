@@ -391,6 +391,12 @@ await runAsyncTest('Test Order 1 (Bitcoin): Send Customer & Admin Emails via Clo
   assert.ok(adminEmail.html.includes('Northern Lights 28g'));
   assert.ok(adminEmail.html.includes('Sour Diesel Vape Cartridge 1ml'));
   assert.ok(adminEmail.html.includes('$371.85'));
+
+  // Save preview HTML files for inspection
+  const previewDir = path.join(ROOT_DIR, 'public', 'email-previews');
+  if (!fs.existsSync(previewDir)) fs.mkdirSync(previewDir, { recursive: true });
+  fs.writeFileSync(path.join(previewDir, 'customer-order-bitcoin.html'), custEmail.html, 'utf8');
+  fs.writeFileSync(path.join(previewDir, 'admin-order-bitcoin.html'), adminEmail.html, 'utf8');
 });
 
 // ── Test Order 2: Bank Transfer / PayID ──
@@ -476,6 +482,71 @@ await runAsyncTest('Test Order 2 (Bank Transfer): Customer & Admin Emails with L
   assert.ok(custEmail.html.includes('$190.00'));
   assert.ok(!custEmail.html.includes(BTC_ADDRESS)); // No BTC QR for bank orders
   assert.ok(!/[🌿🔒📦⚡💬⚠️✅]/.test(custEmail.html), 'Bank email contains emoji icons');
+
+  // Save preview HTML files for inspection
+  const previewDir = path.join(ROOT_DIR, 'public', 'email-previews');
+  if (!fs.existsSync(previewDir)) fs.mkdirSync(previewDir, { recursive: true });
+  fs.writeFileSync(path.join(previewDir, 'customer-order-bank-transfer.html'), custEmail.html, 'utf8');
+  fs.writeFileSync(path.join(previewDir, 'admin-order-bank-transfer.html'), adminEmail.html, 'utf8');
+
+  // Also create a modern tabbed preview index viewer
+  const previewIndexHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mullaways — Order Email Template Previews</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; display: flex; flex-direction: column; height: 100vh; }
+  header { background: #1e293b; border-bottom: 1px solid #334155; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .logo { font-size: 15px; font-weight: 700; color: #10b981; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+  .tabs { display: flex; gap: 8px; }
+  .tab-btn { background: #334155; color: #cbd5e1; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .tab-btn:hover { background: #475569; color: #fff; }
+  .tab-btn.active { background: #059669; color: #fff; }
+  .badge { font-size: 11px; background: #064e3b; color: #6ee7b7; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .frame-container { flex: 1; display: flex; justify-content: center; align-items: stretch; padding: 16px; background: #0b1120; }
+  iframe { width: 100%; max-width: 680px; height: 100%; border: 1px solid #334155; border-radius: 8px; background: #f8f9fa; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v1a6 6 0 0 1-6 6z"/><path d="M11 13a3 3 0 0 0 3-3"/></svg>
+    Mullaways Email Template Inspector
+    <span class="badge">Flat &bull; Modern &bull; No AI Slop &bull; 0 Emojis</span>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="loadFrame('customer-order-bank-transfer.html', this)">Bank Transfer (Customer)</button>
+    <button class="tab-btn" onclick="loadFrame('customer-order-bitcoin.html', this)">Bitcoin (Customer)</button>
+    <button class="tab-btn" onclick="loadFrame('admin-order-bank-transfer.html', this)">Admin Notification</button>
+  </div>
+</header>
+<div class="frame-container">
+  <iframe id="preview-frame" src="customer-order-bank-transfer.html"></iframe>
+</div>
+<script>
+  function loadFrame(url, btn) {
+    document.getElementById('preview-frame').src = url;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>`;
+  fs.writeFileSync(path.join(previewDir, 'index.html'), previewIndexHtml, 'utf8');
+
+  // Also sync to dist/email-previews if dist exists
+  const distPreviewDir = path.join(ROOT_DIR, 'dist', 'email-previews');
+  if (fs.existsSync(path.join(ROOT_DIR, 'dist'))) {
+    if (!fs.existsSync(distPreviewDir)) fs.mkdirSync(distPreviewDir, { recursive: true });
+    fs.copyFileSync(path.join(previewDir, 'customer-order-bank-transfer.html'), path.join(distPreviewDir, 'customer-order-bank-transfer.html'));
+    fs.copyFileSync(path.join(previewDir, 'admin-order-bank-transfer.html'), path.join(distPreviewDir, 'admin-order-bank-transfer.html'));
+    fs.copyFileSync(path.join(previewDir, 'customer-order-bitcoin.html'), path.join(distPreviewDir, 'customer-order-bitcoin.html'));
+    fs.copyFileSync(path.join(previewDir, 'admin-order-bitcoin.html'), path.join(distPreviewDir, 'admin-order-bitcoin.html'));
+    fs.copyFileSync(path.join(previewDir, 'index.html'), path.join(distPreviewDir, 'index.html'));
+  }
 });
 
 // ── Test Zoho Live Chat Pre-fill Logic ───────────────────────────────────────
